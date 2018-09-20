@@ -1,0 +1,42 @@
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  height: 72px;
+}
+
+.nav-toolbar {
+  z-index: 10;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+.title-wrapper {
+  padding-right: 40px;
+  padding-left: 20px;
+}
+
+.title-icon {
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+.page-nav {
+  margin: 10px 40px 0 0;
+  cursor: pointer;
+}
+
+.page-nav button {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  margin-top: 12px;
+  height: 60px;
+  display: inline;
+}
