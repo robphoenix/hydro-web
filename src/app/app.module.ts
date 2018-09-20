@@ -19,9 +19,10 @@ import {
 
 import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
+import { MonitorsComponent } from './monitors/monitors.component';
 
 @NgModule({
-  declarations: [AppComponent, LayoutHeaderComponent],
+  declarations: [AppComponent, LayoutHeaderComponent, MonitorsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
