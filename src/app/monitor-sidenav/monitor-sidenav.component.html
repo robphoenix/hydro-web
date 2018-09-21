@@ -1,0 +1,31 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+
+    <div class="monitors-title-container">
+      <h3 class="monitors-title">Monitors</h3>
+    </div>
+
+    <div *ngIf="liveMonitors" class="live-monitors-panel">
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Live Monitors
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-nav-list *ngFor="let monitor of liveMonitors">
+            <a mat-list-item href="#">{{monitor.topic}}</a>
+          </mat-nav-list>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

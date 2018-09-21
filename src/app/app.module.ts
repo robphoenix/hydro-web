@@ -16,14 +16,21 @@ import {
   MatSortModule,
   MatSliderModule
 } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { MonitorsComponent } from './monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
 
 @NgModule({
-  declarations: [AppComponent, LayoutHeaderComponent, MonitorsComponent],
+  declarations: [
+    AppComponent,
+    LayoutHeaderComponent,
+    MonitorsComponent,
+    MonitorSidenavComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -40,7 +47,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSliderModule
+    MatSliderModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

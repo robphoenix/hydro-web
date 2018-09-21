@@ -1,7 +1,3 @@
 <div *ngIf="liveMonitors">
-  <ol>
-    <li *ngFor="let monitor of liveMonitors">
-      {{monitor.topic}}
-    </li>
-  </ol>
+  <app-monitor-sidenav [liveMonitors]="liveMonitors"></app-monitor-sidenav>
 </div>
