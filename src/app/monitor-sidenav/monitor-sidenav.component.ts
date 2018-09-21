@@ -12,6 +12,7 @@ import { LiveMonitor } from '../monitors/monitor';
 export class MonitorSidenavComponent implements OnInit {
   @Input()
   liveMonitors: LiveMonitor[];
+  searchTerm: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)

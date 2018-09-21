@@ -17,6 +17,7 @@ import {
   MatSliderModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
@@ -24,6 +25,7 @@ import { MonitorsComponent } from './monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
 import { MonitorComponent } from './monitor/monitor.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { MonitorComponent } from './monitor/monitor.component';
     LayoutHeaderComponent,
     MonitorsComponent,
     MonitorSidenavComponent,
-    MonitorComponent
+    MonitorComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,8 @@ import { MonitorComponent } from './monitor/monitor.component';
     MatPaginatorModule,
     MatSortModule,
     MatSliderModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

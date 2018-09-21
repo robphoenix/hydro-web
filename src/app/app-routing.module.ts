@@ -5,7 +5,7 @@ import { MonitorComponent } from './monitor/monitor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/monitors', pathMatch: 'full' },
-  { path: 'monitors', component: MonitorsComponent }
+  { path: 'monitors', component: MonitorsComponent },
   { path: 'monitors/:id', component: MonitorComponent }
 ];
 
