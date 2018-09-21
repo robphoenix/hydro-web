@@ -1,3 +1,7 @@
-<p>
-  monitors works!
-</p>
+<div *ngIf="liveMonitors">
+  <ol>
+    <li *ngFor="let monitor of liveMonitors">
+      {{monitor.topic}}
+    </li>
+  </ol>
+</div>

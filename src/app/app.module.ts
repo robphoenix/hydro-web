@@ -20,6 +20,7 @@ import {
 import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { MonitorsComponent } from './monitors/monitors.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, LayoutHeaderComponent, MonitorsComponent],
@@ -28,6 +29,7 @@ import { MonitorsComponent } from './monitors/monitors.component';
     BrowserAnimationsModule,
     LayoutModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
