@@ -17,7 +17,7 @@
           </mat-expansion-panel-header>
 
           <mat-nav-list *ngFor="let monitor of liveMonitors">
-            <a mat-list-item href="#">{{monitor.topic}}</a>
+            <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
           </mat-nav-list>
 
         </mat-expansion-panel>
@@ -26,6 +26,6 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- Add Content Here -->
+    <app-monitor></app-monitor>
   </mat-sidenav-content>
 </mat-sidenav-container>

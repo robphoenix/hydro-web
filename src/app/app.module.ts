@@ -23,13 +23,15 @@ import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { MonitorsComponent } from './monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
+import { MonitorComponent } from './monitor/monitor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutHeaderComponent,
     MonitorsComponent,
-    MonitorSidenavComponent
+    MonitorSidenavComponent,
+    MonitorComponent
   ],
   imports: [
     BrowserModule,

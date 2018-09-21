@@ -14,10 +14,17 @@ export class MonitorsService {
   constructor(private http: HttpClient) {}
 
   // API: GET /live-monitors
-  public getLiveMonitors() {
+  public getLiveMonitors(): Observable<LiveMonitor[]> {
     return this.http.get<LiveMonitor[]>(this.liveMonitorsUrl).pipe(
       tap((monitors: LiveMonitor[]) => console.log({ monitors })),
       catchError(this.handleError<LiveMonitor[]>('getLiveMonitors'))
+    );
+  }
+
+  public getLiveMonitorById(id: number): Observable<LiveMonitor> {
+    return this.http.get<LiveMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
+      tap((monitor: LiveMonitor) => console.log({ monitor })),
+      catchError(this.handleError<LiveMonitor>('getLiveMonitorById'))
     );
   }
 
