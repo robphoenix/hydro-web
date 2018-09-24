@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
 import { LiveMonitor } from '../monitors/monitor';
 
 @Component({
@@ -9,16 +6,10 @@ import { LiveMonitor } from '../monitors/monitor';
   templateUrl: './monitor-sidenav.component.html',
   styleUrls: ['./monitor-sidenav.component.scss']
 })
-export class MonitorSidenavComponent implements OnInit {
+export class MonitorSidenavComponent {
   @Input()
   liveMonitors: LiveMonitor[];
+  @Input()
+  favouriteMonitors: LiveMonitor[];
   searchTerm: string;
-
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(map(result => result.matches));
-
-  constructor(private breakpointObserver: BreakpointObserver) {}
-
-  ngOnInit() {}
 }

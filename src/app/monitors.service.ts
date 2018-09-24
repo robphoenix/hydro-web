@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { MonitorData } from './monitors/monitor-data';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,10 @@ import { catchError, tap } from 'rxjs/operators';
 export class MonitorsService {
   baseUrl = `http://localhost:3000`;
   liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
+  monitorDataUrl = `${this.baseUrl}/monitorData`;
 
   constructor(private http: HttpClient) {}
 
-  // API: GET /live-monitors
   public getLiveMonitors(): Observable<LiveMonitor[]> {
     return this.http.get<LiveMonitor[]>(this.liveMonitorsUrl).pipe(
       tap((monitors: LiveMonitor[]) => console.log({ monitors })),
@@ -25,6 +26,13 @@ export class MonitorsService {
     return this.http.get<LiveMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
       tap((monitor: LiveMonitor) => console.log({ monitor })),
       catchError(this.handleError<LiveMonitor>('getLiveMonitorById'))
+    );
+  }
+
+  public getMonitorDataById(id: number): Observable<MonitorData> {
+    return this.http.get<MonitorData>(`${this.monitorDataUrl}/${id}`).pipe(
+      tap((monitor: MonitorData) => console.log({ monitor })),
+      catchError(this.handleError<MonitorData>('getMonitorDataById'))
     );
   }
 

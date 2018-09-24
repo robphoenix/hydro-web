@@ -1,3 +1,4 @@
+import { UserService } from './../user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { LiveMonitor } from './monitor';
@@ -9,16 +10,30 @@ import { LiveMonitor } from './monitor';
 })
 export class MonitorsComponent implements OnInit {
   liveMonitors: LiveMonitor[];
+  favouriteMonitors: LiveMonitor[] = [];
 
-  constructor(private monitorService: MonitorsService) {}
+  constructor(
+    private monitorService: MonitorsService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.getLiveMonitors();
+    this.getUserFavouriteMonitors();
   }
 
   getLiveMonitors() {
     this.monitorService.getLiveMonitors().subscribe(monitors => {
       this.liveMonitors = monitors;
+    });
+  }
+
+  getUserFavouriteMonitors() {
+    const favourites: number[] = this.userService.getFavouriteMonitors();
+    favourites.forEach(id => {
+      this.monitorService.getLiveMonitorById(id).subscribe(monitor => {
+        this.favouriteMonitors.push(monitor);
+      });
     });
   }
 }

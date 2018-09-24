@@ -1,9 +1,17 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+<mat-sidenav-container>
+
+  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
+    [opened]="true">
 
     <div class="monitors-title-container">
       <h3 class="monitors-title">Monitors</h3>
+    </div>
+
+    <div *ngIf="favouriteMonitors" class="monitors-title-container">
+      <h4 class="monitors-title">Favourites</h4>
+      <mat-nav-list *ngFor="let monitor of favouriteMonitors">
+        <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
+      </mat-nav-list>
     </div>
 
     <div *ngIf="liveMonitors" class="live-monitors-panel">
