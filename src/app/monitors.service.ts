@@ -9,7 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class MonitorsService {
   baseUrl = `http://localhost:3000`;
-  liveMonitorsUrl = `${this.baseUrl}/live-monitors`;
+  liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
 
   constructor(private http: HttpClient) {}
 
