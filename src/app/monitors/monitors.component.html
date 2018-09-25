@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container [hasBackdrop]="false">
   <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
     [opened]="true">
 
@@ -7,7 +7,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-monitor></app-monitor>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
