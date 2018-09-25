@@ -7,11 +7,23 @@
       <h3 class="monitors-title">Monitors</h3>
     </div>
 
-    <div *ngIf="favouriteMonitors" class="monitors-title-container">
-      <h4 class="monitors-title">Favourites</h4>
-      <mat-nav-list *ngFor="let monitor of favouriteMonitors">
-        <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
-      </mat-nav-list>
+    <div *ngIf="favouriteMonitors" class="monitors-panel">
+
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Favourites
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-nav-list *ngFor="let monitor of favouriteMonitors">
+            <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
+          </mat-nav-list>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
     </div>
 
     <div *ngIf="liveMonitors" class="live-monitors-panel">
@@ -20,7 +32,7 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Live Monitors
+              Live
             </mat-panel-title>
           </mat-expansion-panel-header>
 
