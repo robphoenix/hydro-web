@@ -5,8 +5,11 @@ import { MonitorComponent } from './monitor/monitor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/monitors', pathMatch: 'full' },
-  { path: 'monitors', component: MonitorsComponent },
-  { path: 'monitors/:id', component: MonitorComponent }
+  {
+    path: 'monitors',
+    component: MonitorsComponent,
+    children: [{ path: ':id', component: MonitorComponent }]
+  }
 ];
 
 @NgModule({
