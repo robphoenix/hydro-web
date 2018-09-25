@@ -1,60 +1,7 @@
-<mat-sidenav-container>
+<div class="monitors-title-container">
+  <h3 class="monitors-title">Monitors</h3>
+</div>
 
-  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
-    [opened]="true">
-
-    <div class="monitors-title-container">
-      <h3 class="monitors-title">Monitors</h3>
-    </div>
-
-    <div *ngIf="favouriteMonitors" class="monitors-panel">
-
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Favourites
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <mat-nav-list *ngFor="let monitor of favouriteMonitors">
-            <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
-          </mat-nav-list>
-
-        </mat-expansion-panel>
-      </mat-accordion>
-
-    </div>
-
-    <div *ngIf="liveMonitors" class="live-monitors-panel">
-
-      <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Live
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-
-          <mat-form-field class="example-form-field">
-            <input matInput type="text" placeholder="Filter Monitors"
-              [(ngModel)]="searchTerm">
-            <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
-              aria-label="Clear" (click)="searchTerm=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-
-          <mat-nav-list *ngFor="let monitor of liveMonitors | filter: searchTerm">
-            <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
-          </mat-nav-list>
-
-        </mat-expansion-panel>
-      </mat-accordion>
-
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-monitor></app-monitor>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<app-monitors-list [title]="favouriteMonitorsTitle" [monitors]="favouriteMonitors"></app-monitors-list>
+<app-monitors-list [title]="liveMonitorsTitle" [monitors]="liveMonitors"
+  [search]="true"></app-monitors-list>

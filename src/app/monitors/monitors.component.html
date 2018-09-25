@@ -1,3 +1,13 @@
-<div *ngIf="liveMonitors">
-  <app-monitor-sidenav [liveMonitors]="liveMonitors" [favouriteMonitors]="favouriteMonitors"></app-monitor-sidenav>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
+    [opened]="true">
+
+    <app-monitor-sidenav [liveMonitors]="liveMonitors" [favouriteMonitors]="favouriteMonitors"></app-monitor-sidenav>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-monitor></app-monitor>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

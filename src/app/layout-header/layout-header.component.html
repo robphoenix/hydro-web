@@ -1,13 +1,17 @@
 <mat-toolbar color="primary" class="nav-toolbar">
   <mat-toolbar-row>
-    <span mat-button class="title-wrapper">
+
+    <a mat-button routerLink="/" href="/">
       <img class="logo" [src]="logo" alt="logo">
-    </span>
+    </a>
+
     <span class="nav-spacer"></span>
+
     <span class="page-nav">
-      <a mat-flat-button color="primary" routerLink="/monitors">
+      <a mat-button color="primary" routerLink="/monitors">
         Monitors
       </a>
     </span>
+
   </mat-toolbar-row>
 </mat-toolbar>

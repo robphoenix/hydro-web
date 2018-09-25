@@ -1,0 +1,9 @@
+mat-sidenav {
+  height: 100%;
+  width: 300px;
+  padding-top: 80px;
+}
+
+mat-sidenav::-webkit-scrollbar {
+  display: none;
+}
