@@ -10,7 +10,11 @@ import { LiveMonitor } from './monitor';
 })
 export class MonitorsComponent implements OnInit {
   liveMonitors: LiveMonitor[];
+  liveMonitorsTitle = 'Live';
   favouriteMonitors: LiveMonitor[] = [];
+  favouriteMonitorsTitle = 'Favourites';
+
+  searchTerm: string;
 
   constructor(
     private monitorService: MonitorsService,

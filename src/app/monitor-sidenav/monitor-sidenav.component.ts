@@ -9,7 +9,10 @@ import { LiveMonitor } from '../monitors/monitor';
 export class MonitorSidenavComponent {
   @Input()
   liveMonitors: LiveMonitor[];
+  liveMonitorsTitle = 'Live';
   @Input()
   favouriteMonitors: LiveMonitor[];
+  favouriteMonitorsTitle = 'Favourites';
+
   searchTerm: string;
 }

@@ -10,14 +10,9 @@
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
 
-.title-wrapper {
-  padding-right: 40px;
-  padding-left: 20px;
-}
-
-.title-icon {
-  vertical-align: middle;
-  margin-bottom: 5px;
+.logo {
+  height: 72px;
+  display: inline;
 }
 
 .page-nav {
@@ -33,10 +28,4 @@
 
 .nav-spacer {
   flex: 1 1 auto;
-}
-
-.logo {
-  margin-top: 12px;
-  height: 60px;
-  display: inline;
 }

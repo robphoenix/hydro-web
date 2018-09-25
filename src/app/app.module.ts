@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { FilterPipe } from './filter.pipe';
+import { MonitorsListComponent } from './monitors-list/monitors-list.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FilterPipe } from './filter.pipe';
     MonitorsComponent,
     MonitorSidenavComponent,
     MonitorComponent,
-    FilterPipe
+    FilterPipe,
+    MonitorsListComponent
   ],
   imports: [
     BrowserModule,
