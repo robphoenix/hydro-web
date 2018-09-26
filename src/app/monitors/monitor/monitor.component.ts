@@ -1,3 +1,4 @@
+import { MonitorData } from './../monitor-data';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { LiveMonitor } from '../monitor';
@@ -10,8 +11,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./monitor.component.scss'],
 })
 export class MonitorComponent implements OnInit {
-  @Input()
   monitor: LiveMonitor;
+  data: Array<{ [key: string]: string }>;
+  headers: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,7 @@ export class MonitorComponent implements OnInit {
 
   ngOnInit() {
     this.getMonitor();
+    this.getMonitorData();
   }
 
   getMonitor() {
@@ -29,6 +32,26 @@ export class MonitorComponent implements OnInit {
       this.monitorService.getLiveMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
+    });
+  }
+
+  getMonitorData() {
+    this.route.paramMap.subscribe((params) => {
+      const id: number = +params.get('id');
+      this.monitorService
+        .getMonitorDataById(id)
+        .subscribe((data: MonitorData) => {
+          this.headers = ['Time', ...data.headers];
+          this.data = data.esperItems.map((items) => {
+            const things: { [key: string]: string } = {
+              Time: data.timeStamp,
+            };
+            items.forEach((item) => {
+              things[item['key']] = item['value'];
+            });
+            return things;
+          });
+        });
     });
   }
 

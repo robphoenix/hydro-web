@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { MonitorsListComponent } from './monitors-list/monitors-list.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgModule } from '@angular/core';
@@ -18,22 +19,20 @@ import {
   MatExpansionModule,
   MatInputModule,
 } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FilterPipe } from '../pipes/filter.pipe';
+import { MonitorTableComponent } from './monitor-table/monitor-table.component';
 
 @NgModule({
   imports: [
     CommonModule,
     AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     LayoutModule,
     FormsModule,
     HttpClientModule,
+
+    PipesModule,
 
     MatToolbarModule,
     MatButtonModule,
@@ -50,9 +49,10 @@ import { FilterPipe } from '../pipes/filter.pipe';
   ],
   declarations: [
     MonitorsComponent,
-    MonitorComponent,
     MonitorsListComponent,
-    FilterPipe,
+    MonitorComponent,
+    MonitorTableComponent,
   ],
+  exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
