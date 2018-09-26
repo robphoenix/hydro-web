@@ -9,8 +9,12 @@ import { LiveMonitor } from './monitor';
   styleUrls: ['./monitors.component.scss']
 })
 export class MonitorsComponent implements OnInit {
+  title = 'Monitors';
   liveMonitors: LiveMonitor[];
   favouriteMonitors: LiveMonitor[] = [];
+
+  liveMonitorsTitle = 'Live';
+  favouriteMonitorsTitle = 'Favourites';
 
   searchTerm: string;
 

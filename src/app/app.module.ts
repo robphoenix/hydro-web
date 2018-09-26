@@ -23,7 +23,6 @@ import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { MonitorsComponent } from './monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { MonitorsListComponent } from './monitors-list/monitors-list.component';
@@ -33,7 +32,6 @@ import { MonitorsListComponent } from './monitors-list/monitors-list.component';
     AppComponent,
     LayoutHeaderComponent,
     MonitorsComponent,
-    MonitorSidenavComponent,
     MonitorComponent,
     FilterPipe,
     MonitorsListComponent
