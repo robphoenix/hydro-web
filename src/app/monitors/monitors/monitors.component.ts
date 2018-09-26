@@ -1,7 +1,7 @@
-import { UserService } from './../user.service';
+import { UserService } from '../../user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { LiveMonitor } from './monitor';
+import { LiveMonitor } from '../monitor';
 
 @Component({
   selector: 'app-monitors',

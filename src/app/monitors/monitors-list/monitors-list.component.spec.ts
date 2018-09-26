@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterPipe } from './../pipes/filter.pipe';
+import { FilterPipe } from '../../pipes/filter.pipe';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MonitorsListComponent } from './monitors-list.component';
