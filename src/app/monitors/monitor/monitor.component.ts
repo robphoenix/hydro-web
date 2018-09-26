@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { LiveMonitor } from '../monitors/monitor';
+import { LiveMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 
