@@ -9,7 +9,7 @@ import {
   MatSidenavModule,
   MatIconModule,
   MatInputModule,
-  MatListModule
+  MatListModule,
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MonitorsListComponent } from '../monitors-list/monitors-list.component';
@@ -29,9 +29,9 @@ describe('MonitorsComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
       ],
-      declarations: [MonitorsComponent, MonitorsListComponent, FilterPipe]
+      declarations: [MonitorsComponent, MonitorsListComponent, FilterPipe],
     }).compileComponents();
   }));
 

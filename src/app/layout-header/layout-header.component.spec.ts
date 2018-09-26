@@ -10,7 +10,7 @@ describe('LayoutHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatToolbarModule],
-      declarations: [LayoutHeaderComponent]
+      declarations: [LayoutHeaderComponent],
     }).compileComponents();
   }));
 

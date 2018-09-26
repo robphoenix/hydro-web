@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import {
   MatIconModule,
   MatInputModule,
-  MatListModule
+  MatListModule,
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -24,9 +24,9 @@ describe('MonitorsListComponent', () => {
         MatListModule,
         FormsModule,
         RouterTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
       ],
-      declarations: [MonitorsListComponent, FilterPipe]
+      declarations: [MonitorsListComponent, FilterPipe],
     }).compileComponents();
   }));
 

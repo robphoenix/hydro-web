@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: 'monitors',
     component: MonitorsComponent,
-    children: [{ path: ':id', component: MonitorComponent }]
-  }
+    children: [{ path: ':id', component: MonitorComponent }],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

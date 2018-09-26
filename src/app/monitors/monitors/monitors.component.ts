@@ -6,7 +6,7 @@ import { LiveMonitor } from '../monitor';
 @Component({
   selector: 'app-monitors',
   templateUrl: './monitors.component.html',
-  styleUrls: ['./monitors.component.scss']
+  styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent implements OnInit {
   title = 'Monitors';
@@ -20,7 +20,7 @@ export class MonitorsComponent implements OnInit {
 
   constructor(
     private monitorService: MonitorsService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -29,15 +29,15 @@ export class MonitorsComponent implements OnInit {
   }
 
   getLiveMonitors() {
-    this.monitorService.getLiveMonitors().subscribe(monitors => {
+    this.monitorService.getLiveMonitors().subscribe((monitors) => {
       this.liveMonitors = monitors;
     });
   }
 
   getUserFavouriteMonitors() {
     const favourites: number[] = this.userService.getFavouriteMonitors();
-    favourites.forEach(id => {
-      this.monitorService.getLiveMonitorById(id).subscribe(monitor => {
+    favourites.forEach((id) => {
+      this.monitorService.getLiveMonitorById(id).subscribe((monitor) => {
         this.favouriteMonitors.push(monitor);
       });
     });

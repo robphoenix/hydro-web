@@ -6,7 +6,7 @@ describe('MonitorsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [MonitorsService]
+      providers: [MonitorsService],
     });
   });
 
@@ -14,6 +14,6 @@ describe('MonitorsService', () => {
     [MonitorsService],
     (service: MonitorsService) => {
       expect(service).toBeTruthy();
-    }
+    },
   ));
 });
