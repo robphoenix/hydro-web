@@ -5,13 +5,13 @@
       <h3 class="sidenav-title">{{title}}</h3>
     </div>
 
-    <app-monitors-list [title]="favouriteMonitorsTitle" [monitors]="favouriteMonitors"></app-monitors-list>
-    <app-monitors-list [title]="liveMonitorsTitle" [monitors]="liveMonitors" [search]="true"></app-monitors-list>
+    <app-reports-options [title]="dictionaryTitle"></app-reports-options>
+    <app-reports-options [title]="geolocationTitle"></app-reports-options>
 
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
   </mat-sidenav-content>
 
 </mat-sidenav-container>

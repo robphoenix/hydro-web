@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit {
+  title = 'Reports';
 
-  constructor() { }
+  dictionaryTitle = 'Dictionary Search';
+  geolocationTitle = 'Geolocation Look Up';
 
-  ngOnInit() {
-  }
+  constructor() {}
 
+  ngOnInit() {}
 }

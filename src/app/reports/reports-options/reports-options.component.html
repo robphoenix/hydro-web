@@ -1,0 +1,54 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{title}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div [ngSwitch]="title">
+      <mat-nav-list *ngSwitchCase="'Dictionary Search'">
+        <mat-form-field>
+          <mat-select placeholder="Dictionary Type">
+            <mat-option *ngFor="let type of ParameterType.values()" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Value">
+        </mat-form-field>
+        <button mat-raised-button color="primary">Search</button>
+      </mat-nav-list>
+
+      <mat-nav-list *ngSwitchCase="'Geolocation Look Up'">
+        <mat-form-field>
+          <input matInput placeholder="Enter IP">
+        </mat-form-field>
+        <button mat-raised-button color="primary">Look Up IP</button>
+      </mat-nav-list>
+    </div>
+
+    <!-- <div *ngIf="monitors">
+
+      <div *ngIf="search">
+
+        <mat-form-field class="example-form-field">
+          <input matInput type="text" placeholder="Filter {{title}} Monitors"
+            [(ngModel)]="searchTerm">
+          <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
+            aria-label="Clear" (click)="searchTerm=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+      </div>
+
+      <mat-nav-list *ngFor="let monitor of monitors | filter: searchTerm">
+        <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
+      </mat-nav-list>
+
+    </div> -->
+
+  </mat-expansion-panel>
+</mat-accordion>
