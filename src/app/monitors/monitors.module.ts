@@ -49,8 +49,8 @@ import { MonitorTableComponent } from './monitor-table/monitor-table.component';
   ],
   declarations: [
     MonitorsComponent,
-    MonitorComponent,
     MonitorsListComponent,
+    MonitorComponent,
     MonitorTableComponent,
   ],
   exports: [MonitorsComponent],
