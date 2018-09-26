@@ -1,4 +1,4 @@
-import { LiveMonitor } from './monitors/monitor';
+import { LiveMonitor } from '../monitors/monitor';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'filter' })

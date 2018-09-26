@@ -1,6 +1,16 @@
+import { FilterPipe } from '../pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MonitorSidenavComponent } from './monitor-sidenav.component';
+import { MonitorsListComponent } from '../monitors-list/monitors-list.component';
+import {
+  MatExpansionModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule
+} from '@angular/material';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MonitorSidenavComponent', () => {
   let component: MonitorSidenavComponent;
@@ -8,9 +18,17 @@ describe('MonitorSidenavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MonitorSidenavComponent ]
-    })
-    .compileComponents();
+      imports: [
+        MatInputModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatListModule,
+        FormsModule,
+        RouterModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [MonitorSidenavComponent, MonitorsListComponent, FilterPipe]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
