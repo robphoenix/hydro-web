@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MonitorComponent } from './monitor.component';
+import { MatCardModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MonitorComponent', () => {
   let component: MonitorComponent;
@@ -8,9 +10,9 @@ describe('MonitorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MonitorComponent ]
-    })
-    .compileComponents();
+      imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
+      declarations: [MonitorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

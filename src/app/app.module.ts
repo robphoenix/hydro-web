@@ -25,7 +25,7 @@ import { MonitorsComponent } from './monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
 import { MonitorComponent } from './monitor/monitor.component';
-import { FilterPipe } from './filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { MonitorsListComponent } from './monitors-list/monitors-list.component';
 
 @NgModule({
