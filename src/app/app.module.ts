@@ -1,5 +1,4 @@
 import { AppRoutingModule } from './app-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -14,20 +13,18 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatSliderModule,
-  MatMenuModule
+  MatSliderModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
-import { MonitorsComponent } from './monitors/monitors.component';
+import { MonitorsComponent } from './monitors/monitors/monitors.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MonitorSidenavComponent } from './monitor-sidenav/monitor-sidenav.component';
-import { MonitorComponent } from './monitor/monitor.component';
-import { FilterPipe } from './filter.pipe';
-import { MonitorsListComponent } from './monitors-list/monitors-list.component';
+import { MonitorComponent } from './monitors/monitor/monitor.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { MonitorsListComponent } from './monitors/monitors-list/monitors-list.component';
 import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
@@ -35,32 +32,10 @@ import { ReportsComponent } from './reports/reports.component';
     AppComponent,
     LayoutHeaderComponent,
     MonitorsComponent,
-    MonitorSidenavComponent,
     MonitorComponent,
     FilterPipe,
     MonitorsListComponent,
     ReportsComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatSliderModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

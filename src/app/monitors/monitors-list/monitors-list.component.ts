@@ -1,4 +1,4 @@
-import { LiveMonitor } from './../monitors/monitor';
+import { LiveMonitor } from '../monitor';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

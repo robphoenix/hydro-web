@@ -1,9 +1,9 @@
-import { LiveMonitor } from './monitors/monitor';
+import { LiveMonitor } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { MonitorData } from './monitors/monitor-data';
+import { MonitorData } from './monitor-data';
 
 @Injectable({
   providedIn: 'root'
