@@ -11,9 +11,9 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
     MatToolbarModule,
     MatButtonModule,
     AppRoutingModule,
-    MonitorsModule
+    MonitorsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

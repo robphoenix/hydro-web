@@ -16,7 +16,7 @@ import {
   MatSortModule,
   MatSliderModule,
   MatExpansionModule,
-  MatInputModule
+  MatInputModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,13 +46,13 @@ import { FilterPipe } from '../pipes/filter.pipe';
     MatSortModule,
     MatSliderModule,
     MatExpansionModule,
-    MatInputModule
+    MatInputModule,
   ],
   declarations: [
     MonitorsComponent,
     MonitorComponent,
     MonitorsListComponent,
-    FilterPipe
-  ]
+    FilterPipe,
+  ],
 })
 export class MonitorsModule {}

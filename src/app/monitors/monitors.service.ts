@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { MonitorData } from './monitor-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MonitorsService {
   baseUrl = `http://localhost:3000`;
@@ -18,21 +18,21 @@ export class MonitorsService {
   public getLiveMonitors(): Observable<LiveMonitor[]> {
     return this.http.get<LiveMonitor[]>(this.liveMonitorsUrl).pipe(
       tap((monitors: LiveMonitor[]) => console.log({ monitors })),
-      catchError(this.handleError<LiveMonitor[]>('getLiveMonitors'))
+      catchError(this.handleError<LiveMonitor[]>('getLiveMonitors')),
     );
   }
 
   public getLiveMonitorById(id: number): Observable<LiveMonitor> {
     return this.http.get<LiveMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
       tap((monitor: LiveMonitor) => console.log({ monitor })),
-      catchError(this.handleError<LiveMonitor>('getLiveMonitorById'))
+      catchError(this.handleError<LiveMonitor>('getLiveMonitorById')),
     );
   }
 
   public getMonitorDataById(id: number): Observable<MonitorData> {
     return this.http.get<MonitorData>(`${this.monitorDataUrl}/${id}`).pipe(
       tap((monitor: MonitorData) => console.log({ monitor })),
-      catchError(this.handleError<MonitorData>('getMonitorDataById'))
+      catchError(this.handleError<MonitorData>('getMonitorDataById')),
     );
   }
 

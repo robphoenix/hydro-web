@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-monitor',
   templateUrl: './monitor.component.html',
-  styleUrls: ['./monitor.component.scss']
+  styleUrls: ['./monitor.component.scss'],
 })
 export class MonitorComponent implements OnInit {
   @Input()
@@ -16,7 +16,7 @@ export class MonitorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private monitorService: MonitorsService
+    private monitorService: MonitorsService,
   ) {}
 
   ngOnInit() {
@@ -24,9 +24,9 @@ export class MonitorComponent implements OnInit {
   }
 
   getMonitor() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
-      this.monitorService.getLiveMonitorById(id).subscribe(monitor => {
+      this.monitorService.getLiveMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
     });

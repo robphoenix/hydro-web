@@ -6,7 +6,7 @@ describe('FilterPipe', () => {
   const monitors: LiveMonitor[] = [
     { topic: 'Top 10 IP Addresses' },
     { topic: 'Top 10 User Agents' },
-    { topic: 'FRM Monitor' }
+    { topic: 'FRM Monitor' },
   ] as LiveMonitor[];
 
   beforeEach(function() {
@@ -31,7 +31,7 @@ describe('FilterPipe', () => {
 
   it('should return filtered array', () => {
     expect(pipe.transform(monitors, 'IP Address')).toEqual([
-      { topic: 'Top 10 IP Addresses' }
+      { topic: 'Top 10 IP Addresses' },
     ] as LiveMonitor[]);
   });
 });
