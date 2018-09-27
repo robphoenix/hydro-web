@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { MonitorsComponent } from './monitors/monitors/monitors.component';
 import { MonitorComponent } from './monitors/monitor/monitor.component';
 import { ReportsComponent } from './reports/reports/reports.component';
+import { DictionarySearchComponent } from './reports/dictionary-search/dictionary-search.component';
+import { GeolocationSearchComponent } from './reports/geolocation-search/geolocation-search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/monitors', pathMatch: 'full' },
@@ -13,7 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'reports',
-    component: ReportsComponent
+    component: ReportsComponent,
+    children: [
+      { path: 'geolocation', component: GeolocationSearchComponent },
+      { path: 'dictionary', component: DictionarySearchComponent }
+    ]
   }
 ];
 

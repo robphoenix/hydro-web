@@ -4,14 +4,12 @@
     <div class="sidenav-title-container">
       <h3 class="sidenav-title">{{title}}</h3>
     </div>
-
-    <app-reports-options [title]="dictionaryTitle"></app-reports-options>
-    <app-reports-options [title]="geolocationTitle"></app-reports-options>
-
+    <a mat-button routerLink="/reports/dictionary">{{dictionaryTitle}}</a>
+    <a mat-button routerLink="/reports/geolocation">{{geolocationTitle}}</a>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!-- <router-outlet></router-outlet> -->
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
