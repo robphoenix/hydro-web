@@ -16,7 +16,7 @@ export class DictionarySearchService {
   public getMockSearch(): Observable<SearchData> {
     return this.http.get<SearchData>(this.searchDataUrl).pipe(
       tap((searchResult: SearchData) => console.log({ searchResult })),
-      catchError(this.handleError<SearchData>('getLiveMonitors'))
+      catchError(this.handleError<SearchData>('getMockSearch'))
     );
   }
 
