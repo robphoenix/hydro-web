@@ -8498,7 +8498,10 @@
   "geolocationData": {
     "city": "Brisbane", 
     "country": "Australia", 
-    "provider": "apnic and cloudflare dns resolver project"},
+    "provider": "apnic and cloudflare dns resolver project",
+    "blocked": true,
+    "whitelisted": false,
+    "hosting": false},
   "crossReference": [
    {
      "User Name": "vologia123",

@@ -1,11 +1,11 @@
-import { DictionarySearchService } from './../dictionary-search.service';
-import { SearchData } from './../search-data';
+import { DictionarySearchService } from '../../search/dictionary-search.service';
+import { SearchData } from '../../search/search-data';
 import { DictionaryHelpDialogComponent } from './dictionary-help-dialog/dictionary-help-dialog.component';
 import { ParameterType } from './../../shared/parameterType';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import {} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dictionary-search',
@@ -20,7 +20,8 @@ export class DictionarySearchComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private searchService: DictionarySearchService
+    private searchService: DictionarySearchService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -32,10 +33,7 @@ export class DictionarySearchComponent implements OnInit {
 
   onSubmit(type: String, value: String) {
     if (type && value) {
-      alert(`Submiting ${type} and ${value}`);
-      this.searchService.getMockSearch().subscribe(result => {
-        this.searchResult = result;
-      });
+      this.router.navigate(['search', type, value]);
     }
   }
 

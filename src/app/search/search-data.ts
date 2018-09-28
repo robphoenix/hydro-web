@@ -50,4 +50,7 @@ export interface GeolocationData {
   city: string;
   country: string;
   provider: string;
+  blocked: boolean;
+  whitelisted: boolean;
+  hosting: boolean;
 }

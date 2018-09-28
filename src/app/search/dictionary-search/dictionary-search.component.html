@@ -1,0 +1,25 @@
+<div class="main-div">
+  <mat-card class="card-style">
+    <mat-card-header>
+      <mat-card-title>Dictionary Search</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="searchForm">
+        <mat-form-field>
+          <mat-select #type formControlName="type" placeholder="Dictionary Type">
+            <mat-option *ngFor="let type of parameterTypeValues()" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="value-padding">
+          <input #value matInput placeholder="Value" formControlName="value">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="onSubmit(type.value, value.value)">Search</button>
+        <button mat-icon-button type="submit" color="primary">
+          <mat-icon aria-label="help" (click)="openHelpDialog()">help</mat-icon>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

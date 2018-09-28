@@ -1,4 +1,4 @@
-import { ReportsModule } from './reports/reports.module';
+import { SearchModule } from './search/search.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -13,7 +13,7 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
     MatButtonModule,
     AppRoutingModule,
     MonitorsModule,
-    ReportsModule
+    SearchModule
   ],
   providers: [],
   bootstrap: [AppComponent]
