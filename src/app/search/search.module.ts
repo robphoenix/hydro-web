@@ -13,7 +13,10 @@ import {
   MatInputModule,
   MatCardModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DictionarySearchComponent } from '../search/dictionary-search/dictionary-search.component';
@@ -41,6 +44,9 @@ import { CrossReferenceComponent } from './dictionary-search/dictionary-result/c
     MatCardModule,
     MatIconModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     FlexLayoutModule
   ],
   entryComponents: [DictionaryHelpDialogComponent],

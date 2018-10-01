@@ -4,22 +4,16 @@
   </div>
   <div>
     <mat-card class="card-fit">
-      <mat-card-title>My title!
+      <mat-card-title>Graph will show here
       </mat-card-title>
     </mat-card>
   </div>
 </div>
 <div class="container search-div" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
   <div>
-    <mat-card class="card-fit">
-      <mat-card-title>My title!
-      </mat-card-title>
-    </mat-card>
+    <app-block-history [blockHistory]="blockHistory" [parameterType]="type"></app-block-history>
   </div>
   <div>
-    <mat-card class="card-fit">
-      <mat-card-title>My title!
-      </mat-card-title>
-    </mat-card>
+    <app-cross-reference [crossReference]="crossReference"></app-cross-reference>
   </div>
 </div>

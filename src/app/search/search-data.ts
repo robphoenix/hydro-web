@@ -26,24 +26,12 @@ export interface BlockHistory {
 }
 
 export interface CrossReference {
-  'User Name': UserName;
-  IP: IP;
+  'User Name': string;
+  IP: string;
   'Session Token': string;
   'User Agent': string;
   Timestamp: string;
-  'Login Status': LoginStatus;
-}
-
-export enum IP {
-  The857494230 = '85.74.94.230'
-}
-
-export enum LoginStatus {
-  LoginOk = 'Login Ok'
-}
-
-export enum UserName {
-  Vologia123 = 'vologia123'
+  'Login Status': string;
 }
 
 export interface GeolocationData {

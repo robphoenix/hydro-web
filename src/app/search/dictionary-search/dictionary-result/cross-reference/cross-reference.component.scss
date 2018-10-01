@@ -1,0 +1,32 @@
+.card-fit {
+  height: 370px;
+  width: 850px;
+}
+
+.mat-cell,
+.mat-header-cell {
+  text-align: center;
+}
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding: 0px 7px;
+}
+
+table.mat-table {
+  width: 850px;
+}
+
+tr.mat-footer-row,
+tr.mat-row {
+  height: 45px;
+}
+
+.smaller-font {
+  font-size: 10px;
+}
+
+.align-filter {
+  text-align: right;
+}

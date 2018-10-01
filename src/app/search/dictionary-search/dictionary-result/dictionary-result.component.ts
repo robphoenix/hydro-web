@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material';
 import {
   BlockHistory,
   CrossReference,
@@ -17,9 +18,9 @@ import { ParameterType } from '../../../shared/parameterType';
 export class DictionaryResultComponent implements OnInit {
   value: String;
   type: ParameterType;
-  blockHistory: BlockHistory[];
-  crossReference: CrossReference[];
   geolocationData: GeolocationData;
+  blockHistory = new MatTableDataSource<BlockHistory>();
+  crossReference = new MatTableDataSource<CrossReference>();
   constructor(
     private route: ActivatedRoute,
     private searchService: DictionarySearchService
@@ -34,8 +35,8 @@ export class DictionaryResultComponent implements OnInit {
       this.value = params.get('value');
       this.type = ParameterType[params.get('type')];
       this.searchService.getMockSearch().subscribe(result => {
-        this.blockHistory = result.blockHistory;
-        this.crossReference = result.crossReference;
+        this.blockHistory.data = result.blockHistory;
+        this.crossReference.data = result.crossReference;
         this.geolocationData = result.geolocationData;
       });
     });
