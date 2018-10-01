@@ -25,8 +25,7 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 bet365Wrapper/4.0.17.0"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
           { "key": "CompletedLogin", "value": "1" },
@@ -38,11 +37,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "1" },
           { "key": "SessionTokens", "value": "12" },
           { "key": "OpenAccount", "value": "26" },
@@ -52,11 +49,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Mobile/15E148 Safari/604.1"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "1" },
           { "key": "SessionTokens", "value": "4" },
           { "key": "OpenAccount", "value": "12" },
@@ -66,11 +61,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "2" },
           { "key": "SessionTokens", "value": "3" },
           { "key": "OpenAccount", "value": "2" },
@@ -80,11 +73,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "0" },
           { "key": "SessionTokens", "value": "1" },
           { "key": "OpenAccount", "value": "0" },
@@ -94,11 +85,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Linux; Android 7.0; SM-J730GM Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Mobile Safari/537.36"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "1" },
           { "key": "SessionTokens", "value": "1" },
           { "key": "OpenAccount", "value": "1" },
@@ -108,11 +97,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Linux; Android 8.0.0; SM-G950F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.91 Mobile Safari/537.36"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "1" },
           { "key": "SessionTokens", "value": "1" },
           { "key": "OpenAccount", "value": "9" },
@@ -122,11 +109,9 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (Linux; Android 8.1.0; EML-L29 Build/HUAWEIEML-L29) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.91 Mobile Safari/537.36"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ],
         [
-          { "key": "time", "value": "19/09/18 14:27:39" },
           { "key": "CompletedLogin", "value": "1" },
           { "key": "SessionTokens", "value": "2" },
           { "key": "OpenAccount", "value": "8" },
@@ -136,20 +121,17 @@
           {
             "key": "userAgent",
             "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.0 Mobile/14G60 Safari/602.1"
-          },
-          { "key": "Time", "value": "19/09/18 14:27" }
+          }
         ]
       ],
       "headers": [
-        "time",
         "CompletedLogin",
         "SessionTokens",
         "OpenAccount",
         "Usernames",
         "ValidateUsername",
         "IPAddresses",
-        "userAgent",
-        "Time"
+        "userAgent"
       ],
       "timeStamp": "19/09/18 14:27:39",
       "hashCode": 2025839880,
@@ -250,14 +232,12 @@
         ]
       ],
       "headers": [
-        "time",
         "CompletedLogin",
         "SessionTokens",
         "OpenAccount",
         "Usernames",
         "ValidateUsername",
         "UserAgents",
-        "Time",
         "sip"
       ],
       "timeStamp": "19/09/18 11:02:39",

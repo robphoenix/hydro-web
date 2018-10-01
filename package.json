@@ -8,7 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "json-server --watch db.json"
+    "server": "json-server --watch db.json",
+    "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/styles.css\"",
+    "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/styles.css\""
   },
   "private": true,
   "dependencies": {
@@ -46,6 +48,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "prettier": "^1.14.3",
     "protractor": "~5.4.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
