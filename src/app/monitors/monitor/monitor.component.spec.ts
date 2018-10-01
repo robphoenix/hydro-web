@@ -11,7 +11,7 @@ describe('MonitorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
-      declarations: [MonitorComponent]
+      declarations: [MonitorComponent],
     }).compileComponents();
   }));
 

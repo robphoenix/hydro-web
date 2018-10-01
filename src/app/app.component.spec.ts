@@ -8,7 +8,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatToolbarModule],
-      declarations: [AppComponent, LayoutHeaderComponent]
+      declarations: [AppComponent, LayoutHeaderComponent],
     }).compileComponents();
   }));
 
@@ -29,7 +29,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain(
-      'Welcome to hydro-poc!'
+      'Welcome to hydro-poc!',
     );
   }));
 });

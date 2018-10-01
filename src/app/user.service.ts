@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private favouriteMonitors: number[] = [892, 894];
@@ -16,7 +16,7 @@ export class UserService {
 
   removeFromFavouriteMonitors(id: number) {
     this.favouriteMonitors = this.favouriteMonitors.filter(
-      monitor => monitor !== id
+      (monitor) => monitor !== id,
     );
   }
 

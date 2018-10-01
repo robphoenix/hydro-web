@@ -1,13 +1,12 @@
 import { BlockHistory } from './../../../search-data';
 import { ParameterType } from './../../../../shared/parameterType';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { BlockHistory } from '../../../search-data';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-block-history',
   templateUrl: './block-history.component.html',
-  styleUrls: ['./block-history.component.scss']
+  styleUrls: ['./block-history.component.scss'],
 })
 export class BlockHistoryComponent implements OnInit {
   @Input()
@@ -23,7 +22,7 @@ export class BlockHistoryComponent implements OnInit {
     'topic',
     'username',
     'action',
-    'description'
+    'description',
   ];
 
   @ViewChild(MatPaginator)

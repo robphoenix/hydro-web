@@ -23,7 +23,7 @@ export enum AggregateParameter {
   Empty = '',
   Hits = 'hits',
   LoginCount = 'LoginCount',
-  NumHits = 'numHits'
+  NumHits = 'numHits',
 }
 
 export interface Category {
@@ -45,21 +45,21 @@ export interface ExternalCalloutObject {
 
 export enum Node {
   EsperStore = 'esper-store',
-  FmREST = 'fm-rest'
+  FmREST = 'fm-rest',
 }
 
 export enum PutFields {
   All = 'ALL',
   SIPTopicClientsip = 'sip,topic,clientsip',
   StkTopic = 'stk,topic',
-  TopicXForwardedFor = 'topic,xForwardedFor'
+  TopicXForwardedFor = 'topic,xForwardedFor',
 }
 
 export enum URI {
   FmREST = 'fm-rest',
   RESTBlockwebservice = '/rest/blockwebservice',
   RESTEmail = '/rest/email',
-  Store = '/store'
+  Store = '/store',
 }
 
 export interface Group {
@@ -82,9 +82,9 @@ export enum Name {
   AppForensicMonitoringNetworkEngineering = 'App_Forensic Monitoring Network Engineering',
   AppForensicMonitoringOTS = 'App_Forensic Monitoring OTS',
   AppForensicMonitoringOTSManagers = 'App_Forensic Monitoring OTS Managers',
-  AppForensicMonitoringPublisherAbuse = 'App_Forensic Monitoring Publisher Abuse'
+  AppForensicMonitoringPublisherAbuse = 'App_Forensic Monitoring Publisher Abuse',
 }
 
 export enum SearchHint {
-  OUBet365 = 'OU=bet365'
+  OUBet365 = 'OU=bet365',
 }

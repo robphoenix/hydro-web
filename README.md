@@ -4,9 +4,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
+## Install
+
+Clone this repo to your local machine and run `npm install` to install all dependencies. This will also install Angular & TypeScript to the local project, so you _shouldn't_ need to have them already installed globally.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+We're currently using [json-server](https://github.com/typicode/json-server) to mock a REST API. To use this run `npm run server` within the repo, this will start the mock API running on `http://localhost:3000`.
+
+Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
