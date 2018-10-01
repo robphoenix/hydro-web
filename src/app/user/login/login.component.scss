@@ -1,0 +1,22 @@
+.login-card {
+  width: 25%;
+  margin: 50px auto;
+}
+
+.login-card > * {
+  width: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-username {
+  margin: 5px 0;
+}
+
+.mat-card > .mat-card-actions:last-child {
+  text-align: right;
+  padding-bottom: 20px;
+}
