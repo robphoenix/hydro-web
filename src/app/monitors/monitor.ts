@@ -1,4 +1,4 @@
-export interface LiveMonitor {
+export interface IMonitor {
   id: number;
   topic: string;
   queryBody: string;

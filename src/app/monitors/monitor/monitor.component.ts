@@ -1,7 +1,7 @@
 import { MonitorData } from './../monitor-data';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { LiveMonitor } from '../monitor';
+import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./monitor.component.scss'],
 })
 export class MonitorComponent implements OnInit {
-  monitor: LiveMonitor;
+  monitor: IMonitor;
   data: Array<{ [key: string]: string }>;
   headers: string[];
 

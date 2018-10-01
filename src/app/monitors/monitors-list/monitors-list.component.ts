@@ -1,4 +1,4 @@
-import { LiveMonitor } from '../monitor';
+import { IMonitor } from '../monitor';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class MonitorsListComponent implements OnInit {
   @Input()
   search: boolean;
   @Input()
-  monitors: LiveMonitor[];
+  monitors: IMonitor[];
 
   searchTerm: string;
 
