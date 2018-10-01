@@ -7,12 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./monitors-list.component.scss'],
 })
 export class MonitorsListComponent implements OnInit {
-  @Input()
-  title: string;
-  @Input()
-  search: boolean;
-  @Input()
-  monitors: IMonitor[];
+  @Input() title: string;
+  @Input() search: boolean;
+  @Input() monitors: IMonitor[];
 
   searchTerm: string;
 

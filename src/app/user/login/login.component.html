@@ -4,14 +4,14 @@
 
   <mat-card-content>
 
-    <form (ngSubmit)="login()" class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
 
       <mat-form-field appearance="outline" class="login-username">
 
         <mat-label>Username</mat-label>
         <input matInput placeholder="Please enter your username" required type="text"
-          [formControl]="username" (keyup.enter)="login()">
-        <mat-error *ngIf="username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+          formControlName="username" (keyup.enter)="login()">
+        <mat-error *ngIf="loginForm.controls.username.invalid">{{getUsernameErrorMessage()}}</mat-error>
 
       </mat-form-field>
 
@@ -19,10 +19,11 @@
 
         <mat-label>Password</mat-label>
         <input matInput placeholder="Please enter your password" [type]="hide ? 'password' : 'text'"
-          required type="text" [formControl]="password" (keyup.enter)="login()">
-        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' :
+          required type="text" formControlName="password" (keyup.enter)="login()">
+        <mat-icon class="visibility-icon" matSuffix (click)="hide = !hide">{{hide
+          ? 'visibility' :
           'visibility_off'}}</mat-icon>
-        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+        <mat-error *ngIf="loginForm.controls.password.invalid">{{getPasswordErrorMessage()}}</mat-error>
 
       </mat-form-field>
 

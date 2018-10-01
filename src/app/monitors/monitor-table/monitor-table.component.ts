@@ -6,8 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./monitor-table.component.scss'],
 })
 export class MonitorTableComponent {
-  @Input()
-  dataSource: { [key: string]: string }[];
-  @Input()
-  displayedColumns: string[];
+  @Input() dataSource: { [key: string]: string }[];
+  @Input() displayedColumns: string[];
 }

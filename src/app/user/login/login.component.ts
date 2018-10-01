@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,31 +13,41 @@ import { NgForm, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   hide = true;
-  username = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
+  loginForm: FormGroup;
 
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+    });
+  }
 
   login() {
-    if (this.username.value === '') {
-      this.username.markAsTouched();
+    if (this.loginForm.controls.username.value === '') {
+      this.loginForm.controls.username.markAsTouched();
     }
-    if (this.password.value === '') {
-      this.password.markAsTouched();
+    if (this.loginForm.controls.password.value === '') {
+      this.loginForm.controls.password.markAsTouched();
     }
-    const username = this.username.value;
-    const password = this.password.value;
+    const username = this.loginForm.controls.username.value;
+    const password = this.loginForm.controls.password.value;
     console.log({ username });
     console.log({ password });
   }
 
   getUsernameErrorMessage() {
-    return this.username.hasError('required') ? 'You must enter a value' : '';
+    return this.loginForm.controls.username.hasError('required')
+      ? 'You must enter a value'
+      : '';
   }
 
   getPasswordErrorMessage() {
-    return this.password.hasError('required') ? 'You must enter a value' : '';
+    return this.loginForm.controls.password.hasError('required')
+      ? 'You must enter a value'
+      : this.loginForm.controls.password.errors.minlength
+        ? 'Password must be at least 5 characters'
+        : '';
   }
 }
