@@ -1,3 +1,4 @@
+import { LoginComponent } from './user/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MonitorsComponent } from './monitors/monitors/monitors.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
     path: 'search',
     component: DictionarySearchComponent
   },
-  { path: 'search/:type/:value', component: DictionaryResultComponent }
+  { path: 'search/:type/:value', component: DictionaryResultComponent },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

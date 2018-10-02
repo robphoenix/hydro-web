@@ -1,7 +1,7 @@
-import { UserService } from '../../user.service';
+import { UserService } from '../../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { LiveMonitor } from '../monitor';
+import { IMonitor } from '../monitor';
 
 @Component({
   selector: 'app-monitors',
@@ -10,8 +10,8 @@ import { LiveMonitor } from '../monitor';
 })
 export class MonitorsComponent implements OnInit {
   title = 'Monitors';
-  liveMonitors: LiveMonitor[];
-  favouriteMonitors: LiveMonitor[] = [];
+  liveMonitors: IMonitor[];
+  favouriteMonitors: IMonitor[] = [];
 
   liveMonitorsTitle = 'Live';
   favouriteMonitorsTitle = 'Favourites';
