@@ -1,3 +1,4 @@
+import { AuthGuard } from './user/auth.guard';
 import { LoginComponent } from './user/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,13 +12,19 @@ const routes: Routes = [
   {
     path: 'monitors',
     component: MonitorsComponent,
+    canActivate: [AuthGuard],
     children: [{ path: ':id', component: MonitorComponent }],
   },
   {
     path: 'search',
     component: DictionarySearchComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'search/:type/:value', component: DictionaryResultComponent },
+  {
+    path: 'search/:type/:value',
+    component: DictionaryResultComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: LoginComponent },
 ];
 

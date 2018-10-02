@@ -1,3 +1,5 @@
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,5 +24,6 @@ import {
     MatButtonModule,
   ],
   declarations: [LoginComponent],
+  providers: [AuthService, AuthGuard],
 })
 export class UserModule {}
