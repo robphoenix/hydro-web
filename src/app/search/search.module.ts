@@ -16,7 +16,7 @@ import {
   MatDialogModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
@@ -47,7 +47,7 @@ import { CrossReferenceComponent } from './cross-reference/cross-reference.compo
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   entryComponents: [DictionaryHelpDialogComponent],
   declarations: [
@@ -56,7 +56,7 @@ import { CrossReferenceComponent } from './cross-reference/cross-reference.compo
     DictionaryResultComponent,
     BlockHistoryComponent,
     GeolocationDataComponent,
-    CrossReferenceComponent
-  ]
+    CrossReferenceComponent,
+  ],
 })
 export class SearchModule {}

@@ -8,9 +8,8 @@ describe('DictionarySearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DictionarySearchComponent ]
-    })
-    .compileComponents();
+      declarations: [DictionarySearchComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

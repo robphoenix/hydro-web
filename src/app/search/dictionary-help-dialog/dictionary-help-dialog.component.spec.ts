@@ -8,9 +8,8 @@ describe('DictionaryHelpDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DictionaryHelpDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DictionaryHelpDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dictionary-search',
   templateUrl: './dictionary-search.component.html',
-  styleUrls: ['./dictionary-search.component.scss']
+  styleUrls: ['./dictionary-search.component.scss'],
 })
 export class DictionarySearchComponent implements OnInit {
   SearchParameter = SearchParameter;
@@ -19,13 +19,13 @@ export class DictionarySearchComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
       value: [null, Validators.required],
-      type: [null, Validators.required]
+      type: [null, Validators.required],
     });
   }
 
@@ -37,13 +37,13 @@ export class DictionarySearchComponent implements OnInit {
 
   searchParameterValues() {
     return Object.keys(SearchParameter).filter(
-      type => isNaN(<any>type) && type !== 'values'
+      (type) => isNaN(<any>type) && type !== 'values',
     );
   }
 
   openHelpDialog(): void {
     this.dialog.open(DictionaryHelpDialogComponent, {
-      width: '600px'
+      width: '600px',
     });
   }
 }

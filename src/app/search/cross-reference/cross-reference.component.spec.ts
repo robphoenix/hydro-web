@@ -8,9 +8,8 @@ describe('CrossReferenceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrossReferenceComponent ]
-    })
-    .compileComponents();
+      declarations: [CrossReferenceComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

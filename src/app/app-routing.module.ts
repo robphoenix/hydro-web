@@ -11,11 +11,11 @@ const routes: Routes = [
   {
     path: 'monitors',
     component: MonitorsComponent,
-    children: [{ path: ':id', component: MonitorComponent }]
+    children: [{ path: ':id', component: MonitorComponent }],
   },
   {
     path: 'search',
-    component: DictionarySearchComponent
+    component: DictionarySearchComponent,
   },
   { path: 'search/:type/:value', component: DictionaryResultComponent },
   { path: 'login', component: LoginComponent },

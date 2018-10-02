@@ -8,9 +8,8 @@ describe('DictionaryResultComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DictionaryResultComponent ]
-    })
-    .compileComponents();
+      declarations: [DictionaryResultComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
