@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DictionarySearchService {
   baseUrl = `http://localhost:3000`;
@@ -16,7 +16,7 @@ export class DictionarySearchService {
   public getMockSearch(): Observable<ISearchData> {
     return this.http.get<ISearchData>(this.searchDataUrl).pipe(
       tap((searchResult: ISearchData) => console.log({ searchResult })),
-      catchError(this.handleError<ISearchData>('getMockSearch'))
+      catchError(this.handleError<ISearchData>('getMockSearch')),
     );
   }
 

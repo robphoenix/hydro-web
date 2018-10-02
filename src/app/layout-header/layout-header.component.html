@@ -20,11 +20,9 @@
       <a mat-button routerLink="/search">
         Search
       </a>
-    </span>
-
-    <span class="page-nav" *ngIf="authService.isLoggedIn()">
-      <a mat-button (click)="logOut()">Log Out
-        {{authService.currentUser.username}}</a>
+      <a mat-button (click)="logOut()">
+        Log Out {{authService.currentUser.username}}
+      </a>
     </span>
 
   </mat-toolbar-row>

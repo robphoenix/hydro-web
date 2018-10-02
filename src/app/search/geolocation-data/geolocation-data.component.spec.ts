@@ -8,9 +8,8 @@ describe('GeolocationDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeolocationDataComponent ]
-    })
-    .compileComponents();
+      declarations: [GeolocationDataComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

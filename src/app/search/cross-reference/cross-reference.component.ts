@@ -5,7 +5,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-cross-reference',
   templateUrl: './cross-reference.component.html',
-  styleUrls: ['./cross-reference.component.scss']
+  styleUrls: ['./cross-reference.component.scss'],
 })
 export class CrossReferenceComponent implements OnInit {
   @Input()
@@ -17,7 +17,7 @@ export class CrossReferenceComponent implements OnInit {
     'stk',
     'userAgent',
     'timeStamp',
-    'loginStatus'
+    'loginStatus',
   ];
 
   @ViewChild(MatPaginator)

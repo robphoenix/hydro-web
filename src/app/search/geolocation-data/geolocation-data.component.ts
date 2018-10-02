@@ -5,7 +5,7 @@ import { SearchParameter } from '../search-parameter';
 @Component({
   selector: 'app-geolocation-data',
   templateUrl: './geolocation-data.component.html',
-  styleUrls: ['./geolocation-data.component.scss']
+  styleUrls: ['./geolocation-data.component.scss'],
 })
 export class GeolocationDataComponent implements OnInit {
   @Input()

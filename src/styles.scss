@@ -3,8 +3,7 @@
 html,
 body {
   height: 100%;
-}
-body {
+  background-color: whitesmoke;
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
@@ -29,5 +28,4 @@ mat-sidenav::-webkit-scrollbar {
 
 .sidenav-title {
   font-weight: 200;
-  background-color: whitesmoke;
 }

@@ -8,9 +8,8 @@ describe('BlockHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BlockHistoryComponent ]
-    })
-    .compileComponents();
+      declarations: [BlockHistoryComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

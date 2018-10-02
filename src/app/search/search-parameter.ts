@@ -9,5 +9,5 @@ export enum SearchParameter {
   ForwardedFor = 'xForwardedFor',
   ClientSIP = 'clientsip',
   STKIP = 'stkip',
-  LoginTKN = 'txtTKN'
+  LoginTKN = 'txtTKN',
 }
