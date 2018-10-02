@@ -6,6 +6,7 @@ import { MonitorsModule } from './monitors/monitors.module';
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [AppComponent, LayoutHeaderComponent],
@@ -15,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
 
     MonitorsModule,
+    UserModule,
 
     MatToolbarModule,
     MatButtonModule,

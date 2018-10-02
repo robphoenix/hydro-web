@@ -1,4 +1,4 @@
-import { LiveMonitor } from './monitor';
+import { IMonitor } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -15,17 +15,17 @@ export class MonitorsService {
 
   constructor(private http: HttpClient) {}
 
-  public getLiveMonitors(): Observable<LiveMonitor[]> {
-    return this.http.get<LiveMonitor[]>(this.liveMonitorsUrl).pipe(
-      tap((monitors: LiveMonitor[]) => console.log({ monitors })),
-      catchError(this.handleError<LiveMonitor[]>('getLiveMonitors')),
+  public getLiveMonitors(): Observable<IMonitor[]> {
+    return this.http.get<IMonitor[]>(this.liveMonitorsUrl).pipe(
+      tap((monitors: IMonitor[]) => console.log({ monitors })),
+      catchError(this.handleError<IMonitor[]>('getLiveMonitors')),
     );
   }
 
-  public getLiveMonitorById(id: number): Observable<LiveMonitor> {
-    return this.http.get<LiveMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
-      tap((monitor: LiveMonitor) => console.log({ monitor })),
-      catchError(this.handleError<LiveMonitor>('getLiveMonitorById')),
+  public getLiveMonitorById(id: number): Observable<IMonitor> {
+    return this.http.get<IMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
+      tap((monitor: IMonitor) => console.log({ monitor })),
+      catchError(this.handleError<IMonitor>('getLiveMonitorById')),
     );
   }
 

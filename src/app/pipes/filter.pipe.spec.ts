@@ -1,13 +1,13 @@
-import { LiveMonitor } from './../monitors/monitor';
+import { IMonitor } from './../monitors/monitor';
 import { FilterPipe } from './filter.pipe';
 
 describe('FilterPipe', () => {
   let pipe: FilterPipe;
-  const monitors: LiveMonitor[] = [
+  const monitors: IMonitor[] = [
     { topic: 'Top 10 IP Addresses' },
     { topic: 'Top 10 User Agents' },
     { topic: 'FRM Monitor' },
-  ] as LiveMonitor[];
+  ] as IMonitor[];
 
   beforeEach(function() {
     pipe = new FilterPipe();
@@ -32,6 +32,6 @@ describe('FilterPipe', () => {
   it('should return filtered array', () => {
     expect(pipe.transform(monitors, 'IP Address')).toEqual([
       { topic: 'Top 10 IP Addresses' },
-    ] as LiveMonitor[]);
+    ] as IMonitor[]);
   });
 });

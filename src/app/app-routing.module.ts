@@ -1,3 +1,4 @@
+import { LoginComponent } from './user/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MonitorsComponent } from './monitors/monitors/monitors.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
     component: MonitorsComponent,
     children: [{ path: ':id', component: MonitorComponent }],
   },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({
