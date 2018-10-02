@@ -43,13 +43,13 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(username, password);
-
-    if (this.authService.redirectUrl) {
-      this.router.navigateByUrl(this.authService.redirectUrl);
-    } else {
-      this.router.navigate(['/monitors']);
-    }
+    this.authService.login(username, password).subscribe(() => {
+      if (this.authService.redirectUrl) {
+        this.router.navigateByUrl(this.authService.redirectUrl);
+      } else {
+        this.router.navigate(['/monitors']);
+      }
+    });
   }
 
   getUsernameErrorMessage() {

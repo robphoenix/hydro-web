@@ -1,5 +1,8 @@
 export interface IUser {
-  id: number;
   username: string;
-  isAdmin: boolean;
+  role: Role;
+}
+
+export enum Role {
+  admin = 'ADMIN',
 }
