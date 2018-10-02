@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MonitorsComponent } from './monitors/monitors/monitors.component';
 import { MonitorComponent } from './monitors/monitor/monitor.component';
 import { DictionarySearchComponent } from './search/dictionary-search/dictionary-search.component';
-import { DictionaryResultComponent } from './search/dictionary-search/dictionary-result/dictionary-result.component';
+import { DictionaryResultComponent } from './search/dictionary-result/dictionary-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/monitors', pathMatch: 'full' },

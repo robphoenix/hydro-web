@@ -1,14 +1,13 @@
 import { MatTableDataSource } from '@angular/material';
 import {
-  BlockHistory,
-  CrossReference,
-  GeolocationData
-} from './../../search-data';
-import { DictionarySearchService } from './../../dictionary-search.service';
+  IBlockHistory,
+  ICrossReference,
+  IGeolocationData
+} from './../search-data';
+import { DictionarySearchService } from './../dictionary-search.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SearchData } from '../../search-data';
-import { ParameterType } from '../../../shared/parameterType';
+import { SearchParameter } from '../search-parameter';
 
 @Component({
   selector: 'app-dictionary-result',
@@ -17,10 +16,10 @@ import { ParameterType } from '../../../shared/parameterType';
 })
 export class DictionaryResultComponent implements OnInit {
   value: String;
-  type: ParameterType;
-  geolocationData: GeolocationData;
-  blockHistory = new MatTableDataSource<BlockHistory>();
-  crossReference = new MatTableDataSource<CrossReference>();
+  type: SearchParameter;
+  geolocationData: IGeolocationData;
+  blockHistory = new MatTableDataSource<IBlockHistory>();
+  crossReference = new MatTableDataSource<ICrossReference>();
   constructor(
     private route: ActivatedRoute,
     private searchService: DictionarySearchService
@@ -33,7 +32,7 @@ export class DictionaryResultComponent implements OnInit {
   getSearchResult() {
     this.route.paramMap.subscribe(params => {
       this.value = params.get('value');
-      this.type = ParameterType[params.get('type')];
+      this.type = SearchParameter[params.get('type')];
       this.searchService.getMockSearch().subscribe(result => {
         this.blockHistory.data = result.blockHistory;
         this.crossReference.data = result.crossReference;

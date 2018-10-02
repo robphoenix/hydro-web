@@ -1,7 +1,6 @@
-import { DictionarySearchService } from '../../search/dictionary-search.service';
-import { SearchData } from '../../search/search-data';
-import { DictionaryHelpDialogComponent } from './dictionary-help-dialog/dictionary-help-dialog.component';
-import { ParameterType } from './../../shared/parameterType';
+import { ISearchData } from '../search-data';
+import { DictionaryHelpDialogComponent } from './../dictionary-help-dialog/dictionary-help-dialog.component';
+import { SearchParameter } from '../search-parameter';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -13,14 +12,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./dictionary-search.component.scss']
 })
 export class DictionarySearchComponent implements OnInit {
-  ParameterType = ParameterType;
+  SearchParameter = SearchParameter;
   searchForm: FormGroup;
-  searchResult: SearchData;
+  searchResult: ISearchData;
 
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private searchService: DictionarySearchService,
     private router: Router
   ) {}
 
@@ -37,8 +35,8 @@ export class DictionarySearchComponent implements OnInit {
     }
   }
 
-  parameterTypeValues() {
-    return Object.keys(ParameterType).filter(
+  searchParameterValues() {
+    return Object.keys(SearchParameter).filter(
       type => isNaN(<any>type) && type !== 'values'
     );
   }

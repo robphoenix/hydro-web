@@ -1,4 +1,4 @@
-import { CrossReference } from './../../../search-data';
+import { ICrossReference } from './../search-data';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
@@ -9,7 +9,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 })
 export class CrossReferenceComponent implements OnInit {
   @Input()
-  crossReference: MatTableDataSource<CrossReference>;
+  crossReference: MatTableDataSource<ICrossReference>;
 
   columns: string[] = [
     'username',

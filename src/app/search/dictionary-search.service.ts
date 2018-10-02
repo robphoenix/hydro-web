@@ -1,6 +1,6 @@
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { SearchData } from './search-data';
+import { ISearchData } from './search-data';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -13,10 +13,10 @@ export class DictionarySearchService {
 
   constructor(private http: HttpClient) {}
 
-  public getMockSearch(): Observable<SearchData> {
-    return this.http.get<SearchData>(this.searchDataUrl).pipe(
-      tap((searchResult: SearchData) => console.log({ searchResult })),
-      catchError(this.handleError<SearchData>('getMockSearch'))
+  public getMockSearch(): Observable<ISearchData> {
+    return this.http.get<ISearchData>(this.searchDataUrl).pipe(
+      tap((searchResult: ISearchData) => console.log({ searchResult })),
+      catchError(this.handleError<ISearchData>('getMockSearch'))
     );
   }
 

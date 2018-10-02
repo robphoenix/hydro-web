@@ -1,4 +1,4 @@
-export enum ParameterType {
+export enum SearchParameter {
   SIP = 'SIP',
   IPRange = 'IP_RANGE',
   STK = 'STK',

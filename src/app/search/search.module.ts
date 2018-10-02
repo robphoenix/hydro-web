@@ -19,12 +19,12 @@ import {
   MatSortModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DictionarySearchComponent } from '../search/dictionary-search/dictionary-search.component';
-import { DictionaryHelpDialogComponent } from '../search/dictionary-search/dictionary-help-dialog/dictionary-help-dialog.component';
-import { DictionaryResultComponent } from '../search/dictionary-search/dictionary-result/dictionary-result.component';
-import { BlockHistoryComponent } from './dictionary-search/dictionary-result/block-history/block-history.component';
-import { GeolocationDataComponent } from './dictionary-search/dictionary-result/geolocation-data/geolocation-data.component';
-import { CrossReferenceComponent } from './dictionary-search/dictionary-result/cross-reference/cross-reference.component';
+import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
+import { DictionaryHelpDialogComponent } from './dictionary-help-dialog/dictionary-help-dialog.component';
+import { DictionaryResultComponent } from './dictionary-result/dictionary-result.component';
+import { BlockHistoryComponent } from './block-history/block-history.component';
+import { GeolocationDataComponent } from './geolocation-data/geolocation-data.component';
+import { CrossReferenceComponent } from './cross-reference/cross-reference.component';
 
 @NgModule({
   imports: [

@@ -1,6 +1,6 @@
-import { GeolocationData } from './../../../search-data';
+import { IGeolocationData } from './../search-data';
 import { Component, OnInit, Input } from '@angular/core';
-import { ParameterType } from '../../../../shared/parameterType';
+import { SearchParameter } from '../search-parameter';
 
 @Component({
   selector: 'app-geolocation-data',
@@ -11,9 +11,9 @@ export class GeolocationDataComponent implements OnInit {
   @Input()
   value: string;
   @Input()
-  type: ParameterType;
+  type: SearchParameter;
   @Input()
-  geolocationData: GeolocationData;
+  geolocationData: IGeolocationData;
 
   constructor() {}
 

@@ -1,5 +1,5 @@
-import { BlockHistory } from './../../../search-data';
-import { ParameterType } from './../../../../shared/parameterType';
+import { IBlockHistory } from './../search-data';
+import { SearchParameter } from '../search-parameter';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
@@ -10,10 +10,10 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class BlockHistoryComponent implements OnInit {
   @Input()
-  blockHistory: MatTableDataSource<BlockHistory>;
+  blockHistory: MatTableDataSource<IBlockHistory>;
 
   @Input()
-  parameterType: ParameterType;
+  searchParameter: SearchParameter;
 
   columns: string[] = [
     'date',

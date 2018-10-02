@@ -1,10 +1,10 @@
-export interface SearchData {
-  blockHistory: BlockHistory[];
-  geolocationData: GeolocationData;
-  crossReference: CrossReference[];
+export interface ISearchData {
+  blockHistory: IBlockHistory[];
+  geolocationData: IGeolocationData;
+  crossReference: ICrossReference[];
 }
 
-export interface BlockHistory {
+export interface IBlockHistory {
   id: number;
   blockAction: string;
   category: string;
@@ -25,7 +25,7 @@ export interface BlockHistory {
   ipAsLong: number;
 }
 
-export interface CrossReference {
+export interface ICrossReference {
   'User Name': string;
   IP: string;
   'Session Token': string;
@@ -34,7 +34,7 @@ export interface CrossReference {
   'Login Status': string;
 }
 
-export interface GeolocationData {
+export interface IGeolocationData {
   city: string;
   country: string;
   provider: string;
