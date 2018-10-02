@@ -1,3 +1,4 @@
+import { SearchModule } from './search/search.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { UserModule } from './user/user.module';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    MonitorsModule,
+    SearchModule,
 
     MonitorsModule,
     UserModule,

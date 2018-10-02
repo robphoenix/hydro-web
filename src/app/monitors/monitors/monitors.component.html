@@ -1,14 +1,12 @@
 <mat-sidenav-container [hasBackdrop]="false">
-  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
-    [opened]="true">
+  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'" [opened]="true">
 
-    <div class="monitors-title-container">
-      <h3 class="monitors-title">{{title}}</h3>
+    <div class="sidenav-title-container">
+      <h3 class="sidenav-title">{{title}}</h3>
     </div>
 
     <app-monitors-list [title]="favouriteMonitorsTitle" [monitors]="favouriteMonitors"></app-monitors-list>
-    <app-monitors-list [title]="liveMonitorsTitle" [monitors]="liveMonitors"
-      [search]="true"></app-monitors-list>
+    <app-monitors-list [title]="liveMonitorsTitle" [monitors]="liveMonitors" [search]="true"></app-monitors-list>
 
   </mat-sidenav>
 

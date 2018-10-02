@@ -1,0 +1,19 @@
+<div class="container search-div" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+  <div>
+    <app-geolocation-data [type]="type" [value]="value" [geolocationData]="geolocationData"></app-geolocation-data>
+  </div>
+  <div>
+    <mat-card class="card-fit">
+      <mat-card-title>Graph will show here
+      </mat-card-title>
+    </mat-card>
+  </div>
+</div>
+<div class="container search-div" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1%" fxLayoutAlign="center">
+  <div>
+    <app-block-history [blockHistory]="blockHistory" [searchParameter]="type"></app-block-history>
+  </div>
+  <div>
+    <app-cross-reference [crossReference]="crossReference"></app-cross-reference>
+  </div>
+</div>
