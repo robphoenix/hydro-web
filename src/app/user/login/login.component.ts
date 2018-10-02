@@ -5,6 +5,8 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,11 @@ export class LoginComponent implements OnInit {
   hide = true;
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -25,16 +31,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.controls.username.value === '') {
-      this.loginForm.controls.username.markAsTouched();
-    }
-    if (this.loginForm.controls.password.value === '') {
-      this.loginForm.controls.password.markAsTouched();
-    }
     const username = this.loginForm.controls.username.value;
     const password = this.loginForm.controls.password.value;
-    console.log({ username });
-    console.log({ password });
+    if (!username || !password) {
+      if (!username) {
+        this.loginForm.controls.username.markAsTouched();
+      }
+      if (!password) {
+        this.loginForm.controls.password.markAsTouched();
+      }
+      return;
+    }
+
+    this.authService.login(username, password);
+
+    if (this.authService.redirectUrl) {
+      this.router.navigateByUrl(this.authService.redirectUrl);
+    } else {
+      this.router.navigate(['/monitors']);
+    }
   }
 
   getUsernameErrorMessage() {
