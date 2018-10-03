@@ -3,7 +3,12 @@ import { DictionaryHelpDialogComponent } from './../dictionary-help-dialog/dicti
 import { SearchParameter } from '../search-parameter';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({

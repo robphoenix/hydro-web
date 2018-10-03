@@ -1,25 +1,32 @@
-<div class="main-div">
-  <mat-card class="card-style">
-    <mat-card-header>
-      <mat-card-title>Dictionary Search</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="searchForm">
-        <mat-form-field>
-          <mat-select #type formControlName="type" placeholder="Dictionary Type">
-            <mat-option *ngFor="let type of searchParameterValues()" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="value-padding">
-          <input #value matInput placeholder="Value" formControlName="value">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="onSubmit(type.value, value.value)">Search</button>
-        <button mat-icon-button type="submit" color="primary">
-          <mat-icon aria-label="help" (click)="openHelpDialog()">help</mat-icon>
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
+<mat-card class="search-card">
+  <mat-card-title>Dictionary search</mat-card-title>
+  <mat-card-subtitle>
+    Display all known information about a particular value.
+  </mat-card-subtitle>
+
+  <mat-card-content>
+
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit(type.value, value.value)"
+      class="search-form">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Value</mat-label>
+        <input #value matInput required placeholder="Value" formControlName="value">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Dictionary Type</mat-label>
+        <mat-select required #type formControlName="type" placeholder="Dictionary Type">
+          <mat-option *ngFor="let type of searchParameterValues()" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="accent" (click)="onSubmit(type.value, value.value)">Search</button>
+  </mat-card-actions>
+</mat-card>
