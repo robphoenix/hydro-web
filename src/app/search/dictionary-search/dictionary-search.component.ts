@@ -1,5 +1,4 @@
 import { ISearchData } from '../search-data';
-import { DictionaryHelpDialogComponent } from './../dictionary-help-dialog/dictionary-help-dialog.component';
 import { SearchParameter } from '../search-parameter';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
@@ -44,11 +43,5 @@ export class DictionarySearchComponent implements OnInit {
     return Object.keys(SearchParameter).filter(
       (type) => isNaN(<any>type) && type !== 'values',
     );
-  }
-
-  openHelpDialog(): void {
-    this.dialog.open(DictionaryHelpDialogComponent, {
-      width: '600px',
-    });
   }
 }
