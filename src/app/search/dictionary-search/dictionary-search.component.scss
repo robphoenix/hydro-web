@@ -1,10 +1,18 @@
-.main-div {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.search-card {
+  width: 25%;
+  margin: 50px auto;
 }
 
-.value-padding {
-  padding: 0px 50px 0px 50px;
+.search-card > * {
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card > .mat-card-actions:last-child {
+  text-align: right;
+  padding-bottom: 20px;
 }
