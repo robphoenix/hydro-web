@@ -11,7 +11,6 @@ import {
   MatCardModule,
   MatButtonModule,
 } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
@@ -19,14 +18,13 @@ import { JwtModule } from '@auth0/angular-jwt';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
 
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
           return localStorage.getItem('access_token');
         },
-        whitelistedDomains: ['localhost:4200', 'http://mn2splpfa001sl0:4200'],
+        whitelistedDomains: ['localhost:4200', 'mn2splpfa001sl0:4200'],
       },
     }),
 

@@ -1,10 +1,10 @@
 import { IAccessToken } from './access-token';
 import { Injectable } from '@angular/core';
-import { IUser } from './user';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { IUser, Role } from './user';
 
 const httpOptions = {
   responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
@@ -19,14 +19,20 @@ const httpOptions = {
 export class AuthService {
   private baseUrl = `http://mn2splpfa001sl0:8080`;
   private loginPath = `/login`;
-
-  currentUser: IUser;
+  private refreshPath = `/p/refresh`;
+  private refreshTimer;
+  private accessTokenName = `access_token`;
+  private currentUser: IUser = {} as IUser;
   redirectUrl: string;
 
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {}
 
-  isLoggedIn(): boolean {
-    return !!this.currentUser;
+  isAuthenticated(): boolean {
+    return !this.jwtHelper.isTokenExpired(this.accessToken);
+  }
+
+  decodedAccessToken(): IAccessToken {
+    return this.jwtHelper.decodeToken(this.accessToken) as IAccessToken;
   }
 
   login(username: string, password: string): Observable<string> {
@@ -38,17 +44,66 @@ export class AuthService {
       )
       .pipe(
         tap((resp) => {
-          localStorage.setItem('access_token', resp);
-
-          const token: IAccessToken = this.jwtHelper.decodeToken(
-            resp,
-          ) as IAccessToken;
+          this.accessToken = resp;
           // tslint:disable-next-line:no-shadowed-variable
-          const { username, role } = token;
-          this.currentUser = { username, role } as IUser;
+          const { username, role } = this.jwtHelper.decodeToken(resp);
+          this.role = role;
+          this.username = username;
+          this.refreshTimer = setInterval(() => this.refreshToken(), 60 * 1000);
         }),
         catchError(this.handleError<any>('login')),
       );
+  }
+
+  refreshToken(): Observable<string> {
+    if (!this.isAuthenticated()) {
+      return of(``);
+    }
+
+    return this.http
+      .get(`${this.baseUrl}${this.refreshPath}`, httpOptions)
+      .pipe(
+        tap((resp) => {
+          this.accessToken = resp;
+        }),
+        catchError(this.handleError<any>('login')),
+      );
+  }
+
+  set accessToken(token: string) {
+    localStorage.setItem(this.accessTokenName, token);
+  }
+
+  get accessToken(): string {
+    return localStorage.getItem(this.accessTokenName);
+  }
+
+  removeAccessToken() {
+    localStorage.removeItem(this.accessTokenName);
+  }
+
+  logout(): void {
+    this.role = null;
+    this.username = null;
+    this.removeAccessToken();
+    clearInterval(this.refreshTimer);
+  }
+
+  set username(value: string) {
+    this.currentUser.username = value;
+  }
+  get username(): string {
+    if (this.isAuthenticated() && !this.currentUser.username) {
+      this.currentUser.username = this.decodedAccessToken().username;
+    }
+    return this.currentUser.username;
+  }
+
+  set role(value: string) {
+    this.currentUser.role = value as Role;
+  }
+  get role(): string {
+    return this.currentUser.role as string;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -57,10 +112,5 @@ export class AuthService {
       console.log(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
-  }
-
-  logout(): void {
-    this.currentUser = null;
-    localStorage.removeItem('access_token');
   }
 }

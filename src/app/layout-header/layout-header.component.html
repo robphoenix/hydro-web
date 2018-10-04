@@ -7,13 +7,13 @@
 
     <span class="nav-spacer"></span>
 
-    <span class="page-nav" *ngIf="!authService.isLoggedIn()">
+    <span class="page-nav" *ngIf="!authService.isAuthenticated()">
       <a mat-button routerLink="/login">
         Log In
       </a>
     </span>
 
-    <span class="page-nav" *ngIf="authService.isLoggedIn()">
+    <span class="page-nav" *ngIf="authService.isAuthenticated()">
       <a mat-button routerLink="/monitors">
         Monitors
       </a>
@@ -21,7 +21,7 @@
         Search
       </a>
       <a mat-button (click)="logOut()">
-        Log Out {{authService.currentUser.username}}
+        Log Out {{authService.username}}
       </a>
     </span>
 

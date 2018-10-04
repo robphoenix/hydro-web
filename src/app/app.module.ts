@@ -8,6 +8,8 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserModule } from './user/user.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './user/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, LayoutHeaderComponent],
@@ -24,7 +26,9 @@ import { UserModule } from './user/user.module';
     MatToolbarModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
