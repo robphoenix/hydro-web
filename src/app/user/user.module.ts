@@ -11,12 +11,23 @@ import {
   MatCardModule,
   MatButtonModule,
 } from '@angular/material';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['localhost:4200', 'mn2splpfa001sl0:4200'],
+      },
+    }),
+
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
