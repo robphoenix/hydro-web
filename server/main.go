@@ -41,8 +41,8 @@ func main() {
     err := http.ListenAndServe(":3000", jsonRouter)
     if err != nil {
       panic("ListenAndServe: " + err.Error())
-      shutdown <- true
     }
+    shutdown <- true
   }()
   // Blocks and waits until it receives a bool
   <-shutdown
