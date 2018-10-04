@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MonitorData } from './monitor-data';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MonitorsService {
-  baseUrl = `http://localhost:3000`;
+  host = environment.apiHost;
+  baseUrl = `http://${this.host}:3000`;
   liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
   monitorDataUrl = `${this.baseUrl}/monitorData`;
 
