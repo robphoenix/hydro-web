@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { ISearchData } from './search-data';
@@ -8,7 +9,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DictionarySearchService {
-  baseUrl = `http://localhost:3000`;
+  host = environment.apiHost;
+  baseUrl = `http://${this.host}:3000`;
   searchDataUrl = `${this.baseUrl}/searchData`;
 
   constructor(private http: HttpClient) {}
