@@ -18,8 +18,8 @@ const httpOptions = {
 })
 export class AuthService {
   private baseUrl = `http://mn2splpfa001sl0:8080`;
-  private loginPath = `/login`;
-  private refreshPath = `/p/refresh`;
+  private loginUrl = `${this.baseUrl}/login`;
+  private refreshUrl = `${this.baseUrl}/p/refresh`;
   private refreshTimer;
   private accessTokenName = `access_token`;
   private currentUser: IUser = {} as IUser;
@@ -37,11 +37,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<string> {
     return this.http
-      .post(
-        `${this.baseUrl}${this.loginPath}`,
-        { username, password },
-        httpOptions,
-      )
+      .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
         tap((resp) => {
           this.accessToken = resp;
@@ -60,14 +56,12 @@ export class AuthService {
       return of(``);
     }
 
-    return this.http
-      .get(`${this.baseUrl}${this.refreshPath}`, httpOptions)
-      .pipe(
-        tap((resp) => {
-          this.accessToken = resp;
-        }),
-        catchError(this.handleError<any>('login')),
-      );
+    return this.http.get(this.refreshUrl, httpOptions).pipe(
+      tap((resp) => {
+        this.accessToken = resp;
+      }),
+      catchError(this.handleError<any>('login')),
+    );
   }
 
   set accessToken(token: string) {

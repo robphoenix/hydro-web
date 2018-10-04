@@ -10,8 +10,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class MonitorsService {
-  host = environment.apiHost;
-  baseUrl = `http://${this.host}:3000`;
+  baseUrl = `http://${environment.apiHost}:3000`;
   liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
   monitorDataUrl = `${this.baseUrl}/monitorData`;
 
