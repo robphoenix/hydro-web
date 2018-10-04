@@ -9,7 +9,7 @@ import { MonitorData } from './monitor-data';
   providedIn: 'root',
 })
 export class MonitorsService {
-  baseUrl = `http://mn2splpfa001sl0:3000`;
+  baseUrl = `http://localhost:3000`;
   liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
   monitorDataUrl = `${this.baseUrl}/monitorData`;
 

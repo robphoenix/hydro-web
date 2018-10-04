@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DictionarySearchService {
-  baseUrl = `http://mn2splpfa001sl0:3000`;
+  baseUrl = `http://localhost:3000`;
   searchDataUrl = `${this.baseUrl}/searchData`;
 
   constructor(private http: HttpClient) {}

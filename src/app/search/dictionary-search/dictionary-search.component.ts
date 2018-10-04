@@ -1,9 +1,13 @@
 import { ISearchData } from '../search-data';
-import { DictionaryHelpDialogComponent } from './../dictionary-help-dialog/dictionary-help-dialog.component';
 import { SearchParameter } from '../search-parameter';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -39,11 +43,5 @@ export class DictionarySearchComponent implements OnInit {
     return Object.keys(SearchParameter).filter(
       (type) => isNaN(<any>type) && type !== 'values',
     );
-  }
-
-  openHelpDialog(): void {
-    this.dialog.open(DictionaryHelpDialogComponent, {
-      width: '600px',
-    });
   }
 }
