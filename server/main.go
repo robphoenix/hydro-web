@@ -20,16 +20,6 @@ func main() {
 
   // Router for JSON Mock API
   jsonRouter := mux.NewRouter()
-
-  // Dealing with CORS and preflight requests
-  jsonRouter.Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Access-Control-Allow-Origin", "*")
-    w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Access-Control-Request-Headers, Access-Control-Request-Method, Connection, Host, Origin, User-Agent, Referer, Cache-Control, X-header")
-    w.WriteHeader(http.StatusNoContent)
-    return
-  })
-
   jsonRouter.HandleFunc("/liveMonitors", liveMonitors).Methods("GET")
   jsonRouter.HandleFunc("/liveMonitors/{id}", liveMonitorsByID).Methods("GET")
   jsonRouter.HandleFunc("/monitorData/{id}", monitorDataByID).Methods("GET")
@@ -48,7 +38,7 @@ func main() {
   }()
   go func() {
     log.Println("Serving json mock data on 3000")
-    err := http.ListenAndServe(":3000", jsonRouter)
+    err := http.ListenAndServe(":3000", &MyServer{jsonRouter})
     if err != nil {
       panic("ListenAndServe: " + err.Error())
     }
@@ -87,6 +77,26 @@ func wrapHandler(h http.Handler) http.HandlerFunc {
       http.Redirect(w, r, "/index.html", http.StatusFound)
     }
   }
+}
+
+// Handle CORS and preflight OPTIONS requests
+type MyServer struct {
+  r *mux.Router
+}
+
+func (s *MyServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+  if origin := req.Header.Get("Origin"); origin != "" {
+    rw.Header().Set("Access-Control-Allow-Origin", origin)
+    rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+    rw.Header().Set("Access-Control-Allow-Headers",
+      "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+  }
+  // Stop here if its Preflighted OPTIONS request
+  if req.Method == "OPTIONS" {
+    return
+  }
+  // Lets Gorilla work
+  s.r.ServeHTTP(rw, req)
 }
 
 /************************** JSON Mock API **************************/
