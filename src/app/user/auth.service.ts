@@ -21,6 +21,7 @@ export class AuthService {
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
   private refreshTimer;
+  private refreshInterval = 60 * 1000; // in milliseconds
   private accessTokenName = `access_token`;
   private currentUser: IUser = {} as IUser;
   redirectUrl: string;
@@ -45,17 +46,27 @@ export class AuthService {
           const { username, role } = this.jwtHelper.decodeToken(resp);
           this.role = role;
           this.username = username;
-          this.refreshTimer = setInterval(() => this.refreshToken(), 60 * 1000);
+          this.startRefreshTimer();
         }),
         catchError(this.handleError<any>('login')),
       );
+  }
+
+  startRefreshTimer() {
+    this.refreshTimer = setInterval(
+      () => this.refreshToken().subscribe(),
+      this.refreshInterval,
+    );
+  }
+
+  clearRefreshTimer() {
+    clearInterval(this.refreshTimer);
   }
 
   refreshToken(): Observable<string> {
     if (!this.isAuthenticated()) {
       return of(``);
     }
-
     return this.http.get(this.refreshUrl, httpOptions).pipe(
       tap((resp) => {
         this.accessToken = resp;
@@ -80,7 +91,7 @@ export class AuthService {
     this.role = null;
     this.username = null;
     this.removeAccessToken();
-    clearInterval(this.refreshTimer);
+    this.clearRefreshTimer();
   }
 
   set username(value: string) {
