@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout-header.component.scss'],
 })
 export class LayoutHeaderComponent implements OnInit {
-  logo = `../assets/img/hydro_logo_white.png`;
+  logo = '../assets/img/hydro_logo_white.png';
 
   constructor(public authService: AuthService, private router: Router) {}
 
