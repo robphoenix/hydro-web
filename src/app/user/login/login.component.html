@@ -1,6 +1,10 @@
 <mat-card class="login-card">
-  <mat-card-title>Log In</mat-card-title>
-  <mat-card-subtitle>Please enter your Bet365 credentials</mat-card-subtitle>
+  <mat-card-title>
+    {{title}}
+  </mat-card-title>
+  <mat-card-subtitle>
+    {{subtitle}}
+  </mat-card-subtitle>
 
   <mat-card-content>
 
@@ -8,23 +12,30 @@
 
       <mat-form-field appearance="outline" class="login-username">
 
-        <mat-label>Username</mat-label>
+        <mat-label>
+          Username
+        </mat-label>
         <input matInput placeholder="Please enter your username" required type="text"
           formControlName="username" (keyup.enter)="login()">
-        <mat-error *ngIf="loginForm.controls.username.invalid">{{getUsernameErrorMessage()}}</mat-error>
+        <mat-error *ngIf="loginForm.controls['username'].invalid">
+          {{getUsernameErrorMessage()}}
+        </mat-error>
 
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Please enter your password" [type]="hide ? 'password' : 'text'"
-          required type="text" formControlName="password" (keyup.enter)="login()">
-        <mat-icon class="visibility-icon" matSuffix (click)="hide = !hide">{{hide
-          ? 'visibility' :
-          'visibility_off'}}</mat-icon>
-        <mat-error *ngIf="loginForm.controls.password.invalid">{{getPasswordErrorMessage()}}</mat-error>
-
+        <mat-label>
+          Password
+        </mat-label>
+        <input #password matInput placeholder="Please enter your password"
+          required [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+          (keyup.enter)="login()" name="password">
+        <mat-icon class="visibility-icon" matSuffix (click)="hidePassword = !hidePassword">
+          {{hidePassword ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+        <mat-error *ngIf="loginForm.controls['password'].invalid">
+          {{getPasswordErrorMessage()}}
+        </mat-error>
       </mat-form-field>
 
     </form>
@@ -32,6 +43,8 @@
   </mat-card-content>
 
   <mat-card-actions class="login-actions">
-    <button mat-raised-button color="accent" (click)="login()">Login</button>
+    <button mat-raised-button color="accent" (click)="login()">
+      Login
+    </button>
   </mat-card-actions>
 </mat-card>

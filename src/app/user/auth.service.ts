@@ -13,6 +13,12 @@ const httpOptions = {
   }),
 };
 
+/**
+ * Handles all aspects of user authentication.
+ *
+ * @export
+ * @class AuthService
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -28,14 +34,38 @@ export class AuthService {
 
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {}
 
+  /**
+   * Returns a boolean indicating whether the current user
+   * is authenticated.
+   *
+   * @returns {boolean}
+   * @memberof AuthService
+   */
   isAuthenticated(): boolean {
     return !this.jwtHelper.isTokenExpired(this.accessToken);
   }
 
+  /**
+   * Returns the decoded JWT access token.
+   *
+   * @returns {IAccessToken}
+   * @memberof AuthService
+   */
   decodedAccessToken(): IAccessToken {
     return this.jwtHelper.decodeToken(this.accessToken) as IAccessToken;
   }
 
+  /**
+   * Attempts to log in with the given username & password.
+   * If authentication is successful the returned JWT access token
+   * is stored in local storage, the current user is updated, and
+   * the token refresh timer is started.
+   *
+   * @param {string} username
+   * @param {string} password
+   * @returns {Observable<string>}
+   * @memberof AuthService
+   */
   login(username: string, password: string): Observable<string> {
     return this.http
       .post(this.loginUrl, { username, password }, httpOptions)
@@ -63,6 +93,14 @@ export class AuthService {
     clearInterval(this.refreshTimer);
   }
 
+  /**
+   * If current user is authenticated the access token is refreshed repeatedly,
+   * on a timer, and the token in local storage is updated. This requires the current
+   * access token to be valid.
+   *
+   * @returns {Observable<string>}
+   * @memberof AuthService
+   */
   refreshToken(): Observable<string> {
     if (!this.isAuthenticated()) {
       return of(``);
@@ -75,18 +113,41 @@ export class AuthService {
     );
   }
 
+  /**
+   * Sets the access token in local storage.
+   *
+   * @memberof AuthService
+   */
   set accessToken(token: string) {
     localStorage.setItem(this.accessTokenName, token);
   }
 
+  /**
+   * Gets the access token from local storage.
+   *
+   * @type {string}
+   * @memberof AuthService
+   */
   get accessToken(): string {
     return localStorage.getItem(this.accessTokenName);
   }
 
+  /**
+   * Removes the access token from local storage.
+   *
+   * @memberof AuthService
+   */
   removeAccessToken() {
     localStorage.removeItem(this.accessTokenName);
   }
 
+  /**
+   * Logs out the current user.
+   * Sets the current user details to null, removes the access token from
+   * local storage, and clears the refresh timer.
+   *
+   * @memberof AuthService
+   */
   logout(): void {
     this.role = null;
     this.username = null;
@@ -94,9 +155,25 @@ export class AuthService {
     this.clearRefreshTimer();
   }
 
+  /**
+   * Sets the current user's username.
+   *
+   * @memberof AuthService
+   */
   set username(value: string) {
     this.currentUser.username = value;
   }
+
+  /**
+   * Gets the current user's username.
+   * If there is no current user details but the user is authenticated,
+   * then we get the username from the valid user token.
+   * This can happen if the application is closed and the reopened
+   * while the access token is still valid.
+   *
+   * @type {string}
+   * @memberof AuthService
+   */
   get username(): string {
     if (this.isAuthenticated() && !this.currentUser.username) {
       this.currentUser.username = this.decodedAccessToken().username;
@@ -104,13 +181,26 @@ export class AuthService {
     return this.currentUser.username;
   }
 
+  /**
+   * Set's the current user's role.
+   *
+   * @memberof AuthService
+   */
   set role(value: string) {
     this.currentUser.role = value as Role;
   }
+
+  /**
+   * Get's the current user's role.
+   *
+   * @type {string}
+   * @memberof AuthService
+   */
   get role(): string {
     return this.currentUser.role as string;
   }
 
+  // TODO: Move this into a shared service.
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
