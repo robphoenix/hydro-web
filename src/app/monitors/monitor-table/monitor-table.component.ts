@@ -1,5 +1,11 @@
 import { Component, Input } from '@angular/core';
 
+/**
+ * Renders the monitor data in a table.
+ *
+ * @export
+ * @class MonitorTableComponent
+ */
 @Component({
   selector: 'app-monitor-table',
   templateUrl: './monitor-table.component.html',

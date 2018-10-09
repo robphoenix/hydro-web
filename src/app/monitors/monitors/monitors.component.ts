@@ -3,6 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { IMonitor } from '../monitor';
 
+/**
+ * Lists all monitors, displaying a single monitor.
+ *
+ * @export
+ * @class MonitorsComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-monitors',
   templateUrl: './monitors.component.html',
@@ -28,12 +35,22 @@ export class MonitorsComponent implements OnInit {
     this.getUserFavouriteMonitors();
   }
 
+  /**
+   * Get the list of Live monitors.
+   *
+   * @memberof MonitorsComponent
+   */
   getLiveMonitors() {
     this.monitorService.getLiveMonitors().subscribe((monitors) => {
       this.liveMonitors = monitors;
     });
   }
 
+  /**
+   * Get the user's favourite monitors.
+   *
+   * @memberof MonitorsComponent
+   */
   getUserFavouriteMonitors() {
     const favourites: number[] = this.userService.getFavouriteMonitors();
     favourites.forEach((id) => {

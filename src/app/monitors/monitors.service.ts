@@ -6,6 +6,12 @@ import { catchError, tap } from 'rxjs/operators';
 import { MonitorData } from './monitor-data';
 import { environment } from '../../environments/environment';
 
+/**
+ * Manages access to the monitors data on the server.
+ *
+ * @export
+ * @class MonitorsService
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +22,12 @@ export class MonitorsService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Gets the list of live monitors.
+   *
+   * @returns {Observable<IMonitor[]>}
+   * @memberof MonitorsService
+   */
   public getLiveMonitors(): Observable<IMonitor[]> {
     return this.http.get<IMonitor[]>(this.liveMonitorsUrl).pipe(
       tap((monitors: IMonitor[]) => console.log({ monitors })),
@@ -23,6 +35,13 @@ export class MonitorsService {
     );
   }
 
+  /**
+   * Gets a single monitor.
+   *
+   * @param {number} id
+   * @returns {Observable<IMonitor>}
+   * @memberof MonitorsService
+   */
   public getLiveMonitorById(id: number): Observable<IMonitor> {
     return this.http.get<IMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
       tap((monitor: IMonitor) => console.log({ monitor })),
@@ -30,6 +49,13 @@ export class MonitorsService {
     );
   }
 
+  /**
+   * Gets the data for a single monitor.
+   *
+   * @param {number} id
+   * @returns {Observable<MonitorData>}
+   * @memberof MonitorsService
+   */
   public getMonitorDataById(id: number): Observable<MonitorData> {
     return this.http.get<MonitorData>(`${this.monitorDataUrl}/${id}`).pipe(
       tap((monitor: MonitorData) => console.log({ monitor })),
@@ -37,6 +63,7 @@ export class MonitorsService {
     );
   }
 
+  // TODO: move to shared service.
   /**
    * Handle Http operation that failed.
    * Let the app continue.
