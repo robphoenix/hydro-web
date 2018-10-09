@@ -1,10 +1,17 @@
-import { MonitorData } from './../monitor-data';
+import { MonitorData, EsperItem } from './../monitor-data';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 
+/**
+ * Describes a single monitor.
+ *
+ * @export
+ * @class MonitorComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-monitor',
   templateUrl: './monitor.component.html',
@@ -12,8 +19,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
-  data: Array<{ [key: string]: string }>;
-  headers: string[];
+  data: { [key: string]: string }[];
+  tableHeaders: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +33,11 @@ export class MonitorComponent implements OnInit {
     this.getMonitorData();
   }
 
+  /**
+   * Get details about the monitor itself.
+   *
+   * @memberof MonitorComponent
+   */
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
@@ -35,26 +47,51 @@ export class MonitorComponent implements OnInit {
     });
   }
 
+  /**
+   * Get the monitor's data.
+   *
+   * @memberof MonitorComponent
+   */
   getMonitorData() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
       this.monitorService
         .getMonitorDataById(id)
-        .subscribe((data: MonitorData) => {
-          this.headers = ['Time', ...data.headers];
-          this.data = data.esperItems.map((items) => {
-            const things: { [key: string]: string } = {
-              Time: data.timeStamp,
-            };
-            items.forEach((item) => {
-              things[item['key']] = item['value'];
-            });
-            return things;
-          });
+        .subscribe((monitorData: MonitorData) => {
+          this.tableHeaders = ['Time', ...monitorData.headers];
+          this.data = this.transformMonitorData(monitorData);
         });
     });
   }
 
+  /**
+   * Transforms the nested monitor data array
+   * into a single array of objects
+   *
+   * @param {MonitorData} monitorData
+   * @returns {{ [key: string]: string }[]}
+   * @memberof MonitorComponent
+   */
+  transformMonitorData(monitorData: MonitorData): { [key: string]: string }[] {
+    return monitorData.esperItems.map((esperItems: EsperItem[]) => {
+      // initialise the data object with the monitor timestamp
+      const data: { [key: string]: string } = {
+        Time: monitorData.timeStamp,
+      };
+      // transform the array of esperItems into
+      // key:value pairs and add to the data object
+      esperItems.forEach((item) => {
+        data[item['key']] = item['value'];
+      });
+      return data;
+    });
+  }
+
+  /**
+   * Navigates to the previous URL.
+   *
+   * @memberof MonitorComponent
+   */
   goBack() {
     this.location.back();
   }

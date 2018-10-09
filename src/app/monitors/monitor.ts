@@ -1,3 +1,13 @@
+/**
+ * Describes a monitor.
+ *
+ * @remark
+ * TODO: I'm not going to document everything in this file until we know for sure
+ * in what shape the data will come back from the server.
+ *
+ * @export
+ * @interface IMonitor
+ */
 export interface IMonitor {
   id: number;
   topic: string;
