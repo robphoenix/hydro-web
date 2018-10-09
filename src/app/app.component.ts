@@ -7,7 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'hydro-poc';
+  title = 'hydro-web';
 
   constructor(private authService: AuthService) {}
 
