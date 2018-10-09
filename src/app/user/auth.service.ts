@@ -5,6 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser, Role } from './user';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
@@ -32,7 +33,11 @@ export class AuthService {
   private currentUser: IUser = {} as IUser;
   redirectUrl: string;
 
-  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    public jwtHelper: JwtHelperService,
+  ) {}
 
   /**
    * Returns a boolean indicating whether the current user
@@ -103,6 +108,7 @@ export class AuthService {
    */
   refreshToken(): Observable<string> {
     if (!this.isAuthenticated()) {
+      this.router.navigate(['login']);
       return of(``);
     }
     return this.http.get(this.refreshUrl, httpOptions).pipe(
