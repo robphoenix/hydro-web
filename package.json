@@ -9,8 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "json-server --watch db.json",
-    "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/styles.css\"",
-    "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/styles.css\""
+    "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\"",
+    "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\""
   },
   "private": true,
   "dependencies": {
