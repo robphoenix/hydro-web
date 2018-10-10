@@ -4,8 +4,12 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 /**
  * Intercepts all HTTP requests to add the authenticated JWT access token.
@@ -22,23 +26,28 @@ import { Observable } from 'rxjs';
  */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService, private router: Router) {}
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    // We're in an HTTP request, we can't inject the AuthService,
-    // so we get the access_token from local storage.
-    const token: string = localStorage.getItem('access_token');
-
-    if (!token) {
-      return next.handle(req);
-    }
-
     const updatedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${this.authService.accessToken}`,
       },
     });
-    return next.handle(updatedReq);
+
+    return next.handle(updatedReq).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          // auto logout if 401 response returned from api
+          this.authService.logout();
+        }
+        const message = JSON.parse(err.error)[0].message;
+        const error = message || err.statusText;
+        return throwError(error);
+      }),
+    );
   }
 }

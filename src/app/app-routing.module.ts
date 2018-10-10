@@ -13,7 +13,10 @@ const routes: Routes = [
     path: 'monitors',
     component: MonitorsComponent,
     canActivate: [AuthGuard],
-    children: [{ path: ':id', component: MonitorComponent }],
+    runGuardsAndResolvers: 'always',
+    children: [
+      { path: ':id', component: MonitorComponent, canActivate: [AuthGuard] },
+    ],
   },
   {
     path: 'search',

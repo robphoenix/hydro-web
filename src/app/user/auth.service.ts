@@ -83,7 +83,6 @@ export class AuthService {
           this.username = username;
           this.startRefreshTimer();
         }),
-        catchError(this.handleError<any>('login')),
       );
   }
 
@@ -115,7 +114,7 @@ export class AuthService {
       tap((resp) => {
         this.accessToken = resp;
       }),
-      catchError(this.handleError<any>('login')),
+      catchError(this.handleError<any>('refresh token')),
     );
   }
 
@@ -209,8 +208,9 @@ export class AuthService {
   // TODO: Move this into a shared service.
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      console.log(`${operation} failed: ${error.message}`);
+      console.error(` handling error: ${error.error}`); // log to console instead
+      console.log({ error });
+      console.log(`${operation} failed`);
       return of(result as T);
     };
   }
