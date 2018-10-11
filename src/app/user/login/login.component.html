@@ -6,10 +6,15 @@
     {{subtitle}}
   </mat-card-subtitle>
 
-  <mat-card-content>
-    <mat-error *ngIf="loginErrorMessage">
+  <div class="error-message" *ngIf="loginErrorMessage">
+    <mat-error>
       {{loginErrorMessage}}
     </mat-error>
+  </div>
+
+  <mat-card-content>
+
+
 
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
 
@@ -19,7 +24,7 @@
           Username
         </mat-label>
         <input matInput placeholder="Please enter your username" required type="text"
-          formControlName="username" (keyup.enter)="login()">
+          formControlName="username" (keyup.enter)="login()" (click)="loginErrorMessage = ''">
         <mat-error *ngIf="loginForm.controls['username'].invalid">
           {{getUsernameErrorMessage()}}
         </mat-error>
@@ -32,7 +37,7 @@
         </mat-label>
         <input #password matInput placeholder="Please enter your password"
           required [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-          (keyup.enter)="login()" name="password">
+          (keyup.enter)="login()" name="password" (click)="loginErrorMessage = ''">
         <mat-icon class="visibility-icon" matSuffix (click)="hidePassword = !hidePassword">
           {{hidePassword ? 'visibility' : 'visibility_off'}}
         </mat-icon>
@@ -45,7 +50,8 @@
 
   </mat-card-content>
 
-  <mat-card-actions class="login-actions">
+
+  <mat-card-actions>
     <button mat-raised-button color="accent" (click)="login()">
       Login
     </button>
