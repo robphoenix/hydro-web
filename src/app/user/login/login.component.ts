@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   subtitle = 'Please enter your bet365 credentials.';
   hidePassword = true;
   loginForm: FormGroup;
+  loginErrorMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,25 +29,26 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const username = this.loginForm.controls.username.value;
-    const password = this.loginForm.controls.password.value;
-    if (!username || !password) {
-      if (!username) {
-        this.loginForm.controls.username.markAsTouched();
-      }
-      if (!password) {
-        this.loginForm.controls.password.markAsTouched();
-      }
+    const username = this.loginForm.controls.username;
+    const password = this.loginForm.controls.password;
+    username.markAsTouched();
+    password.markAsTouched();
+    if (!username.value || !password.value) {
       return;
     }
 
-    this.authService.login(username, password).subscribe(() => {
-      if (this.authService.redirectUrl) {
-        this.router.navigateByUrl(this.authService.redirectUrl);
-      } else {
-        this.router.navigate(['/monitors']);
-      }
-    });
+    this.authService.login(username.value, password.value).subscribe(
+      () => {
+        if (this.authService.redirectUrl) {
+          this.router.navigateByUrl(this.authService.redirectUrl);
+        } else {
+          this.router.navigate(['/monitors']);
+        }
+      },
+      (err: string) => {
+        this.loginErrorMessage = err;
+      },
+    );
   }
 
   getUsernameErrorMessage() {
