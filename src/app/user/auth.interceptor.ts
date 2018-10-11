@@ -44,9 +44,17 @@ export class AuthInterceptor implements HttpInterceptor {
           // auto logout if 401 response returned from api
           this.authService.logout();
         }
-        const message = JSON.parse(err.error)[0].message;
-        const error = message || err.statusText;
-        return throwError(error);
+        let msg: string;
+        // let's see if we have an error message back from the API first.
+        try {
+          msg = JSON.parse(err.error)[0].message;
+        } catch (e) {
+          // if not, then a client-side or network error occurred.
+          if (e instanceof SyntaxError) {
+            msg = err.message;
+          }
+        }
+        return throwError(msg);
       }),
     );
   }
