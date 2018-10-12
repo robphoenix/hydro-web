@@ -12,6 +12,7 @@ import {
   MatButtonModule,
 } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
+import { LoginGuard } from './login.guard';
 
 @NgModule({
   imports: [
@@ -35,6 +36,6 @@ import { JwtModule } from '@auth0/angular-jwt';
     MatButtonModule,
   ],
   declarations: [LoginComponent],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, LoginGuard],
 })
 export class UserModule {}
