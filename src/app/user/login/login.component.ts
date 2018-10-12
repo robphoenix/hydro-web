@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +14,13 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
   loginForm: FormGroup;
   loginErrorMessage: string;
+  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -26,29 +28,29 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
+
+    // Pull the URL to go to after login out of the query params
+    this.returnUrl =
+      this.route.snapshot.queryParamMap.get('returnUrl') || '/monitors';
   }
 
   login() {
     const username = this.loginForm.controls.username;
     const password = this.loginForm.controls.password;
+
     username.markAsTouched();
     password.markAsTouched();
+
     if (!username.value || !password.value) {
       return;
     }
 
-    this.authService.login(username.value, password.value).subscribe(
-      () => {
-        if (this.authService.redirectUrl) {
-          this.router.navigateByUrl(this.authService.redirectUrl);
-        } else {
-          this.router.navigate(['/monitors']);
-        }
-      },
-      (err: string) => {
-        this.loginErrorMessage = err;
-      },
-    );
+    this.authService
+      .login(username.value, password.value)
+      .subscribe(
+        () => this.router.navigateByUrl(this.returnUrl),
+        (err: string) => (this.loginErrorMessage = err),
+      );
   }
 
   getUsernameErrorMessage() {

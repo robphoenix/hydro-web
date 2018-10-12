@@ -1,6 +1,11 @@
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 /**
  * Guards all routes that require basic authentication.
@@ -23,9 +28,14 @@ export class AuthGuard implements CanActivate {
    * @returns {boolean}
    * @memberof AuthGuard
    */
-  canActivate(): boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): boolean {
     if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url },
+      });
       return false;
     }
     return true;

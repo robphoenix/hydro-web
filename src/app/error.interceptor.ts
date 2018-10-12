@@ -37,11 +37,9 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (typeof error.error === 'string') {
           // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong
-          const errorMessages: IErrorMessage[] = JSON.parse(error.error);
           // Until otherwise necessary, we're only going to deal
           // with the first error message sent back from the server
-          const { message } = errorMessages[0] as IErrorMessage;
+          const [{ message }] = JSON.parse(error.error) as IErrorMessage[];
           msg = message;
         } else {
           // A client-side or network error occurred. Handle it accordingly.

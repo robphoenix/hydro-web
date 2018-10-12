@@ -1,11 +1,11 @@
 import { IAccessToken } from './access-token';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser, Role } from './user';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 const httpOptions = {
   responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
@@ -82,10 +82,12 @@ export class AuthService {
       .pipe(
         tap((resp) => {
           this.accessToken = resp;
-          // tslint:disable-next-line:no-shadowed-variable
-          const { username, role } = this.jwtHelper.decodeToken(resp);
+          const {
+            username: currentUsername,
+            role,
+          } = this.jwtHelper.decodeToken(resp);
           this.role = role;
-          this.username = username;
+          this.username = currentUsername;
           this.initTimers();
         }),
       );
@@ -97,13 +99,11 @@ export class AuthService {
    * @memberof AuthService
    */
   initTimers() {
-    this.refreshToken();
     this.refreshTokenTimer = window.setInterval(
       () => this.refreshToken(),
       this.refreshTokenInterval,
     );
 
-    this.checkToken();
     this.checkTokenTimer = window.setInterval(
       () => this.checkToken(),
       this.checkTokenInterval,
@@ -130,7 +130,7 @@ export class AuthService {
    */
   refreshToken() {
     if (!this.isAuthenticated()) {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
       return;
     }
     this.http.get(this.refreshUrl, httpOptions).pipe(
@@ -149,7 +149,7 @@ export class AuthService {
   checkToken() {
     if (!this.isAuthenticated()) {
       this.logout();
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
     }
   }
 
