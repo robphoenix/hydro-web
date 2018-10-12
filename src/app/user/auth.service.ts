@@ -27,10 +27,15 @@ export class AuthService {
   private baseUrl = `http://mn2splpfa001sl0:8080`;
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
-  private refreshTimer;
-  private refreshInterval = 60 * 1000; // in milliseconds
   private accessTokenName = `access_token`;
   private currentUser: IUser = {} as IUser;
+
+  // timers
+  private refreshTokenTimer: number;
+  private refreshTokenInterval = 60 * 1000; // in milliseconds
+  private checkTokenTimer: number;
+  private checkTokenInterval = 1 * 1000; // in milliseconds
+
   redirectUrl: string;
 
   constructor(
@@ -81,41 +86,71 @@ export class AuthService {
           const { username, role } = this.jwtHelper.decodeToken(resp);
           this.role = role;
           this.username = username;
-          this.startRefreshTimer();
+          this.initTimers();
         }),
       );
   }
 
-  startRefreshTimer() {
-    this.refreshTimer = setInterval(
-      () => this.refreshToken().subscribe(),
-      this.refreshInterval,
+  /**
+   * Initialises all timers.
+   *
+   * @memberof AuthService
+   */
+  initTimers() {
+    this.refreshToken();
+    this.refreshTokenTimer = window.setInterval(
+      () => this.refreshToken(),
+      this.refreshTokenInterval,
+    );
+
+    this.checkToken();
+    this.checkTokenTimer = window.setInterval(
+      () => this.checkToken(),
+      this.checkTokenInterval,
     );
   }
 
-  clearRefreshTimer() {
-    clearInterval(this.refreshTimer);
+  /**
+   * Clears all timers.
+   *
+   * @memberof AuthService
+   */
+  clearTimers() {
+    clearInterval(this.refreshTokenTimer);
+    clearInterval(this.checkTokenTimer);
   }
 
   /**
    * If current user is authenticated the access token is refreshed repeatedly,
-   * on a timer, and the token in local storage is updated. This requires the current
-   * access token to be valid.
+   * on a timer, and the token in local storage is updated.
+   * This requires the current access token to be valid.
    *
-   * @returns {Observable<string>}
+   * @returns
    * @memberof AuthService
    */
-  refreshToken(): Observable<string> {
+  refreshToken() {
     if (!this.isAuthenticated()) {
       this.router.navigate(['login']);
-      return of(``);
+      return;
     }
-    return this.http.get(this.refreshUrl, httpOptions).pipe(
+    this.http.get(this.refreshUrl, httpOptions).pipe(
       tap((resp) => {
         this.accessToken = resp;
       }),
-      catchError(this.handleError<any>('refresh token')),
+      // catchError(this.handleError<any>('refresh token')),
     );
+  }
+
+  /**
+   * Checks the current access token is still valid and logs the user out if not.
+   *
+   * @memberof AuthService
+   */
+  checkToken() {
+    if (!this.isAuthenticated()) {
+      this.logout();
+      this.router.navigate(['login']);
+    }
   }
 
   /**
@@ -157,7 +192,7 @@ export class AuthService {
     this.role = null;
     this.username = null;
     this.removeAccessToken();
-    this.clearRefreshTimer();
+    this.clearTimers();
   }
 
   /**
