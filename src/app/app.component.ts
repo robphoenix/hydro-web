@@ -12,11 +12,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.refreshToken().subscribe();
-    this.authService.startRefreshTimer();
+    this.authService.initTimers();
   }
 
   ngOnDestroy(): void {
-    this.authService.clearRefreshTimer();
+    this.authService.clearTimers();
   }
 }
