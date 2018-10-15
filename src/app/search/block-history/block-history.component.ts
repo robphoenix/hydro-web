@@ -33,17 +33,19 @@ export class BlockHistoryComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.blockHistory.paginator = this.paginator;
+    if (this.blockHistory) {
+      this.blockHistory.paginator = this.paginator;
 
-    this.blockHistory.sortingDataAccessor = (item, property) => {
-      switch (property) {
-        case 'date':
-          return item.createdDate;
-        default:
-          return item[property];
-      }
-    };
-    this.blockHistory.sort = this.sort;
+      this.blockHistory.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'date':
+            return item.createdDate;
+          default:
+            return item[property];
+        }
+      };
+      this.blockHistory.sort = this.sort;
+    }
   }
 
   applyFilter(filterValue: string) {

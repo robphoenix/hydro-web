@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BlockHistoryComponent } from './block-history.component';
+import { HydroMaterialModule } from '../../material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BlockHistoryComponent', () => {
   let component: BlockHistoryComponent;
@@ -8,6 +10,7 @@ describe('BlockHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HydroMaterialModule, NoopAnimationsModule],
       declarations: [BlockHistoryComponent],
     }).compileComponents();
   }));

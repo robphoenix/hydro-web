@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MonitorComponent } from './monitor.component';
-import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HydroMaterialModule } from '../../material/material.module';
+import { MonitorTableComponent } from '../monitor-table/monitor-table.component';
 
 describe('MonitorComponent', () => {
   let component: MonitorComponent;
@@ -10,8 +11,12 @@ describe('MonitorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
-      declarations: [MonitorComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        HydroMaterialModule,
+      ],
+      declarations: [MonitorComponent, MonitorTableComponent],
     }).compileComponents();
   }));
 

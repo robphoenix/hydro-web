@@ -7,12 +7,14 @@ import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginGuard } from './login.guard';
 import { HydroMaterialModule } from '../material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     HydroMaterialModule,
     JwtModule.forRoot({
       config: {
