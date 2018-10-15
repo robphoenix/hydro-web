@@ -11,8 +11,6 @@
   - [Changing db.json](#changing-dbjson)
 - [Running Unit Tests](#running-unit-tests)
 - [Running End-to-End Tests](#running-end-to-end-tests)
-- [Authentication](#authentication)
-  - [Expected Behaviour](#expected-behaviour)
 - [Hydro API](#hydro-api)
 
 <!-- /TOC -->
@@ -63,20 +61,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running End-to-End Tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Authentication
-
-[JSON Web Tokens](https://jwt.io/) provide authentication. On successful login with the server a JWT access token is returned to the client. This token is stored in local storage and contains an expiry date & time. On receiving the access token a refresh timer is started which periodically sends an HTTP request to the server to get a new token with an updated expiration. This new token then replaces the token in local storage. To refresh the JWT access token, the current token needs to still be valid.
-
-The token is also refreshed when the app is started, if there is still a valid access token in local storage. In this case, the refresh timer is also set in motion upon app startup.
-
-Every API request to a protected endpoint requires a valid JWT access token.
-
-### Expected Behaviour
-
-- Upon successful login, a user will not be logged out of the application while it is open in the browser, unless they explicitly log out.
-- If the user closes the application, without explicitly logging out, they will be logged out when the JWT access token expires.
-- If the application is closed and then reopened while the JWT access token is still valid, the user will still be logged in.
 
 ## Hydro API
 

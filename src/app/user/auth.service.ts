@@ -17,6 +17,34 @@ const httpOptions = {
 /**
  * Handles all aspects of user authentication.
  *
+ * On successful login with the server a JWT access token is returned to the
+ * client. This token is stored in local storage and contains an expiry date &
+ * time.Every API request to a protected endpoint requires a valid JWT access
+ * token. On receiving the access token a refresh timer & a check timer are
+ * started.
+ *
+ * The refresh timer periodically sends an HTTP request to the server to get a
+ * new token with an updated expiration. This new token then replaces the token
+ * in local storage. To refresh the JWT access token, the current token needs to
+ * still be valid.
+ *
+ * The check timer periodically checks the current access token in order to take
+ * any necessary actions when it becomes invalid.
+ *
+ * Both timers are also inititated on app start up if the user is authenticated.
+ * The token is also refreshed when the app is started, if there is still a
+ * valid access token in local storage. In this case, the refresh timer is also
+ * set in motion upon app startup.
+ *
+ * @remarks
+ * Expected Behaviour:
+ * - Upon successful login, a user will not be logged out of the application
+ *   while it is open in the browser, unless they explicitly log out.
+ * - If the user closes the application, without explicitly logging out, they
+ *   will be logged out when the JWT access token expires.
+ * - If the application is closed and then reopened while the JWT access token
+ *   is still valid, the user will still be logged in.
+ *
  * @export
  * @class AuthService
  */
@@ -35,8 +63,6 @@ export class AuthService {
   private refreshTokenInterval = 60 * 1000; // in milliseconds
   private checkTokenTimer: number;
   private checkTokenInterval = 1 * 1000; // in milliseconds
-
-  redirectUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -99,6 +125,10 @@ export class AuthService {
    * @memberof AuthService
    */
   initTimers() {
+    if (!this.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.refreshTokenTimer = window.setInterval(
       () => this.refreshToken(),
       this.refreshTokenInterval,
