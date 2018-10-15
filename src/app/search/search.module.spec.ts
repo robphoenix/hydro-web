@@ -1,10 +1,10 @@
-import { ReportsModule } from './search.module';
+import { SearchModule } from './search.module';
 
-describe('ReportsModule', () => {
-  let reportsModule: ReportsModule;
+describe('SearchModule', () => {
+  let reportsModule: SearchModule;
 
   beforeEach(() => {
-    reportsModule = new ReportsModule();
+    reportsModule = new SearchModule();
   });
 
   it('should create an instance', () => {

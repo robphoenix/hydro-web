@@ -28,8 +28,10 @@ export class CrossReferenceComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.crossReference.paginator = this.paginator;
-    this.crossReference.sort = this.sort;
+    if (this.crossReference) {
+      this.crossReference.paginator = this.paginator;
+      this.crossReference.sort = this.sort;
+    }
   }
 
   applyFilter(filterValue: string) {

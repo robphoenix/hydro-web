@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MonitorTableComponent } from './monitor-table.component';
+import { HydroMaterialModule } from '../../material/material.module';
 
 describe('MonitorTableComponent', () => {
   let component: MonitorTableComponent;
@@ -8,6 +9,7 @@ describe('MonitorTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HydroMaterialModule],
       declarations: [MonitorTableComponent],
     }).compileComponents();
   }));

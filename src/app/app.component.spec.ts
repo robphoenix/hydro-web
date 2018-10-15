@@ -1,14 +1,28 @@
-import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material';
+import { HeaderComponent } from './layout/header/header.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, MatToolbarModule],
-      declarations: [AppComponent, LayoutHeaderComponent],
+      imports: [
+        RouterTestingModule,
+        MatToolbarModule,
+        HttpClientTestingModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: () => {
+              return '';
+            },
+          },
+        }),
+      ],
+      providers: [JwtHelperService],
+      declarations: [AppComponent, HeaderComponent],
     }).compileComponents();
   }));
 
@@ -18,10 +32,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'hydro-poc'`, async(() => {
+  it(`should have as title 'hydro-web'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('hydro-poc');
+    expect(app.title).toEqual('hydro-web');
   }));
 
   xit('should render title in a h1 tag', async(() => {

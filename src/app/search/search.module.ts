@@ -25,6 +25,7 @@ import { BlockHistoryComponent } from './block-history/block-history.component';
 import { GeolocationDataComponent } from './geolocation-data/geolocation-data.component';
 import { CrossReferenceComponent } from './cross-reference/cross-reference.component';
 import { HydroMaterialModule } from '../material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { HydroMaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     FlexLayoutModule,
     HydroMaterialModule,
+    BrowserAnimationsModule,
   ],
   declarations: [
     DictionarySearchComponent,

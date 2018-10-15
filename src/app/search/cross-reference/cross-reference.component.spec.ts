@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CrossReferenceComponent } from './cross-reference.component';
+import { HydroMaterialModule } from '../../material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CrossReferenceComponent', () => {
   let component: CrossReferenceComponent;
@@ -8,6 +10,7 @@ describe('CrossReferenceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HydroMaterialModule, NoopAnimationsModule],
       declarations: [CrossReferenceComponent],
     }).compileComponents();
   }));

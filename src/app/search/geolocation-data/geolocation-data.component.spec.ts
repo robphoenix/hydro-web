@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GeolocationDataComponent } from './geolocation-data.component';
+import { HydroMaterialModule } from '../../material/material.module';
 
 describe('GeolocationDataComponent', () => {
   let component: GeolocationDataComponent;
@@ -8,6 +9,7 @@ describe('GeolocationDataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HydroMaterialModule],
       declarations: [GeolocationDataComponent],
     }).compileComponents();
   }));
