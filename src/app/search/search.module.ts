@@ -24,6 +24,7 @@ import { DictionaryResultComponent } from './dictionary-result/dictionary-result
 import { BlockHistoryComponent } from './block-history/block-history.component';
 import { GeolocationDataComponent } from './geolocation-data/geolocation-data.component';
 import { CrossReferenceComponent } from './cross-reference/cross-reference.component';
+import { HydroMaterialModule } from '../material/material.module';
 
 @NgModule({
   imports: [
@@ -31,22 +32,8 @@ import { CrossReferenceComponent } from './cross-reference/cross-reference.compo
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatIconModule,
-    MatDialogModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
     FlexLayoutModule,
+    HydroMaterialModule,
   ],
   declarations: [
     DictionarySearchComponent,
