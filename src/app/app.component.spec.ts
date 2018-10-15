@@ -13,6 +13,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         MatToolbarModule,
         HttpClientTestingModule,
+        // https://github.com/auth0/angular2-jwt/issues/476#issuecomment-362805181
         JwtModule.forRoot({
           config: {
             tokenGetter: () => {
@@ -38,7 +39,7 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('hydro-web');
   }));
 
-  xit('should render title in a h1 tag', async(() => {
+  it('should render title in a h1 tag', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
