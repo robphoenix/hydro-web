@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../user/auth.service';
-import { Router } from '@angular/router';
 
 /**
  * The main header & toolbar.
@@ -13,10 +12,25 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   logo = '../assets/img/hydro_logo_white.png';
+  isAuthenticated = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  private subscription: any;
+
+  constructor(public authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.subscription = this.authService
+      .validateToken()
+      .subscribe((isValid: boolean) => {
+        this.isAuthenticated = isValid;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   /**
    * Log out the current user and route to `/login`
@@ -24,7 +38,7 @@ export class HeaderComponent {
    * @memberof LayoutHeaderComponent
    */
   logOut(): void {
+    this.isAuthenticated = false;
     this.authService.logout();
-    this.router.navigateByUrl('/login');
   }
 }

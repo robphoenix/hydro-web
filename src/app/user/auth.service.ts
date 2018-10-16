@@ -1,8 +1,8 @@
 import { IAccessToken } from './access-token';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { tap, map, switchMap } from 'rxjs/operators';
+import { Observable, of, interval } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser, Role } from './user';
 import { Router } from '@angular/router';
@@ -20,22 +20,19 @@ const httpOptions = {
  *
  * On successful login with the server a JWT access token is returned to the
  * client. This token is stored in local storage and contains an expiry date &
- * time.Every API request to a protected endpoint requires a valid JWT access
- * token. On receiving the access token a refresh timer & a check timer are
- * started.
+ * time. Every API request to a protected endpoint requires a valid JWT access
+ * token. On receiving the access token a refresh interval & a validation
+ * interval are started.
  *
- * The refresh timer periodically sends an HTTP request to the server to get a
+ * The refresh interval periodically sends an HTTP request to the server to get a
  * new token with an updated expiration. This new token then replaces the token
  * in local storage. To refresh the JWT access token, the current token needs to
  * still be valid.
  *
- * The check timer periodically checks the current access token in order to take
- * any necessary actions when it becomes invalid.
+ * The validation interval periodically checks the current access token in
+ * order to take any necessary actions when it becomes invalid.
  *
- * Both timers are also inititated on app start up if the user is authenticated.
- * The token is also refreshed when the app is started, if there is still a
- * valid access token in local storage. In this case, the refresh timer is also
- * set in motion upon app startup.
+ * Both intervals are also initiated on app start up if the user is authenticated.
  *
  * @remarks
  * Expected Behaviour:
@@ -56,14 +53,20 @@ export class AuthService {
   baseUrl = `http://${environment.apiHost}:8080`;
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
+
+  // the key the JWT token is stored under in local storage
   private accessTokenName = `access_token`;
+
   private currentUser: IUser = {} as IUser;
 
-  // timers
-  private refreshTokenTimer: number;
-  private refreshTokenInterval = 60 * 1000; // in milliseconds
-  private checkTokenTimer: number;
-  private checkTokenInterval = 1 * 1000; // in milliseconds
+  // interval durations
+  private refreshInterval = 60 * 1000; // in milliseconds
+  private validationInterval = 0.5 * 1000; // in milliseconds
+
+  // any observable subscriptions that need to be unsubscribed from on logout.
+  subscriptions: any;
+
+  isAuthenticated = false;
 
   constructor(
     private http: HttpClient,
@@ -72,14 +75,14 @@ export class AuthService {
   ) {}
 
   /**
-   * Returns a boolean indicating whether the current user
-   * is authenticated.
+   * Validates a JWT token. If no token is given, will validate the current
+   * access token.
    *
    * @returns {boolean}
    * @memberof AuthService
    */
-  isAuthenticated(): boolean {
-    return !this.jwtHelper.isTokenExpired(this.accessToken);
+  isValidToken(token?: string): boolean {
+    return !this.jwtHelper.isTokenExpired(token || this.accessToken);
   }
 
   /**
@@ -108,80 +111,75 @@ export class AuthService {
       .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
         tap((resp) => {
+          // set the access token
           this.accessToken = resp;
-          const {
-            username: currentUsername,
-            role,
-          } = this.jwtHelper.decodeToken(resp);
+          // set the isAuthenticated property
+          this.isAuthenticated = this.isValidToken(resp);
+          // set the current user
+          const { username: currentUsername, role } = this.decodedAccessToken();
           this.role = role;
           this.username = currentUsername;
-          this.initTimers();
+          // initialise the subscriptions
+          this.initSubscriptions();
         }),
       );
   }
 
   /**
-   * Initialises all timers.
+   * Initialises the subscriptions.
    *
    * @memberof AuthService
    */
-  initTimers() {
-    if (!this.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.refreshTokenTimer = window.setInterval(
-      () => this.refreshToken(),
-      this.refreshTokenInterval,
-    );
+  initSubscriptions() {
+    this.subscriptions = this.refreshToken().subscribe();
 
-    this.checkTokenTimer = window.setInterval(
-      () => this.checkToken(),
-      this.checkTokenInterval,
+    // Subscribe to access token validation,
+    // logging out when it is not longer valid.
+    this.subscriptions.add(
+      this.validateToken().subscribe((isValid) => {
+        this.isAuthenticated = isValid;
+        if (!this.isAuthenticated) {
+          this.logout();
+        }
+      }),
     );
-  }
-
-  /**
-   * Clears all timers.
-   *
-   * @memberof AuthService
-   */
-  clearTimers() {
-    clearInterval(this.refreshTokenTimer);
-    clearInterval(this.checkTokenTimer);
   }
 
   /**
    * If current user is authenticated the access token is refreshed repeatedly,
-   * on a timer, and the token in local storage is updated.
-   * This requires the current access token to be valid.
+   * on a timer, and the token in local storage is updated. This requires the
+   * current access token to be valid.
    *
    * @returns
    * @memberof AuthService
    */
-  refreshToken() {
-    if (!this.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.http.get(this.refreshUrl, httpOptions).pipe(
+  refreshToken(): Observable<string> {
+    return interval(this.refreshInterval).pipe(
+      switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
       tap((resp) => {
-        this.accessToken = resp;
+        this.isAuthenticated = this.isValidToken(resp);
+        if (this.isAuthenticated) {
+          this.accessToken = resp;
+        } else {
+          this.logout();
+        }
+        return of(resp);
       }),
-      // catchError(this.handleError<any>('refresh token')),
     );
   }
 
   /**
-   * Checks the current access token is still valid and logs the user out if not.
+   * Validates the current access token on a set interval.
    *
+   * @returns {Observable<boolean>}
    * @memberof AuthService
    */
-  checkToken() {
-    if (!this.isAuthenticated()) {
-      this.logout();
-      this.router.navigate(['/login']);
-    }
+  public validateToken(): Observable<boolean> {
+    return interval(this.validationInterval).pipe(
+      map(() => {
+        return this.isValidToken();
+      }),
+    );
   }
 
   /**
@@ -214,16 +212,24 @@ export class AuthService {
 
   /**
    * Logs out the current user.
-   * Sets the current user details to null, removes the access token from
-   * local storage, and clears the refresh timer.
+   *
+   * Removes the access token from local storage.
+   * Sets isAuthenticated property to false.
+   * Sets the current user details to null.
+   * Unsubscribes from all subscriptions.
+   * Navigates to the login page.
    *
    * @memberof AuthService
    */
   logout(): void {
+    this.removeAccessToken();
+    this.isAuthenticated = false;
     this.role = null;
     this.username = null;
-    this.removeAccessToken();
-    this.clearTimers();
+    if (this.subscriptions) {
+      this.subscriptions.unsubscribe();
+    }
+    this.router.navigate(['/login']);
   }
 
   /**
@@ -246,7 +252,7 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    if (this.isAuthenticated() && !this.currentUser.username) {
+    if (this.isAuthenticated && !this.currentUser.username) {
       this.currentUser.username = this.decodedAccessToken().username;
     }
     return this.currentUser.username;
