@@ -71,9 +71,6 @@ export class AuthService {
   // Observable subscriptions that need to be unsubscribed from on logout.
   private subscriptions: any;
 
-  // Indicates the user's current authentication status.
-  isAuthenticated = false;
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -81,14 +78,23 @@ export class AuthService {
   ) {}
 
   /**
-   * Validates a JWT token. If no token is given, will validate the current
-   * access token.
+   * Validates a JWT token.
    *
    * @returns {boolean}
    * @memberof AuthService
    */
-  isValidToken(token?: string): boolean {
-    return !this.jwtHelper.isTokenExpired(token || this.accessToken);
+  isValidToken(token: string): boolean {
+    return !this.jwtHelper.isTokenExpired(token);
+  }
+
+  /**
+   * Validates the current access token.
+   *
+   * @returns {boolean}
+   * @memberof AuthService
+   */
+  isAuthenticated(): boolean {
+    return !this.jwtHelper.isTokenExpired(this.accessToken);
   }
 
   /**
@@ -117,16 +123,19 @@ export class AuthService {
       .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
         tap((resp) => {
-          // set the access token
-          this.accessToken = resp;
-          // set the isAuthenticated property
-          this.isAuthenticated = this.isValidToken(resp);
-          // set the current user
-          const { username: currentUsername, role } = this.decodedAccessToken();
-          this.role = role;
-          this.username = currentUsername;
-          // initialise the subscriptions
-          this.initSubscriptions();
+          if (this.isValidToken(resp)) {
+            // set the access token
+            this.accessToken = resp;
+            // set the current user
+            const {
+              username: currentUsername,
+              role,
+            } = this.decodedAccessToken();
+            this.role = role;
+            this.username = currentUsername;
+            // initialise the subscriptions
+            this.initSubscriptions();
+          }
         }),
       );
   }
@@ -137,24 +146,16 @@ export class AuthService {
    * @memberof AuthService
    */
   initSubscriptions() {
-    // Refresh the access token
-    this.subscriptions = this.refreshToken().subscribe((token: string) => {
-      this.accessToken = token;
-    });
+    // Only start subscriptions if logged in
+    if (!this.isAuthenticated()) {
+      return;
+    }
 
-    // Subscribe to access token validation,
-    // logging out when it is not longer valid.
-    this.subscriptions.add(
-      this.validateToken().subscribe((isValid: boolean) => {
-        // Set isAuthenticated property so users of the service are made aware
-        // of the current status.
-        this.isAuthenticated = isValid;
-        // Logout if the token is no longer valid.
-        if (!this.isAuthenticated) {
-          this.logout();
-        }
-      }),
-    );
+    // Refresh the access token, and add it to the subscriptions.
+    this.subscriptions = this.refreshToken().subscribe();
+
+    // Subscribe to access token validation, and add it to the subscriptions.
+    this.subscriptions.add(this.validateToken().subscribe());
   }
 
   /**
@@ -180,6 +181,7 @@ export class AuthService {
       switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
       // TODO: Handle errors
       tap((resp) => {
+        this.accessToken = resp;
         return of(resp);
       }),
     );
@@ -187,6 +189,7 @@ export class AuthService {
 
   /**
    * Validates the current access token on a set interval.
+   * Logging out if the access token is invalid.
    *
    * @returns {Observable<boolean>}
    * @memberof AuthService
@@ -194,7 +197,11 @@ export class AuthService {
   public validateToken(): Observable<boolean> {
     return interval(this.validationInterval).pipe(
       map(() => {
-        return this.isValidToken();
+        const isValid: boolean = !this.isAuthenticated();
+        if (isValid) {
+          this.logout();
+        }
+        return isValid;
       }),
     );
   }
@@ -240,7 +247,6 @@ export class AuthService {
    */
   logout(): void {
     this.removeAccessToken();
-    this.isAuthenticated = false;
     this.role = null;
     this.username = null;
     if (this.subscriptions) {
@@ -269,7 +275,7 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    if (this.isAuthenticated && !this.currentUser.username) {
+    if (this.isAuthenticated() && !this.currentUser.username) {
       this.currentUser.username = this.decodedAccessToken().username;
     }
     return this.currentUser.username;
@@ -292,15 +298,5 @@ export class AuthService {
    */
   get role(): string {
     return this.currentUser.role as string;
-  }
-
-  // TODO: Move this into a shared service.
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(` handling error: ${error.error}`); // log to console instead
-      console.log({ error });
-      console.log(`${operation} failed`);
-      return of(result as T);
-    };
   }
 }

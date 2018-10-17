@@ -7,7 +7,7 @@
 
     <span class="nav-spacer"></span>
 
-    <span class="page-nav" *ngIf="authService.isAuthenticated">
+    <span class="page-nav" *ngIf="authService.isAuthenticated()">
       <a mat-button routerLink="/monitors">
         Monitors
       </a>
