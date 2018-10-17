@@ -54,18 +54,24 @@ export class AuthService {
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
 
-  // the key the JWT token is stored under in local storage
+  // The key the JWT token is stored under in local storage
   private accessTokenName = `access_token`;
 
   private currentUser: IUser = {} as IUser;
 
-  // interval durations
-  private refreshInterval = 60 * 1000; // in milliseconds
-  private validationInterval = 0.5 * 1000; // in milliseconds
+  // Interval durations, these are in milliseconds
+  //
+  // The refresh interval should be less than the expiry duration of the JWT
+  // token sent from the server.
+  private refreshInterval = 60 * 1000;
+  // The validation interval should be very small, otherwise we could create an
+  // awkward lag in the UI, between an action and it's reaction in the UI
+  private validationInterval = 1 * 1000;
 
-  // any observable subscriptions that need to be unsubscribed from on logout.
-  subscriptions: any;
+  // Observable subscriptions that need to be unsubscribed from on logout.
+  private subscriptions: any;
 
+  // Indicates the user's current authentication status.
   isAuthenticated = false;
 
   constructor(
@@ -99,7 +105,7 @@ export class AuthService {
    * Attempts to log in with the given username & password.
    * If authentication is successful the returned JWT access token
    * is stored in local storage, the current user is updated, and
-   * the token refresh timer is started.
+   * the subscriptions are initiated.
    *
    * @param {string} username
    * @param {string} password
@@ -131,13 +137,19 @@ export class AuthService {
    * @memberof AuthService
    */
   initSubscriptions() {
-    this.subscriptions = this.refreshToken().subscribe();
+    // Refresh the access token
+    this.subscriptions = this.refreshToken().subscribe((token: string) => {
+      this.accessToken = token;
+    });
 
     // Subscribe to access token validation,
     // logging out when it is not longer valid.
     this.subscriptions.add(
-      this.validateToken().subscribe((isValid) => {
+      this.validateToken().subscribe((isValid: boolean) => {
+        // Set isAuthenticated property so users of the service are made aware
+        // of the current status.
         this.isAuthenticated = isValid;
+        // Logout if the token is no longer valid.
         if (!this.isAuthenticated) {
           this.logout();
         }
@@ -146,9 +158,19 @@ export class AuthService {
   }
 
   /**
-   * If current user is authenticated the access token is refreshed repeatedly,
-   * on a timer, and the token in local storage is updated. This requires the
-   * current access token to be valid.
+   * Unsubscribes from all subscriptions.
+   *
+   * @memberof AuthService
+   */
+  unsubscribeSubscriptions() {
+    this.subscriptions.unsubscribe();
+  }
+
+  /**
+   * Fetches a refreshed access token from the server, repeatedly on an interval.
+   *
+   * @remarks
+   * This requires the current token to be valid.
    *
    * @returns
    * @memberof AuthService
@@ -156,13 +178,8 @@ export class AuthService {
   refreshToken(): Observable<string> {
     return interval(this.refreshInterval).pipe(
       switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
+      // TODO: Handle errors
       tap((resp) => {
-        this.isAuthenticated = this.isValidToken(resp);
-        if (this.isAuthenticated) {
-          this.accessToken = resp;
-        } else {
-          this.logout();
-        }
         return of(resp);
       }),
     );
@@ -227,7 +244,7 @@ export class AuthService {
     this.role = null;
     this.username = null;
     if (this.subscriptions) {
-      this.subscriptions.unsubscribe();
+      this.unsubscribeSubscriptions();
     }
     this.router.navigate(['/login']);
   }
