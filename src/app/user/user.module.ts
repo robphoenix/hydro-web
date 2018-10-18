@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         tokenGetter: () => {
           return localStorage.getItem('access_token');
         },
-        whitelistedDomains: ['localhost:4200', 'mn2splpfa001sl0:4200'],
+        whitelistedDomains: ['localhost:4200', 'mn2splmfe001sd0:4200'],
       },
     }),
   ],

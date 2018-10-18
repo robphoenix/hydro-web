@@ -52,7 +52,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = `http://mn2splpfa001sl0:8080`;
+  private baseUrl = `http://mn2splmfe001sd0:8080`;
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
   private accessTokenName = `access_token`;
