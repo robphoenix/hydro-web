@@ -5,7 +5,8 @@ import { tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser, Role } from './user';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.dev';
 
 const httpOptions = {
   responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
@@ -52,7 +53,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = `http://mn2splpfa001sl0:8080`;
+  baseUrl = `http://${environment.apiHost}:8080`;
   private loginUrl = `${this.baseUrl}/login`;
   private refreshUrl = `${this.baseUrl}/p/refresh`;
   private accessTokenName = `access_token`;
