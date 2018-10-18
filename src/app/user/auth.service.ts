@@ -71,6 +71,8 @@ export class AuthService {
   // Observable subscriptions that need to be unsubscribed from on logout.
   private subscriptions: any;
 
+  isLoggedIn = false;
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -78,23 +80,14 @@ export class AuthService {
   ) {}
 
   /**
-   * Validates a JWT token.
+   * Validates a JWT token. If no token is given the current access token will
+   * be validated.
    *
    * @returns {boolean}
    * @memberof AuthService
    */
-  isValidToken(token: string): boolean {
-    return !this.jwtHelper.isTokenExpired(token);
-  }
-
-  /**
-   * Validates the current access token.
-   *
-   * @returns {boolean}
-   * @memberof AuthService
-   */
-  isAuthenticated(): boolean {
-    return !this.jwtHelper.isTokenExpired(this.accessToken);
+  isValidToken(token?: string): boolean {
+    return !this.jwtHelper.isTokenExpired(token || this.accessToken);
   }
 
   /**
@@ -126,6 +119,8 @@ export class AuthService {
           if (this.isValidToken(resp)) {
             // set the access token
             this.accessToken = resp;
+
+            this.isLoggedIn = true;
             // set the current user
             const {
               username: currentUsername,
@@ -146,8 +141,9 @@ export class AuthService {
    * @memberof AuthService
    */
   initSubscriptions() {
+    this.isLoggedIn = this.isValidToken();
     // Only start subscriptions if logged in
-    if (!this.isAuthenticated()) {
+    if (!this.isLoggedIn) {
       return;
     }
 
@@ -197,8 +193,9 @@ export class AuthService {
   public validateToken(): Observable<boolean> {
     return interval(this.validationInterval).pipe(
       map(() => {
-        const isValid: boolean = !this.isAuthenticated();
-        if (isValid) {
+        const isValid: boolean = this.isValidToken();
+        this.isLoggedIn = isValid;
+        if (!isValid) {
           this.logout();
         }
         return isValid;
@@ -237,15 +234,16 @@ export class AuthService {
   /**
    * Logs out the current user.
    *
+   * Sets isLoggedIn property to false.
    * Removes the access token from local storage.
-   * Sets isAuthenticated property to false.
    * Sets the current user details to null.
-   * Unsubscribes from all subscriptions.
+   * Unsubscribes from any subscriptions.
    * Navigates to the login page.
    *
    * @memberof AuthService
    */
   logout(): void {
+    this.isLoggedIn = false;
     this.removeAccessToken();
     this.role = null;
     this.username = null;
@@ -275,7 +273,7 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    if (this.isAuthenticated() && !this.currentUser.username) {
+    if (this.isLoggedIn && !this.currentUser.username) {
       this.currentUser.username = this.decodedAccessToken().username;
     }
     return this.currentUser.username;

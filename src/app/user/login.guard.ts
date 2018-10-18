@@ -10,7 +10,7 @@ export class LoginGuard implements CanActivate {
   constructor(private authService: AuthService, private location: Location) {}
 
   canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isLoggedIn) {
       // return to previous page
       this.location.back();
       return false;
