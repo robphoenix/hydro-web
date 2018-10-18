@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../user/auth.service';
-import { Router } from '@angular/router';
 
 /**
  * The main header & toolbar.
@@ -16,7 +15,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   logo = '../assets/img/hydro_logo_white.png';
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService) {}
 
   /**
    * Log out the current user and route to `/login`
@@ -25,6 +24,5 @@ export class HeaderComponent {
    */
   logOut(): void {
     this.authService.logout();
-    this.router.navigateByUrl('/login');
   }
 }
