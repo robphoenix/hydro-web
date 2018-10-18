@@ -16,7 +16,7 @@ import (
 func main() {
   // Router for Angular client
   staticRouter := mux.NewRouter()
-  staticRouter.PathPrefix("/").Handler(wrapHandler(http.FileServer(http.Dir("../dist/hydro-poc"))))
+  staticRouter.PathPrefix("/").Handler(wrapHandler(http.FileServer(http.Dir("../dist/hydro-web"))))
 
   // Router for JSON Mock API
   jsonRouter := mux.NewRouter()
