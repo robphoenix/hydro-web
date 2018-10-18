@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hydro-poc": {
+    "hydro-web": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,15 +17,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hydro-poc",
+            "outputPath": "dist/hydro-web",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               {
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
@@ -52,11 +49,11 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "load": {
+            "dev": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.load.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ]
             }
@@ -65,21 +62,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hydro-poc:build"
+            "browserTarget": "hydro-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hydro-poc:build:production"
+              "browserTarget": "hydro-web:build:production"
             },
-            "load": {
-              "browserTarget": "hydro-poc:build:load"
+            "dev": {
+              "browserTarget": "hydro-web:build:dev"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hydro-poc:build"
+            "browserTarget": "hydro-web:build"
           }
         },
         "test": {
@@ -96,27 +93,19 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     },
-    "hydro-poc-e2e": {
+    "hydro-web-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -124,11 +113,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "hydro-poc:serve"
+            "devServerTarget": "hydro-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "hydro-poc:serve:production"
+              "devServerTarget": "hydro-web:serve:production"
             }
           }
         },
@@ -136,13 +125,11 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }
   },
-  "defaultProject": "hydro-poc"
+  "defaultProject": "hydro-web"
 }
