@@ -50,9 +50,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = `http://${environment.apiHost}:8080`;
-  private loginUrl = `${this.baseUrl}/login`;
-  private refreshUrl = `${this.baseUrl}/p/refresh`;
+  readonly baseUrl = `http://${environment.apiHost}:8080`;
+  readonly loginUrl = `${this.baseUrl}/login`;
+  readonly refreshUrl = `${this.baseUrl}/p/refresh`;
 
   // The key the JWT token is stored under in local storage
   readonly accessTokenName = 'access_token';
