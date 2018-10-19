@@ -7,7 +7,6 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
 
 /**
  * Intercepts all HTTP requests to add the authenticated JWT access token.
@@ -23,7 +22,7 @@ import { Router } from '@angular/router';
  */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -32,7 +31,9 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(
       req.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.authService.accessToken}`,
+          Authorization: `Bearer ${localStorage.getItem(
+            this.authService.accessTokenName,
+          )}`,
         },
       }),
     );

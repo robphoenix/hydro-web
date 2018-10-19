@@ -55,7 +55,7 @@ export class AuthService {
   private refreshUrl = `${this.baseUrl}/p/refresh`;
 
   // The key the JWT token is stored under in local storage
-  private accessTokenName = `access_token`;
+  readonly accessTokenName = 'access_token';
 
   private currentUser: IUser = {} as IUser;
 
@@ -80,27 +80,6 @@ export class AuthService {
   ) {}
 
   /**
-   * Validates a JWT token. If no token is given the current access token will
-   * be validated.
-   *
-   * @returns {boolean}
-   * @memberof AuthService
-   */
-  isValidToken(token?: string): boolean {
-    return !this.jwtHelper.isTokenExpired(token || this.accessToken);
-  }
-
-  /**
-   * Returns the decoded JWT access token.
-   *
-   * @returns {IAccessToken}
-   * @memberof AuthService
-   */
-  decodedAccessToken(): IAccessToken {
-    return this.jwtHelper.decodeToken(this.accessToken) as IAccessToken;
-  }
-
-  /**
    * Attempts to log in with the given username & password.
    * If authentication is successful the returned JWT access token
    * is stored in local storage, the current user is updated, and
@@ -116,16 +95,17 @@ export class AuthService {
       .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
         tap((resp) => {
-          if (this.isValidToken(resp)) {
+          if (!this.jwtHelper.isTokenExpired(resp)) {
             // set the access token
-            this.accessToken = resp;
+            localStorage.setItem(this.accessTokenName, resp);
 
             this.isLoggedIn = true;
             // set the current user
             const {
               username: currentUsername,
               role,
-            } = this.decodedAccessToken();
+            } = this.jwtHelper.decodeToken(resp) as IAccessToken;
+
             this.role = role;
             this.username = currentUsername;
             // initialise the subscriptions
@@ -141,7 +121,8 @@ export class AuthService {
    * @memberof AuthService
    */
   initSubscriptions() {
-    this.isLoggedIn = this.isValidToken();
+    const token = localStorage.getItem(this.accessTokenName);
+    this.isLoggedIn = !this.jwtHelper.isTokenExpired(token);
     // Only start subscriptions if logged in
     if (!this.isLoggedIn) {
       return;
@@ -175,9 +156,8 @@ export class AuthService {
   refreshToken(): Observable<string> {
     return interval(this.refreshInterval).pipe(
       switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
-      // TODO: Handle errors
       tap((resp) => {
-        this.accessToken = resp;
+        localStorage.setItem(this.accessTokenName, resp);
         return of(resp);
       }),
     );
@@ -193,7 +173,8 @@ export class AuthService {
   public validateToken(): Observable<boolean> {
     return interval(this.validationInterval).pipe(
       map(() => {
-        const isValid: boolean = this.isValidToken();
+        const token = localStorage.getItem(this.accessTokenName);
+        const isValid: boolean = !this.jwtHelper.isTokenExpired(token);
         this.isLoggedIn = isValid;
         if (!isValid) {
           this.logout();
@@ -201,34 +182,6 @@ export class AuthService {
         return isValid;
       }),
     );
-  }
-
-  /**
-   * Sets the access token in local storage.
-   *
-   * @memberof AuthService
-   */
-  set accessToken(token: string) {
-    localStorage.setItem(this.accessTokenName, token);
-  }
-
-  /**
-   * Gets the access token from local storage.
-   *
-   * @type {string}
-   * @memberof AuthService
-   */
-  get accessToken(): string {
-    return localStorage.getItem(this.accessTokenName);
-  }
-
-  /**
-   * Removes the access token from local storage.
-   *
-   * @memberof AuthService
-   */
-  removeAccessToken() {
-    localStorage.removeItem(this.accessTokenName);
   }
 
   /**
@@ -244,7 +197,7 @@ export class AuthService {
    */
   logout(): void {
     this.isLoggedIn = false;
-    this.removeAccessToken();
+    localStorage.removeItem(this.accessTokenName);
     this.role = null;
     this.username = null;
     if (this.subscriptions) {
@@ -273,8 +226,12 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    if (this.isLoggedIn && !this.currentUser.username) {
-      this.currentUser.username = this.decodedAccessToken().username;
+    // get the username from the token if necessary
+    if (!this.currentUser.username && this.isLoggedIn) {
+      const { username } = this.jwtHelper.decodeToken(
+        localStorage.getItem(this.accessTokenName),
+      ) as IAccessToken;
+      this.currentUser.username = username;
     }
     return this.currentUser.username;
   }

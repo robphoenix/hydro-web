@@ -3,24 +3,25 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { IAccessToken } from './access-token';
 
 describe('AuthService', () => {
-  beforeEach(() =>
+  let mockJwtHelperService;
+
+  beforeEach(() => {
+    mockJwtHelperService = jasmine.createSpyObj('mockJwtHelperService', [
+      'isTokenExpired',
+      'decodeToken',
+    ]);
+
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        JwtModule.forRoot({
-          config: {
-            tokenGetter: () => {
-              return '';
-            },
-          },
-        }),
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [
+        { provide: JwtHelperService, useValue: mockJwtHelperService },
       ],
-      providers: [JwtHelperService],
-    }));
+    });
+  });
 
   it('should be created', () => {
     const service: AuthService = TestBed.get(AuthService);

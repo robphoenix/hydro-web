@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material';
 import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -33,18 +34,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  xit(`should have as title 'hydro-web'`, async(() => {
+  it('should render the header component', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('hydro-web');
-  }));
-
-  xit('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(
-      'Welcome to hydro-poc!',
-    );
+    expect(
+      fixture.debugElement.query(By.directive(HeaderComponent)).nativeElement,
+    ).toBeTruthy();
   }));
 });
