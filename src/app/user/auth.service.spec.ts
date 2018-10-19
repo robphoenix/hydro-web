@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
 import {
   HttpClientTestingModule,
@@ -7,13 +6,11 @@ import {
 } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IAccessToken } from './access-token';
 import { HttpClient } from '@angular/common/http';
-import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 describe('AuthService', () => {
   let mockJwtHelperService;
-  let httpClient: HttpClient;
+  // let httpClient: HttpClient;
   let httpMock: HttpTestingController;
   let service: AuthService;
 
@@ -34,7 +31,7 @@ describe('AuthService', () => {
       ],
     });
 
-    httpClient = TestBed.get(HttpClient);
+    // httpClient = TestBed.get(HttpClient);
     httpMock = TestBed.get(HttpTestingController);
     service = TestBed.get(AuthService);
   });
@@ -86,36 +83,62 @@ describe('AuthService', () => {
       expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
     });
 
-    it('should not log in on 401 HTTP response', () => {
+    it('should log in on 200 HTTP response', () => {
+      mockJwtHelperService.isTokenExpired.and.returnValue(false);
+      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      const token = 'valid_token';
+
       service.login(username, password).subscribe();
 
       httpMock
         .expectOne(service.loginUrl)
-        .flush(
-          { errorCode: 'GENERIC_ERROR' },
-          { status: 401, statusText: 'unauthorised' },
-        );
+        .flush(token, { status: 200, statusText: '' });
 
-      expect(service.isLoggedIn).toBe(false);
-      expect(service.username).toBeTruthy();
-      expect(service.role).toBeFalsy();
-      expect(localStorage.getItem(service.accessTokenName)).toBeTruthy();
+      expect(service.isLoggedIn).toBe(true);
+      expect(service.username).toBe(username);
+      expect(service.role).toBe(role);
+      expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
     });
 
-    fit('should not log in on 500 HTTP response', () => {
-      service.login(username, password).subscribe();
+    it('should not log in on 401 HTTP response', () => {
+      const errorResponse = JSON.stringify({ errorCode: 'GENERIC_ERROR' });
+      service.login(username, password).subscribe(
+        () => {},
+        (err) => {
+          expect(err.error).toBe(errorResponse);
+
+          expect(service.isLoggedIn).toBe(false);
+          expect(service.username).toBeFalsy();
+          expect(service.role).toBeFalsy();
+          expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
+        },
+      );
 
       httpMock
         .expectOne(service.loginUrl)
-        .flush(
-          { errorCode: 'INTERNAL_SERVER_ERROR' },
-          { status: 500, statusText: 'Internal Server Error' },
-        );
+        .flush(errorResponse, { status: 401, statusText: 'unauthorised' });
+    });
 
-      expect(service.isLoggedIn).toBe(false);
-      expect(service.username).toBeFalsy();
-      expect(service.role).toBeFalsy();
-      expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
+    it('should not log in on 500 HTTP response', () => {
+      const errorResponse = JSON.stringify({
+        errorCode: 'INTERNAL_SERVER_ERROR',
+      });
+      service.login(username, password).subscribe(
+        () => {},
+        (err) => {
+          expect(err.error).toBe(errorResponse);
+
+          expect(service.isLoggedIn).toBe(false);
+          expect(service.username).toBeFalsy();
+          expect(service.role).toBeFalsy();
+          expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
+        },
+      );
+
+      httpMock.expectOne(service.loginUrl).flush(errorResponse, {
+        status: 500,
+        statusText: 'Internal Server Error',
+      });
     });
   });
 });
