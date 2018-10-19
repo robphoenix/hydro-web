@@ -15,6 +15,7 @@ describe('AuthService', () => {
   let mockJwtHelperService;
   let httpClient: HttpClient;
   let httpMock: HttpTestingController;
+  let service: AuthService;
 
   const username = 'username';
   const password = 'password';
@@ -35,95 +36,86 @@ describe('AuthService', () => {
 
     httpClient = TestBed.get(HttpClient);
     httpMock = TestBed.get(HttpTestingController);
+    service = TestBed.get(AuthService);
   });
 
   it('should be created', () => {
-    const service: AuthService = TestBed.get(AuthService);
     expect(service).toBeTruthy();
   });
 
-  fdescribe('login', () => {
+  describe('login', () => {
+    afterEach(() => {
+      localStorage.removeItem(service.accessTokenName);
+
+      httpMock.verify();
+    });
+
     it('should log in if successfully authenticated', () => {
-      const service: AuthService = TestBed.get(AuthService);
-      // return a valid token
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
       mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      const token = 'valid_token';
 
-      // before we've logged in
       expect(service.isLoggedIn).toBe(false);
+      expect(service.username).toBeFalsy();
+      expect(service.role).toBeFalsy();
 
-      // login
       service.login(username, password).subscribe();
 
-      // check the request
       const req = httpMock.expectOne(service.loginUrl);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ username, password });
 
-      // return the token
-      req.flush('valid_token');
+      req.flush(token);
 
-      // check we're now logged in
       expect(service.isLoggedIn).toBe(true);
-
-      httpMock.verify();
+      expect(service.username).toBe(username);
+      expect(service.role).toBe(role);
+      expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
     });
 
     it('should not log in if returned token is invalid', () => {
-      const service: AuthService = TestBed.get(AuthService);
-      // return an invalid token
-      mockJwtHelperService.isTokenExpired.and.returnValue(true);
-
-      // before we've logged in
-      expect(service.isLoggedIn).toBe(false);
-
-      // login
-      service.login(username, password).subscribe();
-
-      httpMock.expectOne(service.loginUrl).flush('invalid_token');
-
-      // check we're still not logged in
-      expect(service.isLoggedIn).toBe(false);
-
-      httpMock.verify();
-    });
-
-    it('should create the user if successfully authenticated', () => {
-      const service: AuthService = TestBed.get(AuthService);
-      // return a valid token
-      mockJwtHelperService.isTokenExpired.and.returnValue(false);
-      // return the decoded token
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
-
-      // ensure the user is not currently defined
-      expect(service.username).toBeFalsy();
-      expect(service.role).toBeFalsy();
-
-      // login
-      service.login(username, password).subscribe();
-
-      httpMock.expectOne(service.loginUrl).flush('valid_token');
-
-      // check we now have a user
-      expect(service.username).toBe(username);
-      expect(service.role).toBe(role);
-
-      httpMock.verify();
-    });
-
-    it('should not create the user if authentication fails', () => {
-      const service: AuthService = TestBed.get(AuthService);
-      // return an invalid token
       mockJwtHelperService.isTokenExpired.and.returnValue(true);
 
       service.login(username, password).subscribe();
 
       httpMock.expectOne(service.loginUrl).flush('invalid_token');
 
+      expect(service.isLoggedIn).toBe(false);
       expect(service.username).toBeFalsy();
       expect(service.role).toBeFalsy();
+      expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
+    });
 
-      httpMock.verify();
+    it('should not log in on 401 HTTP response', () => {
+      service.login(username, password).subscribe();
+
+      httpMock
+        .expectOne(service.loginUrl)
+        .flush(
+          { errorCode: 'GENERIC_ERROR' },
+          { status: 401, statusText: 'unauthorised' },
+        );
+
+      expect(service.isLoggedIn).toBe(false);
+      expect(service.username).toBeTruthy();
+      expect(service.role).toBeFalsy();
+      expect(localStorage.getItem(service.accessTokenName)).toBeTruthy();
+    });
+
+    fit('should not log in on 500 HTTP response', () => {
+      service.login(username, password).subscribe();
+
+      httpMock
+        .expectOne(service.loginUrl)
+        .flush(
+          { errorCode: 'INTERNAL_SERVER_ERROR' },
+          { status: 500, statusText: 'Internal Server Error' },
+        );
+
+      expect(service.isLoggedIn).toBe(false);
+      expect(service.username).toBeFalsy();
+      expect(service.role).toBeFalsy();
+      expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
     });
   });
 });
