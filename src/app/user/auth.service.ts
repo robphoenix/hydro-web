@@ -4,7 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IUser, Role } from './user';
+import { IUser } from './user';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.dev';
 
@@ -110,7 +110,6 @@ export class AuthService {
               role,
             } = this.jwtHelper.decodeToken(resp) as IAccessToken;
 
-            this.role = role;
             this.username = currentUsername;
             // initialise the subscriptions
             this.initSubscriptions();
@@ -236,7 +235,6 @@ export class AuthService {
 
     localStorage.removeItem(this.accessTokenName);
 
-    this.role = null;
     this.username = null;
 
     this.unsubscribeAll();
@@ -272,24 +270,5 @@ export class AuthService {
       this.currentUser.username = username;
     }
     return this.currentUser.username;
-  }
-
-  /**
-   * Set's the current user's role.
-   *
-   * @memberof AuthService
-   */
-  set role(value: string) {
-    this.currentUser.role = value as Role;
-  }
-
-  /**
-   * Get's the current user's role.
-   *
-   * @type {string}
-   * @memberof AuthService
-   */
-  get role(): string {
-    return this.currentUser.role as string;
   }
 }

@@ -20,7 +20,6 @@ describe('AuthService', () => {
 
   const username = 'username';
   const password = 'password';
-  const role = 'admin';
 
   beforeEach(() => {
     mockJwtHelperService = jasmine.createSpyObj('mockJwtHelperService', [
@@ -55,12 +54,11 @@ describe('AuthService', () => {
   describe('login', () => {
     it('should log in if successfully authenticated', () => {
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      mockJwtHelperService.decodeToken.and.returnValue({ username });
       const token = 'valid_token';
 
       expect(service.isLoggedIn).toBe(false);
       expect(service.username).toBeFalsy();
-      expect(service.role).toBeFalsy();
 
       service.login(username, password).subscribe();
 
@@ -72,13 +70,12 @@ describe('AuthService', () => {
 
       expect(service.isLoggedIn).toBe(true);
       expect(service.username).toBe(username);
-      expect(service.role).toBe(role);
       expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
     });
 
     it('should open the subscriptions', () => {
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      mockJwtHelperService.decodeToken.and.returnValue({ username });
       const token = 'valid_token';
 
       expect(service.refresh$).toBeFalsy();
@@ -101,13 +98,12 @@ describe('AuthService', () => {
 
       expect(service.isLoggedIn).toBe(false);
       expect(service.username).toBeFalsy();
-      expect(service.role).toBeFalsy();
       expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
     });
 
     it('should log in on 200 HTTP response', () => {
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      mockJwtHelperService.decodeToken.and.returnValue({ username });
       const token = 'valid_token';
 
       service.login(username, password).subscribe();
@@ -118,7 +114,6 @@ describe('AuthService', () => {
 
       expect(service.isLoggedIn).toBe(true);
       expect(service.username).toBe(username);
-      expect(service.role).toBe(role);
       expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
     });
 
@@ -131,7 +126,6 @@ describe('AuthService', () => {
 
           expect(service.isLoggedIn).toBe(false);
           expect(service.username).toBeFalsy();
-          expect(service.role).toBeFalsy();
           expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
         },
       );
@@ -152,7 +146,6 @@ describe('AuthService', () => {
 
           expect(service.isLoggedIn).toBe(false);
           expect(service.username).toBeFalsy();
-          expect(service.role).toBeFalsy();
           expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
         },
       );
@@ -168,7 +161,7 @@ describe('AuthService', () => {
     beforeEach(function() {
       // log user in
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      mockJwtHelperService.decodeToken.and.returnValue({ username });
       const token = 'valid_token';
 
       service.login(username, password).subscribe();
@@ -177,7 +170,6 @@ describe('AuthService', () => {
 
       expect(service.isLoggedIn).toBe(true);
       expect(service.username).toBe(username);
-      expect(service.role).toBe(role);
       expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
     });
 
@@ -186,7 +178,6 @@ describe('AuthService', () => {
 
       expect(service.isLoggedIn).toBe(false);
       expect(service.username).toBeFalsy();
-      expect(service.role).toBeFalsy();
       expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
     });
 
@@ -211,7 +202,7 @@ describe('AuthService', () => {
 
   describe('username', () => {
     it('should return username from JWT in local storage if not already set and logged in', () => {
-      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      mockJwtHelperService.decodeToken.and.returnValue({ username });
 
       expect(service.username).toBeFalsy();
 
