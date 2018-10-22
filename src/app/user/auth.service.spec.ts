@@ -180,5 +180,11 @@ describe('AuthService', () => {
       const navArgs = spy.calls.first().args[0];
       expect(navArgs).toEqual(['/login']);
     });
+
+    it('should close the subscriptions', () => {
+      expect(service.subscriptions.closed).toBe(false);
+      service.logout();
+      expect(service.subscriptions.closed).toBe(true);
+    });
   });
 });

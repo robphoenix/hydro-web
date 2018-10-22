@@ -2,7 +2,7 @@ import { IAccessToken } from './access-token';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap, map, switchMap } from 'rxjs/operators';
-import { Observable, of, interval } from 'rxjs';
+import { Observable, of, interval, Subscriber } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser, Role } from './user';
 import { Router } from '@angular/router';
@@ -69,7 +69,7 @@ export class AuthService {
   private validationInterval = 1 * 1000;
 
   // Observable subscriptions that need to be unsubscribed from on logout.
-  readonly subscriptions: any;
+  subscriptions: any;
 
   isLoggedIn = false;
 
