@@ -208,4 +208,19 @@ describe('AuthService', () => {
       expect(service.validate$.closed).toBe(true);
     });
   });
+
+  describe('username', () => {
+    it('should return username from JWT in local storage if not already set and logged in', () => {
+      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+
+      expect(service.username).toBeFalsy();
+
+      service.isLoggedIn = true;
+
+      expect(service.username).toBe(username);
+      // double check it's actually been set
+      service.isLoggedIn = false;
+      expect(service.username).toBe(username);
+    });
+  });
 });
