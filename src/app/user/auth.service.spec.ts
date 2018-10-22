@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 describe('AuthService', () => {
@@ -13,6 +14,9 @@ describe('AuthService', () => {
   // let httpClient: HttpClient;
   let httpMock: HttpTestingController;
   let service: AuthService;
+  let router: Router;
+
+  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
   const username = 'username';
   const password = 'password';
@@ -28,12 +32,14 @@ describe('AuthService', () => {
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         { provide: JwtHelperService, useValue: mockJwtHelperService },
+        { provide: Router, useValue: routerSpy },
       ],
     });
 
     // httpClient = TestBed.get(HttpClient);
     httpMock = TestBed.get(HttpTestingController);
     service = TestBed.get(AuthService);
+    router = TestBed.get(Router);
   });
 
   it('should be created', () => {
@@ -139,6 +145,40 @@ describe('AuthService', () => {
         status: 500,
         statusText: 'Internal Server Error',
       });
+    });
+  });
+
+  fdescribe('logout', () => {
+    beforeEach(function() {
+      // log user in
+      mockJwtHelperService.isTokenExpired.and.returnValue(false);
+      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      const token = 'valid_token';
+
+      service.login(username, password).subscribe();
+
+      httpMock.expectOne(service.loginUrl).flush(token);
+
+      expect(service.isLoggedIn).toBe(true);
+      expect(service.username).toBe(username);
+      expect(service.role).toBe(role);
+      expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
+    });
+
+    it('should logout logged in user', () => {
+      service.logout();
+
+      expect(service.isLoggedIn).toBe(false);
+      expect(service.username).toBeFalsy();
+      expect(service.role).toBeFalsy();
+      expect(localStorage.getItem(service.accessTokenName)).toBeFalsy();
+    });
+
+    it('should navigate to login page', () => {
+      service.logout();
+      const spy = router.navigate as jasmine.Spy;
+      const navArgs = spy.calls.first().args[0];
+      expect(navArgs).toEqual(['/login']);
     });
   });
 });

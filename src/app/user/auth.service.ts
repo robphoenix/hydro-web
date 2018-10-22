@@ -69,7 +69,7 @@ export class AuthService {
   private validationInterval = 1 * 1000;
 
   // Observable subscriptions that need to be unsubscribed from on logout.
-  private subscriptions: any;
+  readonly subscriptions: any;
 
   isLoggedIn = false;
 
