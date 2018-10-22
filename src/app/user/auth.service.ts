@@ -209,6 +209,12 @@ export class AuthService {
     );
   }
 
+  /**
+   * Notify subscriptions to unsubscribe. This does this by emitting a next()
+   * notification, and then complete() the unsubscribe observable.
+   *
+   * @memberof AuthService
+   */
   unsubscribeAll() {
     this.unsubscribe.next();
     this.unsubscribe.complete();

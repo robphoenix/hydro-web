@@ -42,17 +42,17 @@ describe('AuthService', () => {
     router = TestBed.get(Router);
   });
 
+  afterEach(() => {
+    localStorage.removeItem(service.accessTokenName);
+
+    httpMock.verify();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   describe('login', () => {
-    afterEach(() => {
-      localStorage.removeItem(service.accessTokenName);
-
-      httpMock.verify();
-    });
-
     it('should log in if successfully authenticated', () => {
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
       mockJwtHelperService.decodeToken.and.returnValue({ username, role });
@@ -74,6 +74,22 @@ describe('AuthService', () => {
       expect(service.username).toBe(username);
       expect(service.role).toBe(role);
       expect(localStorage.getItem(service.accessTokenName)).toEqual(token);
+    });
+
+    it('should open the subscriptions', () => {
+      mockJwtHelperService.isTokenExpired.and.returnValue(false);
+      mockJwtHelperService.decodeToken.and.returnValue({ username, role });
+      const token = 'valid_token';
+
+      expect(service.refresh$).toBeFalsy();
+      expect(service.validate$).toBeFalsy();
+
+      service.login(username, password).subscribe();
+
+      httpMock.expectOne(service.loginUrl).flush(token);
+
+      expect(service.refresh$.closed).toBe(false);
+      expect(service.validate$.closed).toBe(false);
     });
 
     it('should not log in if returned token is invalid', () => {
@@ -148,7 +164,7 @@ describe('AuthService', () => {
     });
   });
 
-  fdescribe('logout', () => {
+  describe('logout', () => {
     beforeEach(function() {
       // log user in
       mockJwtHelperService.isTokenExpired.and.returnValue(false);
@@ -176,15 +192,20 @@ describe('AuthService', () => {
 
     it('should navigate to login page', () => {
       service.logout();
+
       const spy = router.navigate as jasmine.Spy;
       const navArgs = spy.calls.first().args[0];
       expect(navArgs).toEqual(['/login']);
     });
 
     it('should close the subscriptions', () => {
-      expect(service.subscriptions.closed).toBe(false);
+      expect(service.refresh$.closed).toBe(false);
+      expect(service.validate$.closed).toBe(false);
+
       service.logout();
-      expect(service.subscriptions.closed).toBe(true);
+
+      expect(service.refresh$.closed).toBe(true);
+      expect(service.validate$.closed).toBe(true);
     });
   });
 });
