@@ -1,10 +1,10 @@
 import { IAccessToken } from './access-token';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { tap, map, switchMap } from 'rxjs/operators';
-import { Observable, of, interval } from 'rxjs';
+import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IUser, Role } from './user';
+import { IUser } from './user';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.dev';
 
@@ -69,9 +69,14 @@ export class AuthService {
   private validationInterval = 1 * 1000;
 
   // Observable subscriptions that need to be unsubscribed from on logout.
-  private subscriptions: any;
+  private _refresh$: Subscription;
+  private _validate$: Subscription;
+  // Unsubscribe observable to notify when to unsubscribe from a subscription,
+  // this should be used with `takeUntil` in any subscriptions.
+  private unsubscribe: Subject<void> = new Subject();
 
   isLoggedIn = false;
+  redirectUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -106,13 +111,32 @@ export class AuthService {
               role,
             } = this.jwtHelper.decodeToken(resp) as IAccessToken;
 
-            this.role = role;
             this.username = currentUsername;
             // initialise the subscriptions
             this.initSubscriptions();
           }
         }),
       );
+  }
+
+  /**
+   * Getter for private refresh subscription.
+   *
+   * @readonly
+   * @memberof AuthService
+   */
+  get refresh$() {
+    return this._refresh$;
+  }
+
+  /**
+   * Getter for private validate subscription.
+   *
+   * @readonly
+   * @memberof AuthService
+   */
+  get validate$() {
+    return this._validate$;
   }
 
   /**
@@ -129,19 +153,27 @@ export class AuthService {
     }
 
     // Refresh the access token, and add it to the subscriptions.
-    this.subscriptions = this.refreshToken().subscribe();
+    this._refresh$ = this.refreshToken()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (value: string) => localStorage.setItem(this.accessTokenName, value),
+        (error) => console.error(`[refreshToken] ${error}`),
+        () => console.log('[refreshToken] complete'),
+      );
 
     // Subscribe to access token validation, and add it to the subscriptions.
-    this.subscriptions.add(this.validateToken().subscribe());
-  }
-
-  /**
-   * Unsubscribes from all subscriptions.
-   *
-   * @memberof AuthService
-   */
-  unsubscribeSubscriptions() {
-    this.subscriptions.unsubscribe();
+    this._validate$ = this.validateToken()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (isValid: boolean) => {
+          this.isLoggedIn = isValid;
+          if (!isValid) {
+            this.logout();
+          }
+        },
+        (error) => console.error(`[validateToken] ${error}`),
+        () => console.log('[validateToken] complete'),
+      );
   }
 
   /**
@@ -156,10 +188,7 @@ export class AuthService {
   refreshToken(): Observable<string> {
     return interval(this.refreshInterval).pipe(
       switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
-      tap((resp) => {
-        localStorage.setItem(this.accessTokenName, resp);
-        return of(resp);
-      }),
+      tap((token) => token),
     );
   }
 
@@ -173,15 +202,22 @@ export class AuthService {
   public validateToken(): Observable<boolean> {
     return interval(this.validationInterval).pipe(
       map(() => {
-        const token = localStorage.getItem(this.accessTokenName);
-        const isValid: boolean = !this.jwtHelper.isTokenExpired(token);
-        this.isLoggedIn = isValid;
-        if (!isValid) {
-          this.logout();
-        }
-        return isValid;
+        return !this.jwtHelper.isTokenExpired(
+          localStorage.getItem(this.accessTokenName),
+        );
       }),
     );
+  }
+
+  /**
+   * Notify subscriptions to unsubscribe. This does this by emitting a next()
+   * notification, and then complete() the unsubscribe observable.
+   *
+   * @memberof AuthService
+   */
+  unsubscribeAll() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   /**
@@ -197,12 +233,13 @@ export class AuthService {
    */
   logout(): void {
     this.isLoggedIn = false;
+
     localStorage.removeItem(this.accessTokenName);
-    this.role = null;
+
     this.username = null;
-    if (this.subscriptions) {
-      this.unsubscribeSubscriptions();
-    }
+
+    this.unsubscribeAll();
+
     this.router.navigate(['/login']);
   }
 
@@ -234,24 +271,5 @@ export class AuthService {
       this.currentUser.username = username;
     }
     return this.currentUser.username;
-  }
-
-  /**
-   * Set's the current user's role.
-   *
-   * @memberof AuthService
-   */
-  set role(value: string) {
-    this.currentUser.role = value as Role;
-  }
-
-  /**
-   * Get's the current user's role.
-   *
-   * @type {string}
-   * @memberof AuthService
-   */
-  get role(): string {
-    return this.currentUser.role as string;
   }
 }

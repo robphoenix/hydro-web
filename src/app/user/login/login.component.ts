@@ -14,13 +14,11 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
   loginForm: FormGroup;
   loginErrorMessage: string;
-  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -28,10 +26,6 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
-
-    // Pull the URL to go to after login out of the query params
-    this.returnUrl =
-      this.route.snapshot.queryParamMap.get('returnUrl') || '/monitors';
   }
 
   login() {
@@ -45,12 +39,14 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService
-      .login(username.value, password.value)
-      .subscribe(
-        () => this.router.navigateByUrl(this.returnUrl),
-        (err: string) => (this.loginErrorMessage = err),
-      );
+    this.authService.login(username.value, password.value).subscribe(
+      () => {
+        this.router.navigateByUrl(this.authService.redirectUrl || '/monitors');
+      },
+      (err: string) => {
+        this.loginErrorMessage = err;
+      },
+    );
   }
 
   getUsernameErrorMessage() {
