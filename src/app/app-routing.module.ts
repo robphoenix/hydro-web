@@ -7,6 +7,7 @@ import { MonitorComponent } from './monitors/monitor/monitor.component';
 import { DictionarySearchComponent } from './search/dictionary-search/dictionary-search.component';
 import { DictionaryResultComponent } from './search/dictionary-result/dictionary-result.component';
 import { LoginGuard } from './user/login.guard';
+import { ShowmeComponent } from './temp/showme/showme.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/monitors', pathMatch: 'full' },
@@ -28,6 +29,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  {
+    path: 'showme',
+    component: ShowmeComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
