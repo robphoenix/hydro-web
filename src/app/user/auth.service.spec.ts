@@ -22,7 +22,7 @@ describe('AuthService', () => {
   const password = 'password';
 
   beforeEach(() => {
-    mockJwtHelperService = jasmine.createSpyObj('mockJwtHelperService', [
+    mockJwtHelperService = jasmine.createSpyObj('JwtHelperService', [
       'isTokenExpired',
       'decodeToken',
     ]);
