@@ -76,6 +76,7 @@ export class AuthService {
   private unsubscribe: Subject<void> = new Subject();
 
   isLoggedIn = false;
+  redirectUrl: string;
 
   constructor(
     private http: HttpClient,
