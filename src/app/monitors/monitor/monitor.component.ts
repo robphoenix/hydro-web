@@ -41,7 +41,7 @@ export class MonitorComponent implements OnInit {
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
-      this.monitorService.getLiveMonitorById(id).subscribe((monitor) => {
+      this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
     });
@@ -56,7 +56,7 @@ export class MonitorComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
       this.monitorService
-        .getMonitorDataById(id)
+        .getMonitorData(id)
         .subscribe((monitorData: MonitorData) => {
           this.tableHeaders = ['Time', ...monitorData.headers];
           this.data = this.transformMonitorData(monitorData);
