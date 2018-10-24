@@ -116,6 +116,8 @@ func (s *MyServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 }
 
 func monitors(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET /monitors")
+
 	f, err := os.Open("./data/monitors.json")
 	if err != nil {
 		log.Println("error opening monitors.json")
@@ -135,6 +137,8 @@ func monitorsByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Printf("invalid monitor: %s\n", vars["id"])
 	}
+
+	log.Printf("GET /monitors/%d", id)
 
 	f, err := os.Open("./data/monitors.json")
 	if err != nil {
@@ -167,6 +171,8 @@ func monitorsData(w http.ResponseWriter, r *http.Request) {
 		log.Printf("invalid monitor: %s\n", vars["id"])
 	}
 
+	log.Printf("GET /monitors/%d/data", id)
+
 	f, err := os.Open("./data/monitors-data.json")
 	if err != nil {
 		log.Println("error opening monitors-data.json")
@@ -192,6 +198,8 @@ func monitorsData(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchData(w http.ResponseWriter, r *http.Request) {
+	log.Printf("GET /search")
+
 	f, err := os.Open("./data/search.json")
 	if err != nil {
 		log.Println("error opening search.json")

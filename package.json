@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "go run ./server/main.go --index=false",
+    "server": "cd server && go run main.go --index=false",
     "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\"",
     "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\""
   },
