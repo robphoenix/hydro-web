@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './user/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { ErrorInterceptor } from './error.interceptor';
+import { TempModule } from './temp/temp.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,8 @@ import { ErrorInterceptor } from './error.interceptor';
     UserModule,
     MonitorsModule,
     SearchModule,
+    // TODO: please remember to delete this module
+    TempModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
