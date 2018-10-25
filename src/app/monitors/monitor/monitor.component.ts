@@ -1,4 +1,4 @@
-import { IMonitorData, EsperItem } from './../monitor-data';
+import { IMonitorData, EsperItem } from './../monitor';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
