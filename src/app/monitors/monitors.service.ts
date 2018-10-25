@@ -28,9 +28,9 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>(this.monitorsUrl).pipe(
+    return this.http.get<IMonitor[]>('api/monitors').pipe(
       tap((monitors: IMonitor[]) => monitors),
-      catchError(this.handleError<IMonitor[]>('getMonitors')),
+      catchError(this.handleError<IMonitor[]>('getLiveMonitors')),
     );
   }
 
@@ -41,8 +41,8 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getMonitorById(id: number): Observable<IMonitor> {
-    return this.http.get<IMonitor>(`${this.monitorsUrl}/${id}`).pipe(
+  public getMonitorById(id: string): Observable<IMonitor> {
+    return this.http.get<IMonitor>(`api/monitors/${id}`).pipe(
       tap((monitor: IMonitor) => monitor),
       catchError(this.handleError<IMonitor>('getMonitorById')),
     );
