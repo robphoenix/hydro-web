@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "json-server --watch db.json",
+    "server": "cd server && go run main.go --index=false",
     "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\"",
     "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\""
   },
@@ -43,7 +43,6 @@
     "codelyzer": "~4.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "json-server": "^0.14.0",
     "karma": "~1.7.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.0",

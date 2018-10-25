@@ -31,7 +31,7 @@ export class MonitorsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getLiveMonitors();
+    this.getMonitors();
     this.getUserFavouriteMonitors();
   }
 
@@ -40,8 +40,8 @@ export class MonitorsComponent implements OnInit {
    *
    * @memberof MonitorsComponent
    */
-  getLiveMonitors() {
-    this.monitorService.getLiveMonitors().subscribe((monitors) => {
+  getMonitors() {
+    this.monitorService.getMonitors().subscribe((monitors) => {
       this.liveMonitors = monitors;
     });
   }
@@ -54,7 +54,7 @@ export class MonitorsComponent implements OnInit {
   getUserFavouriteMonitors() {
     const favourites: number[] = this.userService.getFavouriteMonitors();
     favourites.forEach((id) => {
-      this.monitorService.getLiveMonitorById(id).subscribe((monitor) => {
+      this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.favouriteMonitors.push(monitor);
       });
     });

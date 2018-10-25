@@ -10,13 +10,13 @@ import { Injectable } from '@angular/core';
 })
 export class DictionarySearchService {
   baseUrl = `http://${environment.apiHost}:3000`;
-  searchDataUrl = `${this.baseUrl}/searchData`;
+  searchDataUrl = `${this.baseUrl}/search`;
 
   constructor(private http: HttpClient) {}
 
   public getMockSearch(): Observable<ISearchData> {
     return this.http.get<ISearchData>(this.searchDataUrl).pipe(
-      tap((searchResult: ISearchData) => console.log({ searchResult })),
+      tap((searchResult: ISearchData) => searchResult),
       catchError(this.handleError<ISearchData>('getMockSearch')),
     );
   }

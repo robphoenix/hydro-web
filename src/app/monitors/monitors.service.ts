@@ -17,8 +17,7 @@ import { environment } from '../../environments/environment';
 })
 export class MonitorsService {
   baseUrl = `http://${environment.apiHost}:3000`;
-  liveMonitorsUrl = `${this.baseUrl}/liveMonitors`;
-  monitorDataUrl = `${this.baseUrl}/monitorData`;
+  monitorsUrl = `${this.baseUrl}/monitors`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,8 +27,8 @@ export class MonitorsService {
    * @returns {Observable<IMonitor[]>}
    * @memberof MonitorsService
    */
-  public getLiveMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>(this.liveMonitorsUrl).pipe(
+  public getMonitors(): Observable<IMonitor[]> {
+    return this.http.get<IMonitor[]>(this.monitorsUrl).pipe(
       tap((monitors: IMonitor[]) => console.log({ monitors })),
       catchError(this.handleError<IMonitor[]>('getLiveMonitors')),
     );
@@ -42,9 +41,9 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getLiveMonitorById(id: number): Observable<IMonitor> {
-    return this.http.get<IMonitor>(`${this.liveMonitorsUrl}/${id}`).pipe(
-      tap((monitor: IMonitor) => console.log({ monitor })),
+  public getMonitorById(id: number): Observable<IMonitor> {
+    return this.http.get<IMonitor>(`${this.monitorsUrl}/${id}`).pipe(
+      tap((monitor: IMonitor) => monitor),
       catchError(this.handleError<IMonitor>('getLiveMonitorById')),
     );
   }
@@ -56,9 +55,9 @@ export class MonitorsService {
    * @returns {Observable<MonitorData>}
    * @memberof MonitorsService
    */
-  public getMonitorDataById(id: number): Observable<MonitorData> {
-    return this.http.get<MonitorData>(`${this.monitorDataUrl}/${id}`).pipe(
-      tap((monitor: MonitorData) => console.log({ monitor })),
+  public getMonitorData(id: number): Observable<MonitorData> {
+    return this.http.get<MonitorData>(`${this.monitorsUrl}/${id}/data`).pipe(
+      tap((monitor: MonitorData) => monitor),
       catchError(this.handleError<MonitorData>('getMonitorDataById')),
     );
   }
