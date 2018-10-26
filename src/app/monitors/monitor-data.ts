@@ -4,7 +4,7 @@
  * @export
  * @interface MonitorData
  */
-export interface MonitorData {
+export interface IMonitorData {
   id: number;
   esperItems: Array<EsperItem[]>;
   headers: string[];

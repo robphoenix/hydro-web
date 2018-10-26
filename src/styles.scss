@@ -7,25 +7,3 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
-
-mat-sidenav-container {
-  height: 100%;
-}
-
-mat-sidenav {
-  height: 100%;
-  width: 300px;
-  padding-top: 80px;
-}
-
-mat-sidenav::-webkit-scrollbar {
-  display: none;
-}
-
-.sidenav-title-container {
-  text-align: center;
-}
-
-.sidenav-title {
-  font-weight: 200;
-}

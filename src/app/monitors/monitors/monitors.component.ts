@@ -17,22 +17,14 @@ import { IMonitor } from '../monitor';
 })
 export class MonitorsComponent implements OnInit {
   title = 'Monitors';
-  liveMonitors: IMonitor[];
-  favouriteMonitors: IMonitor[] = [];
-
-  liveMonitorsTitle = 'Live';
-  favouriteMonitorsTitle = 'Favourites';
-
+  monitors: IMonitor[];
   searchTerm: string;
+  columnsToDisplay = ['topic', 'queryDescription', 'categories'];
 
-  constructor(
-    private monitorService: MonitorsService,
-    private userService: UserService,
-  ) {}
+  constructor(private monitorService: MonitorsService) {}
 
   ngOnInit() {
     this.getMonitors();
-    this.getUserFavouriteMonitors();
   }
 
   /**
@@ -42,21 +34,7 @@ export class MonitorsComponent implements OnInit {
    */
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors) => {
-      this.liveMonitors = monitors;
-    });
-  }
-
-  /**
-   * Get the user's favourite monitors.
-   *
-   * @memberof MonitorsComponent
-   */
-  getUserFavouriteMonitors() {
-    const favourites: number[] = this.userService.getFavouriteMonitors();
-    favourites.forEach((id) => {
-      this.monitorService.getMonitorById(id).subscribe((monitor) => {
-        this.favouriteMonitors.push(monitor);
-      });
+      this.monitors = monitors;
     });
   }
 }

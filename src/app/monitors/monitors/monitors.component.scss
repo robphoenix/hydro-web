@@ -1,0 +1,26 @@
+.filter {
+  margin-left: 20px;
+  width: 250px;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  height: 100%;
+  width: 350px;
+  padding-top: 80px;
+}
+
+mat-sidenav::-webkit-scrollbar {
+  display: none;
+}
+
+.sidenav-title-container {
+  text-align: center;
+}
+
+.sidenav-title {
+  font-weight: 200;
+}

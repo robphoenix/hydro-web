@@ -8,15 +8,15 @@
     <span class="nav-spacer"></span>
 
     <span class="page-nav" *ngIf="authService.isLoggedIn">
-      <a mat-button routerLink="/showme">
+      <!-- <a mat-button routerLink="/showme">
         showme
-      </a>
+      </a> -->
       <a mat-button routerLink="/monitors">
         Monitors
       </a>
-      <a mat-button routerLink="/search">
+      <!-- <a mat-button routerLink="/search">
         Search
-      </a>
+      </a> -->
       <a mat-button (click)="logOut()">
         Log Out {{authService.username}}
       </a>
