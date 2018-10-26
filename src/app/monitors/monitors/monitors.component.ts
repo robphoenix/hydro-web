@@ -1,7 +1,8 @@
 import { UserService } from '../../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor } from '../monitor';
+import { IMonitor, ICategory } from '../monitor';
+import { FormControl } from '@angular/forms';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -18,8 +19,11 @@ import { IMonitor } from '../monitor';
 export class MonitorsComponent implements OnInit {
   title = 'Monitors';
   monitors: IMonitor[];
+  originalMonitors: IMonitor[];
   searchTerm: string;
-  columnsToDisplay = ['topic', 'queryDescription', 'categories'];
+  categories = new FormControl();
+  categoriesList: string[];
+  selectedCategories: string[];
 
   constructor(private monitorService: MonitorsService) {}
 
@@ -33,8 +37,24 @@ export class MonitorsComponent implements OnInit {
    * @memberof MonitorsComponent
    */
   getMonitors() {
-    this.monitorService.getMonitors().subscribe((monitors) => {
+    this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
+      this.originalMonitors = monitors;
+      const categories: Set<string> = new Set();
+      monitors.forEach((monitor: IMonitor) => {
+        monitor.categories.forEach((category) =>
+          categories.add(category.value),
+        );
+      });
+      this.categoriesList = Array.from(categories);
+    });
+  }
+
+  filterCategories(categories: string[]) {
+    this.monitors = this.originalMonitors.filter((monitor: IMonitor) => {
+      return categories.some((category: string) =>
+        monitor.categories.map((c: ICategory) => c.value).includes(category),
+      );
     });
   }
 }

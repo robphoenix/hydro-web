@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MonitorComponent } from './monitor/monitor.component';
 import { MonitorsComponent } from './monitors/monitors.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MonitorTableComponent } from './monitor-table/monitor-table.component';
 import { HydroMaterialModule } from '../material/material.module';
@@ -17,6 +17,7 @@ import { HydroMaterialModule } from '../material/material.module';
     AppRoutingModule,
     LayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HydroMaterialModule,
     PipesModule,

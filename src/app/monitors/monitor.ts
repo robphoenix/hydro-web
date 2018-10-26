@@ -21,11 +21,11 @@ export interface IMonitor {
   parentId: number;
   cacheWindow: number;
   aggregateParameter: AggregateParameter;
-  categories: Category[];
+  categories: ICategory[];
   externalCalloutObjects: ExternalCalloutObject[];
   groups: Group[];
   blocks: boolean;
-  sortedCategoryList: Category[];
+  sortedCategoryList: ICategory[];
   store: boolean;
 }
 
@@ -36,7 +36,7 @@ export enum AggregateParameter {
   NumHits = 'numHits',
 }
 
-export interface Category {
+export interface ICategory {
   id: number;
   value: string;
   dateCreated: number;

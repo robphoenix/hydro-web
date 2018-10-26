@@ -1,56 +1,41 @@
-<div *ngIf="monitors">
-  <table mat-table [dataSource]="monitors">
+<article *ngIf="monitors">
+  <div class="title">
+    <h1>{{title}}</h1>
+  </div>
+  <mat-card class="filters">
 
-    <ng-container matColumnDef="topic">
-      <th mat-header-cell *matHeaderCellDef> Topic </th>
-      <td mat-cell *matCellDef="let monitor"> {{monitor.topic}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="queryDescription">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let monitor"> {{monitor.queryDescription}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="categories">
-      <th mat-header-cell *matHeaderCellDef> Categories </th>
-      <td mat-cell *matCellDef="let monitor">
-        <span *ngFor="let category of monitor.categories">
-          {{category.value}}
-        </span>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-
-  </table>
-</div>
-
-<!-- <mat-sidenav-container [hasBackdrop]="false">
-  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
-    [opened]="true">
-
-    <div class="sidenav-title-container">
-      <h3 class="sidenav-title">{{title}}</h3>
-    </div>
-
-    <mat-form-field class="filter">
-      <input matInput type="text" placeholder="Filter Monitors" [(ngModel)]="searchTerm">
+    <mat-form-field class="search">
+      <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
       <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
         aria-label="Clear" (click)="searchTerm=''">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
+    <mat-form-field class="categories">
+      <mat-select placeholder="Filter categories" [formControl]="categories"
+        (selectionChange)="filterCategories($event.value)" multiple>
+        <mat-option *ngFor="let category of categoriesList" [value]="category">{{category}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <mat-nav-list *ngFor="let monitor of monitors | filter: searchTerm">
-      <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
-    </mat-nav-list>
+  </mat-card>
 
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-
-</mat-sidenav-container> -->
+  <mat-card class="list">
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let monitor of monitors | filter: searchTerm; last as last">
+          <h2 class="topic" mat-line>{{monitor.topic}}</h2>
+          <h4 class="description" mat-line>{{monitor.queryDescription}}</h4>
+          <div class="categories" mat-line>
+            <span *ngFor="let category of monitor.categories">
+              {{category.value}}
+            </span>
+          </div>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</article>

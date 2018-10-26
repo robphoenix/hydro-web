@@ -12,10 +12,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {
   transform(monitors: IMonitor[], term: string): IMonitor[] {
-    if (!monitors) {
-      return [];
-    }
-    if (!term) {
+    if (!monitors || !term) {
       return monitors;
     }
     return monitors.filter((monitor: IMonitor) => {

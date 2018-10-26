@@ -1,26 +1,42 @@
-.filter {
-  margin-left: 20px;
-  width: 250px;
+article {
+  width: 50%;
+  margin: 50px auto;
+
+  mat-card {
+    border-radius: 0;
+  }
 }
 
-mat-sidenav-container {
-  height: 100%;
+.filters {
+  margin-bottom: 20px;
+
+  .search {
+    width: 30%;
+    margin-right: 10px;
+  }
+
+  .categories {
+    width: 30%;
+    margin-left: 10px;
+  }
 }
 
-mat-sidenav {
-  height: 100%;
-  width: 350px;
-  padding-top: 80px;
+.list {
+  padding: 10px 40px;
 }
 
-mat-sidenav::-webkit-scrollbar {
-  display: none;
-}
-
-.sidenav-title-container {
+.title {
   text-align: center;
 }
 
-.sidenav-title {
-  font-weight: 200;
+.topic {
+  color: black;
+}
+
+.description {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.categories {
+  text-align: right;
 }
