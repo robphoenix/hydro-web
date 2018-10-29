@@ -14,8 +14,10 @@
 
     <mat-form-field class="categories">
       <mat-select placeholder="Filter categories" [formControl]="categories"
-        (selectionChange)="filterCategories($event.value)" multiple>
-        <mat-option *ngFor="let category of categoriesList" [value]="category">{{category}}</mat-option>
+        [(value)]="selectedCategories" [disableOptionCentering]="true" multiple>
+        <mat-option *ngFor="let category of categoriesList" [value]="category">
+          {{category}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -24,7 +26,7 @@
   <mat-card class="list">
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let monitor of monitors | filter: searchTerm; last as last">
+        <mat-list-item *ngFor="let monitor of monitors | filter: searchTerm | filterCategories: selectedCategories; last as last">
           <h2 class="topic" mat-line>{{monitor.topic}}</h2>
           <h4 class="description" mat-line>{{monitor.queryDescription}}</h4>
           <div class="categories" mat-line>

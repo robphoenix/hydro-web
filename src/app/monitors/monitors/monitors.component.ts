@@ -19,8 +19,9 @@ import { FormControl } from '@angular/forms';
 export class MonitorsComponent implements OnInit {
   title = 'Monitors';
   monitors: IMonitor[];
-  originalMonitors: IMonitor[];
+
   searchTerm: string;
+
   categories = new FormControl();
   categoriesList: string[];
   selectedCategories: string[];
@@ -39,7 +40,6 @@ export class MonitorsComponent implements OnInit {
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
-      this.originalMonitors = monitors;
       const categories: Set<string> = new Set();
       monitors.forEach((monitor: IMonitor) => {
         monitor.categories.forEach((category) =>
@@ -47,14 +47,6 @@ export class MonitorsComponent implements OnInit {
         );
       });
       this.categoriesList = Array.from(categories);
-    });
-  }
-
-  filterCategories(categories: string[]) {
-    this.monitors = this.originalMonitors.filter((monitor: IMonitor) => {
-      return categories.some((category: string) =>
-        monitor.categories.map((c: ICategory) => c.value).includes(category),
-      );
     });
   }
 }
