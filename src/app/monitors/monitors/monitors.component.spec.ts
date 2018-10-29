@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FilterPipe } from '../../pipes/filter.pipe';
+import { FilterTopicsPipe } from './filter-topics.pipe';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -31,7 +31,11 @@ describe('MonitorsComponent', () => {
         HttpClientTestingModule,
         BrowserAnimationsModule,
       ],
-      declarations: [MonitorsComponent, MonitorsListComponent, FilterPipe],
+      declarations: [
+        MonitorsComponent,
+        MonitorsListComponent,
+        FilterTopicsPipe,
+      ],
     }).compileComponents();
   }));
 

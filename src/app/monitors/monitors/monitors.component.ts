@@ -17,7 +17,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent implements OnInit {
-  title = 'Monitors';
   monitors: IMonitor[];
 
   searchTerm: string;

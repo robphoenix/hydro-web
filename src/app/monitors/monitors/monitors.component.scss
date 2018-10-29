@@ -1,42 +1,38 @@
 article {
-  width: 50%;
-  margin: 50px auto;
+  width: 75%;
+  margin: 30px auto;
+}
 
-  mat-card {
-    border-radius: 0;
-  }
+mat-card-title {
+  text-align: center;
 }
 
 .filters {
   margin-bottom: 20px;
-
-  .search {
-    width: 30%;
-    margin-right: 10px;
-  }
-
-  .categories {
-    width: 30%;
-    margin-left: 10px;
-  }
 }
 
-.list {
-  padding: 10px 40px;
-}
-
-.title {
-  text-align: center;
+.monitors-list-item {
+  display: flex;
 }
 
 .topic {
-  color: black;
+  flex: 1;
 }
 
 .description {
-  color: rgba(0, 0, 0, 0.54);
+  flex: 2;
+  padding: 7px;
 }
 
 .categories {
+  flex: 1;
   text-align: right;
+}
+
+.mat-list-item {
+  height: initial !important;
+  .mat-line {
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+  }
 }

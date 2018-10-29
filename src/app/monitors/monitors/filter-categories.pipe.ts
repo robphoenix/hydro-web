@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IMonitor, ICategory } from '../monitors/monitor';
+import { IMonitor, ICategory } from '../monitor';
 
 @Pipe({ name: 'filterCategories' })
 export class FilterCategoriesPipe implements PipeTransform {

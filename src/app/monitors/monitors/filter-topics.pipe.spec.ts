@@ -1,8 +1,8 @@
-import { IMonitor } from './../monitors/monitor';
-import { FilterPipe } from './filter.pipe';
+import { IMonitor } from '../monitor';
+import { FilterTopicsPipe } from './filter-topics.pipe';
 
-describe('FilterPipe', () => {
-  let pipe: FilterPipe;
+describe('FilterTopicsPipe', () => {
+  let pipe: FilterTopicsPipe;
   const monitors: IMonitor[] = [
     { topic: 'Top 10 IP Addresses' },
     { topic: 'Top 10 User Agents' },
@@ -10,7 +10,7 @@ describe('FilterPipe', () => {
   ] as IMonitor[];
 
   beforeEach(function() {
-    pipe = new FilterPipe();
+    pipe = new FilterTopicsPipe();
   });
 
   it('should create an instance', () => {

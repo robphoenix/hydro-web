@@ -1,43 +1,54 @@
 <article *ngIf="monitors">
-  <div class="title">
-    <h1>{{title}}</h1>
-  </div>
-  <mat-card class="filters">
 
-    <mat-form-field class="search">
-      <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
-      <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
-        aria-label="Clear" (click)="searchTerm=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
+  <mat-card>
+    <mat-card-title>
+      Monitors
+    </mat-card-title>
 
-    <mat-form-field class="categories">
-      <mat-select placeholder="Filter categories" [formControl]="categories"
-        [(value)]="selectedCategories" [disableOptionCentering]="true" multiple>
-        <mat-option *ngFor="let category of categoriesList" [value]="category">
-          {{category}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="filters" fxLayout="row" fxLayoutGap="40px">
 
-  </mat-card>
+      <mat-form-field class="search" fxFlex>
+        <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
+        <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
+          aria-label="Clear" (click)="searchTerm=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
 
-  <mat-card class="list">
-    <mat-card-content>
-      <mat-list>
-        <mat-list-item *ngFor="let monitor of monitors | filter: searchTerm | filterCategories: selectedCategories; last as last">
-          <h2 class="topic" mat-line>{{monitor.topic}}</h2>
-          <h4 class="description" mat-line>{{monitor.queryDescription}}</h4>
-          <div class="categories" mat-line>
-            <span *ngFor="let category of monitor.categories">
-              {{category.value}}
+      <mat-form-field class="categories" fxFlex>
+        <mat-select placeholder="Filter Categories" [formControl]="categories"
+          [(value)]="selectedCategories" [disableOptionCentering]="true"
+          multiple>
+          <mat-option *ngFor="let category of categoriesList" [value]="category">
+            {{category}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-list>
+      <mat-list-item class="monitors-list-item" *ngFor="let monitor of monitors | filterTopics: searchTerm | filterCategories: selectedCategories; last as last">
+
+        <div class="topic">
+          <!-- <mat-icon mat-list-icon>offline_bolt</mat-icon> -->
+          <h4>{{monitor.topic}}</h4>
+        </div>
+
+        <div class="description">
+          {{monitor.queryDescription}}
+        </div>
+
+        <div class="categories">
+          <span *ngFor="let category of monitor.categories; last as last">
+            <span>
+              {{category.value | lowercase}}<span *ngIf="!last">, </span>
             </span>
-          </div>
-          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-list>
-    </mat-card-content>
+          </span>
+        </div>
+
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+
   </mat-card>
 </article>

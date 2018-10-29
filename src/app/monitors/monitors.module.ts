@@ -1,4 +1,3 @@
-import { PipesModule } from './../pipes/pipes.module';
 import { MonitorsListComponent } from './monitors-list/monitors-list.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgModule } from '@angular/core';
@@ -10,6 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MonitorTableComponent } from './monitor-table/monitor-table.component';
 import { HydroMaterialModule } from '../material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FilterCategoriesPipe } from './monitors/filter-categories.pipe';
+import { FilterTopicsPipe } from './monitors/filter-topics.pipe';
 
 @NgModule({
   imports: [
@@ -20,13 +22,15 @@ import { HydroMaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     HttpClientModule,
     HydroMaterialModule,
-    PipesModule,
+    FlexLayoutModule,
   ],
   declarations: [
     MonitorsComponent,
     MonitorsListComponent,
     MonitorComponent,
     MonitorTableComponent,
+    FilterCategoriesPipe,
+    FilterTopicsPipe,
   ],
   exports: [MonitorsComponent],
 })

@@ -1,4 +1,4 @@
-import { IMonitor } from '../monitors/monitor';
+import { IMonitor } from '../monitor';
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
@@ -9,8 +9,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  * @class FilterPipe
  * @implements {PipeTransform}
  */
-@Pipe({ name: 'filter' })
-export class FilterPipe implements PipeTransform {
+@Pipe({ name: 'filterTopics' })
+export class FilterTopicsPipe implements PipeTransform {
   transform(monitors: IMonitor[], term: string): IMonitor[] {
     if (!monitors || !term) {
       return monitors;
