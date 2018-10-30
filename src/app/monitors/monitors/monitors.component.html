@@ -1,17 +1,42 @@
-<mat-sidenav-container [hasBackdrop]="false">
-  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'" [opened]="true">
+<article class="w-75 mt4 center" *ngIf="monitors">
 
-    <div class="sidenav-title-container">
-      <h3 class="sidenav-title">{{title}}</h3>
+  <mat-card>
+    <mat-card-title class="tc">
+      <h2>Monitors</h2>
+    </mat-card-title>
+
+    <div class="mb4" fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center">
+
+      <mat-form-field class="search" fxFlex="40">
+        <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
+        <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
+          aria-label="Clear" (click)="searchTerm=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field class="categories" fxFlex="40">
+        <mat-select placeholder="Filter Categories" [formControl]="categories"
+          [(value)]="selectedCategories" [disableOptionCentering]="true"
+          multiple>
+          <mat-option *ngFor="let category of categoriesList" [value]="category">
+            {{category}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
-    <app-monitors-list [title]="favouriteMonitorsTitle" [monitors]="favouriteMonitors"></app-monitors-list>
-    <app-monitors-list [title]="liveMonitorsTitle" [monitors]="liveMonitors" [search]="true"></app-monitors-list>
-
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-
-</mat-sidenav-container>
+    <mat-nav-list>
+      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories; last as last">
+        <h4 fxFlex>{{monitor.topic}}</h4>
+        <p fxFlex="40">{{monitor.queryDescription}}</p>
+        <div fxFlex class="tr">
+          <span *ngFor="let category of monitor.categories; last as last">
+            {{category.value | lowercase}}<span *ngIf="!last">, </span>
+          </span>
+        </div>
+        <mat-divider [inset]="false" *ngIf="!last"></mat-divider>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card>
+</article>

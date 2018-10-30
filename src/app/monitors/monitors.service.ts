@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { MonitorData } from './monitor-data';
+import { IMonitorData } from './monitor-data';
 import { environment } from '../../environments/environment';
 
 /**
@@ -29,8 +29,8 @@ export class MonitorsService {
    */
   public getMonitors(): Observable<IMonitor[]> {
     return this.http.get<IMonitor[]>(this.monitorsUrl).pipe(
-      tap((monitors: IMonitor[]) => console.log({ monitors })),
-      catchError(this.handleError<IMonitor[]>('getLiveMonitors')),
+      tap((monitors: IMonitor[]) => monitors),
+      catchError(this.handleError<IMonitor[]>('getMonitors')),
     );
   }
 
@@ -44,7 +44,7 @@ export class MonitorsService {
   public getMonitorById(id: number): Observable<IMonitor> {
     return this.http.get<IMonitor>(`${this.monitorsUrl}/${id}`).pipe(
       tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('getLiveMonitorById')),
+      catchError(this.handleError<IMonitor>('getMonitorById')),
     );
   }
 
@@ -52,17 +52,16 @@ export class MonitorsService {
    * Gets the data for a single monitor.
    *
    * @param {number} id
-   * @returns {Observable<MonitorData>}
+   * @returns {Observable<IMonitorData>}
    * @memberof MonitorsService
    */
-  public getMonitorData(id: number): Observable<MonitorData> {
-    return this.http.get<MonitorData>(`${this.monitorsUrl}/${id}/data`).pipe(
-      tap((monitor: MonitorData) => monitor),
-      catchError(this.handleError<MonitorData>('getMonitorDataById')),
+  public getMonitorData(id: number): Observable<IMonitorData> {
+    return this.http.get<IMonitorData>(`${this.monitorsUrl}/${id}/data`).pipe(
+      tap((monitor: IMonitorData) => monitor),
+      catchError(this.handleError<IMonitorData>('getMonitorData')),
     );
   }
 
-  // TODO: move to shared service.
   /**
    * Handle Http operation that failed.
    * Let the app continue.

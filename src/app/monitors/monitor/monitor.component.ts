@@ -1,4 +1,4 @@
-import { MonitorData, EsperItem } from './../monitor-data';
+import { IMonitorData, EsperItem } from './../monitor-data';
 import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
@@ -21,6 +21,9 @@ export class MonitorComponent implements OnInit {
   monitor: IMonitor;
   data: { [key: string]: string }[];
   tableHeaders: string[];
+  title = 'Monitors';
+  monitors: IMonitor[];
+  searchTerm: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +32,20 @@ export class MonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getMonitors();
     this.getMonitor();
     this.getMonitorData();
+  }
+
+  /**
+   * Get the list of Live monitors.
+   *
+   * @memberof MonitorsComponent
+   */
+  getMonitors() {
+    this.monitorService.getMonitors().subscribe((monitors) => {
+      this.monitors = monitors;
+    });
   }
 
   /**
@@ -57,7 +72,7 @@ export class MonitorComponent implements OnInit {
       const id: number = +params.get('id');
       this.monitorService
         .getMonitorData(id)
-        .subscribe((monitorData: MonitorData) => {
+        .subscribe((monitorData: IMonitorData) => {
           this.tableHeaders = ['Time', ...monitorData.headers];
           this.data = this.transformMonitorData(monitorData);
         });
@@ -68,11 +83,11 @@ export class MonitorComponent implements OnInit {
    * Transforms the nested monitor data array
    * into a single array of objects
    *
-   * @param {MonitorData} monitorData
+   * @param {IMonitorData} monitorData
    * @returns {{ [key: string]: string }[]}
    * @memberof MonitorComponent
    */
-  transformMonitorData(monitorData: MonitorData): { [key: string]: string }[] {
+  transformMonitorData(monitorData: IMonitorData): { [key: string]: string }[] {
     return monitorData.esperItems.map((esperItems: EsperItem[]) => {
       // initialise the data object with the monitor timestamp
       const data: { [key: string]: string } = {

@@ -1,7 +1,8 @@
 import { UserService } from '../../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor } from '../monitor';
+import { IMonitor, ICategory } from '../monitor';
+import { FormControl } from '@angular/forms';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -16,23 +17,18 @@ import { IMonitor } from '../monitor';
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent implements OnInit {
-  title = 'Monitors';
-  liveMonitors: IMonitor[];
-  favouriteMonitors: IMonitor[] = [];
-
-  liveMonitorsTitle = 'Live';
-  favouriteMonitorsTitle = 'Favourites';
+  monitors: IMonitor[];
 
   searchTerm: string;
 
-  constructor(
-    private monitorService: MonitorsService,
-    private userService: UserService,
-  ) {}
+  categories = new FormControl();
+  categoriesList: string[];
+  selectedCategories: string[];
+
+  constructor(private monitorService: MonitorsService) {}
 
   ngOnInit() {
     this.getMonitors();
-    this.getUserFavouriteMonitors();
   }
 
   /**
@@ -41,22 +37,15 @@ export class MonitorsComponent implements OnInit {
    * @memberof MonitorsComponent
    */
   getMonitors() {
-    this.monitorService.getMonitors().subscribe((monitors) => {
-      this.liveMonitors = monitors;
-    });
-  }
-
-  /**
-   * Get the user's favourite monitors.
-   *
-   * @memberof MonitorsComponent
-   */
-  getUserFavouriteMonitors() {
-    const favourites: number[] = this.userService.getFavouriteMonitors();
-    favourites.forEach((id) => {
-      this.monitorService.getMonitorById(id).subscribe((monitor) => {
-        this.favouriteMonitors.push(monitor);
+    this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
+      this.monitors = monitors;
+      const categories: Set<string> = new Set();
+      monitors.forEach((monitor: IMonitor) => {
+        monitor.categories.forEach((category) =>
+          categories.add(category.value),
+        );
       });
+      this.categoriesList = Array.from(categories);
     });
   }
 }

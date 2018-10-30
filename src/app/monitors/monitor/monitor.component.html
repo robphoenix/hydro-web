@@ -1,8 +1,36 @@
-<mat-card *ngIf="monitor" class="monitor-title-card">
-  <mat-card-header>
-    <mat-card-title>{{monitor.topic}}</mat-card-title>
-    <mat-card-subtitle>{{monitor.queryDescription}}</mat-card-subtitle>
-  </mat-card-header>
-</mat-card>
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav #drawer fixedInViewport="true" [attr.role]="'navigation'"
+    [opened]="true">
 
-<app-monitor-table [dataSource]="data" [displayedColumns]="tableHeaders"></app-monitor-table>
+    <div class="sidenav-title-container">
+      <h3 class="sidenav-title">{{title}}</h3>
+    </div>
+
+    <mat-form-field class="filter">
+      <input matInput type="text" placeholder="Filter Monitors" [(ngModel)]="searchTerm">
+      <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
+        aria-label="Clear" (click)="searchTerm=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+
+    <!-- <mat-nav-list *ngFor="let monitor of monitors | filterTopics: searchTerm">
+      <a mat-list-item routerLink="/monitors/{{monitor.id}}">{{monitor.topic}}</a>
+    </mat-nav-list> -->
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- <router-outlet></router-outlet> -->
+    <mat-card *ngIf="monitor" class="monitor-title-card">
+      <mat-card-header>
+        <mat-card-title>{{monitor.topic}}</mat-card-title>
+        <mat-card-subtitle>{{monitor.queryDescription}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <app-monitor-table [dataSource]="data" [displayedColumns]="tableHeaders"></app-monitor-table>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

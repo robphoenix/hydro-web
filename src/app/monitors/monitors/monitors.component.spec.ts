@@ -1,7 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FilterPipe } from '../../pipes/filter.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MonitorsComponent } from './monitors.component';
@@ -13,6 +12,8 @@ import {
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MonitorsListComponent } from '../monitors-list/monitors-list.component';
+import { HydroMaterialModule } from 'src/app/material/material.module';
+import { FilterMonitorsPipe } from '../filter-monitors.pipe';
 
 describe('MonitorsComponent', () => {
   let component: MonitorsComponent;
@@ -21,17 +22,18 @@ describe('MonitorsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MatSidenavModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
+        HydroMaterialModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
       ],
-      declarations: [MonitorsComponent, MonitorsListComponent, FilterPipe],
+      declarations: [
+        MonitorsComponent,
+        MonitorsListComponent,
+        FilterMonitorsPipe,
+      ],
     }).compileComponents();
   }));
 
