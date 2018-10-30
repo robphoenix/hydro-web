@@ -27,7 +27,7 @@
     </div>
 
     <mat-nav-list>
-      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterTopics: searchTerm | filterCategories: selectedCategories; last as last">
+      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories; last as last">
         <h4 fxFlex>{{monitor.topic}}</h4>
         <p fxFlex="40">{{monitor.queryDescription}}</p>
         <div fxFlex class="tr">

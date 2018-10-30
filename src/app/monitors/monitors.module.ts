@@ -10,8 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MonitorTableComponent } from './monitor-table/monitor-table.component';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FilterCategoriesPipe } from './monitors/filter-categories.pipe';
-import { FilterTopicsPipe } from './monitors/filter-topics.pipe';
+import { FilterMonitorsPipe } from './filter-monitors.pipe';
 
 @NgModule({
   imports: [
@@ -29,8 +28,7 @@ import { FilterTopicsPipe } from './monitors/filter-topics.pipe';
     MonitorsListComponent,
     MonitorComponent,
     MonitorTableComponent,
-    FilterCategoriesPipe,
-    FilterTopicsPipe,
+    FilterMonitorsPipe,
   ],
   exports: [MonitorsComponent],
 })
