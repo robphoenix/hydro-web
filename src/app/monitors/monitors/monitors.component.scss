@@ -1,38 +1,5 @@
-article {
-  width: 75%;
-  margin: 30px auto;
-}
-
-mat-card-title {
-  text-align: center;
-}
-
-.filters {
-  margin-bottom: 20px;
-}
-
-.monitors-list-item {
-  display: flex;
-}
-
-.topic {
-  flex: 1;
-}
-
-.description {
-  flex: 2;
-  padding: 7px;
-}
-
-.categories {
-  flex: 1;
-  text-align: right;
-}
-
+// Height of mat-list-item is limited to 48px so we need to override to
+// accomodate length text, for instance in the monitor queryDescription
 .mat-list-item {
   height: initial !important;
-  .mat-line {
-    word-wrap: break-word !important;
-    white-space: pre-wrap !important;
-  }
 }

@@ -1,13 +1,13 @@
-<article *ngIf="monitors">
+<article class="w-75 mt4 center" *ngIf="monitors">
 
   <mat-card>
-    <mat-card-title>
-      Monitors
+    <mat-card-title class="tc">
+      <h2>Monitors</h2>
     </mat-card-title>
 
-    <div class="filters" fxLayout="row" fxLayoutGap="40px">
+    <div class="mb4" fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center">
 
-      <mat-form-field class="search" fxFlex>
+      <mat-form-field class="search" fxFlex="40">
         <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
         <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
           aria-label="Clear" (click)="searchTerm=''">
@@ -15,7 +15,7 @@
         </button>
       </mat-form-field>
 
-      <mat-form-field class="categories" fxFlex>
+      <mat-form-field class="categories" fxFlex="40">
         <mat-select placeholder="Filter Categories" [formControl]="categories"
           [(value)]="selectedCategories" [disableOptionCentering]="true"
           multiple>
@@ -26,29 +26,17 @@
       </mat-form-field>
     </div>
 
-    <mat-list>
-      <mat-list-item class="monitors-list-item" *ngFor="let monitor of monitors | filterTopics: searchTerm | filterCategories: selectedCategories; last as last">
-
-        <div class="topic">
-          <!-- <mat-icon mat-list-icon>offline_bolt</mat-icon> -->
-          <h4>{{monitor.topic}}</h4>
-        </div>
-
-        <div class="description">
-          {{monitor.queryDescription}}
-        </div>
-
-        <div class="categories">
+    <mat-nav-list>
+      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterTopics: searchTerm | filterCategories: selectedCategories; last as last">
+        <h4 fxFlex>{{monitor.topic}}</h4>
+        <p fxFlex="40">{{monitor.queryDescription}}</p>
+        <div fxFlex class="tr">
           <span *ngFor="let category of monitor.categories; last as last">
-            <span>
-              {{category.value | lowercase}}<span *ngIf="!last">, </span>
-            </span>
+            {{category.value | lowercase}}<span *ngIf="!last">, </span>
           </span>
         </div>
-
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        <mat-divider [inset]="false" *ngIf="!last"></mat-divider>
       </mat-list-item>
-    </mat-list>
-
+    </mat-nav-list>
   </mat-card>
 </article>
