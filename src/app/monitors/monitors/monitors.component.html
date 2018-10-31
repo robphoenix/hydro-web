@@ -35,7 +35,7 @@
             {{category.value | lowercase}}<span *ngIf="!last">, </span>
           </span>
         </div>
-        <mat-divider [inset]="false" *ngIf="!last"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
       </mat-list-item>
     </mat-nav-list>
   </mat-card>

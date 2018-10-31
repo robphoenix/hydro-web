@@ -6,4 +6,11 @@ body {
   background-color: whitesmoke;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
 }
