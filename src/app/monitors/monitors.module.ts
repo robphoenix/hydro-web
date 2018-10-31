@@ -1,4 +1,3 @@
-import { MonitorsListComponent } from './monitors-list/monitors-list.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,7 +24,6 @@ import { FilterMonitorsPipe } from './filter-monitors.pipe';
   ],
   declarations: [
     MonitorsComponent,
-    MonitorsListComponent,
     MonitorComponent,
     MonitorTableComponent,
     FilterMonitorsPipe,

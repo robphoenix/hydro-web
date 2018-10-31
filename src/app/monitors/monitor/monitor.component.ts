@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 /**
  * Describes a single monitor.
@@ -24,6 +25,9 @@ export class MonitorComponent implements OnInit {
   title = 'Monitors';
   monitors: IMonitor[];
   searchTerm: string;
+  categories = new FormControl();
+  categoriesList: string[];
+  selectedCategories: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -32,9 +36,11 @@ export class MonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('monitor init');
+
     this.getMonitors();
     this.getMonitor();
-    this.getMonitorData();
+    // this.getMonitorData();
   }
 
   /**
@@ -43,8 +49,15 @@ export class MonitorComponent implements OnInit {
    * @memberof MonitorsComponent
    */
   getMonitors() {
-    this.monitorService.getMonitors().subscribe((monitors) => {
+    this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
+      const categories: Set<string> = new Set();
+      monitors.forEach((monitor: IMonitor) => {
+        monitor.categories.forEach((category) =>
+          categories.add(category.value),
+        );
+      });
+      this.categoriesList = Array.from(categories);
     });
   }
 

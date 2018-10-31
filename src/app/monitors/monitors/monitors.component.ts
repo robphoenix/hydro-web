@@ -1,7 +1,6 @@
-import { UserService } from '../../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor, ICategory } from '../monitor';
+import { IMonitor } from '../monitor';
 import { FormControl } from '@angular/forms';
 
 /**
