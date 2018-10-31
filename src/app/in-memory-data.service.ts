@@ -2,7 +2,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Injectable } from '@angular/core';
 import * as faker from 'faker';
 import { IMonitor, Category } from './monitors/monitor';
-import { IMonitorData, EsperItem } from './monitors/monitor';
+import { IMonitorData, IEsperItem } from './monitors/monitor';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +13,12 @@ export class InMemoryDataService implements InMemoryDbService {
   private monitorData(id: string): IMonitorData {
     const timeStamp: Date = faker.date.recent();
     const headers: string[] = Array.from(
-      Array(faker.random.number({ min: 5, max: 12 })),
+      Array(faker.random.number({ min: 5, max: 7 })),
     ).map(() => {
       return faker.random.word();
     });
 
-    const esperItems: Array<EsperItem[]> = Array.from(
+    const esperItems: Array<IEsperItem[]> = Array.from(
       Array(faker.random.number({ min: 20, max: 100 })),
     ).map(() => {
       return headers.map((key: string, i: number) => {
@@ -26,11 +26,11 @@ export class InMemoryDataService implements InMemoryDbService {
         if (i % 3 === 0) {
           value = faker.random.word();
         } else if (i % 2 === 0) {
-          value = faker.random.words();
+          value = faker.random.words(faker.random.number({ min: 2, max: 5 }));
         } else {
-          value = `${faker.random.number()}`;
+          value = faker.internet.ip();
         }
-        return { key, value } as EsperItem;
+        return { key, value } as IEsperItem;
       });
     });
 

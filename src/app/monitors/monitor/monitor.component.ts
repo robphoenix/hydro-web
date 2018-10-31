@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { IMonitor, IMonitorData, EsperItem } from '../monitor';
+import { IMonitor, IMonitorData, IEsperItem } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -83,23 +83,13 @@ export class MonitorComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id: string = params.get('id');
       this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
-        this.tableHeaders = ['Time', ...data.headers];
-        this.data = this.transformMonitorData(data);
+        if (data) {
+          this.tableHeaders = ['Time', ...data.headers];
+          this.data = this.transformMonitorData(data);
+        }
       });
     });
   }
-
-  // getmonitordata() {
-  //   this.route.parammap.subscribe((params) => {
-  //     const id: number = +params.get('id');
-  //     this.monitorservice
-  //       .getmonitordata(id)
-  //       .subscribe((monitordata: monitordata) => {
-  //         this.tableheaders = ['time', ...monitordata.headers];
-  //         this.data = this.transformmonitordata(monitordata);
-  //       });
-  //   });
-  // }
 
   /**
    * Transforms the nested monitor data array
@@ -110,10 +100,11 @@ export class MonitorComponent implements OnInit {
    * @memberof MonitorComponent
    */
   transformMonitorData(monitorData: IMonitorData): { [key: string]: string }[] {
-    return monitorData.esperItems.map((esperItems: EsperItem[]) => {
+    return monitorData.esperItems.map((esperItems: IEsperItem[]) => {
       // initialise the data object with the monitor timestamp
+      const time: Date = new Date(monitorData.timeStamp);
       const data: { [key: string]: string } = {
-        Time: monitorData.timeStamp,
+        Time: time.toLocaleString('en-GB'),
       };
       // transform the array of esperItems into
       // key:value pairs and add to the data object

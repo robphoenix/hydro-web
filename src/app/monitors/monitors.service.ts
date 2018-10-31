@@ -63,11 +63,8 @@ export class MonitorsService {
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
-    console.log({ operation });
-
     return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      // console.log(`${operation} failed: ${error.message}`);
+      console.error(`${operation} failed: ${error}`);
       return of(result as T);
     };
   }

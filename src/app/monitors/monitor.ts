@@ -22,7 +22,7 @@ export interface Category {
  */
 export interface IMonitorData {
   id: string;
-  esperItems: Array<EsperItem[]>;
+  esperItems: Array<IEsperItem[]>;
   headers: string[];
   timeStamp: Date;
 }
@@ -35,7 +35,7 @@ export interface IMonitorData {
  * @export
  * @interface EsperItem
  */
-export interface EsperItem {
+export interface IEsperItem {
   key: string;
   value: string;
 }
