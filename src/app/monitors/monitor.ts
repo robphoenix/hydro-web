@@ -4,11 +4,11 @@ export interface IMonitor {
   queryBody: string;
   queryDescription: string;
   dateCreated: Date;
-  categories: Category[];
+  categories: ICategory[];
   data: IMonitorData;
 }
 
-export interface Category {
+export interface ICategory {
   id: string;
   value: string;
   dateCreated: Date;

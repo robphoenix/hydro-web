@@ -1,7 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Injectable } from '@angular/core';
 import * as faker from 'faker';
-import { IMonitor, Category } from './monitors/monitor';
+import { IMonitor, ICategory } from './monitors/monitor';
 import { IMonitorData, IEsperItem } from './monitors/monitor';
 
 @Injectable({
@@ -63,7 +63,7 @@ export class InMemoryDataService implements InMemoryDbService {
             id: faker.random.uuid(),
             value: faker.random.word(),
             dateCreated: faker.date.past(),
-          } as Category;
+          } as ICategory;
         }),
       } as IMonitor;
     });

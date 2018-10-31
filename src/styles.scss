@@ -6,11 +6,14 @@ body {
   background-color: whitesmoke;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  box-sizing: border-box;
+  // set to always show the scrollbar, so we don't get an awkward change while
+  // waiting for data
+  height: 101%;
 }
 
-* {
-  box-sizing: border-box;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
