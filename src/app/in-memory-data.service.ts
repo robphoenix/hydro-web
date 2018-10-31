@@ -8,45 +8,18 @@ import { IMonitorData, EsperItem } from './monitors/monitor';
   providedIn: 'root',
 })
 export class InMemoryDataService implements InMemoryDbService {
-  singleMonitor(): IMonitor {
-    const id: string = faker.random.uuid();
-    return {
-      id,
-      topic: faker.random.words(),
-      queryBody: faker.lorem.paragraph(),
-      queryDescription: faker.lorem.sentence(),
-      dateCreated: faker.date.past(),
-      categories: this.categories(),
-      data: this.monitorData(id),
-    } as IMonitor;
-  }
+  private ids: string[];
 
-  multipleMonitors(): IMonitor[] {
-    return Array.from(Array(faker.random.number(100))).map(() => {
-      return this.singleMonitor();
-    });
-  }
-
-  categories(): Category[] {
-    return Array.from(Array(faker.random.number(4))).map(() => {
-      return {
-        id: faker.random.uuid(),
-        value: faker.random.word(),
-        dateCreated: faker.date.past(),
-      } as Category;
-    });
-  }
-
-  monitorData(id: string): IMonitorData {
+  private monitorData(id: string): IMonitorData {
     const timeStamp: Date = faker.date.recent();
-    const headers: string[] = Array.from(Array(faker.random.number(12))).map(
-      () => {
-        return faker.random.word();
-      },
-    );
+    const headers: string[] = Array.from(
+      Array(faker.random.number({ min: 5, max: 12 })),
+    ).map(() => {
+      return faker.random.word();
+    });
 
     const esperItems: Array<EsperItem[]> = Array.from(
-      Array(faker.random.number(100)),
+      Array(faker.random.number({ min: 20, max: 100 })),
     ).map(() => {
       return headers.map((key: string, i: number) => {
         let value: string;
@@ -70,7 +43,34 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   createDb() {
-    const monitors: IMonitor[] = this.multipleMonitors();
-    return { monitors };
+    this.ids = Array.from(
+      Array(faker.random.number({ min: 30, max: 120 })),
+    ).map(() => {
+      return faker.random.uuid();
+    });
+
+    const monitors: IMonitor[] = this.ids.map((id: string) => {
+      return {
+        id,
+        topic: faker.random.words(),
+        queryBody: faker.lorem.paragraph(),
+        queryDescription: faker.lorem.sentence(),
+        dateCreated: faker.date.past(),
+        categories: Array.from(
+          Array(faker.random.number({ min: 1, max: 4 })),
+        ).map(() => {
+          return {
+            id: faker.random.uuid(),
+            value: faker.random.word(),
+            dateCreated: faker.date.past(),
+          } as Category;
+        }),
+      } as IMonitor;
+    });
+
+    const monitorsData: IMonitorData[] = this.ids.map((id: string) => {
+      return this.monitorData(id);
+    });
+    return { monitors, monitorsData };
   }
 }

@@ -1,10 +1,9 @@
-import { IMonitor } from './monitor';
+import { IMonitor, IMonitorData } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { IMonitorData } from './monitor';
 
 /**
  * Manages access to the monitors data on the server.
@@ -50,15 +49,8 @@ export class MonitorsService {
     );
   }
 
-  /**
-   * Gets the data for a single monitor.
-   *
-   * @param {number} id
-   * @returns {Observable<IMonitorData>}
-   * @memberof MonitorsService
-   */
-  public getMonitorData(id: number): Observable<IMonitorData> {
-    return this.http.get<IMonitorData>(`${this.monitorsUrl}/${id}/data`).pipe(
+  public getMonitorData(id: string): Observable<IMonitorData> {
+    return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
       tap((monitor: IMonitorData) => monitor),
       catchError(this.handleError<IMonitorData>('getMonitorData')),
     );

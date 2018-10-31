@@ -1,7 +1,6 @@
-import { IMonitorData, EsperItem } from './../monitor';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { IMonitor } from '../monitor';
+import { IMonitor, IMonitorData, EsperItem } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -40,7 +39,7 @@ export class MonitorComponent implements OnInit {
 
     this.getMonitors();
     this.getMonitor();
-    // this.getMonitorData();
+    this.getMonitorData();
   }
 
   /**
@@ -82,15 +81,25 @@ export class MonitorComponent implements OnInit {
    */
   getMonitorData() {
     this.route.paramMap.subscribe((params) => {
-      const id: number = +params.get('id');
-      this.monitorService
-        .getMonitorData(id)
-        .subscribe((monitorData: IMonitorData) => {
-          this.tableHeaders = ['Time', ...monitorData.headers];
-          this.data = this.transformMonitorData(monitorData);
-        });
+      const id: string = params.get('id');
+      this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
+        this.tableHeaders = ['Time', ...data.headers];
+        this.data = this.transformMonitorData(data);
+      });
     });
   }
+
+  // getmonitordata() {
+  //   this.route.parammap.subscribe((params) => {
+  //     const id: number = +params.get('id');
+  //     this.monitorservice
+  //       .getmonitordata(id)
+  //       .subscribe((monitordata: monitordata) => {
+  //         this.tableheaders = ['time', ...monitordata.headers];
+  //         this.data = this.transformmonitordata(monitordata);
+  //       });
+  //   });
+  // }
 
   /**
    * Transforms the nested monitor data array
