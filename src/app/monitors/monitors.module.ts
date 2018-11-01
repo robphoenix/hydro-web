@@ -6,7 +6,6 @@ import { MonitorsComponent } from './monitors/monitors.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MonitorTableComponent } from './monitor-table/monitor-table.component';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FilterMonitorsPipe } from './filter-monitors.pipe';
@@ -22,12 +21,7 @@ import { FilterMonitorsPipe } from './filter-monitors.pipe';
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [
-    MonitorsComponent,
-    MonitorComponent,
-    MonitorTableComponent,
-    FilterMonitorsPipe,
-  ],
+  declarations: [MonitorsComponent, MonitorComponent, FilterMonitorsPipe],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
