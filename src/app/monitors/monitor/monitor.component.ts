@@ -19,11 +19,12 @@ import { FormControl } from '@angular/forms';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
-  data: { [key: string]: string }[];
-  tableHeaders: string[];
-  title = 'Monitors';
+  dataSource: { [key: string]: string }[];
+  displayedColumns: string[];
   monitors: IMonitor[];
+
   searchTerm: string;
+
   categories = new FormControl();
   categoriesList: string[];
   selectedCategories: string[];
@@ -35,29 +36,37 @@ export class MonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('monitor init');
-
     this.getMonitors();
     this.getMonitor();
     this.getMonitorData();
   }
 
   /**
-   * Get the list of Live monitors.
+   * Get the current monitors.
    *
    * @memberof MonitorsComponent
    */
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
-      const categories: Set<string> = new Set();
-      monitors.forEach((monitor: IMonitor) => {
-        monitor.categories.forEach((category) =>
-          categories.add(category.value),
-        );
-      });
-      this.categoriesList = Array.from(categories);
+      this.setCategories();
     });
+  }
+
+  /**
+   * Sets a complete list of categories derived from the current monitors.
+   *
+   * @private
+   * @memberof MonitorsComponent
+   */
+  private setCategories() {
+    const categories: Set<string> = new Set();
+    this.monitors.forEach((monitor: IMonitor) => {
+      monitor.categories.forEach((category) =>
+        categories.add(category.value.toLowerCase()),
+      );
+    });
+    this.categoriesList = Array.from(categories).sort();
   }
 
   /**
@@ -83,9 +92,10 @@ export class MonitorComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id: string = params.get('id');
       this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
+        // TODO: error handling
         if (data) {
-          this.tableHeaders = ['Time', ...data.headers];
-          this.data = this.transformMonitorData(data);
+          this.displayedColumns = ['Time', ...data.headers];
+          this.dataSource = this.transformMonitorData(data);
         }
       });
     });

@@ -18,8 +18,6 @@ export class MonitorsService {
   baseUrl = `http://${environment.apiHost}:3000`;
   monitorsUrl = `${this.baseUrl}/monitors`;
 
-  ids: string[];
-
   constructor(private http: HttpClient) {}
 
   /**
@@ -49,6 +47,13 @@ export class MonitorsService {
     );
   }
 
+  /**
+   * Gets the associated data for a single monitor.
+   *
+   * @param {string} id
+   * @returns {Observable<IMonitorData>}
+   * @memberof MonitorsService
+   */
   public getMonitorData(id: string): Observable<IMonitorData> {
     return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
       tap((monitor: IMonitorData) => monitor),

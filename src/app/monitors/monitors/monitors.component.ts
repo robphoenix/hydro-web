@@ -31,20 +31,30 @@ export class MonitorsComponent implements OnInit {
   }
 
   /**
-   * Get the list of Live monitors.
+   * Get the current monitors.
    *
    * @memberof MonitorsComponent
    */
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
-      const categories: Set<string> = new Set();
-      monitors.forEach((monitor: IMonitor) => {
-        monitor.categories.forEach((category) =>
-          categories.add(category.value.toLowerCase()),
-        );
-      });
-      this.categoriesList = Array.from(categories).sort();
+      this.setCategories();
     });
+  }
+
+  /**
+   * Sets a complete list of categories derived from the current monitors.
+   *
+   * @private
+   * @memberof MonitorsComponent
+   */
+  private setCategories() {
+    const categories: Set<string> = new Set();
+    this.monitors.forEach((monitor: IMonitor) => {
+      monitor.categories.forEach((category) =>
+        categories.add(category.value.toLowerCase()),
+      );
+    });
+    this.categoriesList = Array.from(categories).sort();
   }
 }
