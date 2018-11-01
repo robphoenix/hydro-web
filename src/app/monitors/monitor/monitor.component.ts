@@ -35,8 +35,6 @@ export class MonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('monitor init');
-
     this.getMonitors();
     this.getMonitor();
     this.getMonitorData();
