@@ -41,10 +41,10 @@ export class MonitorsComponent implements OnInit {
       const categories: Set<string> = new Set();
       monitors.forEach((monitor: IMonitor) => {
         monitor.categories.forEach((category) =>
-          categories.add(category.value),
+          categories.add(category.value.toLowerCase()),
         );
       });
-      this.categoriesList = Array.from(categories);
+      this.categoriesList = Array.from(categories).sort();
     });
   }
 }

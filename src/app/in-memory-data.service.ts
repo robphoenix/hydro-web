@@ -10,36 +10,107 @@ import { IMonitorData, IEsperItem } from './monitors/monitor';
 export class InMemoryDataService implements InMemoryDbService {
   private ids: string[];
 
-  private monitorData(id: string): IMonitorData {
-    const timeStamp: Date = faker.date.recent();
-    const headers: string[] = Array.from(
-      Array(faker.random.number({ min: 5, max: 7 })),
-    ).map(() => {
-      return faker.random.word();
-    });
+  private headers(): string[] {
+    return Array.from(Array(faker.random.number({ min: 5, max: 7 }))).map(
+      () => {
+        return faker.random.word();
+      },
+    );
+  }
 
-    const esperItems: Array<IEsperItem[]> = Array.from(
-      Array(faker.random.number({ min: 20, max: 100 })),
-    ).map(() => {
-      return headers.map((key: string, i: number) => {
-        let value: string;
-        if (i % 3 === 0) {
-          value = faker.random.word();
-        } else if (i % 2 === 0) {
-          value = faker.random.words(faker.random.number({ min: 2, max: 5 }));
-        } else {
-          value = faker.internet.ip();
-        }
-        return { key, value } as IEsperItem;
-      });
-    });
+  private esperItems(headers: string[]): Array<IEsperItem[]> {
+    return Array.from(Array(faker.random.number({ min: 20, max: 100 }))).map(
+      () => {
+        return headers.map((key: string, i: number) => {
+          let value: string;
+          if (i % 3 === 0) {
+            value = faker.random.word();
+          } else if (i % 2 === 0) {
+            value = faker.random.words(faker.random.number({ min: 2, max: 5 }));
+          } else {
+            value = faker.internet.ip();
+          }
+          return { key, value } as IEsperItem;
+        });
+      },
+    );
+  }
 
-    return {
-      id,
-      headers,
-      timeStamp,
-      esperItems,
-    } as IMonitorData;
+  private monitorData(): IMonitorData[] {
+    return this.ids.map((id: string) => {
+      const timeStamp: Date = faker.date.recent();
+      const headers: string[] = this.headers();
+      const esperItems: Array<IEsperItem[]> = this.esperItems(headers);
+
+      return {
+        id,
+        headers,
+        timeStamp,
+        esperItems,
+      } as IMonitorData;
+    });
+  }
+
+  private categories(): ICategory[] {
+    const categoriesList: string[] = [
+      'script-attack',
+      'Mobile',
+      'Sports Book',
+      'JohnSnow',
+      'BetSlip',
+      'GavinEdwards',
+      'Scrapers',
+      'China Arbs',
+      'bettingslip',
+      'Extra',
+      'FRM',
+      'Alerts',
+      'NewLoginDefault',
+      'Members',
+      'Monitor',
+      'Blocking',
+      'Investigation',
+      'HoneyPot',
+      'Publisher',
+      'Datacenter',
+      'LoginAttack',
+      'Bookmaker',
+      'hostingfacility',
+      'geo',
+      'Martin',
+      'OpenAccount',
+      'Ragbag',
+    ];
+
+    const usedCategories: string[] = Array.from(
+      Array(faker.random.number({ min: 1, max: 3 })),
+    ).map(
+      () =>
+        categoriesList[
+          faker.random.number({
+            min: 0,
+            max: categoriesList.length - 1,
+          })
+        ],
+    );
+
+    return Array.from(new Set(usedCategories)).map((value) => {
+      const [id, dateCreated] = [faker.random.uuid(), faker.date.past()];
+      return { id, value, dateCreated } as ICategory;
+    });
+  }
+
+  private monitors(): IMonitor[] {
+    return this.ids.map((id: string) => {
+      return {
+        id,
+        topic: faker.random.words(),
+        queryBody: faker.lorem.paragraph(),
+        queryDescription: faker.lorem.sentence(),
+        dateCreated: faker.date.past(),
+        categories: this.categories(),
+      } as IMonitor;
+    });
   }
 
   createDb() {
@@ -49,28 +120,8 @@ export class InMemoryDataService implements InMemoryDbService {
       return faker.random.uuid();
     });
 
-    const monitors: IMonitor[] = this.ids.map((id: string) => {
-      return {
-        id,
-        topic: faker.random.words(),
-        queryBody: faker.lorem.paragraph(),
-        queryDescription: faker.lorem.sentence(),
-        dateCreated: faker.date.past(),
-        categories: Array.from(
-          Array(faker.random.number({ min: 1, max: 4 })),
-        ).map(() => {
-          return {
-            id: faker.random.uuid(),
-            value: faker.random.word(),
-            dateCreated: faker.date.past(),
-          } as ICategory;
-        }),
-      } as IMonitor;
-    });
-
-    const monitorsData: IMonitorData[] = this.ids.map((id: string) => {
-      return this.monitorData(id);
-    });
+    const monitors: IMonitor[] = this.monitors();
+    const monitorsData: IMonitorData[] = this.monitorData();
     return { monitors, monitorsData };
   }
 }
