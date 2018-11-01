@@ -19,11 +19,12 @@ import { FormControl } from '@angular/forms';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
-  data: { [key: string]: string }[];
-  tableHeaders: string[];
-  title = 'Monitors';
+  dataSource: { [key: string]: string }[];
+  displayedColumns: string[];
   monitors: IMonitor[];
+
   searchTerm: string;
+
   categories = new FormControl();
   categoriesList: string[];
   selectedCategories: string[];
@@ -82,8 +83,8 @@ export class MonitorComponent implements OnInit {
       const id: string = params.get('id');
       this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
         if (data) {
-          this.tableHeaders = ['Time', ...data.headers];
-          this.data = this.transformMonitorData(data);
+          this.displayedColumns = ['Time', ...data.headers];
+          this.dataSource = this.transformMonitorData(data);
         }
       });
     });
