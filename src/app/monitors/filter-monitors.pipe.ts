@@ -20,9 +20,13 @@ const filterSearch = (monitors: IMonitor[], searchTerm: string): IMonitor[] => {
   if (searchTerm) {
     const regex: RegExp = new RegExp(searchTerm, 'gi');
     return monitors.filter((monitor: IMonitor) => {
-      return (
-        monitor.topic.toLowerCase().match(regex) ||
-        monitor.queryDescription.toLowerCase().match(regex)
+      const categories = monitor.categories.reduce(
+        (prev, curr) => `${prev} ${curr.value}`,
+        '',
+      );
+
+      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+        regex,
       );
     });
   }
