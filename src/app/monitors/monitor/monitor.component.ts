@@ -1,7 +1,6 @@
-import { IMonitorData, EsperItem } from './../monitor-data';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { IMonitor } from '../monitor';
+import { IMonitor, IMonitorData, IEsperItem } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -40,7 +39,7 @@ export class MonitorComponent implements OnInit {
 
     this.getMonitors();
     this.getMonitor();
-    // this.getMonitorData();
+    this.getMonitorData();
   }
 
   /**
@@ -68,7 +67,7 @@ export class MonitorComponent implements OnInit {
    */
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
-      const id: number = +params.get('id');
+      const id: string = params.get('id');
       this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
@@ -82,13 +81,13 @@ export class MonitorComponent implements OnInit {
    */
   getMonitorData() {
     this.route.paramMap.subscribe((params) => {
-      const id: number = +params.get('id');
-      this.monitorService
-        .getMonitorData(id)
-        .subscribe((monitorData: IMonitorData) => {
-          this.tableHeaders = ['Time', ...monitorData.headers];
-          this.data = this.transformMonitorData(monitorData);
-        });
+      const id: string = params.get('id');
+      this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
+        if (data) {
+          this.tableHeaders = ['Time', ...data.headers];
+          this.data = this.transformMonitorData(data);
+        }
+      });
     });
   }
 
@@ -101,10 +100,11 @@ export class MonitorComponent implements OnInit {
    * @memberof MonitorComponent
    */
   transformMonitorData(monitorData: IMonitorData): { [key: string]: string }[] {
-    return monitorData.esperItems.map((esperItems: EsperItem[]) => {
+    return monitorData.esperItems.map((esperItems: IEsperItem[]) => {
       // initialise the data object with the monitor timestamp
+      const time: Date = new Date(monitorData.timeStamp);
       const data: { [key: string]: string } = {
-        Time: monitorData.timeStamp,
+        Time: time.toLocaleString('en-GB'),
       };
       // transform the array of esperItems into
       // key:value pairs and add to the data object

@@ -1,9 +1,8 @@
-import { IMonitor } from './monitor';
+import { IMonitor, IMonitorData } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { IMonitorData } from './monitor-data';
 import { environment } from '../../environments/environment';
 
 /**
@@ -19,6 +18,8 @@ export class MonitorsService {
   baseUrl = `http://${environment.apiHost}:3000`;
   monitorsUrl = `${this.baseUrl}/monitors`;
 
+  ids: string[];
+
   constructor(private http: HttpClient) {}
 
   /**
@@ -28,7 +29,7 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>(this.monitorsUrl).pipe(
+    return this.http.get<IMonitor[]>('api/monitors').pipe(
       tap((monitors: IMonitor[]) => monitors),
       catchError(this.handleError<IMonitor[]>('getMonitors')),
     );
@@ -41,22 +42,15 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getMonitorById(id: number): Observable<IMonitor> {
-    return this.http.get<IMonitor>(`${this.monitorsUrl}/${id}`).pipe(
+  public getMonitorById(id: string): Observable<IMonitor> {
+    return this.http.get<IMonitor>(`api/monitors/${id}`).pipe(
       tap((monitor: IMonitor) => monitor),
       catchError(this.handleError<IMonitor>('getMonitorById')),
     );
   }
 
-  /**
-   * Gets the data for a single monitor.
-   *
-   * @param {number} id
-   * @returns {Observable<IMonitorData>}
-   * @memberof MonitorsService
-   */
-  public getMonitorData(id: number): Observable<IMonitorData> {
-    return this.http.get<IMonitorData>(`${this.monitorsUrl}/${id}/data`).pipe(
+  public getMonitorData(id: string): Observable<IMonitorData> {
+    return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
       tap((monitor: IMonitorData) => monitor),
       catchError(this.handleError<IMonitorData>('getMonitorData')),
     );
@@ -70,8 +64,7 @@ export class MonitorsService {
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      console.log(`${operation} failed: ${error.message}`);
+      console.error(`${operation} failed: ${error}`);
       return of(result as T);
     };
   }
