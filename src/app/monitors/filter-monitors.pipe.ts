@@ -37,12 +37,14 @@ const filterCategories = (
   monitors: IMonitor[],
   categories: string[],
 ): IMonitor[] => {
-  if (categories && categories.length > 0) {
-    return monitors.filter((monitor: IMonitor) => {
-      return categories.some((category: string) =>
-        monitor.categories.map((c: ICategory) => c.value).includes(category),
-      );
-    });
+  if (!categories || categories.length === 0) {
+    return monitors;
   }
-  return monitors;
+  return monitors.filter((monitor: IMonitor) => {
+    return categories.every((category: string) =>
+      monitor.categories
+        .map((c: ICategory) => c.value.toLowerCase())
+        .includes(category),
+    );
+  });
 };
