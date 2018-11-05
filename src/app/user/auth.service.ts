@@ -6,7 +6,7 @@ import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.dev';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
