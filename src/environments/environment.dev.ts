@@ -2,4 +2,5 @@
 export const environment = {
   production: false,
   apiHost: 'mn2splmfe001sd0',
+  mustAuthenticate: true,
 };

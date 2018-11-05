@@ -6,6 +6,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 /**
  * Guards all routes that require basic authentication.
@@ -32,6 +33,9 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): boolean {
+    if (!environment.mustAuthenticate) {
+      return true;
+    }
     if (this.authService.isLoggedIn) {
       return true;
     }
