@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="fixed top-0 z-999 shadow-2">
+  <mat-toolbar-row>
+    <img class="ml2 mt1" height="40" [src]="logo" alt="logo">
+    <nav class="dib w-100 tr" *ngIf="authService.isLoggedIn">
+
+      <a class="f5" mat-button routerLink="/showme">
+        Show Me
+      </a>
+      <a class="f5" mat-button routerLink="/monitors">
+        Monitors
+      </a>
+      <a class="f5" mat-button routerLink="/search">
+        Search
+      </a>
+      <a class="f5" mat-button (click)="authService.logout()">
+        Log Out {{authService.username}}
+      </a>
+
+    </nav>
+  </mat-toolbar-row>
+</mat-toolbar>
