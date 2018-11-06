@@ -1,5 +1,0 @@
-// Height of mat-list-item is limited to 48px so we need to override to
-// accomodate length text, for instance in the monitor queryDescription
-.mat-list-item {
-  height: initial !important;
-}
