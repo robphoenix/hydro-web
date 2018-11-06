@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor } from '../monitor';
+import { IMonitor, ICategory, IGroup, IAction } from '../monitor';
 import { FormControl } from '@angular/forms';
 
 /**
@@ -24,6 +24,14 @@ export class MonitorsComponent implements OnInit {
   categoriesList: string[];
   selectedCategories: string[];
 
+  groups = new FormControl();
+  groupsList: string[];
+  selectedGroups: string[];
+
+  actions = new FormControl();
+  actionsList: string[];
+  selectedActions: string[];
+
   constructor(private monitorService: MonitorsService) {}
 
   ngOnInit() {
@@ -38,7 +46,9 @@ export class MonitorsComponent implements OnInit {
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
-      this.setCategories();
+      this.categoriesList = this.allCategories(monitors);
+      this.groupsList = this.allGroups(monitors);
+      this.actionsList = this.allActions(monitors);
     });
   }
 
@@ -48,13 +58,45 @@ export class MonitorsComponent implements OnInit {
    * @private
    * @memberof MonitorsComponent
    */
-  private setCategories() {
-    const categories: Set<string> = new Set();
-    this.monitors.forEach((monitor: IMonitor) => {
-      monitor.categories.forEach((category) =>
-        categories.add(category.value.toLowerCase()),
-      );
-    });
-    this.categoriesList = Array.from(categories).sort();
+  private allCategories(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.categories.map((category: ICategory) => category.value),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  private allGroups(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.groups.map((group: IGroup) => group.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  private allActions(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.actions.map((action: IAction) => action.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
   }
 }

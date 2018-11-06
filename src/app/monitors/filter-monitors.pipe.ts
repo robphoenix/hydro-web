@@ -42,9 +42,7 @@ const filterCategories = (
   }
   return monitors.filter((monitor: IMonitor) => {
     return categories.every((category: string) =>
-      monitor.categories
-        .map((c: ICategory) => c.value.toLowerCase())
-        .includes(category),
+      monitor.categories.map((c: ICategory) => c.value).includes(category),
     );
   });
 };
