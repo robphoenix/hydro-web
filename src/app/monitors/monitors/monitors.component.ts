@@ -47,9 +47,65 @@ export class MonitorsComponent implements OnInit {
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
       this.monitors = monitors;
-      this.categoriesList = this.allCategories(monitors);
-      this.groupsList = this.allGroups(monitors);
-      this.actionsList = this.allActions(monitors);
+      this.categoriesList = this.currentCategories(monitors);
+      this.groupsList = this.currentGroups(monitors);
+      this.actionsList = this.currentActions(monitors);
+    });
+  }
+
+  filterMonitors(): IMonitor[] {
+    let filtered: IMonitor[] = this.monitors;
+    if (this.searchTerm) {
+      filtered = this.searchMonitors(filtered);
+    }
+    if (this.selectedCategories && this.selectedCategories.length > 0) {
+      filtered = this.filterCategories(filtered);
+    }
+    if (this.selectedGroups && this.selectedGroups.length > 0) {
+      filtered = this.filterGroups(filtered);
+    }
+    if (this.selectedActions && this.selectedActions.length > 0) {
+      filtered = this.filterActions(filtered);
+    }
+    return filtered;
+  }
+
+  searchMonitors(monitors: IMonitor[]): IMonitor[] {
+    const regex: RegExp = new RegExp(this.searchTerm, 'gi');
+    return monitors.filter((monitor: IMonitor) => {
+      const categories = monitor.categories.reduce(
+        (prev, curr) => `${prev} ${curr.value}`,
+        '',
+      );
+      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+        regex,
+      );
+    });
+  }
+
+  filterCategories(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedCategories.every((selected: string) =>
+        monitor.categories
+          .map((category: ICategory) => category.value)
+          .includes(selected),
+      );
+    });
+  }
+
+  filterGroups(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedGroups.every((selected: string) =>
+        monitor.groups.map((group: IGroup) => group.name).includes(selected),
+      );
+    });
+  }
+
+  filterActions(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedActions.every((action: string) =>
+        monitor.actions.map((a: IGroup) => a.name).includes(action),
+      );
     });
   }
 
@@ -59,7 +115,7 @@ export class MonitorsComponent implements OnInit {
    * @private
    * @memberof MonitorsComponent
    */
-  private allCategories(monitors: IMonitor[]): string[] {
+  private currentCategories(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(
         monitors.reduce(
@@ -73,7 +129,7 @@ export class MonitorsComponent implements OnInit {
     ).sort();
   }
 
-  private allGroups(monitors: IMonitor[]): string[] {
+  private currentGroups(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(
         monitors.reduce(
@@ -87,7 +143,7 @@ export class MonitorsComponent implements OnInit {
     ).sort();
   }
 
-  private allActions(monitors: IMonitor[]): string[] {
+  private currentActions(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(
         monitors.reduce(

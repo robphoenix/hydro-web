@@ -22,9 +22,9 @@
     </mat-form-field>
 
     <mat-nav-list dense>
-      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories; last as last">
+      <!-- <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories; last as last">
         <h4 mat-list-item>{{monitor.topic}}</h4>
-      </mat-list-item>
+      </mat-list-item> -->
     </mat-nav-list>
 
   </mat-sidenav>

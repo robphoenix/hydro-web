@@ -6,8 +6,10 @@
         <h2 class="gray pb3 bb b--light-silver ttu tracked">{{title}}</h2>
       </div>
 
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
-        <mat-icon class="mr2" color="primary">search</mat-icon>
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon color="primary">search</mat-icon>
+        </div>
         <mat-form-field class="w-80">
           <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
           <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
@@ -17,9 +19,11 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pb2 pt3  mv2 ba b--light-silver br1 justify-center bg-white">
-        <mat-icon class="mr2" color="primary">category</mat-icon>
-        <mat-form-field class="w-80 ">
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon color="primary">category</mat-icon>
+        </div>
+        <mat-form-field class="w-80">
           <mat-select placeholder="Filter Categories" [formControl]="categories"
             [(value)]="selectedCategories" [disableOptionCentering]="true"
             multiple>
@@ -30,8 +34,10 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
-        <mat-icon class="mr2" color="primary">group</mat-icon>
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon class="mr2" color="primary">group</mat-icon>
+        </div>
         <mat-form-field class="w-80">
           <mat-select placeholder="Filter Groups" [formControl]="groups"
             [(value)]="selectedGroups" [disableOptionCentering]="true" multiple>
@@ -42,8 +48,10 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
-        <mat-icon class="mr2" color="primary">security</mat-icon>
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon class="mr2" color="primary">security</mat-icon>
+        </div>
         <mat-form-field class="w-80">
           <mat-select placeholder="Filter Actions" [formControl]="actions"
             [(value)]="selectedActions" [disableOptionCentering]="true"
@@ -55,7 +63,7 @@
         </mat-form-field>
       </div>
 
-      <div class="flex ml-auto mt2">
+      <div class="flex ml-auto mt3">
         <button mat-stroked-button color="accent" (click)="clearFilters()">
           Clear Selections
         </button>
@@ -64,7 +72,7 @@
     </div>
 
     <div class="flex flex-column w-50 absolute right-0 mr5 ">
-      <mat-card class="ma2 __card" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories">
+      <mat-card class="ma2 __card" *ngFor="let monitor of filterMonitors()">
         <mat-card-header>
           <mat-card-title>{{monitor.topic}}</mat-card-title>
           <mat-card-subtitle>
