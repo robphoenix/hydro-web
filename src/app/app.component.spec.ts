@@ -2,10 +2,10 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material';
-import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { By } from '@angular/platform-browser';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -24,7 +24,7 @@ describe('AppComponent', () => {
         }),
       ],
       providers: [JwtHelperService],
-      declarations: [AppComponent, HeaderComponent],
+      declarations: [AppComponent, NavbarComponent],
     }).compileComponents();
   }));
 
@@ -34,10 +34,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should render the header component', async(() => {
+  it('should render the navbar component', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     expect(
-      fixture.debugElement.query(By.directive(HeaderComponent)).nativeElement,
+      fixture.debugElement.query(By.directive(NavbarComponent)).nativeElement,
     ).toBeTruthy();
   }));
 });
