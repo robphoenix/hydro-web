@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent implements OnInit {
+  title = 'monitors';
   monitors: IMonitor[];
 
   searchTerm: string;
@@ -98,5 +99,12 @@ export class MonitorsComponent implements OnInit {
         ),
       ),
     ).sort();
+  }
+
+  clearFilters() {
+    this.searchTerm = '';
+    this.selectedActions = [];
+    this.selectedCategories = [];
+    this.selectedGroups = [];
   }
 }

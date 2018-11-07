@@ -2,13 +2,13 @@
   <div class="flex">
     <div class="flex flex-column w-40 fixed ml5">
 
-      <div class="w-50 tc center ">
-        <h2 class="gray pb3 bb b--light-silver">Monitors</h2>
+      <div class="w-50 tc center">
+        <h2 class="gray pb3 bb b--light-silver ttu tracked">{{title}}</h2>
       </div>
 
-      <div class="flex items-center pa3 mv2 ba b--light-silver justify-center bg-white">
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
         <mat-icon class="mr2" color="primary">search</mat-icon>
-        <mat-form-field class="w-80 ">
+        <mat-form-field class="w-80">
           <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
           <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
             aria-label="Clear" (click)="searchTerm=''">
@@ -17,7 +17,7 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pa3 mv2 ba b--light-silver justify-center bg-white">
+      <div class="flex items-center pb2 pt3  mv2 ba b--light-silver br1 justify-center bg-white">
         <mat-icon class="mr2" color="primary">category</mat-icon>
         <mat-form-field class="w-80 ">
           <mat-select placeholder="Filter Categories" [formControl]="categories"
@@ -30,9 +30,9 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pa3 mv2 ba b--light-silver justify-center bg-white">
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
         <mat-icon class="mr2" color="primary">group</mat-icon>
-        <mat-form-field class="w-80 ">
+        <mat-form-field class="w-80">
           <mat-select placeholder="Filter Groups" [formControl]="groups"
             [(value)]="selectedGroups" [disableOptionCentering]="true" multiple>
             <mat-option *ngFor="let group of groupsList" [value]="group">
@@ -42,9 +42,9 @@
         </mat-form-field>
       </div>
 
-      <div class="flex items-center pa3 mv2 ba b--light-silver justify-center bg-white">
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 justify-center bg-white">
         <mat-icon class="mr2" color="primary">security</mat-icon>
-        <mat-form-field class="w-80 ">
+        <mat-form-field class="w-80">
           <mat-select placeholder="Filter Actions" [formControl]="actions"
             [(value)]="selectedActions" [disableOptionCentering]="true"
             multiple>
@@ -55,48 +55,52 @@
         </mat-form-field>
       </div>
 
+      <div class="flex ml-auto mt2">
+        <button mat-stroked-button color="accent" (click)="clearFilters()">
+          Clear Selections
+        </button>
+      </div>
+
     </div>
 
-    <div class="flex flex-column w-50 absolute right-0 mr5">
-      <div class="ma2 grow " *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>{{monitor.topic}}</mat-card-title>
-            <mat-card-subtitle>
-              <div class="flex">
-                <span *ngFor="let category of monitor.categories; last as last">
-                  {{category.value}}<span *ngIf="!last">,&#160;</span>
-                </span>
-              </div>
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{monitor.queryDescription}}</p>
+    <div class="flex flex-column w-50 absolute right-0 mr5 ">
+      <mat-card class="ma2 __card" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories">
+        <mat-card-header>
+          <mat-card-title>{{monitor.topic}}</mat-card-title>
+          <mat-card-subtitle>
             <div class="flex">
-              <div class="flex flex-column mh1">
-                <span *ngFor="let group of monitor.groups">
-                  {{group.name}}
-                </span>
-              </div>
-              <div class="flex flex-column mh1">
-                <span *ngFor="let action of monitor.actions">
-                  {{action.name}}
-                </span>
-              </div>
+              <span *ngFor="let category of monitor.categories; last as last">
+                {{category.value}}<span *ngIf="!last">,&#160;</span>
+              </span>
             </div>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
-            <button mat-button>
-              <mat-icon color="accent">delete</mat-icon>
-            </button>
-            <button mat-button>
-              <mat-icon routerLink="/monitors/{{monitor.id}}" color="accent">launch</mat-icon>
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{monitor.queryDescription}}</p>
+          <div class="flex">
+            <div class="flex flex-column mh1">
+              <span *ngFor="let group of monitor.groups">
+                {{group.name}}
+              </span>
+            </div>
+            <div class="flex flex-column mh1">
+              <span *ngFor="let action of monitor.actions">
+                {{action.name}}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+          <button mat-button>
+            <mat-icon color="accent">delete</mat-icon>
+          </button>
+          <button mat-button>
+            <mat-icon routerLink="/monitors/{{monitor.id}}" color="accent">launch</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
 </article>
