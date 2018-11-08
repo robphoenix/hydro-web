@@ -3,12 +3,14 @@
     <div class="flex flex-column w-40 fixed ml5">
 
       <div class="w-50 tc center">
-        <h2 class="gray pb3 bb b--light-silver ttu tracked">{{title}}</h2>
+        <h2 class="gray pb3 bb b--light-silver ttu tracked">
+          {{title}}
+        </h2>
       </div>
 
       <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
         <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon color="primary">search</mat-icon>
+          <mat-icon color="accent">search</mat-icon>
         </div>
         <mat-form-field class="w-80">
           <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
@@ -21,7 +23,7 @@
 
       <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
         <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon color="primary">category</mat-icon>
+          <mat-icon class="green">category</mat-icon>
         </div>
         <mat-form-field class="w-80">
           <mat-select placeholder="Filter Categories" [formControl]="categories"
@@ -36,7 +38,7 @@
 
       <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
         <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="mr2" color="primary">group</mat-icon>
+          <mat-icon class="blue">group</mat-icon>
         </div>
         <mat-form-field class="w-80">
           <mat-select placeholder="Filter Groups" [formControl]="groups"
@@ -50,7 +52,7 @@
 
       <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
         <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="mr2" color="primary">security</mat-icon>
+          <mat-icon class="orange">security</mat-icon>
         </div>
         <mat-form-field class="w-80">
           <mat-select placeholder="Filter Actions" [formControl]="actions"
@@ -63,8 +65,8 @@
         </mat-form-field>
       </div>
 
-      <div class="flex ml-auto mt3">
-        <button mat-stroked-button color="accent" (click)="clearFilters()">
+      <div class="flex ml-auto mt3 mr3">
+        <button mat-stroked-button color="accent" class="ttu tracked" (click)="clearFilters()">
           Clear Selections
         </button>
       </div>

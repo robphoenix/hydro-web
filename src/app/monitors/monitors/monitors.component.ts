@@ -46,7 +46,9 @@ export class MonitorsComponent implements OnInit {
    */
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
-      this.monitors = monitors;
+      this.monitors = monitors.sort(
+        (a, b) => (a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0),
+      );
       this.categoriesList = this.currentCategories(monitors);
       this.groupsList = this.currentGroups(monitors);
       this.actionsList = this.currentActions(monitors);
