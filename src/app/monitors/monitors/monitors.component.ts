@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor } from '../monitor';
+import { IMonitor, ICategory, IGroup, IAction } from '../monitor';
 import { FormControl } from '@angular/forms';
 
 /**
@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent implements OnInit {
+  title = 'monitors';
   monitors: IMonitor[];
 
   searchTerm: string;
@@ -23,6 +24,14 @@ export class MonitorsComponent implements OnInit {
   categories = new FormControl();
   categoriesList: string[];
   selectedCategories: string[];
+
+  groups = new FormControl();
+  groupsList: string[];
+  selectedGroups: string[];
+
+  actions = new FormControl();
+  actionsList: string[];
+  selectedActions: string[];
 
   constructor(private monitorService: MonitorsService) {}
 
@@ -37,8 +46,68 @@ export class MonitorsComponent implements OnInit {
    */
   getMonitors() {
     this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
-      this.monitors = monitors;
-      this.setCategories();
+      this.monitors = monitors.sort(
+        (a, b) => (a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0),
+      );
+      this.categoriesList = this.currentCategories(monitors);
+      this.groupsList = this.currentGroups(monitors);
+      this.actionsList = this.currentActions(monitors);
+    });
+  }
+
+  filterMonitors(): IMonitor[] {
+    let filtered: IMonitor[] = this.monitors;
+    if (this.searchTerm) {
+      filtered = this.searchMonitors(filtered);
+    }
+    if (this.selectedCategories && this.selectedCategories.length > 0) {
+      filtered = this.filterCategories(filtered);
+    }
+    if (this.selectedGroups && this.selectedGroups.length > 0) {
+      filtered = this.filterGroups(filtered);
+    }
+    if (this.selectedActions && this.selectedActions.length > 0) {
+      filtered = this.filterActions(filtered);
+    }
+    return filtered;
+  }
+
+  searchMonitors(monitors: IMonitor[]): IMonitor[] {
+    const regex: RegExp = new RegExp(this.searchTerm, 'gi');
+    return monitors.filter((monitor: IMonitor) => {
+      const categories = monitor.categories.reduce(
+        (prev, curr) => `${prev} ${curr.value}`,
+        '',
+      );
+      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+        regex,
+      );
+    });
+  }
+
+  filterCategories(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedCategories.every((selected: string) =>
+        monitor.categories
+          .map((category: ICategory) => category.value)
+          .includes(selected),
+      );
+    });
+  }
+
+  filterGroups(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedGroups.every((selected: string) =>
+        monitor.groups.map((group: IGroup) => group.name).includes(selected),
+      );
+    });
+  }
+
+  filterActions(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedActions.every((action: string) =>
+        monitor.actions.map((a: IGroup) => a.name).includes(action),
+      );
     });
   }
 
@@ -48,13 +117,52 @@ export class MonitorsComponent implements OnInit {
    * @private
    * @memberof MonitorsComponent
    */
-  private setCategories() {
-    const categories: Set<string> = new Set();
-    this.monitors.forEach((monitor: IMonitor) => {
-      monitor.categories.forEach((category) =>
-        categories.add(category.value.toLowerCase()),
-      );
-    });
-    this.categoriesList = Array.from(categories).sort();
+  private currentCategories(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.categories.map((category: ICategory) => category.value),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  private currentGroups(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.groups.map((group: IGroup) => group.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  private currentActions(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.actions.map((action: IAction) => action.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  clearFilters() {
+    this.searchTerm = '';
+    this.selectedActions = [];
+    this.selectedCategories = [];
+    this.selectedGroups = [];
   }
 }

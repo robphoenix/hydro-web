@@ -1,18 +1,22 @@
 <mat-toolbar color="primary" class="fixed top-0 z-999 shadow-2">
   <mat-toolbar-row>
     <img class="ml2 mt1" height="40" [src]="logo" alt="logo">
+    <!-- <nav class="dib w-100 tr"> -->
     <nav class="dib w-100 tr" *ngIf="authService.isLoggedIn">
 
-      <a class="f5" mat-button routerLink="/showme">
+      <!-- <a class="ttu tracked" mat-button routerLink="/showme">
         Show Me
-      </a>
-      <a class="f5" mat-button routerLink="/monitors">
-        Monitors
-      </a>
-      <a class="f5" mat-button routerLink="/search">
+      </a> -->
+      <a class="ttu tracked" mat-button routerLink="/search">
+        <mat-icon>search</mat-icon>
         Search
       </a>
-      <a class="f5" mat-button (click)="authService.logout()">
+      <a class="ttu tracked" mat-button routerLink="/monitors">
+        <mat-icon class="yellow">flash_on</mat-icon>
+        Monitors
+      </a>
+      <a class="ttu tracked" mat-button (click)="authService.logout()">
+        <mat-icon>account_circle</mat-icon>
         Log Out {{authService.username}}
       </a>
 

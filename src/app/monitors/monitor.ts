@@ -6,12 +6,24 @@ export interface IMonitor {
   dateCreated: Date;
   categories: ICategory[];
   data: IMonitorData;
+  groups: IGroup[];
+  actions: IAction[];
 }
 
 export interface ICategory {
   id: string;
   value: string;
   dateCreated: Date;
+}
+
+export interface IGroup {
+  id: string;
+  name: string;
+}
+
+export interface IAction {
+  id: string;
+  name: string;
 }
 
 /**

@@ -1,43 +1,82 @@
-<article class="w-75 mt4 center pt5" *ngIf="monitors">
+<article class="mt4 center pt5 w-100" *ngIf="monitors">
+  <div class="flex">
+    <div class="flex flex-column w-40 fixed ml5">
 
-  <mat-card>
-    <mat-card-title class="tc">
-      <h2>Monitors</h2>
-    </mat-card-title>
+      <div class="w-50 tc center">
+        <h2 class="gray pb3 bb b--light-silver ttu tracked">
+          {{title}}
+        </h2>
+      </div>
 
-    <div class="mb4" fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center">
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon color="accent">search</mat-icon>
+        </div>
+        <mat-form-field class="w-80">
+          <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
+          <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
+            aria-label="Clear" (click)="searchTerm=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field class="search" fxFlex="40">
-        <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
-        <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
-          aria-label="Clear" (click)="searchTerm=''">
-          <mat-icon>close</mat-icon>
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon class="green">category</mat-icon>
+        </div>
+        <mat-form-field class="w-80">
+          <mat-select placeholder="Filter Categories" [formControl]="categories"
+            [(value)]="selectedCategories" [disableOptionCentering]="true"
+            multiple>
+            <mat-option *ngFor="let category of categoriesList" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon class="blue">group</mat-icon>
+        </div>
+        <mat-form-field class="w-80">
+          <mat-select placeholder="Filter Groups" [formControl]="groups"
+            [(value)]="selectedGroups" [disableOptionCentering]="true" multiple>
+            <mat-option *ngFor="let group of groupsList" [value]="group">
+              {{group}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
+        <div class="flex justify-center w-10 mr3 pl3">
+          <mat-icon class="orange">security</mat-icon>
+        </div>
+        <mat-form-field class="w-80">
+          <mat-select placeholder="Filter Actions" [formControl]="actions"
+            [(value)]="selectedActions" [disableOptionCentering]="true"
+            multiple>
+            <mat-option *ngFor="let action of actionsList" [value]="action">
+              {{action}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flex ml-auto mt3 mr3">
+        <button mat-stroked-button color="accent" class="ttu tracked" (click)="clearFilters()">
+          Clear Selections
         </button>
-      </mat-form-field>
+      </div>
 
-      <mat-form-field class="categories" fxFlex="40">
-        <mat-select placeholder="Filter Categories" [formControl]="categories"
-          [(value)]="selectedCategories" [disableOptionCentering]="true"
-          multiple>
-          <mat-option *ngFor="let category of categoriesList" [value]="category">
-            {{category}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
     </div>
 
-    <mat-nav-list>
-      <mat-list-item routerLink="/monitors/{{monitor.id}}" *ngFor="let monitor of monitors | filterMonitors: searchTerm:selectedCategories; last as last">
-        <h4 fxFlex>{{monitor.topic}}</h4>
-        <p fxFlex="40">{{monitor.queryDescription}}</p>
-        <div fxFlex class="tr">
-          <span *ngFor="let category of monitor.categories; last as last">
-            {{category.value | lowercase}}<span *ngIf="!last">, </span>
-          </span>
-        </div>
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </mat-list-item>
-    </mat-nav-list>
-
-  </mat-card>
+    <div class="flex flex-column w-50 absolute right-0 mr5 ">
+      <div class="ma2" *ngFor="let monitor of filterMonitors()">
+        <app-monitors-card [monitor]="monitor"></app-monitors-card>
+      </div>
+    </div>
+  </div>
 </article>

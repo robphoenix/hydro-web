@@ -1,8 +1,9 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Injectable } from '@angular/core';
 import * as faker from 'faker';
-import { IMonitor, ICategory } from './monitors/monitor';
+import { IMonitor, ICategory, IGroup, IAction } from './monitors/monitor';
 import { IMonitorData, IEsperItem } from './monitors/monitor';
+import { MatGridList } from '@angular/material';
 
 @Injectable({
   providedIn: 'root',
@@ -82,7 +83,7 @@ export class InMemoryDataService implements InMemoryDbService {
       'Ragbag',
     ];
 
-    const usedCategories: string[] = Array.from(
+    const chosenCategories: string[] = Array.from(
       Array(faker.random.number({ min: 1, max: 3 })),
     ).map(
       () =>
@@ -94,9 +95,97 @@ export class InMemoryDataService implements InMemoryDbService {
         ],
     );
 
-    return Array.from(new Set(usedCategories)).map((value) => {
+    return Array.from(new Set(chosenCategories)).map((value) => {
       const [id, dateCreated] = [faker.random.uuid(), faker.date.past()];
       return { id, value, dateCreated } as ICategory;
+    });
+  }
+
+  private groups(): IGroup[] {
+    const groupsList: string[] = [
+      'OTS',
+      'FRM',
+      'Infrastructure',
+      'Forensic Monitoring',
+      'Network Security',
+    ];
+
+    const chosenGroups: string[] = Array.from(
+      Array(faker.random.number({ min: 1, max: 3 })),
+    ).map(
+      () =>
+        groupsList[
+          faker.random.number({
+            min: 0,
+            max: groupsList.length - 1,
+          })
+        ],
+    );
+
+    return Array.from(new Set(chosenGroups)).map((name) => {
+      const id = faker.random.uuid();
+      return { id, name } as IGroup;
+    });
+  }
+
+  private actions(): IAction[] {
+    const actionsList: string[] = [
+      'Batch Example-1',
+      'Block IP for 1 Hour',
+      'Block Testing',
+      'Multiple Logins Email Alert',
+      'Block Range Permanently',
+      'FRM - Email - Generic',
+      'RollingMembers System callout to store results in R Studio',
+      'Disable Multiple Monitors',
+      'RollingMemberAuthenticated System callout to store results in R Studio',
+      'RollingBettingslip System callout to store results in R Studio',
+      'Block XForwardedFor for 30 minutes',
+      'RollingMobile System callout to store results in R Studio',
+      'Store Results in Database (General Purpose)',
+      'RollingSportsbook Sytem callout to store results in R Studio',
+      'System Monitor Only Store Call',
+      'Block IP Permanently',
+      'block sip 2 mins - Delay 20 seconds',
+      'Block IP for 6 Hours',
+      'Block for 24 hours',
+      'Block stk or sip for 1 minute',
+      'Block stk or sip for 2 hours',
+      'Block stk 10 minutes',
+      'Simple Log',
+      'System Only Store Members Data',
+      'Publisher Kill Sessions (24 Hrs)',
+      'Block sip for 30 minutes',
+      'Block IP for 48 Hours',
+      'Block  Range for 10 minutes Delay 2m',
+      'Block UserAgent for 30 mins',
+      'Block UQID for 10 minutes',
+      'Block IP Range For 3 hours',
+      'Block IP for 3 Hours',
+      'RStudio-Tim-Testing',
+      'User has Created Manual Block',
+      'User has Created or Edited a Monitor',
+      'User has Enabled or Disabled a Monitor',
+      'Publisher Client Kill',
+      'Block sip for 10 minutes',
+      'Email Test Service',
+    ];
+
+    const chosenActions: string[] = Array.from(
+      Array(faker.random.number({ min: 1, max: 6 })),
+    ).map(
+      () =>
+        actionsList[
+          faker.random.number({
+            min: 0,
+            max: actionsList.length - 1,
+          })
+        ],
+    );
+
+    return Array.from(new Set(chosenActions)).map((name) => {
+      const id = faker.random.uuid();
+      return { id, name } as IAction;
     });
   }
 
@@ -109,6 +198,8 @@ export class InMemoryDataService implements InMemoryDbService {
         queryDescription: faker.lorem.sentence(),
         dateCreated: faker.date.past(),
         categories: this.categories(),
+        groups: this.groups(),
+        actions: this.actions(),
       } as IMonitor;
     });
   }

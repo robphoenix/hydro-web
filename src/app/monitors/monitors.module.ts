@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FilterMonitorsPipe } from './filter-monitors.pipe';
+import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { FilterMonitorsPipe } from './filter-monitors.pipe';
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [MonitorsComponent, MonitorComponent, FilterMonitorsPipe],
+  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
