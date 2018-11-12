@@ -1,9 +1,14 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Injectable } from '@angular/core';
 import * as faker from 'faker';
-import { IMonitor, ICategory, IGroup, IAction } from './monitors/monitor';
+import {
+  IMonitor,
+  ICategory,
+  IGroup,
+  IAction,
+  IActionGroup,
+} from './monitors/monitor';
 import { IMonitorData, IEsperItem } from './monitors/monitor';
-import { MatGridList } from '@angular/material';
 
 @Injectable({
   providedIn: 'root',
@@ -128,78 +133,95 @@ export class InMemoryDataService implements InMemoryDbService {
     });
   }
 
-  private actions(): IAction[] {
-    const actionsList: string[] = [
-      'Batch Example-1',
-      'Block IP for 1 Hour',
-      'Block Testing',
-      'Multiple Logins Email Alert',
-      'Block Range Permanently',
-      'FRM - Email - Generic',
-      'RollingMembers System callout to store results in R Studio',
-      'Disable Multiple Monitors',
-      'RollingMemberAuthenticated System callout to store results in R Studio',
-      'RollingBettingslip System callout to store results in R Studio',
-      'Block XForwardedFor for 30 minutes',
-      'RollingMobile System callout to store results in R Studio',
-      'Store Results in Database (General Purpose)',
-      'RollingSportsbook Sytem callout to store results in R Studio',
-      'System Monitor Only Store Call',
-      'Block IP Permanently',
-      'block sip 2 mins - Delay 20 seconds',
-      'Block IP for 6 Hours',
-      'Block for 24 hours',
-      'Block stk or sip for 1 minute',
-      'Block stk or sip for 2 hours',
-      'Block stk 10 minutes',
-      'Simple Log',
-      'System Only Store Members Data',
-      'Publisher Kill Sessions (24 Hrs)',
-      'Block sip for 30 minutes',
-      'Block IP for 48 Hours',
-      'Block  Range for 10 minutes Delay 2m',
-      'Block UserAgent for 30 mins',
-      'Block UQID for 10 minutes',
-      'Block IP Range For 3 hours',
-      'Block IP for 3 Hours',
-      'RStudio-Tim-Testing',
-      'User has Created Manual Block',
-      'User has Created or Edited a Monitor',
-      'User has Enabled or Disabled a Monitor',
-      'Publisher Client Kill',
-      'Block sip for 10 minutes',
-      'Email Test Service',
-    ];
+  private actionGroups(): IActionGroup[] {
+    const availableActions = {
+      block: [
+        'Block IP for 1 Hour',
+        'Block Testing',
+        'Block Range Permanently',
+        'Block XForwardedFor for 30 minutes',
+        'Block IP Permanently',
+        'block sip 2 mins - Delay 20 seconds',
+        'Block IP for 6 Hours',
+        'Block for 24 hours',
+        'Block stk or sip for 1 minute',
+        'Block stk or sip for 2 hours',
+        'Block stk 10 minutes',
+        'Block sip for 30 minutes',
+        'Block IP for 48 Hours',
+        'Block Range for 10 minutes Delay 2m',
+        'Block UserAgent for 30 mins',
+        'Block UQID for 10 minutes',
+        'Block IP Range For 3 hours',
+        'Block IP for 3 Hours',
+        'Block sip for 10 minutes',
+      ],
+      email: [
+        'Batch Example-1',
+        'Multiple Logins Email Alert',
+        'FRM - Email - Generic',
+        'Email Test Service',
+      ],
+      save: [
+        'RollingMembers System callout to store results in R Studio',
+        'RollingMemberAuthenticated System callout to store results in R Studio',
+        'RollingBettingslip System callout to store results in R Studio',
+        'RollingMobile System callout to store results in R Studio',
+        'Store Results in Database (General Purpose)',
+        'RollingSportsbook Sytem callout to store results in R Studio',
+        'System Monitor Only Store Call',
+        'Simple Log',
+        'System Only Store Members Data',
+      ],
+    };
 
     const chosenActions: string[] = Array.from(
-      Array(faker.random.number({ min: 1, max: 6 })),
-    ).map(
-      () =>
-        actionsList[
+      Array(faker.random.number({ min: 1, max: 5 })),
+    ).map(() => {
+      return Object.keys(availableActions)[
+        faker.random.number({ min: 0, max: 2 })
+      ];
+    });
+
+    const groups = { email: [], block: [], save: [] };
+    chosenActions.forEach((group) => {
+      const id = faker.random.uuid();
+      const name =
+        availableActions[group][
           faker.random.number({
             min: 0,
-            max: actionsList.length - 1,
+            max: availableActions[group].length - 1,
           })
-        ],
-    );
-
-    return Array.from(new Set(chosenActions)).map((name) => {
-      const id = faker.random.uuid();
-      return { id, name } as IAction;
+        ];
+      groups[group].push({ id, name } as IAction);
     });
+
+    return Object.keys(groups)
+      .filter((group) => groups[group].length > 0)
+      .map((group) => {
+        return { name: group, actions: groups[group] } as IActionGroup;
+      });
   }
 
   private monitors(): IMonitor[] {
     return this.ids.map((id: string) => {
+      const topic = faker.random.words();
+      const queryBody = faker.lorem.paragraph();
+      const queryDescription = faker.lorem.sentence();
+      const dateCreated = faker.date.past();
+      const categories = this.categories();
+      const groups = this.groups();
+      const actionGroups = this.actionGroups();
+
       return {
         id,
-        topic: faker.random.words(),
-        queryBody: faker.lorem.paragraph(),
-        queryDescription: faker.lorem.sentence(),
-        dateCreated: faker.date.past(),
-        categories: this.categories(),
-        groups: this.groups(),
-        actions: this.actions(),
+        topic,
+        queryBody,
+        queryDescription,
+        dateCreated,
+        categories,
+        groups,
+        actionGroups,
       } as IMonitor;
     });
   }

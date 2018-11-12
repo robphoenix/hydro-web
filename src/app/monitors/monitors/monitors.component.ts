@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor, ICategory, IGroup, IAction } from '../monitor';
+import { IMonitor, ICategory, IGroup, IAction, IActionGroup } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   selectedGroups: string[];
 
   actions = new FormControl();
-  actionsList: string[];
+  actionsList;
   selectedActions: string[];
 
   private unsubscribe$ = new Subject<void>();
@@ -117,11 +117,20 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   }
 
   filterActions(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedActions.every((action: string) =>
-        monitor.actions.map((a: IGroup) => a.name).includes(action),
+    const filterFn = (monitor: IMonitor) => {
+      const currentActions = monitor.actionGroups.reduce(
+        (prev: string[], curr: IActionGroup) => [
+          ...prev,
+          ...curr.actions.map((a) => a.name),
+        ],
+        [],
       );
-    });
+      return this.selectedActions.every((action: string) =>
+        currentActions.includes(action),
+      );
+    };
+
+    return monitors.filter(filterFn);
   }
 
   /**
@@ -159,17 +168,21 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   }
 
   private currentActions(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.actions.map((action: IAction) => action.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
+    const allActions: string[] = monitors
+      .reduce((prev: IAction[][], curr: IMonitor) => {
+        return [
+          ...prev,
+          ...curr.actionGroups.map((a: IActionGroup) => a.actions),
+        ];
+      }, [])
+      .reduce((prevActions: string[], currActions: IAction[]) => {
+        return [
+          ...prevActions,
+          ...currActions.map((action: IAction) => action.name),
+        ];
+      }, []);
+    // remove duplicate actions
+    return Array.from(new Set(allActions)).sort();
   }
 
   clearFilters() {

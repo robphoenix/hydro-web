@@ -7,7 +7,7 @@ export interface IMonitor {
   categories: ICategory[];
   data: IMonitorData;
   groups: IGroup[];
-  actions: IAction[];
+  actionGroups: IActionGroup[];
 }
 
 export interface ICategory {
@@ -21,9 +21,20 @@ export interface IGroup {
   name: string;
 }
 
+export interface IActionGroup {
+  name: Group;
+  actions: IAction[];
+}
+
 export interface IAction {
   id: string;
   name: string;
+}
+
+enum Group {
+  Email = 'email',
+  Block = 'block',
+  Save = 'save',
 }
 
 /**
