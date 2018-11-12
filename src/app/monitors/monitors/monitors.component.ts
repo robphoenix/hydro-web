@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { IMonitor, ICategory, IGroup, IAction } from '../monitor';
 import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -15,7 +17,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './monitors.component.html',
   styleUrls: ['./monitors.component.scss'],
 })
-export class MonitorsComponent implements OnInit {
+export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
   monitors: IMonitor[];
 
@@ -33,10 +35,17 @@ export class MonitorsComponent implements OnInit {
   actionsList: string[];
   selectedActions: string[];
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private monitorService: MonitorsService) {}
 
   ngOnInit() {
     this.getMonitors();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   /**
@@ -45,14 +54,18 @@ export class MonitorsComponent implements OnInit {
    * @memberof MonitorsComponent
    */
   getMonitors() {
-    this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
-      this.monitors = monitors.sort(
-        (a, b) => (a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0),
-      );
-      this.categoriesList = this.currentCategories(monitors);
-      this.groupsList = this.currentGroups(monitors);
-      this.actionsList = this.currentActions(monitors);
-    });
+    this.monitorService
+      .getMonitors()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((monitors: IMonitor[]) => {
+        this.monitors = monitors.sort(
+          (a, b) =>
+            a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0,
+        );
+        this.categoriesList = this.currentCategories(monitors);
+        this.groupsList = this.currentGroups(monitors);
+        this.actionsList = this.currentActions(monitors);
+      });
   }
 
   filterMonitors(): IMonitor[] {
