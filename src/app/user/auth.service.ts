@@ -7,9 +7,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { ILoginResponse } from './login-response';
 
 const httpOptions = {
-  responseType: 'text' as 'text', // https://github.com/angular/angular/issues/18586
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
   }),
@@ -50,7 +50,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  readonly baseUrl = `http://${environment.apiHostAuth}:8080`;
+  readonly baseUrl = `http://${environment.apiHostAuth}`;
   readonly loginUrl = `${this.baseUrl}/login`;
   readonly refreshUrl = `${this.baseUrl}/p/refresh`;
 
@@ -95,23 +95,25 @@ export class AuthService {
    * @returns {Observable<string>}
    * @memberof AuthService
    */
-  login(username: string, password: string): Observable<string> {
+  login(username: string, password: string): Observable<ILoginResponse> {
     return this.http
       .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
-        tap((resp) => {
-          if (!this.jwtHelper.isTokenExpired(resp)) {
+        tap((resp: ILoginResponse) => {
+          const { token } = resp;
+          if (!this.jwtHelper.isTokenExpired(token)) {
             // set the access token
-            localStorage.setItem(this.accessTokenName, resp);
+            localStorage.setItem(this.accessTokenName, token);
 
             this.isLoggedIn = true;
             // set the current user
             const {
               username: currentUsername,
-              role,
-            } = this.jwtHelper.decodeToken(resp) as IAccessToken;
+              displayName,
+            } = this.jwtHelper.decodeToken(token) as IAccessToken;
 
             this.username = currentUsername;
+            this.userDisplayName = displayName;
             // initialise the subscriptions
             this.initSubscriptions();
           }
@@ -156,7 +158,10 @@ export class AuthService {
     this._refresh$ = this.refreshToken()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (value: string) => localStorage.setItem(this.accessTokenName, value),
+        (value: ILoginResponse) => {
+          const { token: refreshToken } = value;
+          localStorage.setItem(this.accessTokenName, refreshToken);
+        },
         (error) => console.error(`[refreshToken] ${error}`),
         () => console.log('[refreshToken] complete'),
       );
@@ -185,10 +190,10 @@ export class AuthService {
    * @returns
    * @memberof AuthService
    */
-  refreshToken(): Observable<string> {
+  refreshToken(): Observable<ILoginResponse> {
     return interval(this.refreshInterval).pipe(
       switchMap(() => this.http.get(this.refreshUrl, httpOptions)),
-      tap((token) => token),
+      tap((resp: ILoginResponse) => resp),
     );
   }
 
@@ -263,7 +268,6 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    // get the username from the token if necessary
     if (!this.currentUser.username && this.isLoggedIn) {
       const { username } = this.jwtHelper.decodeToken(
         localStorage.getItem(this.accessTokenName),
@@ -271,5 +275,35 @@ export class AuthService {
       this.currentUser.username = username;
     }
     return this.currentUser.username;
+  }
+
+  /**
+   * Sets the current user's display name.
+   *
+   * @memberof AuthService
+   */
+  set userDisplayName(value: string) {
+    this.currentUser.displayName = value;
+  }
+
+  /**
+   * Gets the current user's display name.
+   *
+   * If there is no current user details but the user is authenticated,
+   * then we get the display name from the valid user token.
+   * This can happen if the application is closed and the reopened
+   * while the access token is still valid.
+   *
+   * @type {string}
+   * @memberof AuthService
+   */
+  get userDisplayName(): string {
+    if (!this.currentUser.displayName && this.isLoggedIn) {
+      const { displayName } = this.jwtHelper.decodeToken(
+        localStorage.getItem(this.accessTokenName),
+      ) as IAccessToken;
+      this.currentUser.displayName = displayName;
+    }
+    return this.currentUser.displayName;
   }
 }

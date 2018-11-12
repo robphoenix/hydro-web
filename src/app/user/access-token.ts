@@ -6,6 +6,7 @@
  */
 export interface IAccessToken {
   username: string;
+  displayName: string;
   role: string;
   iat: number;
   exp: number;
