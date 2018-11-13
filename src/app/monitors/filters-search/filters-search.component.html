@@ -1,0 +1,21 @@
+<div class="search">
+  <mat-icon color="accent">search</mat-icon>
+  <mat-form-field class="input">
+    <input
+      matInput
+      type="text"
+      placeholder="Search Monitors"
+      [(ngModel)]="searchTerm"
+      (keyup)="updateSearchTerm()"
+    />
+  </mat-form-field>
+  <button
+    *ngIf="searchTerm"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="clearSearchTerm()"
+  >
+    <mat-icon color="primary">close</mat-icon>
+  </button>
+</div>

@@ -1,40 +1,11 @@
-<article class="mt4 center pt5 w-100" *ngIf="monitors">
-  <div class="flex">
-    <div class="flex flex-column w-40 fixed ml5">
-      <div class="w-50 tc center">
-        <h2 class="gray pb3 bb b--light-silver ttu tracked">{{ title }}</h2>
-      </div>
+<article class="content">
+  <div class="filters">
+    <app-filters-search
+      class="search"
+      (searchTermChange)="searchMonitors($event)"
+    ></app-filters-search>
 
-      <div
-        class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white"
-      >
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon color="accent">search</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <input
-            matInput
-            type="text"
-            placeholder="Search Monitors"
-            [(ngModel)]="searchTerm"
-          />
-          <button
-            mat-button
-            *ngIf="searchTerm"
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            (click)="searchTerm = ''"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-
-      <div
-        class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white"
-      >
-        <div class="flex justify-center w-10 mr3 pl3">
+    <div class="flex items-center mh2 w-20 pt3">
           <mat-icon class="green">category</mat-icon>
         </div>
         <mat-form-field class="w-80">

@@ -1,0 +1,15 @@
+.filters {
+  top: 64px;
+  height: 100px;
+  position: fixed;
+  z-index: 10;
+  border-bottom: 1px solid black;
+  background: whitesmoke;
+  display: flex;
+  width: 100%;
+
+  .search {
+    display: flex;
+    align-items: center;
+  }
+}

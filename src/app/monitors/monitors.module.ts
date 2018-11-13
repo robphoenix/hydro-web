@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
+import { FiltersSearchComponent } from './filters-search/filters-search.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent],
+  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent, FiltersSearchComponent],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}

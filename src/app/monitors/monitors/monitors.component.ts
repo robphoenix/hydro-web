@@ -19,6 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
+  filteredMonitors: IMonitor[];
   monitors: IMonitor[];
 
   searchTerm: string;
@@ -48,6 +49,19 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  searchMonitors(searchTerm: string) {
+    const regex: RegExp = new RegExp(searchTerm, 'gi');
+    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
+      const categories = monitor.categories.reduce(
+        (prev, curr) => `${prev} ${curr.value}`,
+        '',
+      );
+      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+        regex,
+      );
+    });
+  }
+
   /**
    * Get the current monitors.
    *
@@ -62,6 +76,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
           (a, b) =>
             a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0,
         );
+        this.filteredMonitors = this.monitors;
         this.categoriesList = this.currentCategories(monitors);
         this.groupsList = this.currentGroups(monitors);
         this.actionsList = this.currentActions(monitors);
@@ -70,9 +85,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   filterMonitors(): IMonitor[] {
     let filtered: IMonitor[] = this.monitors;
-    if (this.searchTerm) {
-      filtered = this.searchMonitors(filtered);
-    }
     if (this.selectedCategories && this.selectedCategories.length > 0) {
       filtered = this.filterCategories(filtered);
     }
@@ -83,19 +95,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
       filtered = this.filterActions(filtered);
     }
     return filtered;
-  }
-
-  searchMonitors(monitors: IMonitor[]): IMonitor[] {
-    const regex: RegExp = new RegExp(this.searchTerm, 'gi');
-    return monitors.filter((monitor: IMonitor) => {
-      const categories = monitor.categories.reduce(
-        (prev, curr) => `${prev} ${curr.value}`,
-        '',
-      );
-      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
-        regex,
-      );
-    });
   }
 
   filterCategories(monitors: IMonitor[]): IMonitor[] {
