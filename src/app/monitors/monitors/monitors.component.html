@@ -6,26 +6,17 @@
       (searchTermChange)="searchMonitors($event)"
     ></app-search-input>
 
-    <div class="flex items-center mh2 w-20 pt3">
-          <mat-icon class="green">category</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <mat-select
-            placeholder="Filter Categories"
+    <app-multiple-select
+      name="categoriesSelect"
+      ngDefaultControl
+      #categoriesSelect
             [formControl]="categories"
-            [(value)]="selectedCategories"
-            [disableOptionCentering]="true"
-            multiple
+      [placeHolder]="'Filter Categories'"
+      [options]="categoriesList"
+      (selectedOptionsChange)="filterCategories($event)"
           >
-            <mat-option
-              *ngFor="let category of categoriesList"
-              [value]="category"
-            >
-              {{ category }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <mat-icon class="green">category</mat-icon>
+    </app-multiple-select>
 
       <div
         class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white"

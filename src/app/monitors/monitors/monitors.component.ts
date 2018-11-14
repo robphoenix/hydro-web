@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { IMonitor, ICategory, IGroup, IAction, IActionGroup } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -26,7 +27,9 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   categories = new FormControl();
   categoriesList: string[];
-  selectedCategories: string[];
+
+  @ViewChild('categoriesSelect')
+  private categoriesSelect: MultipleSelectComponent;
 
   groups = new FormControl();
   groupsList: string[];
@@ -62,6 +65,16 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     });
   }
 
+  filterCategories(selectedOptions: string[]) {
+    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
+      return selectedOptions.every((option: string) =>
+        monitor.categories
+          .map((category: ICategory) => category.value)
+          .includes(option),
+      );
+    });
+  }
+
   /**
    * Get the current monitors.
    *
@@ -85,9 +98,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   filterMonitors(): IMonitor[] {
     let filtered: IMonitor[] = this.monitors;
-    if (this.selectedCategories && this.selectedCategories.length > 0) {
-      filtered = this.filterCategories(filtered);
-    }
     if (this.selectedGroups && this.selectedGroups.length > 0) {
       filtered = this.filterGroups(filtered);
     }
@@ -95,16 +105,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
       filtered = this.filterActions(filtered);
     }
     return filtered;
-  }
-
-  filterCategories(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedCategories.every((selected: string) =>
-        monitor.categories
-          .map((category: ICategory) => category.value)
-          .includes(selected),
-      );
-    });
   }
 
   filterGroups(monitors: IMonitor[]): IMonitor[] {
@@ -185,9 +185,10 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   }
 
   clearFilters() {
-    this.searchTerm = '';
+    this.monitors = this.filteredMonitors;
+    this.categoriesSelect.clearSelectedOptions();
+
     this.selectedActions = [];
-    this.selectedCategories = [];
     this.selectedGroups = [];
   }
 }
