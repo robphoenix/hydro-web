@@ -1,9 +1,10 @@
 <article class="content">
   <div class="filters">
-    <app-filters-search
+    <app-search-input
       class="search"
+      [placeHolder]="'Search Monitors'"
       (searchTermChange)="searchMonitors($event)"
-    ></app-filters-search>
+    ></app-search-input>
 
     <div class="flex items-center mh2 w-20 pt3">
           <mat-icon class="green">category</mat-icon>

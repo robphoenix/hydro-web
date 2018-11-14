@@ -9,11 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
-import { FiltersSearchComponent } from './filters-search/filters-search.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     AppRoutingModule,
     LayoutModule,
     FormsModule,
@@ -22,7 +23,7 @@ import { FiltersSearchComponent } from './filters-search/filters-search.componen
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent, FiltersSearchComponent],
+  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}

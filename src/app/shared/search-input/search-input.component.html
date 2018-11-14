@@ -4,7 +4,7 @@
     <input
       matInput
       type="text"
-      placeholder="Search Monitors"
+      placeholder="{{placeHolder || 'Search'}}"
       [(ngModel)]="searchTerm"
       (keyup)="updateSearchTerm()"
     />
