@@ -40,12 +40,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   actions = new FormControl();
   actionsList;
 
-  icons = {
-    email: 'email',
-    block: 'block',
-    save: 'save_alt',
-  };
-
   private unsubscribe$ = new Subject<void>();
 
   constructor(private monitorService: MonitorsService) {}
@@ -177,10 +171,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
       }, []);
     // remove duplicate actions
     return Array.from(new Set(allActions)).sort();
-  }
-
-  actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join(', ');
   }
 
   clearFilters() {

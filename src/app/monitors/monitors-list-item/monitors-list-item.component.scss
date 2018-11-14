@@ -1,0 +1,91 @@
+// Height of mat-list-item is limited to 48px so we need to override in case of large text
+::ng-deep .mat-list .mat-list-item {
+  height: initial !important;
+}
+
+mat-list-item {
+  padding: 5px;
+
+  &:hover {
+    // background: whitesmoke;
+
+    .buttons {
+      display: inline;
+    }
+  }
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  width: 30%;
+
+  .topic {
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .description {
+    margin-left: 30px;
+
+    p {
+      color: gray;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  width: 10%;
+
+  mat-icon {
+    margin: 5px;
+  }
+}
+
+.categories {
+  display: flex;
+  align-items: center;
+  width: 20%;
+
+  mat-icon {
+    margin-right: 5px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.groups {
+  display: flex;
+  align-items: center;
+  width: 20%;
+
+  mat-icon {
+    margin-right: 5px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.buttons {
+  display: none;
+}

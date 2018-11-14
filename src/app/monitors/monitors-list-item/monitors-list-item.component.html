@@ -1,0 +1,60 @@
+<mat-list-item>
+  <header>
+    <div class="topic">
+      <mat-icon matListIcon class="yellow">flash_on</mat-icon>
+      <h3 matLine>{{ monitor.topic }}</h3>
+    </div>
+    <div class="description">
+      <p>{{ monitor.queryDescription }}</p>
+    </div>
+  </header>
+
+  <div class="actions">
+    <mat-icon class="orange">security</mat-icon>
+    <mat-icon
+      *ngFor="let item of monitor.actionGroups"
+      matTooltip="{{actionNames(item.actions)}}"
+      [matTooltipClass]="'f6 h-auto'"
+      >{{ icons[item.name] }}</mat-icon
+    >
+  </div>
+
+  <div class="categories">
+    <mat-icon class="green">category</mat-icon>
+    <ul>
+      <li *ngFor="let category of monitor.categories.sort(); last as last">
+        {{ category.value }}<span *ngIf="!last">,&#160;</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="groups">
+    <mat-icon class="blue">group</mat-icon>
+    <ul>
+      <li *ngFor="let group of monitor.groups.sort(); last as last">
+        {{ group.name }}<span *ngIf="!last">,&#160;</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="buttons">
+    <a
+      mat-icon-button
+      matTooltip="View Monitor"
+      routerLink="/monitors/{{monitor.id}}"
+    >
+      <mat-icon color="accent">visibility</mat-icon>
+    </a>
+    <button mat-icon-button matTooltip="Duplicate Monitor">
+      <mat-icon color="accent">file_copy</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Disable Monitor">
+      <mat-icon color="warn">flash_off</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Delete Monitor">
+      <mat-icon color="warn">delete</mat-icon>
+    </button>
+  </div>
+</mat-list-item>
+
+<mat-divider></mat-divider>

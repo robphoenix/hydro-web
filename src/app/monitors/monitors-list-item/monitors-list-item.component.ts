@@ -1,0 +1,22 @@
+import { Component, Input } from '@angular/core';
+import { IMonitor, IAction } from '../monitor';
+
+@Component({
+  selector: 'app-monitors-list-item',
+  templateUrl: './monitors-list-item.component.html',
+  styleUrls: ['./monitors-list-item.component.scss'],
+})
+export class MonitorsListItemComponent {
+  @Input()
+  monitor: IMonitor;
+
+  icons = {
+    email: 'email',
+    block: 'block',
+    save: 'save_alt',
+  };
+
+  actionNames(actions: IAction[]): string {
+    return actions.map((action) => action.name).join(', ');
+  }
+}

@@ -10,6 +10,7 @@ import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-item.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { SharedModule } from '../shared/shared.module';
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent],
+  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent, MonitorsListItemComponent],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
