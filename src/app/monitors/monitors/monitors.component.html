@@ -1,15 +1,16 @@
 <article class="content">
   <div class="filters">
     <app-search-input
-      class="search"
+      class="filter"
       [placeHolder]="'Search Monitors'"
       (searchTermChange)="searchMonitors($event)"
     ></app-search-input>
 
     <app-multiple-select
-      name="categoriesSelect"
+      class="filter"
+      name="categorySelect"
       ngDefaultControl
-      #categoriesSelect
+      #categorySelect
             [formControl]="categories"
       [placeHolder]="'Filter Categories'"
       [options]="categoriesList"
@@ -18,57 +19,48 @@
       <mat-icon class="green">category</mat-icon>
     </app-multiple-select>
 
-      <div
-        class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white"
-      >
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="blue">group</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <mat-select
-            placeholder="Filter Groups"
+    <app-multiple-select
+      class="filter"
+      name="groupSelect"
+      ngDefaultControl
+      #groupSelect
             [formControl]="groups"
-            [(value)]="selectedGroups"
-            [disableOptionCentering]="true"
-            multiple
+      [placeHolder]="'Filter Groups'"
+      [options]="groupsList"
+      (selectedOptionsChange)="filterGroups($event)"
           >
-            <mat-option *ngFor="let group of groupsList" [value]="group">
-              {{ group }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <mat-icon class="blue">group</mat-icon>
+    </app-multiple-select>
 
-      <div
-        class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white"
+    <app-multiple-select
+      class="filter"
+      name="actionSelect"
+      ngDefaultControl
+      #actionSelect
+      [formControl]="actions"
+      [placeHolder]="'Filter Actions'"
+      [options]="actionsList"
+      (selectedOptionsChange)="filterActions($event)"
       >
-        <div class="flex justify-center w-10 mr3 pl3">
           <mat-icon class="orange">security</mat-icon>
+    </app-multiple-select>
+
+    <div class="clear-filters">
+      <button mat-stroked-button color="accent" (click)="clearFilters()">
+        Clear Filters
+      </button>
         </div>
-        <mat-form-field class="w-80">
-          <mat-select
-            placeholder="Filter Actions"
-            [formControl]="actions"
-            [(value)]="selectedActions"
-            [disableOptionCentering]="true"
-            multiple
-          >
-            <mat-option *ngFor="let action of actionsList" [value]="action">
-              {{ action }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+  </div>
       </div>
 
-      <div class="flex ml-auto mt3 mr3">
-        <button
-          mat-stroked-button
-          color="accent"
-          class="ttu tracked"
-          (click)="clearFilters()"
+          <mat-icon
+            class="gray mh1"
+            *ngFor="let item of monitor.actionGroups"
+            matTooltip="{{actionNames(item.actions)}}"
+            [matTooltipClass]="'f6 h-auto'"
+            >{{ icons[item.name] }}</mat-icon
         >
-          Clear Selections
-        </button>
+
       </div>
     </div>
 

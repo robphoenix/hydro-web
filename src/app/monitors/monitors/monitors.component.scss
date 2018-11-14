@@ -4,7 +4,23 @@
   position: fixed;
   z-index: 10;
   border-bottom: 1px solid black;
-  background: whitesmoke;
+  background: white;
   display: flex;
+  align-items: center;
   width: 100%;
+  padding: 10px;
+
+  .filter {
+    flex: 3;
+  }
+}
+
+.clear-filters {
+  // align-self: center;
+  flex: 1;
+
+  button {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
 }

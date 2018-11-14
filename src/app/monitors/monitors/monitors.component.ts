@@ -25,19 +25,21 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   searchTerm: string;
 
+  @ViewChild('categorySelect')
+  private categorySelect: MultipleSelectComponent;
   categories = new FormControl();
   categoriesList: string[];
 
-  @ViewChild('categoriesSelect')
-  private categoriesSelect: MultipleSelectComponent;
-
+  @ViewChild('groupSelect')
+  private groupSelect: MultipleSelectComponent;
   groups = new FormControl();
   groupsList: string[];
-  selectedGroups: string[];
 
+  @ViewChild('actionSelect')
+  private actionSelect: MultipleSelectComponent;
   actions = new FormControl();
   actionsList;
-  selectedActions: string[];
+
 
   private unsubscribe$ = new Subject<void>();
 
@@ -75,6 +77,30 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     });
   }
 
+  filterGroups(selectedOptions: string[]) {
+    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
+      return selectedOptions.every((option: string) =>
+        monitor.groups.map((group: IGroup) => group.name).includes(option),
+      );
+    });
+  }
+
+  filterActions(selectedOptions: string[]) {
+    const filterFn: (monitor: IMonitor) => boolean = (monitor: IMonitor) => {
+      const currentActions: string[] = monitor.actionGroups.reduce(
+        (prev: string[], curr: IActionGroup) => [
+          ...prev,
+          ...curr.actions.map((action: IAction) => action.name),
+        ],
+        [],
+      );
+      return selectedOptions.every((option: string) =>
+        currentActions.includes(option),
+      );
+    };
+    this.monitors = this.filteredMonitors.filter(filterFn);
+  }
+
   /**
    * Get the current monitors.
    *
@@ -94,42 +120,6 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.groupsList = this.currentGroups(monitors);
         this.actionsList = this.currentActions(monitors);
       });
-  }
-
-  filterMonitors(): IMonitor[] {
-    let filtered: IMonitor[] = this.monitors;
-    if (this.selectedGroups && this.selectedGroups.length > 0) {
-      filtered = this.filterGroups(filtered);
-    }
-    if (this.selectedActions && this.selectedActions.length > 0) {
-      filtered = this.filterActions(filtered);
-    }
-    return filtered;
-  }
-
-  filterGroups(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedGroups.every((selected: string) =>
-        monitor.groups.map((group: IGroup) => group.name).includes(selected),
-      );
-    });
-  }
-
-  filterActions(monitors: IMonitor[]): IMonitor[] {
-    const filterFn = (monitor: IMonitor) => {
-      const currentActions = monitor.actionGroups.reduce(
-        (prev: string[], curr: IActionGroup) => [
-          ...prev,
-          ...curr.actions.map((a) => a.name),
-        ],
-        [],
-      );
-      return this.selectedActions.every((action: string) =>
-        currentActions.includes(action),
-      );
-    };
-
-    return monitors.filter(filterFn);
   }
 
   /**
@@ -186,9 +176,8 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   clearFilters() {
     this.monitors = this.filteredMonitors;
-    this.categoriesSelect.clearSelectedOptions();
-
-    this.selectedActions = [];
-    this.selectedGroups = [];
+    this.categorySelect.clearSelectedOptions();
+    this.groupSelect.clearSelectedOptions();
+    this.actionSelect.clearSelectedOptions();
   }
 }
