@@ -11,11 +11,11 @@
       name="categorySelect"
       ngDefaultControl
       #categorySelect
-            [formControl]="categories"
+      [formControl]="categories"
       [placeHolder]="'Filter Categories'"
       [options]="categoriesList"
       (selectedOptionsChange)="filterCategories($event)"
-          >
+    >
       <mat-icon class="green">category</mat-icon>
     </app-multiple-select>
 
@@ -24,11 +24,11 @@
       name="groupSelect"
       ngDefaultControl
       #groupSelect
-            [formControl]="groups"
+      [formControl]="groups"
       [placeHolder]="'Filter Groups'"
       [options]="groupsList"
       (selectedOptionsChange)="filterGroups($event)"
-          >
+    >
       <mat-icon class="blue">group</mat-icon>
     </app-multiple-select>
 
@@ -41,17 +41,28 @@
       [placeHolder]="'Filter Actions'"
       [options]="actionsList"
       (selectedOptionsChange)="filterActions($event)"
-      >
-          <mat-icon class="orange">security</mat-icon>
+    >
+      <mat-icon class="orange">security</mat-icon>
     </app-multiple-select>
 
     <div class="clear-filters">
       <button mat-stroked-button color="accent" (click)="clearFilters()">
         Clear Filters
       </button>
-        </div>
+    </div>
   </div>
-      </div>
+
+  <div>
+    <mat-list>
+      <mat-list-item *ngFor="let monitor of monitors">
+        <div class="flex">
+          <div class="flex items-center">
+            <mat-icon matListIcon class="mr2 yellow">flash_on</mat-icon>
+            <div class="flex flex-column">
+              <h4 matLine class="di ttu tracked ma0">{{ monitor.topic }}</h4>
+              <p class="f5 lh-copy gray mt1">{{ monitor.queryDescription }}</p>
+            </div>
+          </div>
 
           <mat-icon
             class="gray mh1"
@@ -59,15 +70,44 @@
             matTooltip="{{actionNames(item.actions)}}"
             [matTooltipClass]="'f6 h-auto'"
             >{{ icons[item.name] }}</mat-icon
+          >
+
+          <div class="flex items-center">
+            <mat-icon class="green">category</mat-icon>
+            <p *ngFor="let category of monitor.categories.sort(); last as last">
+              {{ category.value }}<span *ngIf="!last">,&#160;</span>
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <mat-icon class="blue">group</mat-icon>
+          <p *ngFor="let group of monitor.groups.sort(); last as last">
+            {{ group.name }}<span *ngIf="!last">,&#160;</span>
+          </p>
+        </div>
+        <a
+          mat-icon-button
+          matTooltip="View Monitor"
+          routerLink="/monitors/{{monitor.id}}"
         >
-
-      </div>
-    </div>
-
-    <div class="flex flex-column w-50 absolute right-0 mr5 ">
+          <mat-icon color="accent">visibility</mat-icon>
+        </a>
+        <button mat-icon-button matTooltip="Duplicate Monitor">
+          <mat-icon color="accent">file_copy</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Disable Monitor">
+          <mat-icon color="warn">flash_off</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Delete Monitor">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <!--
       <div class="ma2" *ngFor="let monitor of filterMonitors()">
         <app-monitors-card [monitor]="monitor"></app-monitors-card>
       </div>
-    </div>
+    -->
   </div>
 </article>

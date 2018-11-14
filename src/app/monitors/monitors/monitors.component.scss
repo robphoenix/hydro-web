@@ -24,3 +24,8 @@
     text-transform: uppercase;
   }
 }
+
+// Height of mat-list-item is limited to 48px so we need to override in case of large text
+::ng-deep .mat-list .mat-list-item {
+  height: initial !important;
+}

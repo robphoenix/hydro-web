@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IMonitor } from '../monitor';
+import { IMonitor, IAction } from '../monitor';
 
 @Component({
   selector: 'app-monitors-card',
@@ -9,6 +9,16 @@ import { IMonitor } from '../monitor';
 export class MonitorsCardComponent implements OnInit {
   @Input()
   monitor: IMonitor;
+
+  icons = {
+    email: 'email',
+    block: 'block',
+    save: 'save_alt',
+  };
+
+  actionNames(actions: IAction[]): string {
+    return actions.map((action) => action.name).join(', ');
+  }
 
   constructor() {}
 
