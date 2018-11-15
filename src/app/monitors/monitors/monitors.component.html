@@ -1,61 +1,66 @@
-<article class="content">
-  <div class="filters">
-    <app-search-input
-      class="filter"
-      [placeHolder]="'Search Monitors'"
-      (searchTermChange)="searchMonitors($event)"
-    ></app-search-input>
+<article>
+  <div class="header">
+    <div class="title"><h2 class="gray">monitors</h2></div>
+    <div class="filters">
+      <app-search-input
+        class="filter"
+        [placeHolder]="'Search Monitors'"
+        (searchTermChange)="searchMonitors($event)"
+      ></app-search-input>
 
-    <app-multiple-select
-      class="filter"
-      name="actionSelect"
-      ngDefaultControl
-      #actionSelect
-      [formControl]="actions"
-      [placeHolder]="'Filter Actions'"
-      [options]="actionsList"
-      (selectedOptionsChange)="filterActions($event)"
-    >
-      <mat-icon class="orange">security</mat-icon>
-    </app-multiple-select>
+      <app-multiple-select
+        class="filter"
+        name="actionSelect"
+        ngDefaultControl
+        #actionSelect
+        [formControl]="actions"
+        [placeHolder]="'Filter Actions'"
+        [options]="actionsList"
+        (selectedOptionsChange)="filterActions($event)"
+      >
+        <mat-icon class="orange">security</mat-icon>
+      </app-multiple-select>
 
-    <app-multiple-select
-      class="filter"
-      name="categorySelect"
-      ngDefaultControl
-      #categorySelect
-      [formControl]="categories"
-      [placeHolder]="'Filter Categories'"
-      [options]="categoriesList"
-      (selectedOptionsChange)="filterCategories($event)"
-    >
-      <mat-icon class="green">category</mat-icon>
-    </app-multiple-select>
+      <app-multiple-select
+        class="filter"
+        name="categorySelect"
+        ngDefaultControl
+        #categorySelect
+        [formControl]="categories"
+        [placeHolder]="'Filter Categories'"
+        [options]="categoriesList"
+        (selectedOptionsChange)="filterCategories($event)"
+      >
+        <mat-icon class="green">category</mat-icon>
+      </app-multiple-select>
 
-    <app-multiple-select
-      class="filter"
-      name="groupSelect"
-      ngDefaultControl
-      #groupSelect
-      [formControl]="groups"
-      [placeHolder]="'Filter Groups'"
-      [options]="groupsList"
-      (selectedOptionsChange)="filterGroups($event)"
-    >
-      <mat-icon class="blue">group</mat-icon>
-    </app-multiple-select>
+      <app-multiple-select
+        class="filter"
+        name="groupSelect"
+        ngDefaultControl
+        #groupSelect
+        [formControl]="groups"
+        [placeHolder]="'Filter Groups'"
+        [options]="groupsList"
+        (selectedOptionsChange)="filterGroups($event)"
+      >
+        <mat-icon class="blue">group</mat-icon>
+      </app-multiple-select>
 
-    <div class="clear-filters">
-      <button mat-stroked-button color="accent" (click)="clearFilters()">
-        Clear Filters
-      </button>
+      <div class="clear-filters">
+        <button mat-stroked-button color="accent" (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
     </div>
   </div>
 
-  <mat-list *ngIf="monitors" class="list">
-    <app-monitors-list-item
-      *ngFor="let monitor of monitors"
-      [monitor]="monitor"
-    ></app-monitors-list-item>
-  </mat-list>
+  <div *ngIf="monitors" class="list">
+    <mat-list>
+      <app-monitors-list-item
+        *ngFor="let monitor of monitors"
+        [monitor]="monitor"
+      ></app-monitors-list-item>
+    </mat-list>
+  </div>
 </article>

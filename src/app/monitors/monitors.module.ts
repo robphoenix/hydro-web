@@ -24,7 +24,12 @@ import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-it
     HydroMaterialModule,
     FlexLayoutModule,
   ],
-  declarations: [MonitorsComponent, MonitorComponent, MonitorsCardComponent, MonitorsListItemComponent],
+  declarations: [
+    MonitorsComponent,
+    MonitorComponent,
+    MonitorsCardComponent,
+    MonitorsListItemComponent,
+  ],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
