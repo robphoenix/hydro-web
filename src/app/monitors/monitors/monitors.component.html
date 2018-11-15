@@ -1,11 +1,13 @@
 <article>
   <div class="header">
-    <div class="title"><h2 class="gray">monitors</h2></div>
+    <div class="title">
+      <h2 class="gray">{{ title }}</h2>
+    </div>
     <div class="filters">
       <app-search-input
         class="filter"
         [placeHolder]="'Search Monitors'"
-        (searchTermChange)="searchMonitors($event)"
+        (searchTermChange)="searchTerm = $event; filterMonitors()"
       ></app-search-input>
 
       <app-multiple-select
@@ -16,7 +18,7 @@
         [formControl]="actions"
         [placeHolder]="'Filter Actions'"
         [options]="actionsList"
-        (selectedOptionsChange)="filterActions($event)"
+        (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
       >
         <mat-icon class="orange">security</mat-icon>
       </app-multiple-select>
@@ -29,7 +31,7 @@
         [formControl]="categories"
         [placeHolder]="'Filter Categories'"
         [options]="categoriesList"
-        (selectedOptionsChange)="filterCategories($event)"
+        (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
       >
         <mat-icon class="green">category</mat-icon>
       </app-multiple-select>
@@ -42,7 +44,7 @@
         [formControl]="groups"
         [placeHolder]="'Filter Groups'"
         [options]="groupsList"
-        (selectedOptionsChange)="filterGroups($event)"
+        (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
       >
         <mat-icon class="blue">group</mat-icon>
       </app-multiple-select>
@@ -57,10 +59,10 @@
 
   <div *ngIf="monitors" class="list">
     <mat-list>
-      <app-monitors-list-item
-        *ngFor="let monitor of monitors"
-        [monitor]="monitor"
-      ></app-monitors-list-item>
+      <div *ngFor="let monitor of currentMonitors; last as last">
+        <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </div>
     </mat-list>
   </div>
 </article>

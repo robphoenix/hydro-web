@@ -20,8 +20,10 @@ import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple
 })
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
-  filteredMonitors: IMonitor[];
+
   monitors: IMonitor[];
+  filteredMonitors: IMonitor[];
+  currentMonitors: IMonitor[];
 
   searchTerm: string;
 
@@ -29,16 +31,19 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   private categorySelect: MultipleSelectComponent;
   categories = new FormControl();
   categoriesList: string[];
+  selectedCategories: string[];
 
   @ViewChild('groupSelect')
   private groupSelect: MultipleSelectComponent;
   groups = new FormControl();
   groupsList: string[];
+  selectedGroups: string[];
 
   @ViewChild('actionSelect')
   private actionSelect: MultipleSelectComponent;
   actions = new FormControl();
   actionsList;
+  selectedActions: string[];
 
   private unsubscribe$ = new Subject<void>();
 
@@ -53,9 +58,26 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  searchMonitors(searchTerm: string) {
-    const regex: RegExp = new RegExp(searchTerm, 'gi');
-    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
+  filterMonitors() {
+    let filtered: IMonitor[] = this.monitors;
+    if (this.searchTerm) {
+      filtered = this.searchMonitors(filtered);
+    }
+    if (this.selectedCategories && this.selectedCategories.length > 0) {
+      filtered = this.filterCategories(filtered);
+    }
+    if (this.selectedGroups && this.selectedGroups.length > 0) {
+      filtered = this.filterGroups(filtered);
+    }
+    if (this.selectedActions && this.selectedActions.length > 0) {
+      filtered = this.filterActions(filtered);
+    }
+    this.currentMonitors = filtered;
+  }
+
+  searchMonitors(monitors: IMonitor[]): IMonitor[] {
+    const regex: RegExp = new RegExp(this.searchTerm, 'gi');
+    return monitors.filter((monitor: IMonitor) => {
       const categories = monitor.categories.reduce(
         (prev, curr) => `${prev} ${curr.value}`,
         '',
@@ -66,26 +88,26 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     });
   }
 
-  filterCategories(selectedOptions: string[]) {
-    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
-      return selectedOptions.every((option: string) =>
+  filterCategories(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedCategories.every((selected: string) =>
         monitor.categories
           .map((category: ICategory) => category.value)
-          .includes(option),
+          .includes(selected),
       );
     });
   }
 
-  filterGroups(selectedOptions: string[]) {
-    this.monitors = this.filteredMonitors.filter((monitor: IMonitor) => {
-      return selectedOptions.every((option: string) =>
-        monitor.groups.map((group: IGroup) => group.name).includes(option),
+  filterGroups(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return this.selectedGroups.every((selected: string) =>
+        monitor.groups.map((group: IGroup) => group.name).includes(selected),
       );
     });
   }
 
-  filterActions(selectedOptions: string[]) {
-    const filterFn: (monitor: IMonitor) => boolean = (monitor: IMonitor) => {
+  filterActions(monitors: IMonitor[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
       const currentActions: string[] = monitor.actionGroups.reduce(
         (prev: string[], curr: IActionGroup) => [
           ...prev,
@@ -93,11 +115,10 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         ],
         [],
       );
-      return selectedOptions.every((option: string) =>
+      return this.selectedActions.every((option: string) =>
         currentActions.includes(option),
       );
-    };
-    this.monitors = this.filteredMonitors.filter(filterFn);
+    });
   }
 
   /**
@@ -115,6 +136,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
             a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0,
         );
         this.filteredMonitors = this.monitors;
+        this.currentMonitors = this.monitors;
         this.categoriesList = this.currentCategories(monitors);
         this.groupsList = this.currentGroups(monitors);
         this.actionsList = this.currentActions(monitors);
