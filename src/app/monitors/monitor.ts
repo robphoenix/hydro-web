@@ -1,13 +1,14 @@
 export interface IMonitor {
-  id: string;
-  topic: string;
-  queryBody: string;
-  queryDescription: string;
-  dateCreated: Date;
+  actionGroups: IActionGroup[];
   categories: ICategory[];
   data: IMonitorData;
+  dateCreated: Date;
+  expires: Date;
   groups: IGroup[];
-  actionGroups: IActionGroup[];
+  id: string;
+  queryBody: string;
+  queryDescription: string;
+  topic: string;
 }
 
 export interface ICategory {

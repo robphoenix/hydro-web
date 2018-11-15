@@ -32,6 +32,7 @@ Status: 200 OK
     "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
     "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
     "dateCreated": "2018-09-26T16:25:41.811Z",
+    "expires": "2019-01-22T16:25:41.811Z",
     "categories": [
       {
         "id": "3babdf76-5760-4992-a05b-c4d30601544f",
@@ -114,6 +115,7 @@ Status: 200 OK
   "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
   "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
   "dateCreated": "2018-09-26T16:25:41.811Z",
+  "expires": "2019-01-22T16:25:41.811Z",
   "categories": [
     {
       "id": "3babdf76-5760-4992-a05b-c4d30601544f",

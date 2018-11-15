@@ -28,7 +28,9 @@ export class MonitorsService {
    */
   public getMonitors(): Observable<IMonitor[]> {
     return this.http.get<IMonitor[]>('api/monitors').pipe(
-      tap((monitors: IMonitor[]) => monitors),
+      tap((monitors: IMonitor[]) => {
+        return monitors;
+      }),
       catchError(this.handleError<IMonitor[]>('getMonitors')),
     );
   }

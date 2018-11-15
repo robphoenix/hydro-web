@@ -9,6 +9,7 @@ import {
   IActionGroup,
 } from './monitors/monitor';
 import { IMonitorData, IEsperItem } from './monitors/monitor';
+import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root',
@@ -212,6 +213,7 @@ export class InMemoryDataService implements InMemoryDbService {
       const categories = this.categories();
       const groups = this.groups();
       const actionGroups = this.actionGroups();
+      const expires = faker.date.future();
 
       return {
         id,
@@ -222,6 +224,7 @@ export class InMemoryDataService implements InMemoryDbService {
         categories,
         groups,
         actionGroups,
+        expires,
       } as IMonitor;
     });
   }
