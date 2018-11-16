@@ -11,7 +11,7 @@ export class MonitorsListItemComponent {
   monitor: IMonitor;
 
   icons = {
-    email: 'email',
+    email: 'mail_outline',
     block: 'block',
     save: 'save_alt',
   };

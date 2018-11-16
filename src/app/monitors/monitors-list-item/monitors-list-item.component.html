@@ -7,21 +7,26 @@
     <div class="description">
       <p>{{ monitor.queryDescription }}</p>
     </div>
-    expires: {{ monitor.expires }}
   </header>
 
-  <div class="actions">
-    <mat-icon class="orange">security</mat-icon>
-    <mat-icon
-      *ngFor="let item of monitor.actionGroups"
-      matTooltip="{{actionNames(item.actions)}}"
-      [matTooltipClass]="'f6 h-auto'"
-      >{{ icons[item.name] }}</mat-icon
-    >
+  <div class="first-block">
+    <div class="actions">
+      <mat-icon class="orange" matTooltip="Actions">security</mat-icon>
+      <mat-icon
+        *ngFor="let item of monitor.actionGroups"
+        matTooltip="{{actionNames(item.actions)}}"
+        [matTooltipClass]="'f6 h-auto'"
+        >{{ icons[item.name] }}</mat-icon
+      >
+    </div>
+    <div class="expires">
+      <mat-icon color="warn" matTooltip="Expires">alarm</mat-icon>
+      <p>{{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
+    </div>
   </div>
 
   <div class="categories">
-    <mat-icon class="green">category</mat-icon>
+    <mat-icon class="green" matTooltip="Categories">category</mat-icon>
     <ul>
       <li *ngFor="let category of monitor.categories.sort(); last as last">
         {{ category.value }}<span *ngIf="!last">,&#160;</span>
@@ -30,7 +35,7 @@
   </div>
 
   <div class="groups">
-    <mat-icon class="blue">group</mat-icon>
+    <mat-icon class="blue" matTooltip="Groups">group</mat-icon>
     <ul>
       <li *ngFor="let group of monitor.groups.sort(); last as last">
         {{ group.name }}<span *ngIf="!last">,&#160;</span>
