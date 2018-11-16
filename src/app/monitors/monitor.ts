@@ -8,6 +8,7 @@ export interface IMonitor {
   id: string;
   queryBody: string;
   queryDescription: string;
+  store: boolean;
   topic: string;
 }
 

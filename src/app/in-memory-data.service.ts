@@ -214,6 +214,7 @@ export class InMemoryDataService implements InMemoryDbService {
       const groups = this.groups();
       const actionGroups = this.actionGroups();
       const expires = faker.date.future();
+      const store = faker.random.boolean();
 
       return {
         id,
@@ -225,6 +226,7 @@ export class InMemoryDataService implements InMemoryDbService {
         groups,
         actionGroups,
         expires,
+        store,
       } as IMonitor;
     });
   }

@@ -3,6 +3,12 @@
     <div class="topic">
       <mat-icon matListIcon class="yellow">flash_on</mat-icon>
       <h3 matLine>{{ monitor.topic }}</h3>
+      <mat-icon
+        *ngIf="monitor.store"
+        class="green db"
+        matTooltip="Stored in Database"
+        >check</mat-icon
+      >
     </div>
     <div class="description">
       <p>{{ monitor.queryDescription }}</p>
