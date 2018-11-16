@@ -1,8 +1,12 @@
 <article>
-  <div class="header">
+  <div class="toolbar">
     <div class="title">
-      <h2 class="gray">{{ title }}</h2>
+      <mat-icon class="yellow">flash_on</mat-icon>
+      <h4>{{ title }}</h4>
     </div>
+
+    <span class="divider"></span>
+
     <div class="filters">
       <app-search-input
         class="filter"
@@ -44,7 +48,7 @@
         [formControl]="groups"
         [placeHolder]="'Filter Groups'"
         [options]="groupsList"
-        (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
+        (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
       >
         <mat-icon class="blue">group</mat-icon>
       </app-multiple-select>
@@ -57,12 +61,13 @@
     </div>
   </div>
 
-  <div *ngIf="monitors" class="list">
-    <mat-list>
-      <div *ngFor="let monitor of currentMonitors; last as last">
-        <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
-        <mat-divider *ngIf="!last"></mat-divider>
-      </div>
-    </mat-list>
-  </div>
+  <mat-list *ngIf="currentMonitors.length; else: noMonitors">
+    <div *ngFor="let monitor of currentMonitors; last as last">
+      <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
+      <mat-divider *ngIf="!last"></mat-divider>
+    </div>
+  </mat-list>
+  <ng-template #noMonitors class="no-monitors">
+    <div class="no-monitors"><h4>no available monitors</h4></div>
+  </ng-template>
 </article>

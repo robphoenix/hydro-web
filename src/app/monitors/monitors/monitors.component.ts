@@ -115,8 +115,8 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         ],
         [],
       );
-      return this.selectedActions.every((option: string) =>
-        currentActions.includes(option),
+      return this.selectedActions.every((selected: string) =>
+        currentActions.includes(selected),
       );
     });
   }
