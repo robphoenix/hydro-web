@@ -1,11 +1,11 @@
 <mat-list-item *ngIf="monitor">
-  <header>
+  <header class="title">
     <div class="topic">
       <mat-icon matListIcon class="yellow">flash_on</mat-icon>
-      <h3 matLine>{{ monitor.topic }}</h3>
+      <h5>{{ monitor.topic }}</h5>
       <mat-icon
         *ngIf="monitor.store"
-        class="green db"
+        class="db-indicator"
         matTooltip="Stored in Database"
         >check</mat-icon
       >
@@ -13,36 +13,34 @@
     <div class="description">
       <p>{{ monitor.queryDescription }}</p>
     </div>
+
+    <div class="expires">
+      <p>Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
+    </div>
   </header>
 
-  <div class="first-block">
-    <div class="actions">
-      <mat-icon class="orange" matTooltip="Actions">security</mat-icon>
-      <mat-icon
-        *ngFor="let item of monitor.actionGroups"
-        matTooltip="{{actionNames(item.actions)}}"
-        [matTooltipClass]="'f6 h-auto'"
-        >{{ icons[item.name] }}</mat-icon
-      >
-    </div>
-    <div class="expires">
-      <mat-icon color="warn" matTooltip="Expires">alarm</mat-icon>
-      <p>{{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
-    </div>
+  <div class="section actions">
+    <mat-icon class="orange icon" matTooltip="Actions">security</mat-icon>
+    <mat-icon
+      *ngFor="let item of monitor.actionGroups"
+      matTooltip="{{actionNames(item.actions)}}"
+      [matTooltipClass]="'f6 h-auto'"
+      >{{ icons[item.name] }}</mat-icon
+    >
   </div>
 
-  <div class="categories">
-    <mat-icon class="green" matTooltip="Categories">category</mat-icon>
-    <ul>
+  <div class="section categories">
+    <mat-icon class="green icon" matTooltip="Categories">category</mat-icon>
+    <ul class="list">
       <li *ngFor="let category of monitor.categories.sort(); last as last">
         {{ category.value }}<span *ngIf="!last">,&#160;</span>
       </li>
     </ul>
   </div>
 
-  <div class="groups">
-    <mat-icon class="blue" matTooltip="Groups">group</mat-icon>
-    <ul>
+  <div class="section groups">
+    <mat-icon class="blue icon" matTooltip="Groups">group</mat-icon>
+    <ul class="list">
       <li *ngFor="let group of monitor.groups.sort(); last as last">
         {{ group.name }}<span *ngIf="!last">,&#160;</span>
       </li>

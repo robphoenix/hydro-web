@@ -1,73 +1,81 @@
-<article>
-  <div class="toolbar">
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav
+    disableClose
+    [opened]="true"
+    [mode]="'side'"
+    [fixedInViewport]="sidenavOptions.value.fixed"
+    [fixedTopGap]="sidenavOptions.value.top"
+    [fixedBottomGap]="sidenavOptions.value.bottom"
+    class="monitors__sidenav"
+  >
     <div class="title">
       <mat-icon class="yellow">flash_on</mat-icon>
-      <h4>{{ title }}</h4>
+      <h3>{{ title }}</h3>
     </div>
 
-    <span class="divider"></span>
+    <app-search-input
+      class="filter"
+      [placeHolder]="'Search Monitors'"
+      (searchTermChange)="searchTerm = $event; filterMonitors()"
+    ></app-search-input>
 
-    <div class="filters">
-      <app-search-input
-        class="filter"
-        [placeHolder]="'Search Monitors'"
-        (searchTermChange)="searchTerm = $event; filterMonitors()"
-      ></app-search-input>
+    <app-multiple-select
+      class="filter"
+      name="actionSelect"
+      ngDefaultControl
+      #actionSelect
+      [formControl]="actions"
+      [placeHolder]="'Filter Actions'"
+      [options]="actionsList"
+      (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
+    >
+      <mat-icon class="orange">security</mat-icon>
+    </app-multiple-select>
 
-      <app-multiple-select
-        class="filter"
-        name="actionSelect"
-        ngDefaultControl
-        #actionSelect
-        [formControl]="actions"
-        [placeHolder]="'Filter Actions'"
-        [options]="actionsList"
-        (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
-      >
-        <mat-icon class="orange">security</mat-icon>
-      </app-multiple-select>
+    <app-multiple-select
+      class="filter"
+      name="categorySelect"
+      ngDefaultControl
+      #categorySelect
+      [formControl]="categories"
+      [placeHolder]="'Filter Categories'"
+      [options]="categoriesList"
+      (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
+    >
+      <mat-icon class="green">category</mat-icon>
+    </app-multiple-select>
 
-      <app-multiple-select
-        class="filter"
-        name="categorySelect"
-        ngDefaultControl
-        #categorySelect
-        [formControl]="categories"
-        [placeHolder]="'Filter Categories'"
-        [options]="categoriesList"
-        (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
-      >
-        <mat-icon class="green">category</mat-icon>
-      </app-multiple-select>
+    <app-multiple-select
+      class="filter"
+      name="groupSelect"
+      ngDefaultControl
+      #groupSelect
+      [formControl]="groups"
+      [placeHolder]="'Filter Groups'"
+      [options]="groupsList"
+      (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
+    >
+      <mat-icon class="blue">group</mat-icon>
+    </app-multiple-select>
 
-      <app-multiple-select
-        class="filter"
-        name="groupSelect"
-        ngDefaultControl
-        #groupSelect
-        [formControl]="groups"
-        [placeHolder]="'Filter Groups'"
-        [options]="groupsList"
-        (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
-      >
-        <mat-icon class="blue">group</mat-icon>
-      </app-multiple-select>
-
-      <div class="clear-filters">
-        <button mat-stroked-button color="accent" (click)="clearFilters()">
-          Clear Filters
-        </button>
+    <div class="clear-filters">
+      <button mat-stroked-button color="accent" (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-list
+      *ngIf="currentMonitors.length; else: noMonitors"
+      class="monitors-list"
+    >
+      <div *ngFor="let monitor of currentMonitors; last as last">
+        <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
+        <mat-divider *ngIf="!last"></mat-divider>
       </div>
-    </div>
-  </div>
-
-  <mat-list *ngIf="currentMonitors.length; else: noMonitors">
-    <div *ngFor="let monitor of currentMonitors; last as last">
-      <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
-      <mat-divider *ngIf="!last"></mat-divider>
-    </div>
-  </mat-list>
-  <ng-template #noMonitors class="no-monitors">
-    <div class="no-monitors"><h4>no available monitors</h4></div>
-  </ng-template>
-</article>
+    </mat-list>
+    <ng-template #noMonitors class="no-monitors">
+      <div class="no-monitors"><h4>no available monitors</h4></div>
+    </ng-template>
+  </mat-sidenav-content>
+</mat-sidenav-container>

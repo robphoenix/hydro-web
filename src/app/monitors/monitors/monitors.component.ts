@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { IMonitor, ICategory, IGroup, IAction, IActionGroup } from '../monitor';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
@@ -20,6 +20,7 @@ import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple
 })
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
+  sidenavOptions: FormGroup;
 
   monitors: IMonitor[];
   filteredMonitors: IMonitor[];
@@ -47,7 +48,13 @@ export class MonitorsComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private monitorService: MonitorsService) {}
+  constructor(private monitorService: MonitorsService, fb: FormBuilder) {
+    this.sidenavOptions = fb.group({
+      bottom: 0,
+      fixed: true,
+      top: 64,
+    });
+  }
 
   ngOnInit() {
     this.getMonitors();

@@ -5,6 +5,7 @@
 
 mat-list-item {
   padding: 5px;
+  background: white;
 
   &:hover {
     .buttons {
@@ -13,10 +14,11 @@ mat-list-item {
   }
 }
 
-header {
+.title {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  padding: 5px 0;
   width: 30%;
 
   .topic {
@@ -24,6 +26,11 @@ header {
     align-items: center;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    margin: 5px 0;
+
+    h5 {
+      margin: 0;
+    }
   }
 
   .description {
@@ -31,41 +38,39 @@ header {
 
     p {
       color: gray;
-      padding: 0;
       margin: 0;
     }
   }
 
-  .db {
+  .db-indicator {
+    color: #19a974;
     margin-left: 10px;
   }
+
+  .expires {
+    margin-left: 30px;
+
+    p {
+      color: gray;
+      margin: 0;
+      padding-top: 5px;
+      font-size: 0.85rem;
+    }
+  }
 }
 
-.first-block {
-  display: flex;
-  flex-direction: column;
-  margin: 0 10px;
-  width: 10%;
-  padding-top: 15px;
-}
-
-.expires {
+.section {
   display: flex;
   align-items: center;
-  padding: 0;
+}
 
-  p {
-    color: gray;
-  }
-
-  mat-icon {
-    margin-right: 5px;
-  }
+.icon {
+  margin-right: 5px;
 }
 
 .actions {
-  display: flex;
-  align-items: center;
+  width: 15%;
+  padding-left: 50px;
 
   mat-icon {
     margin-right: 5px;
@@ -73,41 +78,25 @@ header {
 }
 
 .categories {
-  display: flex;
-  align-items: center;
   width: 20%;
-
-  mat-icon {
-    margin-right: 5px;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-  }
+  padding: 5px;
 }
 
 .groups {
-  display: flex;
-  align-items: center;
   width: 20%;
+  padding: 5px;
+}
 
-  mat-icon {
-    margin-right: 5px;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .buttons {
+  width: 15%;
   display: none;
+  margin-left: auto;
 }
