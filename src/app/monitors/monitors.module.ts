@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MonitorsCardComponent } from './monitors-card/monitors-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-item.component';
 
@@ -27,7 +26,6 @@ import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-it
   declarations: [
     MonitorsComponent,
     MonitorComponent,
-    MonitorsCardComponent,
     MonitorsListItemComponent,
   ],
   exports: [MonitorsComponent],
