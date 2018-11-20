@@ -1,11 +1,10 @@
 <mat-sidenav-container [hasBackdrop]="false">
   <mat-sidenav
     disableClose
-    [opened]="true"
-    [mode]="'side'"
+    [opened]="sidenavOptions.value.opened"
+    [mode]="sidenavOptions.value.mode"
     [fixedInViewport]="sidenavOptions.value.fixed"
     [fixedTopGap]="sidenavOptions.value.top"
-    [fixedBottomGap]="sidenavOptions.value.bottom"
     class="monitors__sidenav"
   >
     <div class="title">
@@ -15,7 +14,7 @@
 
     <app-search-input
       class="filter"
-      [placeHolder]="'Search Monitors'"
+      [placeHolder]="placeholders.value.search"
       (searchTermChange)="searchTerm = $event; filterMonitors()"
     ></app-search-input>
 
@@ -25,7 +24,7 @@
       ngDefaultControl
       #actionSelect
       [formControl]="actions"
-      [placeHolder]="'Filter Actions'"
+      [placeHolder]="placeholders.value.actions"
       [options]="actionsList"
       (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
     >
@@ -38,7 +37,7 @@
       ngDefaultControl
       #categorySelect
       [formControl]="categories"
-      [placeHolder]="'Filter Categories'"
+      [placeHolder]="placeholders.value.categories"
       [options]="categoriesList"
       (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
     >
@@ -51,7 +50,7 @@
       ngDefaultControl
       #groupSelect
       [formControl]="groups"
-      [placeHolder]="'Filter Groups'"
+      [placeHolder]="placeholders.value.groups"
       [options]="groupsList"
       (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
     >
@@ -63,7 +62,13 @@
         mat-stroked-button
         color="accent"
         (click)="clearFilters()"
-        [disabled]="!showClearFilters"
+        [disabled]="
+          !(
+            (selectedActions && selectedActions.length) ||
+            (selectedCategories && selectedCategories.length) ||
+            (selectedGroups && selectedGroups.length)
+          )
+        "
       >
         Clear Filters
       </button>
@@ -71,10 +76,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-list
-      *ngIf="currentMonitors.length; else: noMonitors"
+      *ngIf="filteredMonitors && filteredMonitors.length; else: noMonitors"
       class="monitors-list"
     >
-      <div *ngFor="let monitor of currentMonitors; last as last">
+      <div *ngFor="let monitor of filteredMonitors; last as last">
         <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
         <mat-divider *ngIf="!last"></mat-divider>
       </div>
@@ -83,7 +88,7 @@
       <div class="no-monitors">
         <h4>
           {{
-            fetchedMonitors
+            hasFetchedMonitors
               ? 'sorry, no matching monitors...'
               : 'hold on, just fetching the monitors...'
           }}
