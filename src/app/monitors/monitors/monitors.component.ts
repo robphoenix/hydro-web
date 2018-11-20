@@ -22,6 +22,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
   sidenavOptions: FormGroup;
   showClearFilters = false;
+  fetchedMonitors = false;
 
   monitors: IMonitor[];
   filteredMonitors: IMonitor[];
@@ -152,6 +153,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.categoriesList = this.currentCategories(monitors);
         this.groupsList = this.currentGroups(monitors);
         this.actionsList = this.currentActions(monitors);
+        this.fetchedMonitors = true;
       });
   }
 

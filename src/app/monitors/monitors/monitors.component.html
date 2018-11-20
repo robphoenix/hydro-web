@@ -80,7 +80,15 @@
       </div>
     </mat-list>
     <ng-template #noMonitors class="no-monitors">
-      <div class="no-monitors"><h4>no available monitors</h4></div>
+      <div class="no-monitors">
+        <h4>
+          {{
+            fetchedMonitors
+              ? 'sorry, no matching monitors...'
+              : 'hold on, just fetching the monitors...'
+          }}
+        </h4>
+      </div>
     </ng-template>
   </mat-sidenav-content>
 </mat-sidenav-container>
