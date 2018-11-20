@@ -16,6 +16,13 @@ export class MonitorsListItemComponent {
     save: 'save_alt',
   };
 
+  /**
+   * Returns a single string that contains the list of actions.
+   *
+   * @param {IAction[]} actions
+   * @returns {string}
+   * @memberof MonitorsListItemComponent
+   */
   actionNames(actions: IAction[]): string {
     return actions.map((action) => action.name).join(', ');
   }

@@ -20,12 +20,12 @@ import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple
 })
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
-  hasFetchedMonitors = false;
   monitors: IMonitor[];
   filteredMonitors: IMonitor[];
   searchTerm: string;
   placeholders: FormGroup;
   sidenavOptions: FormGroup;
+  hasFetchedMonitors = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -90,6 +90,11 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  /**
+   * Filter the list of monitors by user inputs.
+   *
+   * @memberof MonitorsComponent
+   */
   filterMonitors() {
     let filtered: IMonitor[] = this.monitors;
     if (this.searchTerm) {
@@ -116,6 +121,15 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     this.filteredMonitors = filtered;
   }
 
+  /**
+   * Clear user inputs currently filtering the monitors.
+   *
+   * @remarks
+   * Does not include text search as this is a separate user input, with its
+   * own option to clear.
+   *
+   * @memberof MonitorsComponent
+   */
   clearFilters() {
     this.filteredMonitors = this.monitors;
     this.categorySelect.clearSelectedOptions();

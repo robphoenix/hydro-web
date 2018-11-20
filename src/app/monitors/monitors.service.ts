@@ -28,7 +28,7 @@ export class MonitorsService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Gets the list of live monitors.
+   * Gets the list of monitors.
    *
    * @returns {Observable<IMonitor[]>}
    * @memberof MonitorsService
@@ -70,6 +70,14 @@ export class MonitorsService {
     );
   }
 
+  /**
+   * Compares monitors for sorting.
+   *
+   * @param {IMonitor} a
+   * @param {IMonitor} b
+   * @returns {(1 | -1 | 0)}
+   * @memberof MonitorsService
+   */
   compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
     if (a.topic.toLowerCase() < b.topic.toLowerCase()) {
       return -1;
@@ -80,6 +88,14 @@ export class MonitorsService {
     return 0;
   }
 
+  /**
+   * Text search of a given search term in a given list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string} searchTerm
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
   searchMonitors(monitors: IMonitor[], searchTerm: string): IMonitor[] {
     const regex: RegExp = new RegExp(searchTerm, 'gi');
     return monitors.filter((monitor: IMonitor) => {
@@ -93,6 +109,14 @@ export class MonitorsService {
     });
   }
 
+  /**
+   * Filters a list of monitors by a given list of selected categories.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedCategories
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
   filterCategories(
     monitors: IMonitor[],
     selectedCategories: string[],
@@ -106,6 +130,14 @@ export class MonitorsService {
     });
   }
 
+  /**
+   * Filters a list of monitors by a given list of selected groups.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedGroups
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
   filterGroups(monitors: IMonitor[], selectedGroups: string[]): IMonitor[] {
     return monitors.filter((monitor: IMonitor) => {
       return selectedGroups.every((selected: string) =>
@@ -114,6 +146,14 @@ export class MonitorsService {
     });
   }
 
+  /**
+   * Filters a list of monitors by a given list of selected actions.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedActions
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
   filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
     return monitors.filter((monitor: IMonitor) => {
       const currentActions: string[] = monitor.actionGroups.reduce(
@@ -130,10 +170,11 @@ export class MonitorsService {
   }
 
   /**
-   * Sets a complete list of categories derived from the current monitors.
+   * Returns a complete list of categories derived from a list of monitors.
    *
-   * @private
-   * @memberof MonitorsComponent
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
    */
   currentCategories(monitors: IMonitor[]): string[] {
     return Array.from(
@@ -149,6 +190,13 @@ export class MonitorsService {
     ).sort();
   }
 
+  /**
+   * Returns a complete list of groups derived from a list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
+   */
   currentGroups(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(
@@ -163,6 +211,13 @@ export class MonitorsService {
     ).sort();
   }
 
+  /**
+   * Returns a complete list of actions derived from a list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
+   */
   currentActions(monitors: IMonitor[]): string[] {
     const allActions: string[] = monitors
       .reduce((prev: IAction[][], curr: IMonitor) => {
