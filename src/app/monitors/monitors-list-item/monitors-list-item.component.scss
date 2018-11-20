@@ -20,6 +20,7 @@ mat-list-item {
   margin-bottom: 10px;
   padding: 5px 0;
   width: 30%;
+  cursor: pointer;
 
   .topic {
     display: flex;
@@ -34,8 +35,6 @@ mat-list-item {
   }
 
   .description {
-    margin-left: 30px;
-
     p {
       color: gray;
       margin: 0;
@@ -48,8 +47,6 @@ mat-list-item {
   }
 
   .expires {
-    margin-left: 30px;
-
     p {
       color: gray;
       margin: 0;

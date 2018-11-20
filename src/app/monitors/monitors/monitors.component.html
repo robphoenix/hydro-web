@@ -8,7 +8,7 @@
     class="monitors__sidenav"
   >
     <div class="title">
-      <mat-icon class="yellow">flash_on</mat-icon>
+      <!-- <mat-icon class="yellow">flash_on</mat-icon> -->
       <h3>{{ title }}</h3>
     </div>
 
@@ -79,9 +79,35 @@
       *ngIf="filteredMonitors && filteredMonitors.length; else: noMonitors"
       class="monitors-list"
     >
-      <div *ngFor="let monitor of filteredMonitors; last as last">
-        <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
-        <mat-divider *ngIf="!last"></mat-divider>
+      <div class="headers">
+        <mat-list-item>
+          <div class="section monitor-header">
+            <mat-icon class="yellow icon">flash_on</mat-icon>
+            <h4>monitor</h4>
+          </div>
+
+          <div class="section actions">
+            <mat-icon class="orange icon" matListIcon>security</mat-icon>
+            <h4>actions</h4>
+          </div>
+
+          <div class="section categories">
+            <mat-icon class="green icon">category</mat-icon>
+            <h4>categories</h4>
+          </div>
+
+          <div class="section groups">
+            <mat-icon class="blue icon">group</mat-icon>
+            <h4>groups</h4>
+          </div>
+        </mat-list-item>
+      </div>
+
+      <div class="list-items">
+        <div *ngFor="let monitor of filteredMonitors; last as last">
+          <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
+          <mat-divider *ngIf="!last"></mat-divider>
+        </div>
       </div>
     </mat-list>
     <ng-template #noMonitors>
