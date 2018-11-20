@@ -59,7 +59,12 @@
     </app-multiple-select>
 
     <div class="clear-filters">
-      <button mat-stroked-button color="accent" (click)="clearFilters()">
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="clearFilters()"
+        [disabled]="!showClearFilters"
+      >
         Clear Filters
       </button>
     </div>

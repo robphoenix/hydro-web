@@ -5,11 +5,11 @@
 
 mat-list-item {
   padding: 5px;
-  background: white;
 
   &:hover {
-    .buttons {
-      display: inline;
+    .fade-in-out {
+      visibility: visible;
+      opacity: 1;
     }
   }
 }
@@ -70,11 +70,7 @@ mat-list-item {
 
 .actions {
   width: 15%;
-  padding-left: 50px;
-
-  mat-icon {
-    margin-right: 5px;
-  }
+  padding-left: 25px;
 }
 
 .categories {
@@ -97,6 +93,12 @@ mat-list-item {
 
 .buttons {
   width: 15%;
-  display: none;
   margin-left: auto;
+}
+
+.fade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }

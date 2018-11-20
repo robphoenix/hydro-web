@@ -1,7 +1,7 @@
 <mat-list-item *ngIf="monitor">
   <header class="title">
     <div class="topic">
-      <mat-icon matListIcon class="yellow">flash_on</mat-icon>
+      <mat-icon matListIcon class="yellow fade-in-out">flash_on</mat-icon>
       <h5>{{ monitor.topic }}</h5>
       <mat-icon
         *ngIf="monitor.store"
@@ -47,7 +47,7 @@
     </ul>
   </div>
 
-  <div class="buttons">
+  <div class="buttons fade-in-out">
     <a
       mat-icon-button
       matTooltip="View Monitor"

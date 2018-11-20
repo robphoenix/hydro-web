@@ -21,10 +21,11 @@ import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
   sidenavOptions: FormGroup;
+  showClearFilters = false;
 
   monitors: IMonitor[];
   filteredMonitors: IMonitor[];
-  currentMonitors: IMonitor[];
+  currentMonitors: IMonitor[] = [];
 
   searchTerm: string;
 
@@ -66,17 +67,21 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   }
 
   filterMonitors() {
+    this.showClearFilters = false;
     let filtered: IMonitor[] = this.monitors;
     if (this.searchTerm) {
       filtered = this.searchMonitors(filtered);
     }
     if (this.selectedCategories && this.selectedCategories.length > 0) {
+      this.showClearFilters = true;
       filtered = this.filterCategories(filtered);
     }
     if (this.selectedGroups && this.selectedGroups.length > 0) {
+      this.showClearFilters = true;
       filtered = this.filterGroups(filtered);
     }
     if (this.selectedActions && this.selectedActions.length > 0) {
+      this.showClearFilters = true;
       filtered = this.filterActions(filtered);
     }
     this.currentMonitors = filtered;
