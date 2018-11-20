@@ -84,15 +84,14 @@
         <mat-divider *ngIf="!last"></mat-divider>
       </div>
     </mat-list>
-    <ng-template #noMonitors class="no-monitors">
-      <div class="no-monitors">
-        <h4>
-          {{
-            hasFetchedMonitors
-              ? 'sorry, no matching monitors...'
-              : 'hold on, just fetching the monitors...'
-          }}
-        </h4>
+    <ng-template #noMonitors>
+      <div *ngIf="hasFetchedMonitors" class="no-monitors">
+        <h4>sorry, no matching monitors</h4>
+      </div>
+      <div *ngIf="!hasFetchedMonitors" class="no-monitors">
+        <h4>loading monitors</h4>
+        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'">
+        </mat-progress-spinner>
       </div>
     </ng-template>
   </mat-sidenav-content>

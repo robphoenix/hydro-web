@@ -46,5 +46,8 @@ mat-sidenav-content {
 .no-monitors {
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin: 100px;
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
