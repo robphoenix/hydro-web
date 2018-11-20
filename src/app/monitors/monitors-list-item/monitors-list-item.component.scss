@@ -1,0 +1,104 @@
+// Height of mat-list-item is limited to 48px so we need to override in case of large text
+::ng-deep .mat-list .mat-list-item {
+  height: initial !important;
+}
+
+mat-list-item {
+  padding: 5px;
+
+  &:hover {
+    .fade-in-out {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  width: 30%;
+
+  .topic {
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 5px 0;
+
+    h5 {
+      margin: 0;
+    }
+  }
+
+  .description {
+    margin-left: 30px;
+
+    p {
+      color: gray;
+      margin: 0;
+    }
+  }
+
+  .db-indicator {
+    color: #19a974;
+    margin-left: 10px;
+  }
+
+  .expires {
+    margin-left: 30px;
+
+    p {
+      color: gray;
+      margin: 0;
+      padding-top: 5px;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.section {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.actions {
+  width: 15%;
+  padding-left: 25px;
+}
+
+.categories {
+  width: 20%;
+  padding: 5px;
+}
+
+.groups {
+  width: 20%;
+  padding: 5px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.buttons {
+  width: 15%;
+  margin-left: auto;
+}
+
+.fade-in-out {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
+}

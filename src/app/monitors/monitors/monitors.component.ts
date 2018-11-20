@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor, ICategory, IGroup, IAction } from '../monitor';
-import { FormControl } from '@angular/forms';
+import { IMonitor } from '../monitor';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -20,32 +21,49 @@ import { takeUntil } from 'rxjs/operators';
 export class MonitorsComponent implements OnInit, OnDestroy {
   title = 'monitors';
   monitors: IMonitor[];
-
+  filteredMonitors: IMonitor[];
   searchTerm: string;
+  placeholders: FormGroup;
+  sidenavOptions: FormGroup;
+  hasFetchedMonitors = false;
 
+  private unsubscribe$ = new Subject<void>();
+
+  @ViewChild('categorySelect')
+  private categorySelect: MultipleSelectComponent;
   categories = new FormControl();
   categoriesList: string[];
   selectedCategories: string[];
 
+  @ViewChild('groupSelect')
+  private groupSelect: MultipleSelectComponent;
   groups = new FormControl();
   groupsList: string[];
   selectedGroups: string[];
 
+  @ViewChild('actionSelect')
+  private actionSelect: MultipleSelectComponent;
   actions = new FormControl();
-  actionsList: string[];
+  actionsList;
   selectedActions: string[];
 
-  private unsubscribe$ = new Subject<void>();
-
-  constructor(private monitorService: MonitorsService) {}
+  constructor(private monitorService: MonitorsService, fb: FormBuilder) {
+    this.sidenavOptions = fb.group({
+      fixed: true,
+      opened: true,
+      mode: 'side',
+      top: 64,
+    });
+    this.placeholders = fb.group({
+      search: 'Search Monitors',
+      groups: 'Filter Groups',
+      categories: 'Filter Categories',
+      actions: 'Filter Actions',
+    });
+  }
 
   ngOnInit() {
     this.getMonitors();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   /**
@@ -58,124 +76,64 @@ export class MonitorsComponent implements OnInit, OnDestroy {
       .getMonitors()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((monitors: IMonitor[]) => {
-        this.monitors = monitors.sort(
-          (a, b) =>
-            a.topic.toLowerCase() < b.topic.toLowerCase() ? -1 : 1 || 0,
-        );
-        this.categoriesList = this.currentCategories(monitors);
-        this.groupsList = this.currentGroups(monitors);
-        this.actionsList = this.currentActions(monitors);
+        this.monitors = monitors.sort(this.monitorService.compareMonitors);
+        this.filteredMonitors = this.monitors;
+        this.categoriesList = this.monitorService.currentCategories(monitors);
+        this.groupsList = this.monitorService.currentGroups(monitors);
+        this.actionsList = this.monitorService.currentActions(monitors);
+        this.hasFetchedMonitors = true;
       });
   }
 
-  filterMonitors(): IMonitor[] {
-    let filtered: IMonitor[] = this.monitors;
-    if (this.searchTerm) {
-      filtered = this.searchMonitors(filtered);
-    }
-    if (this.selectedCategories && this.selectedCategories.length > 0) {
-      filtered = this.filterCategories(filtered);
-    }
-    if (this.selectedGroups && this.selectedGroups.length > 0) {
-      filtered = this.filterGroups(filtered);
-    }
-    if (this.selectedActions && this.selectedActions.length > 0) {
-      filtered = this.filterActions(filtered);
-    }
-    return filtered;
-  }
-
-  searchMonitors(monitors: IMonitor[]): IMonitor[] {
-    const regex: RegExp = new RegExp(this.searchTerm, 'gi');
-    return monitors.filter((monitor: IMonitor) => {
-      const categories = monitor.categories.reduce(
-        (prev, curr) => `${prev} ${curr.value}`,
-        '',
-      );
-      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
-        regex,
-      );
-    });
-  }
-
-  filterCategories(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedCategories.every((selected: string) =>
-        monitor.categories
-          .map((category: ICategory) => category.value)
-          .includes(selected),
-      );
-    });
-  }
-
-  filterGroups(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedGroups.every((selected: string) =>
-        monitor.groups.map((group: IGroup) => group.name).includes(selected),
-      );
-    });
-  }
-
-  filterActions(monitors: IMonitor[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return this.selectedActions.every((action: string) =>
-        monitor.actions.map((a: IGroup) => a.name).includes(action),
-      );
-    });
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   /**
-   * Sets a complete list of categories derived from the current monitors.
+   * Filter the list of monitors by user inputs.
    *
-   * @private
    * @memberof MonitorsComponent
    */
-  private currentCategories(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.categories.map((category: ICategory) => category.value),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
+  filterMonitors() {
+    let filtered: IMonitor[] = this.monitors;
+    if (this.searchTerm) {
+      filtered = this.monitorService.searchMonitors(filtered, this.searchTerm);
+    }
+    if (this.selectedCategories && this.selectedCategories.length > 0) {
+      filtered = this.monitorService.filterCategories(
+        filtered,
+        this.selectedCategories,
+      );
+    }
+    if (this.selectedGroups && this.selectedGroups.length > 0) {
+      filtered = this.monitorService.filterGroups(
+        filtered,
+        this.selectedGroups,
+      );
+    }
+    if (this.selectedActions && this.selectedActions.length > 0) {
+      filtered = this.monitorService.filterActions(
+        filtered,
+        this.selectedActions,
+      );
+    }
+    this.filteredMonitors = filtered;
   }
 
-  private currentGroups(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.groups.map((group: IGroup) => group.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
-  }
-
-  private currentActions(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.actions.map((action: IAction) => action.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
-  }
-
+  /**
+   * Clear user inputs currently filtering the monitors.
+   *
+   * @remarks
+   * Does not include text search as this is a separate user input, with its
+   * own option to clear.
+   *
+   * @memberof MonitorsComponent
+   */
   clearFilters() {
-    this.searchTerm = '';
-    this.selectedActions = [];
-    this.selectedCategories = [];
-    this.selectedGroups = [];
+    this.filteredMonitors = this.monitors;
+    this.categorySelect.clearSelectedOptions();
+    this.groupSelect.clearSelectedOptions();
+    this.actionSelect.clearSelectedOptions();
   }
 }

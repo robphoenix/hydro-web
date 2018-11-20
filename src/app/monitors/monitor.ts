@@ -1,13 +1,15 @@
 export interface IMonitor {
-  id: string;
-  topic: string;
-  queryBody: string;
-  queryDescription: string;
-  dateCreated: Date;
+  actionGroups: IActionGroup[];
   categories: ICategory[];
   data: IMonitorData;
+  dateCreated: Date;
+  expires: Date;
   groups: IGroup[];
-  actions: IAction[];
+  id: string;
+  queryBody: string;
+  queryDescription: string;
+  store: boolean;
+  topic: string;
 }
 
 export interface ICategory {
@@ -21,9 +23,20 @@ export interface IGroup {
   name: string;
 }
 
+export interface IActionGroup {
+  name: Group;
+  actions: IAction[];
+}
+
 export interface IAction {
   id: string;
   name: string;
+}
+
+enum Group {
+  Email = 'email',
+  Block = 'block',
+  Save = 'save',
 }
 
 /**

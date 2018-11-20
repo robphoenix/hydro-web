@@ -1,82 +1,98 @@
-<article class="mt4 center pt5 w-100" *ngIf="monitors">
-  <div class="flex">
-    <div class="flex flex-column w-40 fixed ml5">
-
-      <div class="w-50 tc center">
-        <h2 class="gray pb3 bb b--light-silver ttu tracked">
-          {{title}}
-        </h2>
-      </div>
-
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon color="accent">search</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <input matInput type="text" placeholder="Search Monitors" [(ngModel)]="searchTerm">
-          <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button
-            aria-label="Clear" (click)="searchTerm=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="green">category</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <mat-select placeholder="Filter Categories" [formControl]="categories"
-            [(value)]="selectedCategories" [disableOptionCentering]="true"
-            multiple>
-            <mat-option *ngFor="let category of categoriesList" [value]="category">
-              {{category}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="blue">group</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <mat-select placeholder="Filter Groups" [formControl]="groups"
-            [(value)]="selectedGroups" [disableOptionCentering]="true" multiple>
-            <mat-option *ngFor="let group of groupsList" [value]="group">
-              {{group}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="flex items-center pb2 pt3 mv2 ba b--light-silver br1 bg-white">
-        <div class="flex justify-center w-10 mr3 pl3">
-          <mat-icon class="orange">security</mat-icon>
-        </div>
-        <mat-form-field class="w-80">
-          <mat-select placeholder="Filter Actions" [formControl]="actions"
-            [(value)]="selectedActions" [disableOptionCentering]="true"
-            multiple>
-            <mat-option *ngFor="let action of actionsList" [value]="action">
-              {{action}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="flex ml-auto mt3 mr3">
-        <button mat-stroked-button color="accent" class="ttu tracked" (click)="clearFilters()">
-          Clear Selections
-        </button>
-      </div>
-
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav
+    disableClose
+    [opened]="sidenavOptions.value.opened"
+    [mode]="sidenavOptions.value.mode"
+    [fixedInViewport]="sidenavOptions.value.fixed"
+    [fixedTopGap]="sidenavOptions.value.top"
+    class="monitors__sidenav"
+  >
+    <div class="title">
+      <mat-icon class="yellow">flash_on</mat-icon>
+      <h3>{{ title }}</h3>
     </div>
 
-    <div class="flex flex-column w-50 absolute right-0 mr5 ">
-      <div class="ma2" *ngFor="let monitor of filterMonitors()">
-        <app-monitors-card [monitor]="monitor"></app-monitors-card>
-      </div>
+    <app-search-input
+      class="filter"
+      [placeHolder]="placeholders.value.search"
+      (searchTermChange)="searchTerm = $event; filterMonitors()"
+    ></app-search-input>
+
+    <app-multiple-select
+      class="filter"
+      name="actionSelect"
+      ngDefaultControl
+      #actionSelect
+      [formControl]="actions"
+      [placeHolder]="placeholders.value.actions"
+      [options]="actionsList"
+      (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
+    >
+      <mat-icon class="orange">security</mat-icon>
+    </app-multiple-select>
+
+    <app-multiple-select
+      class="filter"
+      name="categorySelect"
+      ngDefaultControl
+      #categorySelect
+      [formControl]="categories"
+      [placeHolder]="placeholders.value.categories"
+      [options]="categoriesList"
+      (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
+    >
+      <mat-icon class="green">category</mat-icon>
+    </app-multiple-select>
+
+    <app-multiple-select
+      class="filter"
+      name="groupSelect"
+      ngDefaultControl
+      #groupSelect
+      [formControl]="groups"
+      [placeHolder]="placeholders.value.groups"
+      [options]="groupsList"
+      (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
+    >
+      <mat-icon class="blue">group</mat-icon>
+    </app-multiple-select>
+
+    <div class="clear-filters">
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="clearFilters()"
+        [disabled]="
+          !(
+            (selectedActions && selectedActions.length) ||
+            (selectedCategories && selectedCategories.length) ||
+            (selectedGroups && selectedGroups.length)
+          )
+        "
+      >
+        Clear Filters
+      </button>
     </div>
-  </div>
-</article>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-list
+      *ngIf="filteredMonitors && filteredMonitors.length; else: noMonitors"
+      class="monitors-list"
+    >
+      <div *ngFor="let monitor of filteredMonitors; last as last">
+        <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </div>
+    </mat-list>
+    <ng-template #noMonitors>
+      <div *ngIf="hasFetchedMonitors" class="no-monitors">
+        <h4>sorry, no matching monitors</h4>
+      </div>
+      <div *ngIf="!hasFetchedMonitors" class="no-monitors">
+        <h4>loading monitors</h4>
+        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'">
+        </mat-progress-spinner>
+      </div>
+    </ng-template>
+  </mat-sidenav-content>
+</mat-sidenav-container>

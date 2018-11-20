@@ -1,0 +1,68 @@
+<mat-list-item *ngIf="monitor">
+  <header class="title">
+    <div class="topic">
+      <mat-icon matListIcon class="yellow fade-in-out">flash_on</mat-icon>
+      <h5>{{ monitor.topic }}</h5>
+      <mat-icon
+        *ngIf="monitor.store"
+        class="db-indicator"
+        matTooltip="Stored in Database"
+        >check</mat-icon
+      >
+    </div>
+    <div class="description">
+      <p>{{ monitor.queryDescription }}</p>
+    </div>
+
+    <div class="expires">
+      <p>Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
+    </div>
+  </header>
+
+  <div class="section actions">
+    <mat-icon class="orange icon" matTooltip="Actions">security</mat-icon>
+    <mat-icon
+      *ngFor="let item of monitor.actionGroups"
+      matTooltip="{{actionNames(item.actions)}}"
+      [matTooltipClass]="'f6 h-auto'"
+      >{{ icons[item.name] }}</mat-icon
+    >
+  </div>
+
+  <div class="section categories">
+    <mat-icon class="green icon" matTooltip="Categories">category</mat-icon>
+    <ul class="list">
+      <li *ngFor="let category of monitor.categories.sort(); last as last">
+        {{ category.value }}<span *ngIf="!last">,&#160;</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section groups">
+    <mat-icon class="blue icon" matTooltip="Groups">group</mat-icon>
+    <ul class="list">
+      <li *ngFor="let group of monitor.groups.sort(); last as last">
+        {{ group.name }}<span *ngIf="!last">,&#160;</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="buttons fade-in-out">
+    <a
+      mat-icon-button
+      matTooltip="View Monitor"
+      routerLink="/monitors/{{monitor.id}}"
+    >
+      <mat-icon color="accent">visibility</mat-icon>
+    </a>
+    <button mat-icon-button matTooltip="Duplicate Monitor">
+      <mat-icon color="accent">file_copy</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Disable Monitor">
+      <mat-icon color="warn">flash_off</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Delete Monitor">
+      <mat-icon color="warn">delete</mat-icon>
+    </button>
+  </div>
+</mat-list-item>

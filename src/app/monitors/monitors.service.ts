@@ -1,4 +1,11 @@
-import { IMonitor, IMonitorData } from './monitor';
+import {
+  IMonitor,
+  IMonitorData,
+  ICategory,
+  IGroup,
+  IActionGroup,
+  IAction,
+} from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -21,14 +28,16 @@ export class MonitorsService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Gets the list of live monitors.
+   * Gets the list of monitors.
    *
    * @returns {Observable<IMonitor[]>}
    * @memberof MonitorsService
    */
   public getMonitors(): Observable<IMonitor[]> {
     return this.http.get<IMonitor[]>('api/monitors').pipe(
-      tap((monitors: IMonitor[]) => monitors),
+      tap((monitors: IMonitor[]) => {
+        return monitors;
+      }),
       catchError(this.handleError<IMonitor[]>('getMonitors')),
     );
   }
@@ -59,6 +68,172 @@ export class MonitorsService {
       tap((monitor: IMonitorData) => monitor),
       catchError(this.handleError<IMonitorData>('getMonitorData')),
     );
+  }
+
+  /**
+   * Compares monitors for sorting.
+   *
+   * @param {IMonitor} a
+   * @param {IMonitor} b
+   * @returns {(1 | -1 | 0)}
+   * @memberof MonitorsService
+   */
+  compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
+    if (a.topic.toLowerCase() < b.topic.toLowerCase()) {
+      return -1;
+    }
+    if (a.topic.toLowerCase() > b.topic.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
+   * Text search of a given search term in a given list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string} searchTerm
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
+  searchMonitors(monitors: IMonitor[], searchTerm: string): IMonitor[] {
+    const regex: RegExp = new RegExp(searchTerm, 'gi');
+    return monitors.filter((monitor: IMonitor) => {
+      const categories = monitor.categories.reduce(
+        (prev, curr) => `${prev} ${curr.value}`,
+        '',
+      );
+      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+        regex,
+      );
+    });
+  }
+
+  /**
+   * Filters a list of monitors by a given list of selected categories.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedCategories
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
+  filterCategories(
+    monitors: IMonitor[],
+    selectedCategories: string[],
+  ): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return selectedCategories.every((selected: string) =>
+        monitor.categories
+          .map((category: ICategory) => category.value)
+          .includes(selected),
+      );
+    });
+  }
+
+  /**
+   * Filters a list of monitors by a given list of selected groups.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedGroups
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
+  filterGroups(monitors: IMonitor[], selectedGroups: string[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return selectedGroups.every((selected: string) =>
+        monitor.groups.map((group: IGroup) => group.name).includes(selected),
+      );
+    });
+  }
+
+  /**
+   * Filters a list of monitors by a given list of selected actions.
+   *
+   * @param {IMonitor[]} monitors
+   * @param {string[]} selectedActions
+   * @returns {IMonitor[]}
+   * @memberof MonitorsService
+   */
+  filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      const currentActions: string[] = monitor.actionGroups.reduce(
+        (prev: string[], curr: IActionGroup) => [
+          ...prev,
+          ...curr.actions.map((action: IAction) => action.name),
+        ],
+        [],
+      );
+      return selectedActions.every((selected: string) =>
+        currentActions.includes(selected),
+      );
+    });
+  }
+
+  /**
+   * Returns a complete list of categories derived from a list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
+   */
+  currentCategories(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.categories.map((category: ICategory) => category.value),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  /**
+   * Returns a complete list of groups derived from a list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
+   */
+  currentGroups(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.groups.map((group: IGroup) => group.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
+  }
+
+  /**
+   * Returns a complete list of actions derived from a list of monitors.
+   *
+   * @param {IMonitor[]} monitors
+   * @returns {string[]}
+   * @memberof MonitorsService
+   */
+  currentActions(monitors: IMonitor[]): string[] {
+    const allActions: string[] = monitors
+      .reduce((prev: IAction[][], curr: IMonitor) => {
+        return [
+          ...prev,
+          ...curr.actionGroups.map((a: IActionGroup) => a.actions),
+        ];
+      }, [])
+      .reduce((prevActions: string[], currActions: IAction[]) => {
+        return [
+          ...prevActions,
+          ...currActions.map((action: IAction) => action.name),
+        ];
+      }, []);
+    // remove duplicate actions
+    return Array.from(new Set(allActions)).sort();
   }
 
   /**
