@@ -1,15 +1,22 @@
 <mat-list-item *ngIf="monitor">
-  <header class="title" routerLink="/monitors/{{monitor.id}}">
-    <div class="topic">
-      <h5>{{ monitor.topic }}</h5>
-    </div>
-    <div class="description">
-      <p>{{ monitor.queryDescription }}</p>
-    </div>
+  <header class="title">
+    <a
+      href="/monitors/{{monitor.id}}"
+      target="_blank"
+      routerLink="/monitors/{{monitor.id}}"
+      rel="noopener noreferrer"
+    >
+      <div class="topic">
+        <h5>{{ monitor.topic }}</h5>
+      </div>
+      <div class="description">
+        <p>{{ monitor.queryDescription }}</p>
+      </div>
 
-    <div class="expires">
-      <p>Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
-    </div>
+      <div class="expires">
+        <p>Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
+      </div>
+    </a>
   </header>
 
   <div class="section actions">
@@ -19,10 +26,7 @@
       [matTooltipClass]="'f6 h-auto'"
       >{{ icons[item.name] }}</mat-icon
     >
-    <mat-icon
-      *ngIf="monitor.store"
-      class="db-indicator"
-      matTooltip="Stored in Database"
+    <mat-icon *ngIf="monitor.store" matTooltip="Stored in Database"
       >check</mat-icon
     >
   </div>
@@ -45,13 +49,13 @@
 
   <div class="buttons fade-in-out">
     <button mat-icon-button matTooltip="Duplicate Monitor">
-      <mat-icon color="accent">file_copy</mat-icon>
+      <mat-icon>file_copy</mat-icon>
     </button>
     <button mat-icon-button matTooltip="Disable Monitor">
-      <mat-icon color="warn">flash_off</mat-icon>
+      <mat-icon>flash_off</mat-icon>
     </button>
     <button mat-icon-button matTooltip="Delete Monitor">
-      <mat-icon color="warn">delete</mat-icon>
+      <mat-icon>delete</mat-icon>
     </button>
   </div>
 </mat-list-item>

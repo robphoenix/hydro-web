@@ -10,6 +10,7 @@ import { HydroMaterialModule } from '../material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-item.component';
+import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-list-headers.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-it
     MonitorsComponent,
     MonitorComponent,
     MonitorsListItemComponent,
+    MonitorsListHeadersComponent,
   ],
   exports: [MonitorsComponent],
 })

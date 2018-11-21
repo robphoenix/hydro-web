@@ -22,6 +22,10 @@ mat-list-item {
   width: 30%;
   cursor: pointer;
 
+  a {
+    text-decoration: none;
+  }
+
   .topic {
     display: flex;
     align-items: center;
@@ -30,6 +34,7 @@ mat-list-item {
     margin: 5px 0;
 
     h5 {
+      color: #333;
       margin: 0;
     }
   }
@@ -59,6 +64,7 @@ mat-list-item {
 .section {
   display: flex;
   align-items: center;
+  padding: 0 25px;
 }
 
 .icon {
@@ -66,18 +72,17 @@ mat-list-item {
 }
 
 .actions {
+  // color: #888888;
   width: 15%;
-  padding-left: 25px;
+  padding-left: 40px;
 }
 
 .categories {
   width: 20%;
-  padding: 5px;
 }
 
 .groups {
   width: 20%;
-  padding: 5px;
 }
 
 .list {
@@ -91,6 +96,9 @@ mat-list-item {
 .buttons {
   width: 15%;
   margin-left: auto;
+  color: #aaaaaa;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .fade-in-out {
