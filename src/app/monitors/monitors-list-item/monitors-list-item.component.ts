@@ -32,6 +32,6 @@ export class MonitorsListItemComponent {
    * @memberof MonitorsListItemComponent
    */
   actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join(', ');
+    return actions.map((action) => action.name).join('\n');
   }
 }

@@ -30,7 +30,10 @@
 
   <div class="section categories">
     <ul class="list">
-      <li *ngFor="let category of monitor.categories.sort(); last as last">
+      <li
+        class="category"
+        *ngFor="let category of monitor.categories.sort(); last as last"
+      >
         {{ category.value }}<span *ngIf="!last">,&#160;</span>
       </li>
     </ul>
@@ -47,15 +50,23 @@
     </ul>
   </div>
 
-  <div class="buttons fade-in-out">
-    <button color="accent" mat-icon-button matTooltip="Duplicate">
-      <mat-icon color="accent">file_copy</mat-icon>
+  <div class="menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <button color="accent" mat-icon-button matTooltip="Disable">
-      <mat-icon color="accent">flash_off</mat-icon>
-    </button>
-    <button color="accent" mat-icon-button matTooltip="Delete">
-      <mat-icon color="accent">delete</mat-icon>
-    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>file_copy</mat-icon>
+        <span>Duplicate</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>flash_off</mat-icon>
+        <span>Disable</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-list-item>

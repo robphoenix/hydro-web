@@ -5,17 +5,28 @@
 
 .item {
   padding: 5px;
-
-  &:hover {
-    .fade-in-out {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
 }
 
 .link {
   text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    .topic {
+      color: #ff4081;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  width: 30%;
+  cursor: pointer;
 
   .topic {
     color: #333;
@@ -38,24 +49,6 @@
     margin: 3px 0;
     font-size: 14px;
   }
-
-  &:hover,
-  &:focus,
-  &:active,
-  &:visited {
-    .topic {
-      color: #ff4081;
-    }
-  }
-}
-
-.title {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  padding: 5px 0;
-  width: 30%;
-  cursor: pointer;
 }
 
 .section {
@@ -75,11 +68,11 @@
 }
 
 .categories {
-  width: 20%;
+  width: 25%;
 }
 
 .groups {
-  width: 20%;
+  width: 25%;
 
   .group {
     color: #ffffff;
@@ -124,24 +117,20 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+
+  .category {
+    color: #888888;
+  }
 }
 
-.buttons {
-  width: 15%;
+.menu {
+  width: 5%;
   margin-left: auto;
-  color: #aaaaaa;
-  display: flex;
-  justify-content: flex-end;
 }
 
-.fade-in-out {
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: all 500ms ease-in-out;
-  transition: all 500ms ease-in-out;
-}
-
-.tooltip {
+::ng-deep .tooltip {
   height: auto;
-  font-size: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
 }
