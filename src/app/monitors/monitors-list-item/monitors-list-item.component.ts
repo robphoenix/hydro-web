@@ -16,6 +16,14 @@ export class MonitorsListItemComponent {
     save: 'save_alt',
   };
 
+  groupClass = {
+    OTS: 'ots',
+    FRM: 'frm',
+    Infrastructure: 'infrastructure',
+    'Forensic Monitoring': 'fm',
+    'Network Security': 'net-sec',
+  };
+
   /**
    * Returns a single string that contains the list of actions.
    *
@@ -24,6 +32,6 @@ export class MonitorsListItemComponent {
    * @memberof MonitorsListItemComponent
    */
   actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join(', ');
+    return actions.map((action) => action.name).join('\n');
   }
 }

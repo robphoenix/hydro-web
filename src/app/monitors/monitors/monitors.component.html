@@ -5,10 +5,9 @@
     [mode]="sidenavOptions.value.mode"
     [fixedInViewport]="sidenavOptions.value.fixed"
     [fixedTopGap]="sidenavOptions.value.top"
-    class="monitors__sidenav"
+    class="sidenav"
   >
     <div class="title">
-      <mat-icon class="yellow">flash_on</mat-icon>
       <h3>{{ title }}</h3>
     </div>
 
@@ -74,11 +73,14 @@
       </button>
     </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-list
       *ngIf="filteredMonitors && filteredMonitors.length; else: noMonitors"
       class="monitors-list"
     >
+      <app-monitors-list-headers></app-monitors-list-headers>
+      <!-- <mat-divider></mat-divider> -->
       <div *ngFor="let monitor of filteredMonitors; last as last">
         <app-monitors-list-item [monitor]="monitor"></app-monitors-list-item>
         <mat-divider *ngIf="!last"></mat-divider>

@@ -1,8 +1,4 @@
-mat-sidenav-content {
-  background: #fcfcfc;
-}
-
-.monitors__sidenav {
+.sidenav {
   background: white;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
     0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
@@ -12,34 +8,48 @@ mat-sidenav-content {
   flex-direction: column;
   align-items: center;
   border-right: 1px solid #cccccc;
+
+  .title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    align-self: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .filter {
+    width: 100%;
+    padding-right: 20px;
+  }
+
+  .clear-filters {
+    margin-left: auto;
+
+    button {
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-right: 20px;
+    }
+  }
 }
 
-.title {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  align-self: center;
-  display: flex;
-  align-items: center;
+mat-sidenav-content {
+  background: #fcfcfc;
 }
 
 .monitors-list {
   width: 90%;
   margin: 95px auto 30px auto;
   padding: 0;
-}
 
-.filter {
-  width: 100%;
-  padding-right: 20px;
-}
-
-.clear-filters {
-  margin-left: auto;
-
-  button {
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-right: 20px;
+  .list-headers {
+    z-index: 5;
+    background: #fcfcfc;
+    position: fixed;
+    border-bottom: 1px solid #555555;
+    height: 150px;
+    top: 0;
+    padding-top: 80px;
   }
 }
 

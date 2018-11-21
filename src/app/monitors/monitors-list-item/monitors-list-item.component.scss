@@ -3,13 +3,19 @@
   height: initial !important;
 }
 
-mat-list-item {
+.item {
   padding: 5px;
+}
 
-  &:hover {
-    .fade-in-out {
-      visibility: visible;
-      opacity: 1;
+.link {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    .topic {
+      color: #ff4081;
     }
   }
 }
@@ -20,48 +26,35 @@ mat-list-item {
   margin-bottom: 10px;
   padding: 5px 0;
   width: 30%;
+  cursor: pointer;
 
   .topic {
-    display: flex;
-    align-items: center;
+    color: #333;
+    margin: 10px 0;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 5px 0;
-
-    h5 {
-      margin: 0;
-    }
+    line-height: 1.5;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
   }
 
   .description {
-    margin-left: 30px;
-
-    p {
-      color: gray;
-      margin: 0;
-    }
-  }
-
-  .db-indicator {
-    color: #19a974;
-    margin-left: 10px;
+    color: #888888;
+    margin: 0;
+    line-height: 1.3;
   }
 
   .expires {
-    margin-left: 30px;
-
-    p {
-      color: gray;
-      margin: 0;
-      padding-top: 5px;
-      font-size: 0.85rem;
-    }
+    color: #aaaaaa;
+    margin: 3px 0;
+    font-size: 14px;
   }
 }
 
 .section {
   display: flex;
   align-items: center;
+  padding: 0 25px;
 }
 
 .icon {
@@ -69,18 +62,53 @@ mat-list-item {
 }
 
 .actions {
+  color: #888888;
   width: 15%;
-  padding-left: 25px;
+  padding-left: 40px;
 }
 
 .categories {
-  width: 20%;
-  padding: 5px;
+  width: 25%;
 }
 
 .groups {
-  width: 20%;
-  padding: 5px;
+  width: 25%;
+
+  .group {
+    color: #ffffff;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    padding: 3px 5px;
+    margin: 2px 5px 2px 0;
+    border: 1px solid;
+
+    &.ots {
+      background-color: #ffd700;
+      border-color: #ffd700;
+    }
+
+    &.frm {
+      background-color: #00449e;
+      border-color: #00449e;
+    }
+
+    &.infrastructure {
+      background-color: #137752;
+      border-color: #137752;
+    }
+
+    &.fm {
+      background-color: #d5008f;
+      border-color: #d5008f;
+    }
+
+    &.net-sec {
+      background-color: #5e2ca5;
+      border-color: #5e2ca5;
+    }
+  }
 }
 
 .list {
@@ -89,16 +117,20 @@ mat-list-item {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+
+  .category {
+    color: #888888;
+  }
 }
 
-.buttons {
-  width: 15%;
+.menu {
+  width: 5%;
   margin-left: auto;
 }
 
-.fade-in-out {
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: all 500ms ease-in-out;
-  transition: all 500ms ease-in-out;
+::ng-deep .tooltip {
+  height: auto;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
 }
