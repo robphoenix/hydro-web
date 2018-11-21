@@ -1,21 +1,15 @@
-<mat-list-item *ngIf="monitor">
+<mat-list-item class="item" *ngIf="monitor">
   <header class="title">
     <a
+      class="link"
       href="/monitors/{{monitor.id}}"
-      target="_blank"
       routerLink="/monitors/{{monitor.id}}"
-      rel="noopener noreferrer"
     >
-      <div class="topic">
-        <h5>{{ monitor.topic }}</h5>
-      </div>
-      <div class="description">
-        <p>{{ monitor.queryDescription }}</p>
-      </div>
-
-      <div class="expires">
-        <p>Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}</p>
-      </div>
+      <h5 class="topic">{{ monitor.topic }}</h5>
+      <p class="description">{{ monitor.queryDescription }}</p>
+      <p class="expires">
+        Expires: {{ monitor.expires | formatDate: 'dd/MM/yyyy' }}
+      </p>
     </a>
   </header>
 
@@ -23,10 +17,13 @@
     <mat-icon
       *ngFor="let item of monitor.actionGroups"
       matTooltip="{{actionNames(item.actions)}}"
-      [matTooltipClass]="'f6 h-auto'"
+      [matTooltipClass]="'tooltip'"
       >{{ icons[item.name] }}</mat-icon
     >
-    <mat-icon *ngIf="monitor.store" matTooltip="Stored in Database"
+    <mat-icon
+      *ngIf="monitor.store"
+      matTooltip="Results stored in database"
+      [matTooltipClass]="'tooltip'"
       >check</mat-icon
     >
   </div>
@@ -41,8 +38,11 @@
 
   <div class="section groups">
     <ul class="list">
-      <li *ngFor="let group of monitor.groups.sort(); last as last">
-        {{ group.name }}<span *ngIf="!last">,&#160;</span>
+      <li
+        class="group {{groupClass[group.name]}}"
+        *ngFor="let group of monitor.groups.sort()"
+      >
+        <span>{{ group.name }}</span>
       </li>
     </ul>
   </div>
