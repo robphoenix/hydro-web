@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { IMonitor, IAction } from '../monitor';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { IMonitor } from '../monitor';
+import { MonitorsService } from '../monitors.service';
 
 @Component({
   selector: 'app-monitors-list-item',
@@ -10,13 +11,16 @@ export class MonitorsListItemComponent {
   @Input()
   monitor: IMonitor;
 
-  icons = {
+  @Output()
+  deleteMonitor: EventEmitter<IMonitor> = new EventEmitter<IMonitor>();
+
+  icons: { [action: string]: string } = {
     email: 'mail_outline',
     block: 'block',
     save: 'save_alt',
   };
 
-  groupClass = {
+  groupClass: { [group: string]: string } = {
     OTS: 'ots',
     FRM: 'frm',
     Infrastructure: 'infrastructure',
@@ -24,14 +28,14 @@ export class MonitorsListItemComponent {
     'Network Security': 'net-sec',
   };
 
+  constructor(public monitorsService: MonitorsService) {}
+
   /**
-   * Returns a single string that contains the list of actions.
+   * Open the dialog modal for deleting a monitor.
    *
-   * @param {IAction[]} actions
-   * @returns {string}
    * @memberof MonitorsListItemComponent
    */
-  actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join('\n');
+  openDeleteDialog() {
+    this.deleteMonitor.emit(this.monitor);
   }
 }

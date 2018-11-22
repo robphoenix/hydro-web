@@ -5,6 +5,9 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
+import { IDeleteDialogData } from '../delete-dialog-data';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { MonitorDeleteDialogComponent } from '../monitor-delete-dialog/monitor-delete-dialog.component';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -47,7 +50,12 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   actionsList;
   selectedActions: string[];
 
-  constructor(private monitorService: MonitorsService, fb: FormBuilder) {
+  constructor(
+    private monitorService: MonitorsService,
+    public fb: FormBuilder,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
+  ) {
     this.sidenavOptions = fb.group({
       fixed: true,
       opened: true,
@@ -83,6 +91,28 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.actionsList = this.monitorService.currentActions(monitors);
         this.hasFetchedMonitors = true;
       });
+  }
+
+  /**
+   * Delete a monitor, and notify the user.
+   *
+   * @param {IDeleteDialogData} data
+   * @returns
+   * @memberof MonitorsComponent
+   */
+  deleteMonitor(monitor: IMonitor) {
+    const dialogRef = this.dialog.open(MonitorDeleteDialogComponent, {
+      data: monitor,
+    });
+
+    dialogRef.afterClosed().subscribe((data: IMonitor) => {
+      this.monitors = this.monitors.filter((m) => m.id !== data.id);
+      this.filteredMonitors = this.monitors;
+      this.monitorService.deleteMonitorById(data.id).subscribe(() => {
+        const message = `Monitor deleted: ${data.topic.toUpperCase()}`;
+        this.snackBar.open(message, '', { duration: 3000 });
+      });
+    });
   }
 
   ngOnDestroy(): void {

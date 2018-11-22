@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-item.component';
 import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-list-headers.component';
+import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,9 @@ import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-l
     MonitorComponent,
     MonitorsListItemComponent,
     MonitorsListHeadersComponent,
+    MonitorDeleteDialogComponent,
   ],
+  entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
 })
 export class MonitorsModule {}

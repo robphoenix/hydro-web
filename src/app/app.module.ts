@@ -13,6 +13,7 @@ import { ErrorInterceptor } from './error.interceptor';
 import { TempModule } from './temp/temp.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { InMemoryDataService } from './in-memory-data.service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
   ],
   bootstrap: [AppComponent],
 })
