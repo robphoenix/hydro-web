@@ -16,7 +16,7 @@
   <div class="section actions">
     <mat-icon
       *ngFor="let item of monitor.actionGroups"
-      matTooltip="{{actionNames(item.actions)}}"
+      matTooltip="{{monitorsService.actionNames(item.actions)}}"
       [matTooltipClass]="'tooltip'"
       >{{ icons[item.name] }}</mat-icon
     >

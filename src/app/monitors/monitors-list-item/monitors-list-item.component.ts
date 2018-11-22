@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IMonitor, IAction } from '../monitor';
-import { MatDialog } from '@angular/material';
-import { MonitorDeleteDialogComponent } from '../monitor-delete-dialog/monitor-delete-dialog.component';
-import { IDeleteDialogData } from '../delete-dialog-data';
+import { IMonitor } from '../monitor';
+import { MonitorsService } from '../monitors.service';
 
 @Component({
   selector: 'app-monitors-list-item',
@@ -13,13 +11,16 @@ export class MonitorsListItemComponent {
   @Input()
   monitor: IMonitor;
 
-  icons = {
+  @Output()
+  deleteMonitor: EventEmitter<IMonitor> = new EventEmitter<IMonitor>();
+
+  icons: { [action: string]: string } = {
     email: 'mail_outline',
     block: 'block',
     save: 'save_alt',
   };
 
-  groupClass = {
+  groupClass: { [group: string]: string } = {
     OTS: 'ots',
     FRM: 'frm',
     Infrastructure: 'infrastructure',
@@ -27,34 +28,14 @@ export class MonitorsListItemComponent {
     'Network Security': 'net-sec',
   };
 
-  @Output()
-  deleteMonitor: EventEmitter<IDeleteDialogData> = new EventEmitter<
-    IDeleteDialogData
-  >();
-
-  constructor(public dialog: MatDialog) {}
+  constructor(public monitorsService: MonitorsService) {}
 
   /**
-   * Returns a single string that contains the list of actions.
+   * Open the dialog modal for deleting a monitor.
    *
-   * @param {IAction[]} actions
-   * @returns {string}
    * @memberof MonitorsListItemComponent
    */
-  actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join('\n');
-  }
-
   openDeleteDialog() {
-    const dialogRef = this.dialog.open(MonitorDeleteDialogComponent, {
-      data: {
-        id: this.monitor.id,
-        topic: this.monitor.topic,
-      } as IDeleteDialogData,
-    });
-
-    dialogRef.afterClosed().subscribe((data: IDeleteDialogData) => {
-      this.deleteMonitor.emit(data);
-    });
+    this.deleteMonitor.emit(this.monitor);
   }
 }

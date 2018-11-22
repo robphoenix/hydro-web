@@ -59,7 +59,7 @@ export class MonitorsService {
   public deleteMonitorById(id: string): Observable<IMonitor> {
     return this.http.delete<IMonitor>(`api/monitors/${id}`).pipe(
       tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('getMonitorById')),
+      catchError(this.handleError<IMonitor>('deleteMonitorById')),
     );
   }
 
@@ -241,6 +241,17 @@ export class MonitorsService {
       }, []);
     // remove duplicate actions
     return Array.from(new Set(allActions)).sort();
+  }
+
+  /**
+   * Returns a single string that contains the list of actions.
+   *
+   * @param {IAction[]} actions
+   * @returns {string}
+   * @memberof MonitorsListItemComponent
+   */
+  actionNames(actions: IAction[]): string {
+    return actions.map((action) => action.name).join('\n');
   }
 
   /**
