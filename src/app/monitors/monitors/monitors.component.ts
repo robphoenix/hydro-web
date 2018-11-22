@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 import { IDeleteDialogData } from '../delete-dialog-data';
+import { MatSnackBar } from '@angular/material';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -48,7 +49,11 @@ export class MonitorsComponent implements OnInit, OnDestroy {
   actionsList;
   selectedActions: string[];
 
-  constructor(private monitorService: MonitorsService, fb: FormBuilder) {
+  constructor(
+    private monitorService: MonitorsService,
+    public fb: FormBuilder,
+    public snackBar: MatSnackBar,
+  ) {
     this.sidenavOptions = fb.group({
       fixed: true,
       opened: true,
@@ -92,7 +97,10 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     }
     this.monitors = this.monitors.filter((m) => m.id !== data.id);
     this.filteredMonitors = this.monitors;
-    this.monitorService.deleteMonitorById(data.id);
+    this.monitorService.deleteMonitorById(data.id).subscribe(() => {
+      const message = `Monitor deleted: ${data.topic.toUpperCase()}`;
+      this.snackBar.open(message, '', { duration: 3000 });
+    });
   }
 
   ngOnDestroy(): void {
