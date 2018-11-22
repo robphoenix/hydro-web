@@ -7,10 +7,14 @@ import {
   IAction,
 } from './monitor';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 
 /**
  * Manages access to the monitors data on the server.
@@ -34,7 +38,7 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>('api/monitors').pipe(
+    return this.http.get<IMonitor[]>('api/monitors', httpOptions).pipe(
       tap((monitors: IMonitor[]) => {
         return monitors;
       }),
@@ -49,17 +53,24 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getMonitorById(id: string): Observable<IMonitor> {
-    return this.http.get<IMonitor>(`api/monitors/${id}`).pipe(
+  public getMonitor(id: string): Observable<IMonitor> {
+    return this.http.get<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
       tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('getMonitorById')),
+      catchError(this.handleError<IMonitor>('getMonitor')),
     );
   }
 
-  public deleteMonitorById(id: string): Observable<IMonitor> {
-    return this.http.delete<IMonitor>(`api/monitors/${id}`).pipe(
+  public addMonitor(monitor: IMonitor): Observable<IMonitor> {
+    return this.http.post<IMonitor>(`api/monitors`, monitor, httpOptions).pipe(
+      tap((m: IMonitor) => m),
+      catchError(this.handleError<IMonitor>('addMonitor')),
+    );
+  }
+
+  public deleteMonitor(id: string): Observable<IMonitor> {
+    return this.http.delete<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
       tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('deleteMonitorById')),
+      catchError(this.handleError<IMonitor>('deleteMonitor')),
     );
   }
 

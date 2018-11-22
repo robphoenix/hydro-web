@@ -108,7 +108,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((data: IMonitor) => {
       this.monitors = this.monitors.filter((m) => m.id !== data.id);
       this.filteredMonitors = this.monitors;
-      this.monitorService.deleteMonitorById(data.id).subscribe(() => {
+      this.monitorService.deleteMonitor(data.id).subscribe(() => {
         const message = `Monitor deleted: ${data.topic.toUpperCase()}`;
         this.snackBar.open(message, '', { duration: 3000 });
       });
