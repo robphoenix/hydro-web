@@ -5,6 +5,7 @@ import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
+import { IDeleteDialogData } from '../delete-dialog-data';
 
 /**
  * Lists all monitors, displaying a single monitor.
@@ -83,6 +84,15 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.actionsList = this.monitorService.currentActions(monitors);
         this.hasFetchedMonitors = true;
       });
+  }
+
+  deleteMonitor(data: IDeleteDialogData) {
+    if (!data.id) {
+      return;
+    }
+    this.monitors = this.monitors.filter((m) => m.id !== data.id);
+    this.filteredMonitors = this.monitors;
+    this.monitorService.deleteMonitorById(data.id);
   }
 
   ngOnDestroy(): void {

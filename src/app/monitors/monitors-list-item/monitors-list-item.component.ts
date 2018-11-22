@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IMonitor, IAction } from '../monitor';
 import { MatDialog } from '@angular/material';
 import { MonitorDeleteDialogComponent } from '../monitor-delete-dialog/monitor-delete-dialog.component';
@@ -27,6 +27,11 @@ export class MonitorsListItemComponent {
     'Network Security': 'net-sec',
   };
 
+  @Output()
+  deleteMonitor: EventEmitter<IDeleteDialogData> = new EventEmitter<
+    IDeleteDialogData
+  >();
+
   constructor(public dialog: MatDialog) {}
 
   /**
@@ -42,11 +47,14 @@ export class MonitorsListItemComponent {
 
   openDeleteDialog() {
     const dialogRef = this.dialog.open(MonitorDeleteDialogComponent, {
-      data: { topic: this.monitor.topic } as IDeleteDialogData,
+      data: {
+        id: this.monitor.id,
+        topic: this.monitor.topic,
+      } as IDeleteDialogData,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log({ result });
+    dialogRef.afterClosed().subscribe((data: IDeleteDialogData) => {
+      this.deleteMonitor.emit(data);
     });
   }
 }

@@ -56,6 +56,13 @@ export class MonitorsService {
     );
   }
 
+  public deleteMonitorById(id: string): Observable<IMonitor> {
+    return this.http.delete<IMonitor>(`api/monitors/${id}`).pipe(
+      tap((monitor: IMonitor) => monitor),
+      catchError(this.handleError<IMonitor>('getMonitorById')),
+    );
+  }
+
   /**
    * Gets the associated data for a single monitor.
    *
