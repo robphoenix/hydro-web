@@ -77,7 +77,7 @@ export class MonitorComponent implements OnInit {
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
       const id: string = params.get('id');
-      this.monitorService.getMonitorById(id).subscribe((monitor) => {
+      this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
     });
