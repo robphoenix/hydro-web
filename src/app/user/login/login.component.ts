@@ -16,13 +16,13 @@ export class LoginComponent implements OnInit {
   loginErrorMessage: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
   ) {}
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
