@@ -9,8 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  title = 'Log In';
-  subtitle = 'Please enter your bet365 credentials.';
+  title = 'login';
+  subtitle = 'Please enter your bet365 credentials';
   hidePassword = true;
   loginForm: FormGroup;
   loginErrorMessage: string;

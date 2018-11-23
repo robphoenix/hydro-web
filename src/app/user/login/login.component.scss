@@ -1,26 +1,31 @@
-.login-card {
+.login {
   width: 25%;
-  margin: 50px auto;
-}
+  margin: 120px auto;
 
-.login-card > * {
-  width: 100%;
-}
+  .title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
+  .subtitle {
+    color: #888888;
+  }
 
-.mat-card > .mat-card-actions:last-child {
-  text-align: right;
-  padding-bottom: 20px;
-}
+  .error-message {
+    padding-bottom: 20px;
+  }
 
-.error-message {
-  padding-bottom: 20px;
-}
+  .form {
+    display: flex;
+    flex-direction: column;
 
-.visibility-icon {
-  cursor: pointer;
+    .visibility {
+      cursor: pointer;
+    }
+  }
+
+  .button {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
