@@ -13,7 +13,7 @@
     </a>
   </header>
 
-  <div class="section actions">
+  <section class="section actions">
     <mat-icon
       *ngFor="let item of monitor.actionGroups"
       matTooltip="{{monitorsService.actionNames(item.actions)}}"
@@ -26,9 +26,9 @@
       [matTooltipClass]="'tooltip'"
       >check</mat-icon
     >
-  </div>
+  </section>
 
-  <div class="section categories">
+  <section class="section categories">
     <ul class="list">
       <li
         class="category"
@@ -37,9 +37,9 @@
         {{ category.value }}<span *ngIf="!last">,&#160;</span>
       </li>
     </ul>
-  </div>
+  </section>
 
-  <div class="section groups">
+  <section class="section groups">
     <ul class="list">
       <li
         class="group {{groupClass[group.name]}}"
@@ -48,9 +48,9 @@
         <span>{{ group.name }}</span>
       </li>
     </ul>
-  </div>
+  </section>
 
-  <div class="menu">
+  <section class="menu">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -68,5 +68,5 @@
         <span>Delete</span>
       </button>
     </mat-menu>
-  </div>
+  </section>
 </mat-list-item>
