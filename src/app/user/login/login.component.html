@@ -6,7 +6,11 @@
     <mat-error> {{ loginErrorMessage }} </mat-error>
   </div>
 
-  <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="attemptingLogIn = true; login()"
+    class="form"
+  >
     <mat-form-field appearance="standard" class="login-username">
       <mat-label> Username </mat-label>
       <input
@@ -61,7 +65,7 @@
       class="title"
       mat-raised-button
       color="accent"
-      (click)="login()"
+      (click)="attemptingLogIn = true; login()"
       [disabled]="!loginForm.valid"
     >
       log in

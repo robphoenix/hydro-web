@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.attemptingLogIn = true;
     const username = this.loginForm.controls.username;
     const password = this.loginForm.controls.password;
 
