@@ -8,36 +8,30 @@
 
   <form
     [formGroup]="loginForm"
-    (ngSubmit)="attemptingLogIn = true; login()"
     class="form"
+    (keyup.enter)="attemptingLogIn = true; login()"
   >
-    <mat-form-field appearance="standard" class="login-username">
+    <mat-form-field appearance="standard">
       <mat-label> Username </mat-label>
       <input
         matInput
         placeholder="Please enter your username"
-        required
         type="text"
         formControlName="username"
-        (keyup.enter)="login()"
         (click)="loginErrorMessage = ''"
       />
-      <mat-error *ngIf="loginForm.controls['username'].invalid">
-        {{ getUsernameErrorMessage() }}
+      <mat-error *ngIf="usernameControl.invalid">
+        {{ usernameValidationMessage() }}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="standard">
       <mat-label> Password </mat-label>
       <input
-        #password
         matInput
         placeholder="Please enter your password"
-        required
         [type]="hidePassword ? 'password' : 'text'"
         formControlName="password"
-        (keyup.enter)="login()"
-        name="password"
         (click)="loginErrorMessage = ''"
       />
       <mat-icon
@@ -47,8 +41,8 @@
       >
         {{ hidePassword ? 'visibility' : 'visibility_off' }}
       </mat-icon>
-      <mat-error *ngIf="loginForm.controls['password'].invalid">
-        {{ getPasswordErrorMessage() }}
+      <mat-error *ngIf="passwordControl.invalid">
+        {{ passwordValidationMessage() }}
       </mat-error>
     </mat-form-field>
   </form>

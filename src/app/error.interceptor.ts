@@ -35,12 +35,14 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         let msg: string;
 
-        if (typeof error.error === 'string') {
+        if (error.error.length) {
           // The backend returned an unsuccessful response code.
           // Until otherwise necessary, we're only going to deal
           // with the first error message sent back from the server
-          const [{ message }] = JSON.parse(error.error) as IErrorMessage[];
+          const [{ message }] = error.error as IErrorMessage[];
           msg = message;
+        } else if (!error.status) {
+          msg = 'Unknown error. Please check your network connection.';
         } else {
           // A client-side or network error occurred. Handle it accordingly.
           msg = error.message;
