@@ -7,7 +7,7 @@
   </div>
 
   <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
-    <mat-form-field appearance="outline" class="login-username">
+    <mat-form-field appearance="standard" class="login-username">
       <mat-label> Username </mat-label>
       <input
         matInput
@@ -23,7 +23,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="standard">
       <mat-label> Password </mat-label>
       <input
         #password
@@ -50,7 +50,20 @@
   </form>
 
   <div class="button">
-    <button class="title" mat-raised-button color="accent" (click)="login()">
+    <mat-spinner
+      *ngIf="attemptingLogIn"
+      [diameter]="20"
+      color="accent"
+      class="spinner"
+    ></mat-spinner>
+    <button
+      *ngIf="!attemptingLogIn"
+      class="title"
+      mat-raised-button
+      color="accent"
+      (click)="login()"
+      [disabled]="!loginForm.valid"
+    >
       log in
     </button>
   </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   hidePassword = true;
   loginForm: FormGroup;
   loginErrorMessage: string;
+  minPasswordLength = 8;
+  attemptingLogIn = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,11 +26,15 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(this.minPasswordLength)],
+      ],
     });
   }
 
   login() {
+    this.attemptingLogIn = true;
     const username = this.loginForm.controls.username;
     const password = this.loginForm.controls.password;
 
@@ -44,6 +50,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl(this.authService.redirectUrl || '/monitors');
       },
       (err: string) => {
+        this.attemptingLogIn = false;
         this.loginErrorMessage = err;
       },
     );
@@ -59,7 +66,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls.password.hasError('required')
       ? 'You must enter a value'
       : this.loginForm.controls.password.errors.minlength
-        ? 'Password must be at least 5 characters'
+        ? `Password must be at least ${this.minPasswordLength} characters`
         : '';
   }
 }
