@@ -27,5 +27,9 @@
   .button {
     display: flex;
     justify-content: flex-end;
+
+    .spinner {
+      margin-right: 30px;
+    }
   }
 }
