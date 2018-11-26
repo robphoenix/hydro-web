@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
@@ -9,63 +9,67 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  usernameControl: FormControl;
+  passwordControl: FormControl;
+
   title = 'login';
   subtitle = 'Please enter your bet365 credentials';
   hidePassword = true;
-  loginForm: FormGroup;
-  loginErrorMessage: string;
   minPasswordLength = 8;
   attemptingLogIn = false;
+  loginErrorMessage: string;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: [
-        '',
-        [Validators.required, Validators.minLength(this.minPasswordLength)],
-      ],
+    this.usernameControl = new FormControl('', [Validators.required]);
+    this.passwordControl = new FormControl('', [
+      Validators.required,
+      Validators.minLength(this.minPasswordLength),
+    ]);
+    this.loginForm = new FormGroup({
+      username: this.usernameControl,
+      password: this.passwordControl,
     });
   }
 
   login() {
-    const username = this.loginForm.controls.username;
-    const password = this.loginForm.controls.password;
-
-    username.markAsTouched();
-    password.markAsTouched();
-
-    if (!username.value || !password.value) {
-      return;
-    }
-
-    this.authService.login(username.value, password.value).subscribe(
-      () => {
-        this.router.navigateByUrl(this.authService.redirectUrl || '/monitors');
-      },
-      (err: string) => {
-        this.attemptingLogIn = false;
-        this.loginErrorMessage = err;
-      },
-    );
+    this.authService
+      .login(this.usernameControl.value, this.passwordControl.value)
+      .subscribe(
+        () => {
+          this.router.navigateByUrl(
+            this.authService.redirectUrl || '/monitors',
+          );
+        },
+        (err: string) => {
+          this.attemptingLogIn = false;
+          this.loginErrorMessage = err;
+        },
+      );
   }
 
-  getUsernameErrorMessage() {
-    return this.loginForm.controls.username.hasError('required')
-      ? 'You must enter a value'
+  usernameValidationMessage(): string {
+    return (this.usernameControl.touched || this.usernameControl.dirty) &&
+      this.usernameControl.errors
+      ? 'Please enter your bet365 username'
       : '';
   }
 
-  getPasswordErrorMessage() {
-    return this.loginForm.controls.password.hasError('required')
-      ? 'You must enter a value'
-      : this.loginForm.controls.password.errors.minlength
-        ? `Password must be at least ${this.minPasswordLength} characters`
-        : '';
+  passwordValidationMessage(): string {
+    const validationMessages = {
+      required: 'Please enter your bet365 password',
+      minlength: `Password must be at least ${
+        this.minPasswordLength
+      } characters`,
+    };
+
+    return (this.passwordControl.touched || this.passwordControl.dirty) &&
+      this.passwordControl.errors
+      ? Object.keys(this.passwordControl.errors)
+          .map((error) => validationMessages[error])
+          .join(' ')
+      : '';
   }
 }
