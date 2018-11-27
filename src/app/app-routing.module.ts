@@ -8,6 +8,7 @@ import { DictionarySearchComponent } from './search/dictionary-search/dictionary
 import { DictionaryResultComponent } from './search/dictionary-result/dictionary-result.component';
 import { LoginGuard } from './user/login.guard';
 import { ShowmeComponent } from './temp/showme/showme.component';
+import { AddMonitorComponent } from './monitors/add-monitor/add-monitor.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,11 @@ import { ShowmeComponent } from './temp/showme/showme.component';
       {
         path: 'monitors',
         component: MonitorsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'monitors/add',
+        component: AddMonitorComponent,
         canActivate: [AuthGuard],
       },
       {
