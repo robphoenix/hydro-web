@@ -39,15 +39,15 @@ Status: 200 OK
     "categories": [
       {
         "id": 1,
-        "value": "Datacenter"
+        "name": "Datacenter"
       },
       {
         "id": 2,
-        "value": "GavinEdwards"
+        "name": "GavinEdwards"
       },
       {
         "id": 3,
-        "value": "Bookmaker"
+        "name": "Bookmaker"
       }
     ],
     "groups": [
@@ -121,15 +121,15 @@ Status: 200 OK
   "categories": [
     {
       "id": 1,
-      "value": "Datacenter"
+      "name": "Datacenter"
     },
     {
       "id": 2,
-      "value": "GavinEdwards"
+      "name": "GavinEdwards"
     },
     {
       "id": 3,
-      "value": "Bookmaker"
+      "name": "Bookmaker"
     }
   ],
   "groups": [
@@ -194,15 +194,15 @@ POST /monitors
   "categories": [
     {
       "id": 1,
-      "value": "Datacenter"
+      "name": "Datacenter"
     },
     {
       "id": 2,
-      "value": "GavinEdwards"
+      "name": "GavinEdwards"
     },
     {
       "id": 3,
-      "value": "Bookmaker"
+      "name": "Bookmaker"
     }
   ],
   "groups": [
@@ -269,15 +269,15 @@ Status: 201 Created
   "categories": [
     {
       "id": 1,
-      "value": "Datacenter"
+      "name": "Datacenter"
     },
     {
       "id": 2,
-      "value": "GavinEdwards"
+      "name": "GavinEdwards"
     },
     {
       "id": 3,
-      "value": "Bookmaker"
+      "name": "Bookmaker"
     }
   ],
   "groups": [
