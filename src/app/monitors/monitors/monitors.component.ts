@@ -59,7 +59,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
       fixed: true,
       opened: true,
       mode: 'side',
-      top: 124,
+      top: 64,
     });
     this.placeholders = fb.group({
       search: 'Search Monitors',

@@ -12,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
 import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-item.component';
 import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-list-headers.component';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
-import { MonitorsToolbarComponent } from './monitors-toolbar/monitors-toolbar.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 
 @NgModule({
@@ -33,7 +32,6 @@ import { AddMonitorComponent } from './add-monitor/add-monitor.component';
     MonitorsListItemComponent,
     MonitorsListHeadersComponent,
     MonitorDeleteDialogComponent,
-    MonitorsToolbarComponent,
     AddMonitorComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],

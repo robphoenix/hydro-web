@@ -1,4 +1,3 @@
-<app-monitors-toolbar [title]="title"></app-monitors-toolbar>
 <mat-sidenav-container [hasBackdrop]="false">
   <mat-sidenav
     disableClose
@@ -8,6 +7,15 @@
     [fixedTopGap]="sidenavOptions.value.top"
     class="sidenav"
   >
+    <h3 class="title">{{ title }}</h3>
+
+    <a mat-button routerLink="add" color="accent" class="">
+      <mat-icon>add</mat-icon>
+      <span> new monitor </span>
+    </a>
+
+    <mat-divider [inset]="true"></mat-divider>
+
     <app-search-input
       class="filter"
       [placeHolder]="placeholders.value.search"
