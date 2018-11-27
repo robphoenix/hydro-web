@@ -5,6 +5,7 @@
 - [Monitors](#monitors)
   - [List Monitors](#list-monitors)
   - [Get Monitor](#get-monitor)
+  - [Create Monitor](#create-monitor)
   - [Remove Monitor](#remove-monitor)
   - [Get Monitor Data](#get-monitor-data)
 
@@ -27,37 +28,35 @@ Status: 200 OK
 ```json
 [
   {
-    "id": "4bb9918a-da0b-42c9-a651-bebdab9a42e8",
-    "topic": "Car Barbados Dollar Quality-focused",
+    "id": 1269,
+    "name": "Car Barbados Dollar Quality-focused",
     "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
     "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
+    "type": "standard",
+    "status": "live",
     "dateCreated": "2018-09-26T16:25:41.811Z",
     "expires": "2019-01-22T16:25:41.811Z",
-    "store": true,
     "categories": [
       {
-        "id": "3babdf76-5760-4992-a05b-c4d30601544f",
-        "value": "Datacenter",
-        "dateCreated": "2018-11-14T07:54:25.201Z"
+        "id": 1,
+        "value": "Datacenter"
       },
       {
-        "id": "2e21688d-8e1a-49f3-a211-138d506e622a",
-        "value": "GavinEdwards",
-        "dateCreated": "2018-05-19T16:16:36.912Z"
+        "id": 2,
+        "value": "GavinEdwards"
       },
       {
-        "id": "fa080886-1a3a-4dec-be9c-83408b4f20f2",
-        "value": "Bookmaker",
-        "dateCreated": "2018-10-24T14:01:06.653Z"
+        "id": 3,
+        "value": "Bookmaker"
       }
     ],
     "groups": [
       {
-        "id": "131017cb-859a-4bfd-ba21-0587c0bf708b",
+        "id": 1,
         "name": "Forensic Monitoring"
       },
       {
-        "id": "c525249c-17cd-43f9-9eee-dd7a2ab825c8",
+        "id": 2,
         "name": "Infrastructure"
       }
     ],
@@ -66,15 +65,15 @@ Status: 200 OK
         "name": "email",
         "actions": [
           {
-            "id": "33be18f2-7246-47eb-95d4-440761748955",
+            "id": 1,
             "name": "Multiple Logins Email Alert"
           },
           {
-            "id": "6d722874-93cc-412e-accc-e8a262a7ebb0",
+            "id": 2,
             "name": "FRM - Email - Generic"
           },
           {
-            "id": "b0923019-a025-413d-b598-9872d00dc6c9",
+            "id": 3,
             "name": "Email Test Service"
           }
         ]
@@ -83,11 +82,11 @@ Status: 200 OK
         "name": "block",
         "actions": [
           {
-            "id": "897acd3e-a98f-45b1-9c8d-389808b4cfe6",
+            "id": 4,
             "name": "block sip 2 mins - Delay 20 seconds"
           },
           {
-            "id": "e394d887-c22c-4e1a-a5e8-8717eb0307ee",
+            "id": 5,
             "name": "Block stk or sip for 2 hours"
           }
         ]
@@ -111,37 +110,35 @@ Status: 200 OK
 
 ```json
 {
-  "id": "4bb9918a-da0b-42c9-a651-bebdab9a42e8",
-  "topic": "Car Barbados Dollar Quality-focused",
+  "id": 12689,
+  "name": "Car Barbados Dollar Quality-focused",
   "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
   "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
+  "type": "system",
+  "status": "live",
   "dateCreated": "2018-09-26T16:25:41.811Z",
   "expires": "2019-01-22T16:25:41.811Z",
-  "store": true,
   "categories": [
     {
-      "id": "3babdf76-5760-4992-a05b-c4d30601544f",
-      "value": "Datacenter",
-      "dateCreated": "2018-11-14T07:54:25.201Z"
+      "id": 1,
+      "value": "Datacenter"
     },
     {
-      "id": "2e21688d-8e1a-49f3-a211-138d506e622a",
-      "value": "GavinEdwards",
-      "dateCreated": "2018-05-19T16:16:36.912Z"
+      "id": 2,
+      "value": "GavinEdwards"
     },
     {
-      "id": "fa080886-1a3a-4dec-be9c-83408b4f20f2",
-      "value": "Bookmaker",
-      "dateCreated": "2018-10-24T14:01:06.653Z"
+      "id": 3,
+      "value": "Bookmaker"
     }
   ],
   "groups": [
     {
-      "id": "131017cb-859a-4bfd-ba21-0587c0bf708b",
+      "id": 1,
       "name": "Forensic Monitoring"
     },
     {
-      "id": "c525249c-17cd-43f9-9eee-dd7a2ab825c8",
+      "id": 2,
       "name": "Infrastructure"
     }
   ],
@@ -150,15 +147,15 @@ Status: 200 OK
       "name": "email",
       "actions": [
         {
-          "id": "33be18f2-7246-47eb-95d4-440761748955",
+          "id": 1,
           "name": "Multiple Logins Email Alert"
         },
         {
-          "id": "6d722874-93cc-412e-accc-e8a262a7ebb0",
+          "id": 2,
           "name": "FRM - Email - Generic"
         },
         {
-          "id": "b0923019-a025-413d-b598-9872d00dc6c9",
+          "id": 3,
           "name": "Email Test Service"
         }
       ]
@@ -167,11 +164,159 @@ Status: 200 OK
       "name": "block",
       "actions": [
         {
-          "id": "897acd3e-a98f-45b1-9c8d-389808b4cfe6",
+          "id": 4,
           "name": "block sip 2 mins - Delay 20 seconds"
         },
         {
-          "id": "e394d887-c22c-4e1a-a5e8-8717eb0307ee",
+          "id": 5,
+          "name": "Block stk or sip for 2 hours"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Create Monitor
+
+```
+POST /monitors
+```
+
+**Example**
+
+```json
+{
+  "name": "Car Barbados Dollar Quality-focused",
+  "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
+  "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
+  "type": "standard",
+  "categories": [
+    {
+      "id": 1,
+      "value": "Datacenter"
+    },
+    {
+      "id": 2,
+      "value": "GavinEdwards"
+    },
+    {
+      "id": 3,
+      "value": "Bookmaker"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "Forensic Monitoring"
+    },
+    {
+      "id": 2,
+      "name": "Infrastructure"
+    }
+  ],
+  "actionGroups": [
+    {
+      "name": "email",
+      "actions": [
+        {
+          "id": 1,
+          "name": "Multiple Logins Email Alert"
+        },
+        {
+          "id": 2,
+          "name": "FRM - Email - Generic"
+        },
+        {
+          "id": 3,
+          "name": "Email Test Service"
+        }
+      ]
+    },
+    {
+      "name": "block",
+      "actions": [
+        {
+          "id": 4,
+          "name": "block sip 2 mins - Delay 20 seconds"
+        },
+        {
+          "id": 5,
+          "name": "Block stk or sip for 2 hours"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Response**
+
+```
+Status: 201 Created
+```
+
+```json
+{
+  "id": 12384,
+  "name": "Car Barbados Dollar Quality-focused",
+  "queryBody": "Quis quasi vero architecto excepturi quisquam nemo natus id harum. Omnis incidunt dignissimos libero delectus id voluptatem cupiditate doloribus cumque. Vero voluptate est.",
+  "queryDescription": "Harum numquam molestias aut explicabo iusto ut ut.",
+  "type": "standard",
+  "status": "live",
+  "dateCreated": "2018-09-26T16:25:41.811Z",
+  "expires": "2019-01-22T16:25:41.811Z",
+  "categories": [
+    {
+      "id": 1,
+      "value": "Datacenter"
+    },
+    {
+      "id": 2,
+      "value": "GavinEdwards"
+    },
+    {
+      "id": 3,
+      "value": "Bookmaker"
+    }
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "name": "Forensic Monitoring"
+    },
+    {
+      "id": 2,
+      "name": "Infrastructure"
+    }
+  ],
+  "actionGroups": [
+    {
+      "name": "email",
+      "actions": [
+        {
+          "id": 1,
+          "name": "Multiple Logins Email Alert"
+        },
+        {
+          "id": 2,
+          "name": "FRM - Email - Generic"
+        },
+        {
+          "id": 3,
+          "name": "Email Test Service"
+        }
+      ]
+    },
+    {
+      "name": "block",
+      "actions": [
+        {
+          "id": 4,
+          "name": "block sip 2 mins - Delay 20 seconds"
+        },
+        {
+          "id": 5,
           "name": "Block stk or sip for 2 hours"
         }
       ]
@@ -206,7 +351,7 @@ Status: 200 OK
 
 ```json
 {
-  "id": "c6b82033-807e-4985-9ffd-3d9256682392",
+  "id": 12673,
   "headers": [
     "parse",
     "Branding",
