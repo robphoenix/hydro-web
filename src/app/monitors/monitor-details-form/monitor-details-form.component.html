@@ -1,3 +1,75 @@
-<p>
-  monitor-details-form works!
-</p>
+<mat-horizontal-stepper [linear]="isLinear" #stepper class="stepper">
+  <mat-step [stepControl]="detailsFormGroup">
+    <form [formGroup]="detailsFormGroup">
+      <ng-template matStepLabel>Monitor Details</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field>
+        <textarea
+          matInput
+          placeholder="Description"
+          formControlName="description"
+        ></textarea>
+      </mat-form-field>
+      <mat-radio-group formControlName="status">
+        <mat-radio-button value="offline" [checked]="true"
+          >Offline</mat-radio-button
+        >
+        <mat-radio-button value="online">Online</mat-radio-button>
+      </mat-radio-group>
+      <div><button mat-button matStepperNext>Next</button></div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="categoriesFormGroup">
+    <form [formGroup]="categoriesFormGroup">
+      <ng-template matStepLabel>Categories</ng-template>
+      <mat-checkbox *ngFor="let c of allCategories">{{ c }}</mat-checkbox>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="eplFormGroup">
+    <form [formGroup]="eplFormGroup">
+      <ng-template matStepLabel>EPL Query</ng-template>
+      <mat-form-field>
+        <textarea
+          matInput
+          placeholder="EPL Query"
+          formControlName="eplQuery"
+        ></textarea>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="actionsFormGroup">
+    <form [formGroup]="actionsFormGroup">
+      <ng-template matStepLabel>Actions</ng-template>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="groupsFormGroup">
+    <form [formGroup]="groupsFormGroup">
+      <ng-template matStepLabel>Groups</ng-template>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Review</ng-template>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
