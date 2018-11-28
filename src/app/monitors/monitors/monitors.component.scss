@@ -1,5 +1,4 @@
 .sidenav {
-  background: #fdfdfd;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
     0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
   width: 350px;
@@ -55,13 +54,9 @@
   }
 }
 
-mat-sidenav-content {
-  background: white;
-}
-
 .monitors-list {
   width: 90%;
-  margin: 95px auto 30px auto;
+  margin: 30px auto 30px auto;
   padding: 0;
 
   .list-headers {
@@ -76,6 +71,7 @@ mat-sidenav-content {
 }
 
 .no-monitors {
+  overflow: hidden;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 200px;

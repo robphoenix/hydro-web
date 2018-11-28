@@ -13,6 +13,7 @@ import { MonitorsListItemComponent } from './monitors-list-item/monitors-list-it
 import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-list-headers.component';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
+import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { AddMonitorComponent } from './add-monitor/add-monitor.component';
     MonitorsListHeadersComponent,
     MonitorDeleteDialogComponent,
     AddMonitorComponent,
+    MonitorDetailsFormComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
