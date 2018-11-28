@@ -7,76 +7,80 @@
     [fixedTopGap]="sidenavOptions.value.top"
     class="sidenav"
   >
-    <h3 class="title">{{ title }}</h3>
+    <section class="title">
+      <h3 class="">{{ title }}</h3>
+    </section>
 
-    <a mat-button routerLink="add" color="accent" class="">
+    <section class="filters">
+      <app-search-input
+        class="filter"
+        [placeHolder]="placeholders.value.search"
+        (searchTermChange)="searchTerm = $event; filterMonitors()"
+      ></app-search-input>
+
+      <app-multiple-select
+        class="filter"
+        name="actionSelect"
+        ngDefaultControl
+        #actionSelect
+        [formControl]="actions"
+        [placeHolder]="placeholders.value.actions"
+        [options]="actionsList"
+        (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
+      >
+        <mat-icon class="orange">security</mat-icon>
+      </app-multiple-select>
+
+      <app-multiple-select
+        class="filter"
+        name="categorySelect"
+        ngDefaultControl
+        #categorySelect
+        [formControl]="categories"
+        [placeHolder]="placeholders.value.categories"
+        [options]="categoriesList"
+        (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
+      >
+        <mat-icon class="green">category</mat-icon>
+      </app-multiple-select>
+
+      <app-multiple-select
+        class="filter"
+        name="groupSelect"
+        ngDefaultControl
+        #groupSelect
+        [formControl]="groups"
+        [placeHolder]="placeholders.value.groups"
+        [options]="groupsList"
+        (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
+      >
+        <mat-icon class="blue">group</mat-icon>
+      </app-multiple-select>
+
+      <div class="clear-filters">
+        <button
+          mat-stroked-button
+          color="accent"
+          (click)="clearFilters()"
+          [disabled]="
+            !(
+              (selectedActions && selectedActions.length) ||
+              (selectedCategories && selectedCategories.length) ||
+              (selectedGroups && selectedGroups.length)
+            )
+          "
+        >
+          Clear Filters
+        </button>
+      </div>
+    </section>
+
+    <a mat-button routerLink="add" color="accent" class="add-monitor">
       <mat-icon>add</mat-icon>
-      <span> new monitor </span>
+      <span> create new monitor </span>
     </a>
 
-    <mat-divider [inset]="true"></mat-divider>
-
-    <app-search-input
-      class="filter"
-      [placeHolder]="placeholders.value.search"
-      (searchTermChange)="searchTerm = $event; filterMonitors()"
-    ></app-search-input>
-
-    <app-multiple-select
-      class="filter"
-      name="actionSelect"
-      ngDefaultControl
-      #actionSelect
-      [formControl]="actions"
-      [placeHolder]="placeholders.value.actions"
-      [options]="actionsList"
-      (selectedOptionsChange)="selectedActions = $event; filterMonitors()"
-    >
-      <mat-icon class="orange">security</mat-icon>
-    </app-multiple-select>
-
-    <app-multiple-select
-      class="filter"
-      name="categorySelect"
-      ngDefaultControl
-      #categorySelect
-      [formControl]="categories"
-      [placeHolder]="placeholders.value.categories"
-      [options]="categoriesList"
-      (selectedOptionsChange)="selectedCategories = $event; filterMonitors()"
-    >
-      <mat-icon class="green">category</mat-icon>
-    </app-multiple-select>
-
-    <app-multiple-select
-      class="filter"
-      name="groupSelect"
-      ngDefaultControl
-      #groupSelect
-      [formControl]="groups"
-      [placeHolder]="placeholders.value.groups"
-      [options]="groupsList"
-      (selectedOptionsChange)="selectedGroups = $event; filterMonitors()"
-    >
-      <mat-icon class="blue">group</mat-icon>
-    </app-multiple-select>
-
-    <div class="clear-filters">
-      <button
-        mat-stroked-button
-        color="accent"
-        (click)="clearFilters()"
-        [disabled]="
-          !(
-            (selectedActions && selectedActions.length) ||
-            (selectedCategories && selectedCategories.length) ||
-            (selectedGroups && selectedGroups.length)
-          )
-        "
-      >
-        Clear Filters
-      </button>
-    </div>
+    <mat-divider></mat-divider>
   </mat-sidenav>
 
   <mat-sidenav-content>
