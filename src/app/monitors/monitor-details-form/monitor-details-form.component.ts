@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  FormControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-monitor-details-form',
@@ -9,10 +15,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class MonitorDetailsFormComponent implements OnInit {
   isLinear = true;
   detailsFormGroup: FormGroup;
+  nameControl: FormControl;
   categoriesFormGroup: FormGroup;
   eplFormGroup: FormGroup;
   actionsFormGroup: FormGroup;
   groupsFormGroup: FormGroup;
+
+  nameMessage: string;
+  descriptionMessage: string;
 
   allCategories: string[] = [
     'script-attack',
@@ -48,10 +58,19 @@ export class MonitorDetailsFormComponent implements OnInit {
 
   ngOnInit() {
     this.detailsFormGroup = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
       status: ['', Validators.required],
       description: ['', Validators.required],
     });
+    const nameControl = this.detailsFormGroup.get('name');
+    nameControl.valueChanges.subscribe(() =>
+      this.setMessage(nameControl, 'name'),
+    );
+    const descriptionControl = this.detailsFormGroup.get('description');
+    descriptionControl.valueChanges.subscribe(() =>
+      this.setMessage(descriptionControl, 'description'),
+    );
+
     this.categoriesFormGroup = this.fb.group({
       categories: [[], Validators.required],
     });
@@ -60,5 +79,45 @@ export class MonitorDetailsFormComponent implements OnInit {
     });
     this.actionsFormGroup = this.fb.group({});
     this.groupsFormGroup = this.fb.group({});
+  }
+
+  setMessage(c: AbstractControl, controlName: string): void {
+    const validationMessages = {
+      required: `Please enter a monitor ${controlName}`,
+      pattern: `Monitor ${controlName} cannot contain punctuation characters`,
+    };
+    switch (controlName) {
+      case 'name':
+        this.nameMessage = '';
+        break;
+      case 'description':
+        this.descriptionMessage = '';
+        break;
+    }
+    // I don't know why, but we need to call this, otherwise mat-error doesn't
+    // show on a failed pattern validation.
+    c.markAsTouched();
+    let msg: string;
+    if ((c.touched || c.dirty) && c.errors) {
+      msg = Object.keys(c.errors)
+        .map((error) => validationMessages[error])
+        .join(' ');
+    }
+    switch (controlName) {
+      case 'name':
+        this.nameMessage = msg;
+        break;
+      case 'description':
+        this.descriptionMessage = msg;
+        break;
+    }
+  }
+
+  validateForm(fg: FormGroup) {
+    const controls = fg.controls;
+    const controlKeys = Object.keys(controls);
+    Object.values(controls).map((fc: FormControl, i: number) =>
+      this.setMessage(fc, controlKeys[i]),
+    );
   }
 }
