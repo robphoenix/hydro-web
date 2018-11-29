@@ -6,6 +6,7 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-monitor-details-form',
@@ -59,7 +60,7 @@ export class MonitorDetailsFormComponent implements OnInit {
   ngOnInit() {
     this.detailsFormGroup = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-      status: ['', Validators.required],
+      status: ['offline', Validators.required],
       description: ['', Validators.required],
     });
     const nameControl = this.detailsFormGroup.get('name');
@@ -113,11 +114,15 @@ export class MonitorDetailsFormComponent implements OnInit {
     }
   }
 
-  validateForm(fg: FormGroup) {
+  validateForm(stepper: MatStepper, fg: FormGroup) {
     const controls = fg.controls;
     const controlKeys = Object.keys(controls);
     Object.values(controls).map((fc: FormControl, i: number) =>
       this.setMessage(fc, controlKeys[i]),
     );
+
+    if (fg.valid) {
+      stepper.next();
+    }
   }
 }

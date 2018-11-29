@@ -36,11 +36,7 @@
         </mat-form-field>
 
         <div>
-          <button
-            mat-button
-            matStepperNext
-            (click)="validateForm(detailsFormGroup)"
-          >
+          <button mat-button (click)="validateForm(stepper, detailsFormGroup)">
             Next
           </button>
         </div>
