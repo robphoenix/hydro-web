@@ -14,6 +14,7 @@ import { MonitorsListHeadersComponent } from './monitors-list-headers/monitors-l
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
+import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-deta
     MonitorDeleteDialogComponent,
     AddMonitorComponent,
     MonitorDetailsFormComponent,
+    MonitorDefinitionFormgroupComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
