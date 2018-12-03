@@ -1,0 +1,7 @@
+<form [formGroup]="categoriesFormGroup">
+  <mat-checkbox *ngFor="let c of currentCategories">{{ c }}</mat-checkbox>
+  <div>
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+  </div>
+</form>

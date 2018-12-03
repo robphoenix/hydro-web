@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MonitorDefinitionFormgroupComponent } from '../monitor-definition-formgroup/monitor-definition-formgroup.component';
+import { MonitorCategoriesFormgroupComponent } from '../monitor-categories-formgroup/monitor-categories-formgroup.component';
 
 @Component({
   selector: 'app-monitor-details-form',
@@ -9,7 +10,6 @@ import { MonitorDefinitionFormgroupComponent } from '../monitor-definition-formg
 })
 export class MonitorDetailsFormComponent implements OnInit {
   isLinear = false;
-  categoriesFormGroup: FormGroup;
   eplFormGroup: FormGroup;
   actionsFormGroup: FormGroup;
   groupsFormGroup: FormGroup;
@@ -17,48 +17,24 @@ export class MonitorDetailsFormComponent implements OnInit {
   @ViewChild(MonitorDefinitionFormgroupComponent)
   definitionFormGroup: MonitorDefinitionFormgroupComponent;
 
+  @ViewChild(MonitorCategoriesFormgroupComponent)
+  categoriesFormGroup: MonitorCategoriesFormgroupComponent;
+
   get fromDefinition() {
     return this.definitionFormGroup
       ? this.definitionFormGroup.definitionFormGroup
       : null;
   }
 
-  allCategories: string[] = [
-    'script-attack',
-    'Mobile',
-    'Sports Book',
-    'JohnSnow',
-    'BetSlip',
-    'GavinEdwards',
-    'Scrapers',
-    'China Arbs',
-    'bettingslip',
-    'Extra',
-    'FRM',
-    'Alerts',
-    'NewLoginDefault',
-    'Members',
-    'Monitor',
-    'Blocking',
-    'Investigation',
-    'HoneyPot',
-    'Publisher',
-    'Datacenter',
-    'LoginAttack',
-    'Bookmaker',
-    'hostingfacility',
-    'geo',
-    'Martin',
-    'OpenAccount',
-    'Ragbag',
-  ];
+  get fromCategories() {
+    return this.categoriesFormGroup
+      ? this.categoriesFormGroup.categoriesFormGroup
+      : null;
+  }
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.categoriesFormGroup = this.fb.group({
-      categories: [[], Validators.required],
-    });
     this.eplFormGroup = this.fb.group({
       eplQuery: ['', Validators.required],
     });

@@ -1,19 +1,15 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper class="stepper">
   <mat-step [stepControl]="fromDefinition">
-    <ng-template matStepLabel>Monitor Definition</ng-template>
+    <ng-template matStepLabel>Definition</ng-template>
     <app-monitor-definition-formgroup
       [stepper]="stepper"
     ></app-monitor-definition-formgroup>
   </mat-step>
   <mat-step [stepControl]="categoriesFormGroup">
-    <form [formGroup]="categoriesFormGroup">
-      <ng-template matStepLabel>Categories</ng-template>
-      <mat-checkbox *ngFor="let c of allCategories">{{ c }}</mat-checkbox>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
+    <ng-template matStepLabel>Categories</ng-template>
+    <app-monitor-categories-formgroup
+      [stepper]="stepper"
+    ></app-monitor-categories-formgroup>
   </mat-step>
   <mat-step [stepControl]="eplFormGroup">
     <form [formGroup]="eplFormGroup">
