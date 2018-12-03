@@ -1,5 +1,5 @@
 <form [formGroup]="categoriesFormGroup">
-  <mat-form-field class="chip-list">
+  <mat-form-field class="categories">
     <mat-chip-list #chipList formControlName="categories">
       <mat-chip
         *ngFor="let category of selectedCategories"
@@ -13,6 +13,7 @@
       <input
         placeholder="Select categories..."
         #categoryInput
+        matInput
         [formControl]="categoryCtrl"
         [matAutocomplete]="auto"
         [matChipInputFor]="chipList"

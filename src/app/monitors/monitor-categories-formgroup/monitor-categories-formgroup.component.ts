@@ -1,10 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import {
   MatStepper,
   MatChipInputEvent,
@@ -21,20 +16,23 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./monitor-categories-formgroup.component.scss'],
 })
 export class MonitorCategoriesFormgroupComponent implements OnInit {
-  categoriesFormGroup: FormGroup;
-  selectedCategories: string[] = [];
-  selectable = true;
-  removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
-  addOnBlur = true;
-  categoryCtrl = new FormControl();
-
   @Input()
   stepper: MatStepper;
 
-  filteredCategories: Observable<string[]>;
+  @ViewChild('categoryInput')
+  categoryInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto')
+  matAutocomplete: MatAutocomplete;
 
-  currentCategories: string[] = [
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
+  categoriesFormGroup: FormGroup;
+  categoryCtrl = new FormControl();
+  selectedCategories: string[] = [];
+  filteredCategories: Observable<string[]>;
+  availableCategories: string[] = [
     'script-attack',
     'Mobile',
     'Sports Book',
@@ -64,20 +62,27 @@ export class MonitorCategoriesFormgroupComponent implements OnInit {
     'Ragbag',
   ];
 
-  @ViewChild('categoryInput')
-  categoryInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto')
-  matAutocomplete: MatAutocomplete;
-
   constructor(private fb: FormBuilder) {
     this.categoriesFormGroup = this.fb.group({
       categories: [this.selectedCategories],
     });
   }
 
-  add(event: MatChipInputEvent): void {
-    console.log('add');
+  ngOnInit() {
+    this.filteredCategories = this.categoryCtrl.valueChanges.pipe(
+      startWith(null),
+      map((term: string) => {
+        if (!term) {
+          return this.availableCategories.slice();
+        }
+        return this.availableCategories.filter((c) =>
+          c.toLowerCase().includes(term.toLowerCase()),
+        );
+      }),
+    );
+  }
 
+  add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = (event.value || '').trim();
 
@@ -97,30 +102,16 @@ export class MonitorCategoriesFormgroupComponent implements OnInit {
 
     if (index >= 0) {
       this.selectedCategories.splice(index, 1);
-      this.currentCategories.push(category);
+      this.availableCategories.push(category);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    console.log('selected');
     const value = event.option.viewValue;
+    const index = this.availableCategories.indexOf(value);
     this.selectedCategories.push(value);
-    this.currentCategories.splice(this.currentCategories.indexOf(value), 1);
+    this.availableCategories.splice(index, 1);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
-  }
-
-  ngOnInit() {
-    this.filteredCategories = this.categoryCtrl.valueChanges.pipe(
-      startWith(null),
-      map(
-        (category: string | null) =>
-          category
-            ? this.currentCategories.filter((c) =>
-                c.toLowerCase().includes(category.toLowerCase()),
-              )
-            : this.currentCategories.slice(),
-      ),
-    );
   }
 }
