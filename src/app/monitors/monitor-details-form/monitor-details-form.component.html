@@ -5,11 +5,9 @@
       [stepper]="stepper"
     ></app-monitor-definition-formgroup>
   </mat-step>
-  <mat-step [stepControl]="categoriesFormGroup">
+  <mat-step [stepControl]="fromCategories">
     <ng-template matStepLabel>Categories</ng-template>
-    <app-monitor-categories-formgroup
-      [stepper]="stepper"
-    ></app-monitor-categories-formgroup>
+    <app-monitor-categories-formgroup></app-monitor-categories-formgroup>
   </mat-step>
   <mat-step [stepControl]="eplFormGroup">
     <form [formGroup]="eplFormGroup">
