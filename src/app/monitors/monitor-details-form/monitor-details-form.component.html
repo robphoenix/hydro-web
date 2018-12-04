@@ -4,6 +4,7 @@
     <app-monitor-definition-formgroup
       [stepper]="stepper"
     ></app-monitor-definition-formgroup>
+    <div class="sql">{{ sql | formatSql: 4 }}</div>
   </mat-step>
   <mat-step [stepControl]="fromCategories">
     <ng-template matStepLabel>Categories</ng-template>
