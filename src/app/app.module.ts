@@ -10,7 +10,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './user/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { ErrorInterceptor } from './error.interceptor';
-import { TempModule } from './temp/temp.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
@@ -18,7 +17,6 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    // angular
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,13 +24,10 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
       dataEncapsulation: false,
       passThruUnknownUrl: true,
     }),
-    // hydro
     LayoutModule,
     UserModule,
     MonitorsModule,
     SearchModule,
-    // TODO: please remember to delete this module
-    TempModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

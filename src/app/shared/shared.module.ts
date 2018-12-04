@@ -5,6 +5,7 @@ import { HydroMaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { FormatDatePipe } from './format-date.pipe';
+import { FormatSqlPipe } from './format-sql.pipe';
 
 @NgModule({
   imports: [
@@ -13,7 +14,17 @@ import { FormatDatePipe } from './format-date.pipe';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [SearchInputComponent, MultipleSelectComponent, FormatDatePipe],
-  exports: [SearchInputComponent, MultipleSelectComponent, FormatDatePipe],
+  declarations: [
+    SearchInputComponent,
+    MultipleSelectComponent,
+    FormatDatePipe,
+    FormatSqlPipe,
+  ],
+  exports: [
+    SearchInputComponent,
+    MultipleSelectComponent,
+    FormatDatePipe,
+    FormatSqlPipe,
+  ],
 })
 export class SharedModule {}

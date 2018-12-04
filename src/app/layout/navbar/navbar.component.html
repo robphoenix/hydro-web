@@ -1,24 +1,17 @@
 <mat-toolbar color="primary" class="toolbar">
-  <mat-toolbar-row>
-    <img class="logo" height="40" [src]="logo" alt="logo" />
-    <nav class="nav" *ngIf="authService.isLoggedIn">
-      <!--
-        <a mat-button routerLink="/showme">
-          Show Me
-        </a>
-      -->
-      <a mat-button routerLink="/search">
-        <mat-icon>search</mat-icon>
-        Search
-      </a>
-      <a mat-button routerLink="/monitors">
-        <mat-icon>flash_on</mat-icon>
-        Monitors
-      </a>
-      <a mat-button (click)="authService.logout()">
-        <mat-icon>account_circle</mat-icon>
-        LogOut {{ authService.userDisplayName }}
-      </a>
-    </nav>
-  </mat-toolbar-row>
+  <img class="logo" height="40" [src]="logo" alt="logo" />
+  <nav class="nav" *ngIf="authService.isLoggedIn">
+    <a mat-button routerLink="/search">
+      <mat-icon>search</mat-icon>
+      Search
+    </a>
+    <a mat-button routerLink="/monitors">
+      <mat-icon>flash_on</mat-icon>
+      Monitors
+    </a>
+    <a mat-button (click)="authService.logout()">
+      <mat-icon>account_circle</mat-icon>
+      LogOut {{ authService.userDisplayName }}
+    </a>
+  </nav>
 </mat-toolbar>

@@ -1,9 +1,8 @@
 .sidenav {
-  background: white;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
     0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
   width: 350px;
-  padding: 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,34 +11,52 @@
   .title {
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    align-self: center;
-    display: flex;
-    align-items: center;
-  }
-
-  .filter {
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
     width: 100%;
-    padding-right: 20px;
+    padding: 15px;
   }
 
-  .clear-filters {
-    margin-left: auto;
+  .filters {
+    width: 100%;
+    padding: 30px;
+    border-bottom: 1px solid #cccccc;
 
-    button {
-      letter-spacing: 0.1em;
+    .filter {
+      width: 100%;
+      padding-right: 20px;
+    }
+
+    .filters-title {
       text-transform: uppercase;
-      margin-right: 20px;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin: 20px 0 0 0;
+    }
+
+    .clear-filters {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
     }
   }
-}
 
-mat-sidenav-content {
-  background: #fcfcfc;
+  .add-monitor {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+  }
 }
 
 .monitors-list {
   width: 90%;
-  margin: 95px auto 30px auto;
+  margin: 30px auto 30px auto;
   padding: 0;
 
   .list-headers {
@@ -54,6 +71,7 @@ mat-sidenav-content {
 }
 
 .no-monitors {
+  overflow: hidden;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 200px;
