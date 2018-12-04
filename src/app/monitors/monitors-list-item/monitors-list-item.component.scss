@@ -13,13 +13,13 @@
   &:hover,
   &:focus,
   &:active {
-    .topic {
+    .name {
       color: #ff4081;
     }
   }
 
   &:visited {
-    .topic {
+    .name {
       color: #3f51b5;
     }
   }
@@ -33,7 +33,7 @@
   width: 30%;
   cursor: pointer;
 
-  .topic {
+  .name {
     color: #333;
     margin: 10px 0;
     letter-spacing: 0.1em;
@@ -75,6 +75,7 @@
 
   .group {
     color: #ffffff;
+    background-color: #cccccc;
     border-radius: 3px;
     font-size: 14px;
     font-weight: normal;

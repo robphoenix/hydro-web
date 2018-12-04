@@ -89,7 +89,7 @@ export class MonitorsService {
         (prev, curr) => `${prev} ${curr.name}`,
         '',
       );
-      return `${monitor.name.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+      return `${monitor.name.toLowerCase()} ${monitor.description.toLowerCase()} ${categories}`.match(
         regex,
       );
     });
@@ -197,40 +197,18 @@ export class MonitorsService {
     ).sort();
   }
 
-  /**
-   * Returns a complete list of actions derived from a list of monitors.
-   *
-   * @param {IMonitor[]} monitors
-   * @returns {string[]}
-   * @memberof MonitorsService
-   */
-  // currentActions(monitors: IMonitor[]): string[] {
-  //   const allActions: string[] = monitors
-  //     .reduce((prev: IAction[][], curr: IMonitor) => {
-  //       return [
-  //         ...prev,
-  //         ...curr.actionGroups.map((a: IActionGroup) => a.actions),
-  //       ];
-  //     }, [])
-  //     .reduce((prevActions: string[], currActions: IAction[]) => {
-  //       return [
-  //         ...prevActions,
-  //         ...currActions.map((action: IAction) => action.name),
-  //       ];
-  //     }, []);
-  //   // remove duplicate actions
-  //   return Array.from(new Set(allActions)).sort();
-  // }
-
-  /**
-   * Returns a single string that contains the list of actions.
-   *
-   * @param {IAction[]} actions
-   * @returns {string}
-   * @memberof MonitorsListItemComponent
-   */
-  actionNames(actions: IAction[]): string {
-    return actions.map((action) => action.name).join('\n');
+  currentActions(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce(
+          (prev: string[], curr: IMonitor) => [
+            ...prev,
+            ...curr.actions.map((action: IAction) => action.name),
+          ],
+          [],
+        ),
+      ),
+    ).sort();
   }
 
   /**

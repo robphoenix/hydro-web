@@ -87,7 +87,7 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.filteredMonitors = this.monitors;
         this.categoriesList = this.monitorService.currentCategories(monitors);
         this.groupsList = this.monitorService.currentGroups(monitors);
-        // this.actionsList = this.monitorService.currentActions(monitors);
+        this.actionsList = this.monitorService.currentActions(monitors);
         this.hasFetchedMonitors = true;
       });
   }

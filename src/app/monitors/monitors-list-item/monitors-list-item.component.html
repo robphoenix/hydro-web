@@ -5,23 +5,17 @@
       href="/monitors/{{monitor.id}}"
       routerLink="/monitors/{{monitor.id}}"
     >
-      <h5 class="topic">{{ monitor.topic }}</h5>
-      <p class="description">{{ monitor.queryDescription }}</p>
+      <h5 class="name">{{ monitor.name }}</h5>
+      <p class="description">{{ monitor.description }}</p>
     </a>
   </header>
 
   <section class="section actions">
     <mat-icon
-      *ngFor="let item of monitor.actionGroups"
-      matTooltip="{{monitorsService.actionNames(item.actions)}}"
+      *ngFor="let action of (actions | objectKeys)"
+      matTooltip="{{actions[action]}}"
       [matTooltipClass]="'tooltip'"
-      >{{ icons[item.name] }}</mat-icon
-    >
-    <mat-icon
-      *ngIf="monitor.store"
-      matTooltip="Results stored in database"
-      [matTooltipClass]="'tooltip'"
-      >check</mat-icon
+      >{{ icons[action] }}</mat-icon
     >
   </section>
 
@@ -31,7 +25,7 @@
         class="category"
         *ngFor="let category of monitor.categories.sort(); last as last"
       >
-        {{ category.value }}<span *ngIf="!last">,&#160;</span>
+        {{ category.name }}<span *ngIf="!last">,&#160;</span>
       </li>
     </ul>
   </section>

@@ -35,7 +35,7 @@ GROUP BY uri`;
       description,
     } = this.definitionFormGroup.definitionFormGroup.value;
     this.monitor.name = name;
-    this.monitor.queryDescription = description;
+    this.monitor.description = description;
 
     return this.definitionFormGroup
       ? this.definitionFormGroup.definitionFormGroup
