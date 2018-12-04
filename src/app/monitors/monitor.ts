@@ -1,8 +1,8 @@
 export interface IMonitor {
   id: number;
   name: string;
-  queryBody: string;
-  queryDescription: string;
+  query: string;
+  description: string;
   dateCreated: string;
   dateUpdated: string;
   createdBy: string | null;
