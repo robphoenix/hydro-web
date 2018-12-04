@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { IMonitorData } from './monitor-data';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -20,8 +18,8 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class MonitorsService {
-  baseUrl = `http://${environment.apiHost}:3000`;
-  monitorsUrl = `${this.baseUrl}/monitors`;
+  baseUrl = 'http://mn2splmfe001sd0:6080';
+  monitorsUrl = `${this.baseUrl}/p/monitors`;
 
   constructor(private http: HttpClient) {}
 
@@ -32,8 +30,10 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>('api/monitors', httpOptions).pipe(
+    return this.http.get<IMonitor[]>(this.monitorsUrl, httpOptions).pipe(
       tap((monitors: IMonitor[]) => {
+        console.log({ monitors });
+
         return monitors;
       }),
       catchError(this.handleError<IMonitor[]>('getMonitors')),
@@ -48,39 +48,13 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitor(id: number): Observable<IMonitor> {
-    return this.http.get<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
-      tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('getMonitor')),
-    );
+    return this.http
+      .get<IMonitor>(`${this.monitorsUrl}/${id}`, httpOptions)
+      .pipe(
+        tap((monitor: IMonitor) => monitor),
+        catchError(this.handleError<IMonitor>('getMonitor')),
+      );
   }
-
-  // public addMonitor(monitor: IMonitor): Observable<IMonitor> {
-  //   return this.http.post<IMonitor>(`api/monitors`, monitor, httpOptions).pipe(
-  //     tap((m: IMonitor) => m),
-  //     catchError(this.handleError<IMonitor>('addMonitor')),
-  //   );
-  // }
-
-  // public deleteMonitor(id: number): Observable<IMonitor> {
-  //   return this.http.delete<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
-  //     tap((monitor: IMonitor) => monitor),
-  //     catchError(this.handleError<IMonitor>('deleteMonitor')),
-  //   );
-  // }
-
-  /**
-   * Gets the associated data for a single monitor.
-   *
-   * @param {string} id
-   * @returns {Observable<IMonitorData>}
-   * @memberof MonitorsService
-   */
-  // public getMonitorData(id: string): Observable<IMonitorData> {
-  //   return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
-  //     tap((monitor: IMonitorData) => monitor),
-  //     catchError(this.handleError<IMonitorData>('getMonitorData')),
-  //   );
-  // }
 
   /**
    * Compares monitors for sorting.
