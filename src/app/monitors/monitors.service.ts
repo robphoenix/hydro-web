@@ -1,16 +1,10 @@
-import {
-  IMonitor,
-  IMonitorData,
-  ICategory,
-  IGroup,
-  IActionGroup,
-  IAction,
-} from './monitor';
+import { IMonitor, ICategory, IGroup, IAction, LDAPGroup } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { IMonitorData } from './monitor-data';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -53,26 +47,26 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getMonitor(id: string): Observable<IMonitor> {
+  public getMonitor(id: number): Observable<IMonitor> {
     return this.http.get<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
       tap((monitor: IMonitor) => monitor),
       catchError(this.handleError<IMonitor>('getMonitor')),
     );
   }
 
-  public addMonitor(monitor: IMonitor): Observable<IMonitor> {
-    return this.http.post<IMonitor>(`api/monitors`, monitor, httpOptions).pipe(
-      tap((m: IMonitor) => m),
-      catchError(this.handleError<IMonitor>('addMonitor')),
-    );
-  }
+  // public addMonitor(monitor: IMonitor): Observable<IMonitor> {
+  //   return this.http.post<IMonitor>(`api/monitors`, monitor, httpOptions).pipe(
+  //     tap((m: IMonitor) => m),
+  //     catchError(this.handleError<IMonitor>('addMonitor')),
+  //   );
+  // }
 
-  public deleteMonitor(id: string): Observable<IMonitor> {
-    return this.http.delete<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
-      tap((monitor: IMonitor) => monitor),
-      catchError(this.handleError<IMonitor>('deleteMonitor')),
-    );
-  }
+  // public deleteMonitor(id: number): Observable<IMonitor> {
+  //   return this.http.delete<IMonitor>(`api/monitors/${id}`, httpOptions).pipe(
+  //     tap((monitor: IMonitor) => monitor),
+  //     catchError(this.handleError<IMonitor>('deleteMonitor')),
+  //   );
+  // }
 
   /**
    * Gets the associated data for a single monitor.
@@ -81,12 +75,12 @@ export class MonitorsService {
    * @returns {Observable<IMonitorData>}
    * @memberof MonitorsService
    */
-  public getMonitorData(id: string): Observable<IMonitorData> {
-    return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
-      tap((monitor: IMonitorData) => monitor),
-      catchError(this.handleError<IMonitorData>('getMonitorData')),
-    );
-  }
+  // public getMonitorData(id: string): Observable<IMonitorData> {
+  //   return this.http.get<IMonitorData>(`api/monitorsData/${id}`).pipe(
+  //     tap((monitor: IMonitorData) => monitor),
+  //     catchError(this.handleError<IMonitorData>('getMonitorData')),
+  //   );
+  // }
 
   /**
    * Compares monitors for sorting.
@@ -97,10 +91,10 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
-    if (a.topic.toLowerCase() < b.topic.toLowerCase()) {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
       return -1;
     }
-    if (a.topic.toLowerCase() > b.topic.toLowerCase()) {
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
       return 1;
     }
     return 0;
@@ -118,10 +112,10 @@ export class MonitorsService {
     const regex: RegExp = new RegExp(searchTerm, 'gi');
     return monitors.filter((monitor: IMonitor) => {
       const categories = monitor.categories.reduce(
-        (prev, curr) => `${prev} ${curr.value}`,
+        (prev, curr) => `${prev} ${curr.name}`,
         '',
       );
-      return `${monitor.topic.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
+      return `${monitor.name.toLowerCase()} ${monitor.queryDescription.toLowerCase()} ${categories}`.match(
         regex,
       );
     });
@@ -142,7 +136,7 @@ export class MonitorsService {
     return monitors.filter((monitor: IMonitor) => {
       return selectedCategories.every((selected: string) =>
         monitor.categories
-          .map((category: ICategory) => category.value)
+          .map((category: ICategory) => category.name)
           .includes(selected),
       );
     });
@@ -158,7 +152,7 @@ export class MonitorsService {
    */
   filterGroups(monitors: IMonitor[], selectedGroups: string[]): IMonitor[] {
     return monitors.filter((monitor: IMonitor) => {
-      return selectedGroups.every((selected: string) =>
+      return selectedGroups.every((selected: LDAPGroup) =>
         monitor.groups.map((group: IGroup) => group.name).includes(selected),
       );
     });
@@ -172,20 +166,20 @@ export class MonitorsService {
    * @returns {IMonitor[]}
    * @memberof MonitorsService
    */
-  filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      const currentActions: string[] = monitor.actionGroups.reduce(
-        (prev: string[], curr: IActionGroup) => [
-          ...prev,
-          ...curr.actions.map((action: IAction) => action.name),
-        ],
-        [],
-      );
-      return selectedActions.every((selected: string) =>
-        currentActions.includes(selected),
-      );
-    });
-  }
+  // filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
+  //   return monitors.filter((monitor: IMonitor) => {
+  //     const currentActions: string[] = monitor.actionGroups.reduce(
+  //       (prev: string[], curr: IActionGroup) => [
+  //         ...prev,
+  //         ...curr.actions.map((action: IAction) => action.name),
+  //       ],
+  //       [],
+  //     );
+  //     return selectedActions.every((selected: string) =>
+  //       currentActions.includes(selected),
+  //     );
+  //   });
+  // }
 
   /**
    * Returns a complete list of categories derived from a list of monitors.
@@ -200,7 +194,7 @@ export class MonitorsService {
         monitors.reduce(
           (prev: string[], curr: IMonitor) => [
             ...prev,
-            ...curr.categories.map((category: ICategory) => category.value),
+            ...curr.categories.map((category: ICategory) => category.name),
           ],
           [],
         ),
@@ -236,23 +230,23 @@ export class MonitorsService {
    * @returns {string[]}
    * @memberof MonitorsService
    */
-  currentActions(monitors: IMonitor[]): string[] {
-    const allActions: string[] = monitors
-      .reduce((prev: IAction[][], curr: IMonitor) => {
-        return [
-          ...prev,
-          ...curr.actionGroups.map((a: IActionGroup) => a.actions),
-        ];
-      }, [])
-      .reduce((prevActions: string[], currActions: IAction[]) => {
-        return [
-          ...prevActions,
-          ...currActions.map((action: IAction) => action.name),
-        ];
-      }, []);
-    // remove duplicate actions
-    return Array.from(new Set(allActions)).sort();
-  }
+  // currentActions(monitors: IMonitor[]): string[] {
+  //   const allActions: string[] = monitors
+  //     .reduce((prev: IAction[][], curr: IMonitor) => {
+  //       return [
+  //         ...prev,
+  //         ...curr.actionGroups.map((a: IActionGroup) => a.actions),
+  //       ];
+  //     }, [])
+  //     .reduce((prevActions: string[], currActions: IAction[]) => {
+  //       return [
+  //         ...prevActions,
+  //         ...currActions.map((action: IAction) => action.name),
+  //       ];
+  //     }, []);
+  //   // remove duplicate actions
+  //   return Array.from(new Set(allActions)).sort();
+  // }
 
   /**
    * Returns a single string that contains the list of actions.
