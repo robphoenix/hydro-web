@@ -50,7 +50,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  readonly baseUrl = `http://${environment.apiHostAuth}`;
+  readonly baseUrl = `http://mn2splmfe001sd0:6080`;
   readonly loginUrl = `${this.baseUrl}/login`;
   readonly refreshUrl = `${this.baseUrl}/p/refresh`;
 
