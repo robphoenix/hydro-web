@@ -23,14 +23,6 @@ export class MonitorsListItemComponent implements OnInit {
     other: 'subject',
   };
 
-  groupClass: { [group: string]: string } = {
-    OTS: 'ots',
-    FRM: 'frm',
-    Infrastructure: 'infrastructure',
-    'Forensic Monitoring': 'fm',
-    'Network Security': 'net-sec',
-  };
-
   constructor(public monitorsService: MonitorsService) {}
 
   ngOnInit(): void {

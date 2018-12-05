@@ -70,47 +70,6 @@
   width: 25%;
 }
 
-.groups {
-  width: 25%;
-
-  .group {
-    color: #ffffff;
-    background-color: #cccccc;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1;
-    padding: 3px 5px;
-    margin: 2px 5px 2px 0;
-    border: 1px solid;
-
-    &.ots {
-      background-color: #ffd700;
-      border-color: #ffd700;
-    }
-
-    &.frm {
-      background-color: #00449e;
-      border-color: #00449e;
-    }
-
-    &.infrastructure {
-      background-color: #137752;
-      border-color: #137752;
-    }
-
-    &.fm {
-      background-color: #d5008f;
-      border-color: #d5008f;
-    }
-
-    &.net-sec {
-      background-color: #5e2ca5;
-      border-color: #5e2ca5;
-    }
-  }
-}
-
 .list {
   list-style: none;
   margin: 0;

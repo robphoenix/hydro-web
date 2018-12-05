@@ -32,9 +32,7 @@ export class MonitorsService {
   public getMonitors(): Observable<IMonitor[]> {
     return this.http.get<IMonitor[]>(this.monitorsUrl, httpOptions).pipe(
       tap((monitors: IMonitor[]) => {
-        console.log({ monitors });
-
-        return monitors;
+        return monitors.slice(1, 20);
       }),
       catchError(this.handleError<IMonitor[]>('getMonitors')),
     );

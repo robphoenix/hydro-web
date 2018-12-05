@@ -30,17 +30,6 @@
     </ul>
   </section>
 
-  <section class="section groups">
-    <ul class="list">
-      <li
-        class="group {{groupClass[group.name]}}"
-        *ngFor="let group of monitor.groups.sort()"
-      >
-        <span>{{ group.name }}</span>
-      </li>
-    </ul>
-  </section>
-
   <section class="menu">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
