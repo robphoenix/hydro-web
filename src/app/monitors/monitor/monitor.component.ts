@@ -39,7 +39,6 @@ export class MonitorComponent implements OnInit {
   ngOnInit() {
     this.getMonitors();
     this.getMonitor();
-    // this.getMonitorData();
   }
 
   /**
@@ -81,48 +80,6 @@ export class MonitorComponent implements OnInit {
       this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
-    });
-  }
-
-  /**
-   * Get the monitor's data.
-   *
-   * @memberof MonitorComponent
-   */
-  // getMonitorData() {
-  //   this.route.paramMap.subscribe((params) => {
-  //     const id: string = params.get('id');
-  //     this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
-  //       // TODO: error handling
-  //       if (data) {
-  //         this.displayedColumns = ['Time', ...data.headers];
-  //         this.dataSource = this.transformMonitorData(data);
-  //       }
-  //     });
-  //   });
-  // }
-
-  /**
-   * Transforms the nested monitor data array
-   * into a single array of objects
-   *
-   * @param {IMonitorData} monitorData
-   * @returns {{ [key: string]: string }[]}
-   * @memberof MonitorComponent
-   */
-  transformMonitorData(monitorData: IMonitorData): { [key: string]: string }[] {
-    return monitorData.esperItems.map((esperItems: IEsperItem[]) => {
-      // initialise the data object with the monitor timestamp
-      const time: Date = new Date(monitorData.timeStamp);
-      const data: { [key: string]: string } = {
-        Time: time.toLocaleString('en-GB'),
-      };
-      // transform the array of esperItems into
-      // key:value pairs and add to the data object
-      esperItems.forEach((item) => {
-        data[item['key']] = item['value'];
-      });
-      return data;
     });
   }
 
