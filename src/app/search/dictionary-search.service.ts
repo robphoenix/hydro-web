@@ -9,17 +9,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DictionarySearchService {
-  baseUrl = `http://${environment.apiHost}:3000`;
-  searchDataUrl = `${this.baseUrl}/search`;
+  // baseUrl = `http://${environment.apiHost}:3000`;
+  // searchDataUrl = `${this.baseUrl}/search`;
 
   constructor(private http: HttpClient) {}
 
-  public getMockSearch(): Observable<ISearchData> {
-    return this.http.get<ISearchData>(this.searchDataUrl).pipe(
-      tap((searchResult: ISearchData) => searchResult),
-      catchError(this.handleError<ISearchData>('getMockSearch')),
-    );
-  }
+  // public getMockSearch(): Observable<ISearchData> {
+  //   return this.http.get<ISearchData>(this.searchDataUrl).pipe(
+  //     tap((searchResult: ISearchData) => searchResult),
+  //     catchError(this.handleError<ISearchData>('getMockSearch')),
+  //   );
+  // }
 
   /**
    * Handle Http operation that failed.

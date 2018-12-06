@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MonitorsComponent } from './monitors/monitors/monitors.component';
 import { MonitorComponent } from './monitors/monitor/monitor.component';
-import { DictionarySearchComponent } from './search/dictionary-search/dictionary-search.component';
-import { DictionaryResultComponent } from './search/dictionary-result/dictionary-result.component';
 import { LoginGuard } from './user/login.guard';
 import { AddMonitorComponent } from './monitors/add-monitor/add-monitor.component';
 
@@ -26,16 +24,6 @@ import { AddMonitorComponent } from './monitors/add-monitor/add-monitor.componen
       {
         path: 'monitors/:id',
         component: MonitorComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'search',
-        component: DictionarySearchComponent,
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'search/:type/:value',
-        component: DictionaryResultComponent,
         canActivate: [AuthGuard],
       },
       { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },

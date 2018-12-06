@@ -26,18 +26,18 @@ export class DictionaryResultComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getSearchResult();
+    // this.getSearchResult();
   }
 
-  getSearchResult() {
-    this.route.paramMap.subscribe((params) => {
-      this.value = params.get('value');
-      this.type = SearchParameter[params.get('type')];
-      this.searchService.getMockSearch().subscribe((result) => {
-        this.blockHistory.data = result.blockHistory;
-        this.crossReference.data = result.crossReference;
-        this.geolocationData = result.geolocationData;
-      });
-    });
-  }
+  // getSearchResult() {
+  //   this.route.paramMap.subscribe((params) => {
+  //     this.value = params.get('value');
+  //     this.type = SearchParameter[params.get('type')];
+  //     this.searchService.getMockSearch().subscribe((result) => {
+  //       this.blockHistory.data = result.blockHistory;
+  //       this.crossReference.data = result.crossReference;
+  //       this.geolocationData = result.geolocationData;
+  //     });
+  //   });
+  // }
 }

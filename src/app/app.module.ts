@@ -1,4 +1,3 @@
-import { SearchModule } from './search/search.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -21,7 +20,6 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     LayoutModule,
     UserModule,
     MonitorsModule,
-    SearchModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
