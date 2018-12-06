@@ -16,12 +16,6 @@ export class MonitorDetailsFormComponent implements OnInit {
   groupsFormGroup: FormGroup;
   monitor: IMonitor = {} as IMonitor;
 
-  sql = `SELECT sip,uri,stk,count(*) as hits
-FROM bettingslip.win:time(1 second)
-WHERE sip LIKE "59.18.235.248"
-AND stk LIKE "67E97760D8C16FC79FC64FE196C99D18000004"
-GROUP BY uri`;
-
   @ViewChild(MonitorDefinitionFormgroupComponent)
   definitionFormGroup: MonitorDefinitionFormgroupComponent;
 
@@ -34,8 +28,8 @@ GROUP BY uri`;
       status,
       description,
     } = this.definitionFormGroup.definitionFormGroup.value;
-    this.monitor.topic = name;
-    this.monitor.queryDescription = description;
+    this.monitor.name = name;
+    this.monitor.description = description;
 
     return this.definitionFormGroup
       ? this.definitionFormGroup.definitionFormGroup

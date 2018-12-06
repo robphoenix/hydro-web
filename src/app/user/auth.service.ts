@@ -6,7 +6,6 @@ import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { ILoginResponse } from './login-response';
 
 const httpOptions = {
@@ -50,7 +49,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  readonly baseUrl = `http://${environment.apiHostAuth}`;
+  readonly baseUrl = `http://mn2splmfe001sd0:6080`;
   readonly loginUrl = `${this.baseUrl}/login`;
   readonly refreshUrl = `${this.baseUrl}/p/refresh`;
 

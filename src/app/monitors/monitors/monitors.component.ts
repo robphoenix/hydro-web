@@ -99,20 +99,20 @@ export class MonitorsComponent implements OnInit, OnDestroy {
    * @returns
    * @memberof MonitorsComponent
    */
-  deleteMonitor(monitor: IMonitor) {
-    const dialogRef = this.dialog.open(MonitorDeleteDialogComponent, {
-      data: monitor,
-    });
+  // deleteMonitor(monitor: IMonitor) {
+  //   const dialogRef = this.dialog.open(MonitorDeleteDialogComponent, {
+  //     data: monitor,
+  //   });
 
-    dialogRef.afterClosed().subscribe((data: IMonitor) => {
-      this.monitorService.deleteMonitor(data.id).subscribe(() => {
-        this.monitors = this.monitors.filter((m) => m.id !== data.id);
-        this.filteredMonitors = this.monitors;
-        const message = `Monitor deleted: ${data.topic.toUpperCase()}`;
-        this.snackBar.open(message, '', { duration: 3000 });
-      });
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((data: IMonitor) => {
+  //     this.monitorService.deleteMonitor(data.id).subscribe(() => {
+  //       this.monitors = this.monitors.filter((m) => m.id !== data.id);
+  //       this.filteredMonitors = this.monitors;
+  //       const message = `Monitor deleted: ${data.topic.toUpperCase()}`;
+  //       this.snackBar.open(message, '', { duration: 3000 });
+  //     });
+  //   });
+  // }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -141,12 +141,12 @@ export class MonitorsComponent implements OnInit, OnDestroy {
         this.selectedGroups,
       );
     }
-    if (this.selectedActions && this.selectedActions.length > 0) {
-      filtered = this.monitorService.filterActions(
-        filtered,
-        this.selectedActions,
-      );
-    }
+    // if (this.selectedActions && this.selectedActions.length > 0) {
+    //   filtered = this.monitorService.filterActions(
+    //     filtered,
+    //     this.selectedActions,
+    //   );
+    // }
     this.filteredMonitors = filtered;
   }
 

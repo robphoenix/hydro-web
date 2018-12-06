@@ -1,4 +1,3 @@
-import { SearchModule } from './search/search.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -10,8 +9,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './user/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { ErrorInterceptor } from './error.interceptor';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
@@ -20,14 +17,9 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false,
-      passThruUnknownUrl: true,
-    }),
     LayoutModule,
     UserModule,
     MonitorsModule,
-    SearchModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { IMonitor, IMonitorData, IEsperItem } from '../monitor';
+import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { IMonitorData, IEsperItem } from '../monitor-data';
 
 /**
  * Describes a single monitor.
@@ -38,7 +39,6 @@ export class MonitorComponent implements OnInit {
   ngOnInit() {
     this.getMonitors();
     this.getMonitor();
-    this.getMonitorData();
   }
 
   /**
@@ -63,7 +63,7 @@ export class MonitorComponent implements OnInit {
     const categories: Set<string> = new Set();
     this.monitors.forEach((monitor: IMonitor) => {
       monitor.categories.forEach((category) =>
-        categories.add(category.value.toLowerCase()),
+        categories.add(category.name.toLowerCase()),
       );
     });
     this.categoriesList = Array.from(categories).sort();
@@ -76,52 +76,10 @@ export class MonitorComponent implements OnInit {
    */
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
-      const id: string = params.get('id');
+      const id: number = +params.get('id');
       this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
       });
-    });
-  }
-
-  /**
-   * Get the monitor's data.
-   *
-   * @memberof MonitorComponent
-   */
-  getMonitorData() {
-    this.route.paramMap.subscribe((params) => {
-      const id: string = params.get('id');
-      this.monitorService.getMonitorData(id).subscribe((data: IMonitorData) => {
-        // TODO: error handling
-        if (data) {
-          this.displayedColumns = ['Time', ...data.headers];
-          this.dataSource = this.transformMonitorData(data);
-        }
-      });
-    });
-  }
-
-  /**
-   * Transforms the nested monitor data array
-   * into a single array of objects
-   *
-   * @param {IMonitorData} monitorData
-   * @returns {{ [key: string]: string }[]}
-   * @memberof MonitorComponent
-   */
-  transformMonitorData(monitorData: IMonitorData): { [key: string]: string }[] {
-    return monitorData.esperItems.map((esperItems: IEsperItem[]) => {
-      // initialise the data object with the monitor timestamp
-      const time: Date = new Date(monitorData.timeStamp);
-      const data: { [key: string]: string } = {
-        Time: time.toLocaleString('en-GB'),
-      };
-      // transform the array of esperItems into
-      // key:value pairs and add to the data object
-      esperItems.forEach((item) => {
-        data[item['key']] = item['value'];
-      });
-      return data;
     });
   }
 

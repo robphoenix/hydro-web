@@ -1,66 +1,71 @@
 export interface IMonitor {
-  actionGroups: IActionGroup[];
-  categories: ICategory[];
-  data: IMonitorData;
-  dateCreated: Date;
-  expires: Date;
-  groups: IGroup[];
-  id: string;
-  queryBody: string;
-  queryDescription: string;
-  store: boolean;
-  topic: string;
-}
-
-export interface ICategory {
-  id: string;
-  value: string;
-  dateCreated: Date;
-}
-
-export interface IGroup {
-  id: string;
+  id: number;
   name: string;
-}
-
-export interface IActionGroup {
-  name: Group;
+  query: string;
+  description: string;
+  dateCreated: string;
+  dateUpdated: string;
+  createdBy: string | null;
+  updatedBy: string | null;
+  status: Status;
+  type: Type;
+  categories: ICategory[];
+  groups: IGroup[];
   actions: IAction[];
 }
 
 export interface IAction {
-  id: string;
+  id: number;
+  name: string;
+  group: ActionGroup;
+}
+
+export enum ActionGroup {
+  Block = 'block',
+  Email = 'email',
+  Other = 'other',
+  Store = 'store',
+}
+
+export interface ICategory {
+  id: number;
   name: string;
 }
 
-enum Group {
-  Email = 'email',
-  Block = 'block',
-  Save = 'save',
+export interface IGroup {
+  id: number;
+  name: LDAPGroup;
 }
 
-/**
- * Describes the monitor data.
- *
- * @export
- * @interface MonitorData
- */
-export interface IMonitorData {
-  id: string;
-  esperItems: Array<IEsperItem[]>;
-  headers: string[];
-  timeStamp: Date;
+export enum LDAPGroup {
+  AppForensicMonitoringAppPlatform = 'App_Forensic Monitoring App Platform',
+  AppForensicMonitoringDBAMembers = 'App_Forensic Monitoring DBA Members',
+  AppForensicMonitoringDevTeam = 'App_Forensic Monitoring Dev Team',
+  AppForensicMonitoringDevelopmentUser = 'App_Forensic Monitoring Development User',
+  AppForensicMonitoringFraudAnalysis = 'App_Forensic Monitoring Fraud Analysis',
+  AppForensicMonitoringITOperations = 'App_Forensic Monitoring IT Operations',
+  AppForensicMonitoringManager = 'App_Forensic Monitoring Manager',
+  AppForensicMonitoringNetworkEngineering = 'App_Forensic Monitoring Network Engineering',
+  AppForensicMonitoringOTS = 'App_Forensic Monitoring OTS',
+  AppForensicMonitoringOTSManagers = 'App_Forensic Monitoring OTS Managers',
+  AppForensicMonitoringPublisherAbuse = 'App_Forensic Monitoring Publisher Abuse',
+  AppForensicMonitoringRAndD = 'App_Forensic Monitoring R and D',
+  JobsFinancialAnalyst = 'Jobs_Financial Analyst',
+  JobsOperationsTechnicalSupportAdvisor = 'Jobs_Operations Technical Support Advisor',
+  JobsOperationsTechnicalSupportAdvisorNightShift = 'Jobs_Operations Technical Support Advisor (Night Shift)',
+  JobsOperationsTechnicalSupportAdvisorTwilightShift = 'Jobs_Operations Technical Support Advisor (Twilight Shift)',
+  JobsOperationsTechnicalSupportSupervisor = 'Jobs_Operations Technical Support Supervisor',
+  JobsOperationsTechnicalSupportSupervisorNightShift = 'Jobs_Operations Technical Support Supervisor (Night Shift)',
+  JobsOperationsTechnicalSupportTeamLeader = 'Jobs_Operations Technical Support Team Leader',
 }
 
-/**
- * Describes the monitor's esper items,
- * this is the main set of variable data
- * that will be displayed.
- *
- * @export
- * @interface EsperItem
- */
-export interface IEsperItem {
-  key: string;
-  value: string;
+export enum Status {
+  Archived = 'archived',
+  Offline = 'offline',
+  Online = 'online',
+}
+
+export enum Type {
+  Standard = 'standard',
+  System = 'system',
 }

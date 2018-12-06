@@ -9,7 +9,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -32,9 +31,6 @@ func main() {
 
 	// Router for JSON Mock API
 	jsonRouter := mux.NewRouter()
-	jsonRouter.HandleFunc("/monitors", monitors).Methods("GET")
-	jsonRouter.HandleFunc("/monitors/{id}", monitorsByID).Methods("GET")
-	jsonRouter.HandleFunc("/monitors/{id}/data", monitorsData).Methods("GET")
 	jsonRouter.HandleFunc("/search", searchData).Methods("GET")
 
 	shutdown := make(chan bool)
@@ -113,88 +109,6 @@ func (s *MyServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	}
 	// Lets Gorilla work
 	s.r.ServeHTTP(rw, req)
-}
-
-func monitors(w http.ResponseWriter, r *http.Request) {
-	log.Println("GET /monitors")
-
-	f, err := os.Open("./data/monitors.json")
-	if err != nil {
-		log.Println("error opening monitors.json")
-	}
-	defer f.Close()
-
-	var data interface{}
-
-	json.NewDecoder(f).Decode(&data)
-	m := data.(map[string]interface{})["monitors"]
-	json.NewEncoder(w).Encode(m)
-}
-
-func monitorsByID(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id, err := strconv.ParseInt(vars["id"], 10, 64)
-	if err != nil {
-		log.Printf("invalid monitor: %s\n", vars["id"])
-	}
-
-	log.Printf("GET /monitors/%d", id)
-
-	f, err := os.Open("./data/monitors.json")
-	if err != nil {
-		log.Println("error opening monitors.json")
-	}
-	defer f.Close()
-
-	var data interface{}
-
-	json.NewDecoder(f).Decode(&data)
-
-	monitors := data.(map[string]interface{})["monitors"]
-
-	var monitor map[string]interface{}
-	for _, v := range monitors.([]interface{}) {
-		m := v.(map[string]interface{})
-		mid := int64(m["id"].(float64))
-		if mid == id {
-			monitor = m
-			break
-		}
-	}
-	json.NewEncoder(w).Encode(monitor)
-}
-
-func monitorsData(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id, err := strconv.ParseInt(vars["id"], 10, 64)
-	if err != nil {
-		log.Printf("invalid monitor: %s\n", vars["id"])
-	}
-
-	log.Printf("GET /monitors/%d/data", id)
-
-	f, err := os.Open("./data/monitors-data.json")
-	if err != nil {
-		log.Println("error opening monitors-data.json")
-	}
-	defer f.Close()
-
-	var data interface{}
-
-	json.NewDecoder(f).Decode(&data)
-
-	monitors := data.(map[string]interface{})["monitors"]
-
-	var monitor map[string]interface{}
-	for _, v := range monitors.([]interface{}) {
-		m := v.(map[string]interface{})
-		mid := int64(m["id"].(float64))
-		if mid == id {
-			monitor = m
-			break
-		}
-	}
-	json.NewEncoder(w).Encode(monitor)
 }
 
 func searchData(w http.ResponseWriter, r *http.Request) {

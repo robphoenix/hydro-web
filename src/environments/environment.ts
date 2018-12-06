@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  apiHost: 'localhost',
-  apiHostAuth: 'mn2splmfe001sd0:6080',
-  mustAuthenticate: false,
 };
 
 /*
