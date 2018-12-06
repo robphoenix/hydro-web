@@ -6,7 +6,6 @@ import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { ILoginResponse } from './login-response';
 
 const httpOptions = {

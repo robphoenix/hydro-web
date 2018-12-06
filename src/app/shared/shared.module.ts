@@ -4,7 +4,6 @@ import { SearchInputComponent } from './search-input/search-input.component';
 import { HydroMaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
-import { FormatSqlPipe } from './format-sql.pipe';
 import { ObjectKeysPipe } from './object-keys.pipe';
 
 @NgModule({
@@ -17,13 +16,11 @@ import { ObjectKeysPipe } from './object-keys.pipe';
   declarations: [
     SearchInputComponent,
     MultipleSelectComponent,
-    FormatSqlPipe,
     ObjectKeysPipe,
   ],
   exports: [
     SearchInputComponent,
     MultipleSelectComponent,
-    FormatSqlPipe,
     ObjectKeysPipe,
   ],
 })
