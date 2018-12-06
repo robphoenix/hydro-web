@@ -16,6 +16,7 @@ import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
 import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
 import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgroup/monitor-categories-formgroup.component';
+import { OverviewTableComponent } from './overview-table/overview-table.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgr
     MonitorDetailsFormComponent,
     MonitorDefinitionFormgroupComponent,
     MonitorCategoriesFormgroupComponent,
+    OverviewTableComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
