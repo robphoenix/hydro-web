@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MonitorsDataSource } from '../monitors-data-source';
 import { MonitorsService } from '../monitors.service';
+import { IMonitor } from '../monitor';
 
 @Component({
   selector: 'app-monitors',
@@ -8,14 +8,11 @@ import { MonitorsService } from '../monitors.service';
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent {
-  dataSource: MonitorsDataSource = new MonitorsDataSource(this.monitorsService);
-  displayedColumns = [
-    'name',
-    'description',
-    'actions',
-    'categories',
-    'options',
-  ];
+  monitors: IMonitor[] = [];
 
-  constructor(private monitorsService: MonitorsService) {}
+  constructor(private monitorsService: MonitorsService) {
+    this.monitorsService
+      .getMonitors()
+      .subscribe((monitors: IMonitor[]) => (this.monitors = monitors));
+  }
 }

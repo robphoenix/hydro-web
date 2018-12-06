@@ -1,4 +1,11 @@
 <app-overview-table
-  [dataSource]="dataSource"
-  [displayedColumns]="displayedColumns"
+  *ngIf="monitors.length; else: noMonitors"
+  [monitors]="monitors"
 ></app-overview-table>
+<ng-template #noMonitors>
+  <div class="no-monitors">
+    <h4>loading monitors</h4>
+    <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'">
+    </mat-progress-spinner>
+  </div>
+</ng-template>
