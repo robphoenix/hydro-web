@@ -9,6 +9,10 @@ import { LoginGuard } from './login.guard';
 import { HydroMaterialModule } from '../material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,9 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HydroMaterialModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
+        tokenGetter,
         whitelistedDomains: ['localhost:4200', 'mn2splmfe001sd0:6080'],
       },
     }),
