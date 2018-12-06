@@ -1,0 +1,17 @@
+<div *ngIf="(groups | objectKeys).length; else: noActions" class="actions">
+  <mat-icon
+    *ngFor="let group of (groups | objectKeys)"
+    matTooltip="{{groups[group]}}"
+    [matTooltipClass]="'tooltip'"
+    >{{ actionsIcons[group] }}</mat-icon
+  >
+</div>
+<ng-template #noActions>
+  <mat-icon
+    matTooltip="No actions"
+    [matTooltipClass]="'tooltip'"
+    class="actions"
+  >
+    remove
+  </mat-icon>
+</ng-template>
