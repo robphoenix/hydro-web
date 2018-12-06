@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MonitorsDataSource } from '../monitors-data-source';
 
 @Component({
   selector: 'app-overview-table',
   templateUrl: './overview-table.component.html',
-  styleUrls: ['./overview-table.component.scss']
+  styleUrls: ['./overview-table.component.scss'],
 })
-export class OverviewTableComponent implements OnInit {
+export class OverviewTableComponent {
+  @Input()
+  dataSource: MonitorsDataSource;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  @Input()
+  displayedColumns: string[];
 }
