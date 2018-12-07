@@ -18,15 +18,10 @@ export class MonitorsComponent {
   constructor(private monitorsService: MonitorsService) {
     this.monitorsService
       .getStandardMonitors()
-      .pipe(
-        map((monitors: IMonitor[]) =>
-          monitors.filter(
-            (monitor: IMonitor) => monitor.status !== Status.Archived,
-          ),
-        ),
-      )
       .subscribe((monitors: IMonitor[]) => {
-        this.monitors = monitors;
+        this.monitors = monitors.filter(
+          (monitor: IMonitor) => monitor.status !== Status.Archived,
+        );
       });
   }
 
