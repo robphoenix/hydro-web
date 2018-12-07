@@ -1,10 +1,15 @@
-<mat-toolbar class="toolbar">
-  <h2 class="title">Monitors</h2>
+<div class="toolbar">
+  <h3 class="title monitors">Monitors</h3>
   <div class="actions">
     <app-search-input
       class="search"
       [placeHolder]="'Search Monitors'"
-      (keyup)="searchMonitors($event.target.value)"
+      (searchTermChange)="searchMonitors($event)"
     ></app-search-input>
+
+    <a mat-button routerLink="create" color="accent" class="create title">
+      <mat-icon class="icon">add</mat-icon>
+      <span>create new monitor</span>
+    </a>
   </div>
-</mat-toolbar>
+</div>

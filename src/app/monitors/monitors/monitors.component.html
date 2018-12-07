@@ -1,8 +1,14 @@
-<app-overview-toolbar (search)="searchMonitors($event)"></app-overview-toolbar>
-<app-overview-table
-  *ngIf="monitors.length; else: noMonitors"
-  [monitors]="monitors"
-></app-overview-table>
-<ng-template #noMonitors>
-  <app-loading-spinner></app-loading-spinner>
-</ng-template>
+<div class="overview">
+  <app-overview-toolbar
+    (search)="searchMonitors($event)"
+    class="toolbar"
+  ></app-overview-toolbar>
+  <app-overview-table
+    class="table"
+    *ngIf="monitors.length; else: noMonitors"
+    [monitors]="monitors"
+  ></app-overview-table>
+  <ng-template #noMonitors>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+</div>
