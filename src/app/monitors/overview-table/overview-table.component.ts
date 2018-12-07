@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatMenu } from '@angular/material';
 import { IMonitor } from '../monitor';
 
 @Component({
@@ -13,13 +13,7 @@ export class OverviewTableComponent implements OnInit {
 
   dataSource: MatTableDataSource<IMonitor>;
 
-  displayedColumns = [
-    'name',
-    'description',
-    'actions',
-    'categories',
-    'options',
-  ];
+  displayedColumns = ['monitor', 'actions', 'categories', 'options'];
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;

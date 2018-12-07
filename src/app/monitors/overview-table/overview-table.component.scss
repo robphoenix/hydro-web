@@ -1,7 +1,46 @@
+.link {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    .name {
+      color: #ff4081;
+    }
+  }
+
+  &:visited {
+    .name {
+      color: #3f51b5;
+    }
+  }
+}
+
 .overview-table {
   width: 80%;
   margin: 0 auto;
   padding: 20px 0;
+
+  .monitor {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.name {
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 10px 0;
+  line-height: 1.5;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.description {
+  color: #888888;
+  margin: 0;
+  line-height: 1.3;
 }
 
 ::ng-deep .tooltip {
