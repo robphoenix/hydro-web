@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { IMonitor, Status } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-monitors',
