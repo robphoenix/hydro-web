@@ -15,9 +15,11 @@ export class MonitorsComponent {
   overviewTable: OverviewTableComponent;
 
   constructor(private monitorsService: MonitorsService) {
-    this.monitorsService.getMonitors().subscribe((monitors: IMonitor[]) => {
-      this.monitors = monitors;
-    });
+    this.monitorsService
+      .getStandardMonitors()
+      .subscribe((monitors: IMonitor[]) => {
+        this.monitors = monitors;
+      });
   }
 
   public searchMonitors(searchTerm: string): void {

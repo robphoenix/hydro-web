@@ -1,12 +1,10 @@
 import { IMonitor, ICategory, IGroup, IAction, LDAPGroup } from './monitor';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
+const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
 /**
  * Manages access to the monitors data on the server.
@@ -23,14 +21,13 @@ export class MonitorsService {
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Gets the list of monitors.
-   *
-   * @returns {Observable<IMonitor[]>}
-   * @memberof MonitorsService
-   */
   public getMonitors(): Observable<IMonitor[]> {
-    return this.http.get<IMonitor[]>(this.monitorsUrl, httpOptions);
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers });
+  }
+
+  public getStandardMonitors(): Observable<IMonitor[]> {
+    const params = new HttpParams().set('type', 'standard');
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
   /**
@@ -42,7 +39,7 @@ export class MonitorsService {
    */
   public getMonitor(id: number): Observable<IMonitor> {
     return this.http
-      .get<IMonitor>(`${this.monitorsUrl}/${id}`, httpOptions)
+      .get<IMonitor>(`${this.monitorsUrl}/${id}`, { headers })
       .pipe(
         tap((monitor: IMonitor) => monitor),
         catchError(this.handleError<IMonitor>('getMonitor')),
