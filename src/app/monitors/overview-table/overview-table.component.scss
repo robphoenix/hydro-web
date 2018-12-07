@@ -4,6 +4,20 @@
   letter-spacing: 0.1em;
 }
 
+.table {
+  max-height: 700px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+  }
+}
+
 .overview-table {
   width: 80%;
   margin: 0 auto;
@@ -64,4 +78,8 @@
   font-size: 14px;
   line-height: 1.5;
   white-space: pre-line;
+}
+
+.paginator {
+  border-top: 1px solid #e0e0e0;
 }
