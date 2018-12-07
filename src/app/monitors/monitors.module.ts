@@ -22,6 +22,7 @@ import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
+import { OverviewToolbarComponent } from './overview-toolbar/overview-toolbar.component';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { CellCategoriesComponent } from './cell-categories/cell-categories.compo
     LoadingSpinnerComponent,
     CellMenuComponent,
     CellCategoriesComponent,
+    OverviewToolbarComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],

@@ -31,4 +31,8 @@ export class OverviewTableComponent implements OnInit {
     };
     this.dataSource.sort = this.sort;
   }
+
+  public searchMonitors(searchTerm: string): void {
+    this.dataSource.filter = searchTerm.trim().toLowerCase();
+  }
 }

@@ -1,0 +1,16 @@
+.toolbar {
+  height: 100px;
+
+  .title {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .actions {
+    margin-left: auto;
+
+    .search {
+      height: 64px;
+    }
+  }
+}

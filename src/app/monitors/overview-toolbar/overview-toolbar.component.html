@@ -1,0 +1,10 @@
+<mat-toolbar class="toolbar">
+  <h2 class="title">Monitors</h2>
+  <div class="actions">
+    <app-search-input
+      class="search"
+      [placeHolder]="'Search Monitors'"
+      (keyup)="searchMonitors($event.target.value)"
+    ></app-search-input>
+  </div>
+</mat-toolbar>

@@ -1,3 +1,4 @@
+<app-overview-toolbar (search)="searchMonitors($event)"></app-overview-toolbar>
 <app-overview-table
   *ngIf="monitors.length; else: noMonitors"
   [monitors]="monitors"
