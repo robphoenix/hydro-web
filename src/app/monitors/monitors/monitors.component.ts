@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor } from '../monitor';
+import { IMonitor, Status } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-monitors',
@@ -17,6 +18,13 @@ export class MonitorsComponent {
   constructor(private monitorsService: MonitorsService) {
     this.monitorsService
       .getStandardMonitors()
+      .pipe(
+        map((monitors: IMonitor[]) =>
+          monitors.filter(
+            (monitor: IMonitor) => monitor.status !== Status.Archived,
+          ),
+        ),
+      )
       .subscribe((monitors: IMonitor[]) => {
         this.monitors = monitors;
       });
