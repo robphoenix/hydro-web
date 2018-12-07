@@ -1,0 +1,14 @@
+.categories {
+  list-style-type: none;
+  color: #333333;
+  line-height: 1.3;
+  display: flex;
+
+  .category {
+    margin: 2px;
+    padding: 2px 4px;
+    background: #dddddd;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+  }
+}
