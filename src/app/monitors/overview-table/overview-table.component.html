@@ -3,14 +3,11 @@
     <ng-container matColumnDef="monitor">
       <mat-header-cell *matHeaderCellDef>Monitor</mat-header-cell>
       <mat-cell *matCellDef="let monitor">
-        <a
-          class="link monitor"
-          href="/monitors/{{monitor.id}}"
-          routerLink="/monitors/{{monitor.id}}"
-        >
-          <h4 class="name">{{ monitor.name }}</h4>
-          <p class="description">{{ monitor.description }}</p>
-        </a>
+        <app-cell-monitor
+          [name]="monitor.name"
+          [description]="monitor.description"
+          [id]="monitor.id"
+        ></app-cell-monitor>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">

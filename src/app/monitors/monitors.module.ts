@@ -18,6 +18,7 @@ import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgr
 import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgroup/monitor-categories-formgroup.component';
 import { OverviewTableComponent } from './overview-table/overview-table.component';
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
+import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { CellActionsComponent } from './cell-actions/cell-actions.component';
     MonitorCategoriesFormgroupComponent,
     OverviewTableComponent,
     CellActionsComponent,
+    CellMonitorComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
