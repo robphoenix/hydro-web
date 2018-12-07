@@ -15,6 +15,7 @@
           ></app-cell-monitor>
         </mat-cell>
       </ng-container>
+
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="actions">
           <mat-icon class="action-icon">report</mat-icon>
@@ -24,22 +25,19 @@
           <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
         </mat-cell>
       </ng-container>
+
       <ng-container matColumnDef="categories">
         <mat-header-cell *matHeaderCellDef class="categories">
           <mat-icon class="category-icon">category</mat-icon>
           <h3 class="title">Categories</h3>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor" class="categories">
-          <span
-            *ngFor="
-              let category of monitor.categories.slice(0, 4);
-              last as last
-            "
-          >
-            {{ category.name }}<span *ngIf="!last">,&#160;</span>
-          </span>
+          <app-cell-categories
+            [categories]="monitor.categories"
+          ></app-cell-categories>
         </mat-cell>
       </ng-container>
+
       <ng-container matColumnDef="menu">
         <mat-header-cell *matHeaderCellDef class="menu">
           <mat-icon class="menu-icon">more_vert</mat-icon>
@@ -49,6 +47,7 @@
           <app-cell-menu></app-cell-menu>
         </mat-cell>
       </ng-container>
+
       <mat-header-row
         *matHeaderRowDef="displayedColumns; sticky: true"
       ></mat-header-row>

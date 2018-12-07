@@ -1,0 +1,3 @@
+<span *ngFor="let category of categories.slice(0, 4); last as last">
+  {{ category.name }}<span *ngIf="!last">,&#160;</span>
+</span>
