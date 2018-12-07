@@ -3,9 +3,5 @@
   [monitors]="monitors"
 ></app-overview-table>
 <ng-template #noMonitors>
-  <div class="no-monitors">
-    <h4>loading monitors</h4>
-    <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'">
-    </mat-progress-spinner>
-  </div>
+  <app-loading-spinner></app-loading-spinner>
 </ng-template>
