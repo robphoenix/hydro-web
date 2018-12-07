@@ -20,6 +20,7 @@ import { OverviewTableComponent } from './overview-table/overview-table.componen
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
 import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { CellMenuComponent } from './cell-menu/cell-menu.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     CellActionsComponent,
     CellMonitorComponent,
     LoadingSpinnerComponent,
+    CellMenuComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],

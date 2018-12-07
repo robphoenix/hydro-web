@@ -3,6 +3,24 @@
   margin: 0 auto;
   padding: 20px 0;
 
+  .mat-row {
+    padding: 5px;
+
+    .menu {
+      opacity: 0;
+      visibility: hidden;
+      -webkit-transition: all 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
+    }
+
+    &:hover {
+      .menu {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
   .monitor {
     display: flex;
     flex-direction: column;

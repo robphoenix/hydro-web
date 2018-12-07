@@ -1,6 +1,6 @@
 <div class="overview-table">
   <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="monitor">
+    <ng-container matColumnDef="monitor" class="row">
       <mat-header-cell *matHeaderCellDef>Monitor</mat-header-cell>
       <mat-cell *matCellDef="let monitor">
         <app-cell-monitor
@@ -26,26 +26,12 @@
         </span>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="options">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let monitor"
-        ><button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>file_copy</mat-icon>
-            <span>Duplicate</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>flash_off</mat-icon>
-            <span>Disable</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            <span>Archive</span>
-          </button>
-        </mat-menu>
+    <ng-container matColumnDef="menu">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>menu</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let monitor">
+        <app-cell-menu class="menu"></app-cell-menu>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -55,7 +41,7 @@
   <mat-paginator
     #paginator
     [length]="monitors.length"
-    [pageSize]="10"
+    [pageSize]="5"
     [pageSizeOptions]="[5, 10, 25, 100]"
     showFirstLastButtons
   ></mat-paginator>
