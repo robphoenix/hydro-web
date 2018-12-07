@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { IMonitor } from '../monitor';
 
 @Component({
@@ -18,10 +18,17 @@ export class OverviewTableComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
+  @ViewChild(MatSort)
+  sort: MatSort;
+
   constructor() {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.monitors);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (monitor) => {
+      return monitor.name;
+    };
+    this.dataSource.sort = this.sort;
   }
 }

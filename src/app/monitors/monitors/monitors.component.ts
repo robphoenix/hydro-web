@@ -11,8 +11,8 @@ export class MonitorsComponent {
   monitors: IMonitor[] = [];
 
   constructor(private monitorsService: MonitorsService) {
-    this.monitorsService
-      .getMonitors()
-      .subscribe((monitors: IMonitor[]) => (this.monitors = monitors));
+    this.monitorsService.getMonitors().subscribe((monitors: IMonitor[]) => {
+      this.monitors = monitors;
+    });
   }
 }

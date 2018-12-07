@@ -49,15 +49,11 @@ export class MonitorsService {
       );
   }
 
-  /**
-   * Compares monitors for sorting.
-   *
-   * @param {IMonitor} a
-   * @param {IMonitor} b
-   * @returns {(1 | -1 | 0)}
-   * @memberof MonitorsService
-   */
-  compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
+  public sortMonitorsByName(monitors: IMonitor[]): IMonitor[] {
+    return monitors.sort(this.compareMonitors);
+  }
+
+  private compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
     if (a.name.toLowerCase() < b.name.toLowerCase()) {
       return -1;
     }
