@@ -1,9 +1,13 @@
 <div class="overview-table">
   <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="monitor" class="row">
-      <mat-header-cell *matHeaderCellDef>Monitor</mat-header-cell>
+    <ng-container matColumnDef="monitor">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon class="monitor-icon">flash_on</mat-icon>
+        <h3 class="title">Monitor</h3>
+      </mat-header-cell>
       <mat-cell *matCellDef="let monitor">
         <app-cell-monitor
+          class="monitor"
           [name]="monitor.name"
           [description]="monitor.description"
           [id]="monitor.id"
@@ -11,14 +15,20 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-      <mat-cell *matCellDef="let monitor">
+      <mat-header-cell *matHeaderCellDef class="actions">
+        <mat-icon class="action-icon">report</mat-icon>
+        <h3 class="title">Actions</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let monitor" class="actions">
         <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="categories">
-      <mat-header-cell *matHeaderCellDef> Categories </mat-header-cell>
-      <mat-cell *matCellDef="let monitor">
+      <mat-header-cell *matHeaderCellDef class="categories">
+        <mat-icon class="category-icon">category</mat-icon>
+        <h3 class="title">Categories</h3>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let monitor" class="categories">
         <span
           *ngFor="let category of monitor.categories.slice(0, 4); last as last"
         >
@@ -27,11 +37,12 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="menu">
-      <mat-header-cell *matHeaderCellDef>
-        <mat-icon>menu</mat-icon>
+      <mat-header-cell *matHeaderCellDef class="menu">
+        <mat-icon class="menu-icon">more_vert</mat-icon>
+        <h3 class="title">Menu</h3>
       </mat-header-cell>
-      <mat-cell *matCellDef="let monitor">
-        <app-cell-menu class="menu"></app-cell-menu>
+      <mat-cell *matCellDef="let monitor" class="menu menu-cell">
+        <app-cell-menu></app-cell-menu>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -1,3 +1,9 @@
+.title {
+  margin: 0 0 0 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
 .overview-table {
   width: 80%;
   margin: 0 auto;
@@ -6,25 +12,51 @@
   .mat-row {
     padding: 5px;
 
-    .menu {
+    .menu-cell {
       opacity: 0;
       visibility: hidden;
       -webkit-transition: all 500ms ease-in-out;
       transition: all 500ms ease-in-out;
+      justify-content: center;
     }
 
     &:hover {
-      .menu {
+      .menu-cell {
         visibility: visible;
         opacity: 1;
       }
     }
   }
+}
 
-  .monitor {
-    display: flex;
-    flex-direction: column;
-  }
+.monitor {
+  width: 100%;
+}
+
+.monitor-icon {
+  color: #ffdc00;
+}
+
+.action-icon {
+  color: #ff851b;
+}
+
+.category-icon {
+  color: #39cccc;
+}
+
+.menu-icon {
+  color: #2ecc40;
+}
+
+.actions,
+.menu {
+  flex: 0 0 15%;
+  justify-content: center;
+}
+
+.categories {
+  flex: 0 0 20%;
 }
 
 ::ng-deep .tooltip {
