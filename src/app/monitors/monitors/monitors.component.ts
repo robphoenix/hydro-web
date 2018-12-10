@@ -9,7 +9,7 @@ import { OverviewTableComponent } from '../overview-table/overview-table.compone
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent {
-  standardMonitors: IMonitor[];
+  standardMonitors: IMonitor[] = [];
   allCurrentActions: IAction[];
   allCurrentCategories: ICategory[];
 

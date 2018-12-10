@@ -25,6 +25,7 @@ export class OverviewTableComponent implements OnInit {
 
   @Input()
   allCurrentActions: IAction[];
+
   actionGroups: { [group: string]: string[] } = {
     block: [],
     store: [],
@@ -46,7 +47,7 @@ export class OverviewTableComponent implements OnInit {
   allCurrentCategories: ICategory[];
   categories: string[];
   categoriesControl = new FormControl();
-  selectedCategories: string[];
+  selectedCategories: string[] = [];
 
   constructor(private monitorsService: MonitorsService) {}
 

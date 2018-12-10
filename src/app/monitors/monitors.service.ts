@@ -132,7 +132,7 @@ export class MonitorsService {
   }
 
   filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
-    monitors.filter((monitor: IMonitor) => {
+    return monitors.filter((monitor: IMonitor) => {
       return selectedActions.every((selected: string) =>
         monitor.actions
           .map((action: IAction) => action.name)

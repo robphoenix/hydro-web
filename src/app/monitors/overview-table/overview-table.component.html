@@ -34,8 +34,11 @@
             <mat-icon>filter_list</mat-icon>
           </button>
           <mat-menu #actionsMenu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="block">Block</button>
-            <mat-menu #block="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="block">
+              <mat-icon>block</mat-icon>
+              <span>Block</span>
+            </button>
+            <mat-menu #block="matMenu" class="actions--menu">
               <app-multiple-select
                 name="blockSelect"
                 ngDefaultControl
@@ -49,7 +52,10 @@
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="email">Email</button>
+            <button mat-menu-item [matMenuTriggerFor]="email">
+              <mat-icon>email</mat-icon>
+              <span>Email</span>
+            </button>
             <mat-menu #email="matMenu">
               <app-multiple-select
                 name="emailSelect"
@@ -64,7 +70,10 @@
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="store">Store</button>
+            <button mat-menu-item [matMenuTriggerFor]="store">
+              <mat-icon>check</mat-icon>
+              <span>Store</span>
+            </button>
             <mat-menu #store="matMenu">
               <app-multiple-select
                 name="storeSelect"
@@ -79,7 +88,10 @@
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="other">Other</button>
+            <button mat-menu-item [matMenuTriggerFor]="other">
+              <mat-icon>subject</mat-icon>
+              <span>Other</span>
+            </button>
             <mat-menu #other="matMenu">
               <app-multiple-select
                 name="otherSelect"
