@@ -25,6 +25,11 @@ export class MultipleSelectComponent {
     this.selectedOptionsChange.emit(this.selectedOptions);
   }
 
+  selectAll() {
+    this.selectedOptions = this.options;
+    this.updateSelectedOptions();
+  }
+
   clearSelectedOptions() {
     this.selectedOptions = [];
     this.updateSelectedOptions();
