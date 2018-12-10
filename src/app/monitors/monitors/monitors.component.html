@@ -1,11 +1,9 @@
-<div class="overview">
-  <app-overview-table
-    class="table"
-    *ngIf="standardMonitors.length; else: noMonitors"
-    [monitors]="standardMonitors"
-    [allCurrentActions]="allCurrentActions"
-  ></app-overview-table>
-  <ng-template #noMonitors>
-    <app-loading-spinner></app-loading-spinner>
-  </ng-template>
-</div>
+<app-overview-table
+  *ngIf="standardMonitors.length; else: noMonitors"
+  [monitors]="standardMonitors"
+  [allCurrentActions]="allCurrentActions"
+  [allCurrentCategories]="allCurrentCategories"
+></app-overview-table>
+<ng-template #noMonitors>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

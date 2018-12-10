@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
-import { IMonitor, Status, IAction } from '../monitor';
+import { IMonitor, Status, IAction, ICategory } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 
 @Component({
@@ -9,8 +9,9 @@ import { OverviewTableComponent } from '../overview-table/overview-table.compone
   styleUrls: ['./monitors.component.scss'],
 })
 export class MonitorsComponent {
-  standardMonitors: IMonitor[] = [];
-  allCurrentActions: IAction[] = [];
+  standardMonitors: IMonitor[];
+  allCurrentActions: IAction[];
+  allCurrentCategories: ICategory[];
 
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
@@ -18,6 +19,7 @@ export class MonitorsComponent {
   constructor(private monitorsService: MonitorsService) {
     this.getMonitors();
     this.getAllCurrentActions();
+    this.getAllCurrentCategories();
   }
 
   private getMonitors(): void {
@@ -35,6 +37,14 @@ export class MonitorsComponent {
       .getAllCurrentActions()
       .subscribe((actions: IAction[]) => {
         this.allCurrentActions = actions;
+      });
+  }
+
+  private getAllCurrentCategories(): void {
+    this.monitorsService
+      .getAllCurrentCategories()
+      .subscribe((categories: ICategory[]) => {
+        this.allCurrentCategories = categories;
       });
   }
 

@@ -44,7 +44,7 @@
                 [placeHolder]="'Filter Block Actions'"
                 [options]="actionGroups['block']"
                 (selectedOptionsChange)="
-                  selectedActions['block'] = $event; filterByActions()
+                  selectedActions['block'] = $event; filterMonitors()
                 "
               ></app-multiple-select>
             </mat-menu>
@@ -59,7 +59,7 @@
                 [placeHolder]="'Filter Email Actions'"
                 [options]="actionGroups['email']"
                 (selectedOptionsChange)="
-                  selectedActions['email'] = $event; filterByActions()
+                  selectedActions['email'] = $event; filterMonitors()
                 "
               ></app-multiple-select>
             </mat-menu>
@@ -74,7 +74,7 @@
                 [placeHolder]="'Filter Store Actions'"
                 [options]="actionGroups['store']"
                 (selectedOptionsChange)="
-                  selectedActions['store'] = $event; filterByActions()
+                  selectedActions['store'] = $event; filterMonitors()
                 "
               ></app-multiple-select>
             </mat-menu>
@@ -89,7 +89,7 @@
                 [placeHolder]="'Filter Other Actions'"
                 [options]="actionGroups['other']"
                 (selectedOptionsChange)="
-                  selectedActions['other'] = $event; filterByActions()
+                  selectedActions['other'] = $event; filterMonitors()
                 "
               ></app-multiple-select>
             </mat-menu>
@@ -104,6 +104,22 @@
         <mat-header-cell *matHeaderCellDef class="categories">
           <mat-icon class="category-icon">category</mat-icon>
           <h3 class="title">Categories</h3>
+          <button mat-icon-button [matMenuTriggerFor]="categoriesMenu">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #categoriesMenu="matMenu">
+            <app-multiple-select
+              name="categoriesSelect"
+              ngDefaultControl
+              #categoriesSelect
+              [formControl]="categoriesControl"
+              [placeHolder]="'Filter Categories'"
+              [options]="categories"
+              (selectedOptionsChange)="
+                selectedCategories = $event; filterMonitors()
+              "
+            ></app-multiple-select>
+          </mat-menu>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor" class="categories">
           <app-cell-categories

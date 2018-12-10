@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { IMonitor, IAction } from '../monitor';
-import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
-import { FormControl, SelectControlValueAccessor } from '@angular/forms';
+import { IMonitor, IAction, ICategory } from '../monitor';
+import { FormControl } from '@angular/forms';
 import { MonitorsService } from '../monitors.service';
-import { preserveWhitespacesDefault } from '@angular/compiler';
 
 @Component({
   selector: 'app-overview-table',
@@ -14,8 +12,6 @@ import { preserveWhitespacesDefault } from '@angular/compiler';
 export class OverviewTableComponent implements OnInit {
   @Input()
   monitors: IMonitor[];
-
-  filteredMonitors: IMonitor[];
 
   dataSource: MatTableDataSource<IMonitor>;
 
@@ -46,31 +42,52 @@ export class OverviewTableComponent implements OnInit {
     other: [],
   };
 
+  @Input()
+  allCurrentCategories: ICategory[];
+  categories: string[];
+  categoriesControl = new FormControl();
+  selectedCategories: string[];
+
   constructor(private monitorsService: MonitorsService) {}
 
   ngOnInit(): void {
-    this.filteredMonitors = this.monitors;
-    this.dataSource = new MatTableDataSource(this.filteredMonitors);
+    this.dataSource = new MatTableDataSource(this.monitors);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
 
     this.allCurrentActions.map((action: IAction) => {
-      this.actionGroups[action.group].push(action.name);
+      this.actionGroups[action.group] = [
+        ...this.actionGroups[action.group],
+        action.name,
+      ].sort();
     });
+
+    this.categories = this.allCurrentCategories
+      .map((category: ICategory) => category.name)
+      .sort();
   }
 
   public searchMonitors(searchTerm: string): void {
     this.dataSource.filter = searchTerm.trim().toLowerCase();
   }
 
-  filterByActions(): void {
+  public filterMonitors(): void {
     const selectedActions = Object.values(this.selectedActions).reduce(
       (prev, curr) => [...prev, ...curr],
       [],
     );
-    this.dataSource.data = selectedActions.length
-      ? this.monitorsService.filterActions(this.monitors, selectedActions)
-      : this.monitors;
+
+    let filtered: IMonitor[] = this.monitors;
+    if (selectedActions.length) {
+      filtered = this.monitorsService.filterActions(filtered, selectedActions);
+    }
+    if (this.selectedCategories.length) {
+      filtered = this.monitorsService.filterCategories(
+        filtered,
+        this.selectedCategories,
+      );
+    }
+    this.dataSource.data = filtered;
   }
 }

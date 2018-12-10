@@ -20,6 +20,7 @@ export class MonitorsService {
   monitorsUrl = `${this.baseUrl}/p/monitors`;
   optionsUrl = `${this.monitorsUrl}/options`;
   allCurrentActionsUrl = `${this.optionsUrl}/actions`;
+  allCurrentCategoriesUrl = `${this.optionsUrl}/categories`;
 
   constructor(private http: HttpClient) {}
 
@@ -34,6 +35,12 @@ export class MonitorsService {
 
   public getAllCurrentActions(): Observable<IAction[]> {
     return this.http.get<IAction[]>(this.allCurrentActionsUrl, { headers });
+  }
+
+  public getAllCurrentCategories(): Observable<ICategory[]> {
+    return this.http.get<ICategory[]>(this.allCurrentCategoriesUrl, {
+      headers,
+    });
   }
 
   /**
@@ -125,69 +132,13 @@ export class MonitorsService {
   }
 
   filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
+    monitors.filter((monitor: IMonitor) => {
       return selectedActions.every((selected: string) =>
         monitor.actions
           .map((action: IAction) => action.name)
           .includes(selected),
       );
     });
-  }
-
-  /**
-   * Returns a complete list of categories derived from a list of monitors.
-   *
-   * @param {IMonitor[]} monitors
-   * @returns {string[]}
-   * @memberof MonitorsService
-   */
-  currentCategories(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.categories.map((category: ICategory) => category.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
-  }
-
-  /**
-   * Returns a complete list of groups derived from a list of monitors.
-   *
-   * @param {IMonitor[]} monitors
-   * @returns {string[]}
-   * @memberof MonitorsService
-   */
-  currentGroups(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.groups.map((group: IGroup) => group.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
-  }
-
-  currentActions(monitors: IMonitor[]): string[] {
-    return Array.from(
-      new Set(
-        monitors.reduce(
-          (prev: string[], curr: IMonitor) => [
-            ...prev,
-            ...curr.actions.map((action: IAction) => action.name),
-          ],
-          [],
-        ),
-      ),
-    ).sort();
   }
 
   /**
