@@ -18,6 +18,8 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 export class MonitorsService {
   baseUrl = 'http://mn2splmfe001sd0:6080';
   monitorsUrl = `${this.baseUrl}/p/monitors`;
+  optionsUrl = `${this.monitorsUrl}/options`;
+  allCurrentActionsUrl = `${this.optionsUrl}/actions`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +30,10 @@ export class MonitorsService {
   public getStandardMonitors(): Observable<IMonitor[]> {
     const params = new HttpParams().set('type', 'standard');
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+  }
+
+  public getAllCurrentActions(): Observable<IAction[]> {
+    return this.http.get<IAction[]>(this.allCurrentActionsUrl, { headers });
   }
 
   /**
@@ -118,28 +124,15 @@ export class MonitorsService {
     });
   }
 
-  /**
-   * Filters a list of monitors by a given list of selected actions.
-   *
-   * @param {IMonitor[]} monitors
-   * @param {string[]} selectedActions
-   * @returns {IMonitor[]}
-   * @memberof MonitorsService
-   */
-  // filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
-  //   return monitors.filter((monitor: IMonitor) => {
-  //     const currentActions: string[] = monitor.actionGroups.reduce(
-  //       (prev: string[], curr: IActionGroup) => [
-  //         ...prev,
-  //         ...curr.actions.map((action: IAction) => action.name),
-  //       ],
-  //       [],
-  //     );
-  //     return selectedActions.every((selected: string) =>
-  //       currentActions.includes(selected),
-  //     );
-  //   });
-  // }
+  filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
+    return monitors.filter((monitor: IMonitor) => {
+      return selectedActions.every((selected: string) =>
+        monitor.actions
+          .map((action: IAction) => action.name)
+          .includes(selected),
+      );
+    });
+  }
 
   /**
    * Returns a complete list of categories derived from a list of monitors.

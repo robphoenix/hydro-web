@@ -30,6 +30,70 @@
         <mat-header-cell *matHeaderCellDef class="actions">
           <mat-icon class="action-icon">report</mat-icon>
           <h3 class="title">Actions</h3>
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="block">Block</button>
+            <mat-menu #block="matMenu">
+              <app-multiple-select
+                name="blockSelect"
+                ngDefaultControl
+                #blockSelect
+                [formControl]="blockControl"
+                [placeHolder]="'Filter Block Actions'"
+                [options]="actionGroups['block']"
+                (selectedOptionsChange)="
+                  selectedActions['block'] = $event; filterByActions()
+                "
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="email">Email</button>
+            <mat-menu #email="matMenu">
+              <app-multiple-select
+                name="emailSelect"
+                ngDefaultControl
+                #emailSelect
+                [formControl]="emailControl"
+                [placeHolder]="'Filter Email Actions'"
+                [options]="actionGroups['email']"
+                (selectedOptionsChange)="
+                  selectedActions['email'] = $event; filterByActions()
+                "
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="store">Store</button>
+            <mat-menu #store="matMenu">
+              <app-multiple-select
+                name="storeSelect"
+                ngDefaultControl
+                #storeSelect
+                [formControl]="storeControl"
+                [placeHolder]="'Filter Store Actions'"
+                [options]="actionGroups['store']"
+                (selectedOptionsChange)="
+                  selectedActions['store'] = $event; filterByActions()
+                "
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="other">Other</button>
+            <mat-menu #other="matMenu">
+              <app-multiple-select
+                name="otherSelect"
+                ngDefaultControl
+                #otherSelect
+                [formControl]="otherControl"
+                [placeHolder]="'Filter Other Actions'"
+                [options]="actionGroups['other']"
+                (selectedOptionsChange)="
+                  selectedActions['other'] = $event; filterByActions()
+                "
+              ></app-multiple-select>
+            </mat-menu>
+          </mat-menu>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor" class="actions">
           <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
