@@ -1,3 +1,13 @@
+<h3 class="title monitors">Monitors</h3>
+<a mat-button routerLink="create" color="accent" class="create title">
+  <mat-icon class="icon">add</mat-icon>
+  <span>new monitor</span>
+</a>
+<app-search-input
+  class="search"
+  [placeHolder]="'Search Monitors'"
+  (searchTermChange)="searchMonitors($event)"
+></app-search-input>
 <div class="overview-table">
   <div class="table">
     <mat-table [dataSource]="dataSource" matSort>
