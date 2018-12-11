@@ -16,6 +16,16 @@
   }
 }
 
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.online {
+  margin-left: 5px;
+  color: #2ecc40;
+}
+
 .name {
   color: #333;
   text-transform: uppercase;

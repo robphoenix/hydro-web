@@ -13,6 +13,7 @@ export class MultipleSelectComponent {
   @Input()
   options: string[];
 
+  @Input()
   selectedOptions: string[];
 
   @Input()

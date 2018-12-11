@@ -20,6 +20,8 @@ export class OverviewTableComponent implements OnInit {
   @Input()
   monitors: IMonitor[];
 
+  filteredMonitors: IMonitor[] = [];
+
   dataSource: MatTableDataSource<IMonitor>;
 
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
@@ -46,25 +48,33 @@ export class OverviewTableComponent implements OnInit {
   storeControl = new FormControl();
   emailControl = new FormControl();
   otherControl = new FormControl();
-  selectedActions: { [group: string]: string[] } = {
-    block: [],
-    store: [],
-    email: [],
-    other: [],
-  };
+
   @Input()
   allCurrentCategories: ICategory[];
   categories: string[];
   categoriesControl = new FormControl();
   selectedCategories: string[] = [];
 
+  filterValues = {
+    searchTerm: '',
+    selectedActions: {
+      block: [],
+      store: [],
+      email: [],
+      other: [],
+    },
+    selectedCategories: [],
+  };
+
   constructor(private monitorsService: MonitorsService) {}
 
   ngOnInit(): void {
+    this.filteredMonitors = this.monitors;
     this.dataSource = new MatTableDataSource(this.monitors);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = this.filterPredicate();
 
     this.allCurrentActions.map((action: IAction) => {
       this.actionGroups[action.group] = [
@@ -78,31 +88,42 @@ export class OverviewTableComponent implements OnInit {
       .sort();
   }
 
-  public searchMonitors(searchTerm: string): void {
-    this.dataSource.filter = searchTerm.trim().toLowerCase();
+  private filterPredicate(): (monitor: IMonitor, filter: string) => boolean {
+    return (monitor: IMonitor, filter: string): boolean => {
+      const { searchTerm, selectedActions, selectedCategories } = JSON.parse(
+        filter,
+      );
+
+      const matchesSearchTerm: boolean = this.monitorsService.matchesSearchTerm(
+        monitor,
+        searchTerm,
+      );
+      const hasSelectedCategories: boolean = this.monitorsService.hasCategories(
+        monitor,
+        selectedCategories,
+      );
+      const hasSelectedActions: boolean = this.monitorsService.hasActions(
+        monitor,
+        Object.keys(selectedActions).reduce(
+          (prev: string[], curr: string) => [...prev, ...selectedActions[curr]],
+          [],
+        ),
+      );
+
+      return matchesSearchTerm && hasSelectedCategories && hasSelectedActions;
+    };
   }
 
   public filterMonitors(): void {
-    const selectedActions = Object.values(this.selectedActions).reduce(
-      (prev, curr) => [...prev, ...curr],
-      [],
-    );
+    // this.filterValues.selectedActions = Object.values(
+    //   this.selectedActions,
+    // ).reduce((prev, curr) => [...prev, ...curr], []);
 
-    let filtered: IMonitor[] = this.monitors;
-    if (selectedActions.length) {
-      filtered = this.monitorsService.filterActions(filtered, selectedActions);
-    }
-    if (this.selectedCategories.length) {
-      filtered = this.monitorsService.filterCategories(
-        filtered,
-        this.selectedCategories,
-      );
-    }
-    this.dataSource.data = filtered;
+    this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
   public clearAllFilters(): void {
-    this.selectedActions = {
+    this.filterValues.selectedActions = {
       block: [],
       store: [],
       email: [],
@@ -113,5 +134,9 @@ export class OverviewTableComponent implements OnInit {
     this.selects.forEach((select: MultipleSelectComponent) =>
       select.clearSelectedOptions(),
     );
+  }
+
+  public toggleOnlineOffline(value: string) {
+    console.log({ value });
   }
 }

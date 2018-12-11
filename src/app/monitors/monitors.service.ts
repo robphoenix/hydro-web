@@ -59,86 +59,26 @@ export class MonitorsService {
       );
   }
 
-  public sortMonitorsByName(monitors: IMonitor[]): IMonitor[] {
-    return monitors.sort(this.compareMonitors);
+  matchesSearchTerm(monitor: IMonitor, searchTerm: string): boolean {
+    const regex: RegExp = new RegExp(searchTerm.trim().toLowerCase(), 'gi');
+    const match = `${monitor.name.toLowerCase()} ${monitor.description.toLowerCase()}`.match(
+      regex,
+    );
+    return match && match.length > 0;
   }
 
-  private compareMonitors(a: IMonitor, b: IMonitor): 1 | -1 | 0 {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) {
-      return -1;
-    }
-    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-      return 1;
-    }
-    return 0;
+  hasCategories(monitor: IMonitor, categories: string[]): boolean {
+    return categories.every((selected: string) =>
+      monitor.categories
+        .map((category: ICategory) => category.name)
+        .includes(selected),
+    );
   }
 
-  /**
-   * Text search of a given search term in a given list of monitors.
-   *
-   * @param {IMonitor[]} monitors
-   * @param {string} searchTerm
-   * @returns {IMonitor[]}
-   * @memberof MonitorsService
-   */
-  searchMonitors(monitors: IMonitor[], searchTerm: string): IMonitor[] {
-    const regex: RegExp = new RegExp(searchTerm, 'gi');
-    return monitors.filter((monitor: IMonitor) => {
-      const categories = monitor.categories.reduce(
-        (prev, curr) => `${prev} ${curr.name}`,
-        '',
-      );
-      return `${monitor.name.toLowerCase()} ${monitor.description.toLowerCase()} ${categories}`.match(
-        regex,
-      );
-    });
-  }
-
-  /**
-   * Filters a list of monitors by a given list of selected categories.
-   *
-   * @param {IMonitor[]} monitors
-   * @param {string[]} selectedCategories
-   * @returns {IMonitor[]}
-   * @memberof MonitorsService
-   */
-  filterCategories(
-    monitors: IMonitor[],
-    selectedCategories: string[],
-  ): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return selectedCategories.every((selected: string) =>
-        monitor.categories
-          .map((category: ICategory) => category.name)
-          .includes(selected),
-      );
-    });
-  }
-
-  /**
-   * Filters a list of monitors by a given list of selected groups.
-   *
-   * @param {IMonitor[]} monitors
-   * @param {string[]} selectedGroups
-   * @returns {IMonitor[]}
-   * @memberof MonitorsService
-   */
-  filterGroups(monitors: IMonitor[], selectedGroups: string[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return selectedGroups.every((selected: LDAPGroup) =>
-        monitor.groups.map((group: IGroup) => group.name).includes(selected),
-      );
-    });
-  }
-
-  filterActions(monitors: IMonitor[], selectedActions: string[]): IMonitor[] {
-    return monitors.filter((monitor: IMonitor) => {
-      return selectedActions.every((selected: string) =>
-        monitor.actions
-          .map((action: IAction) => action.name)
-          .includes(selected),
-      );
-    });
+  hasActions(monitor: IMonitor, actions: string[]): boolean {
+    return actions.every((selected: string) =>
+      monitor.actions.map((action: IAction) => action.name).includes(selected),
+    );
   }
 
   /**

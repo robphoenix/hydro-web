@@ -47,8 +47,4 @@ export class MonitorsComponent {
         this.allCurrentCategories = categories;
       });
   }
-
-  public searchMonitors(searchTerm: string): void {
-    this.overviewTable.searchMonitors(searchTerm);
-  }
 }
