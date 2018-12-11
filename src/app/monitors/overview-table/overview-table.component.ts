@@ -10,6 +10,7 @@ import { IMonitor, IAction, ICategory } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { MonitorsService } from '../monitors.service';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
+import { FilterService } from '../filter.service';
 
 @Component({
   selector: 'app-overview-table',
@@ -66,7 +67,7 @@ export class OverviewTableComponent implements OnInit {
     selectedCategories: [],
   };
 
-  constructor(private monitorsService: MonitorsService) {}
+  constructor(private filterService: FilterService) {}
 
   ngOnInit(): void {
     this.filteredMonitors = this.monitors;
@@ -94,15 +95,15 @@ export class OverviewTableComponent implements OnInit {
         filter,
       );
 
-      const matchesSearchTerm: boolean = this.monitorsService.matchesSearchTerm(
+      const matchesSearchTerm: boolean = this.filterService.matchesSearchTerm(
         monitor,
         searchTerm,
       );
-      const hasSelectedCategories: boolean = this.monitorsService.hasCategories(
+      const hasSelectedCategories: boolean = this.filterService.hasCategories(
         monitor,
         selectedCategories,
       );
-      const hasSelectedActions: boolean = this.monitorsService.hasActions(
+      const hasSelectedActions: boolean = this.filterService.hasActions(
         monitor,
         Object.keys(selectedActions).reduce(
           (prev: string[], curr: string) => [...prev, ...selectedActions[curr]],
@@ -115,10 +116,6 @@ export class OverviewTableComponent implements OnInit {
   }
 
   public filterMonitors(): void {
-    // this.filterValues.selectedActions = Object.values(
-    //   this.selectedActions,
-    // ).reduce((prev, curr) => [...prev, ...curr], []);
-
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
