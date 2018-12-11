@@ -17,7 +17,7 @@ import { AddMonitorComponent } from './monitors/add-monitor/add-monitor.componen
         canActivate: [AuthGuard],
       },
       {
-        path: 'monitors/add',
+        path: 'monitors/create',
         component: AddMonitorComponent,
         canActivate: [AuthGuard],
       },

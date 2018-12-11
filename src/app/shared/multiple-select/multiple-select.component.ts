@@ -13,6 +13,7 @@ export class MultipleSelectComponent {
   @Input()
   options: string[];
 
+  @Input()
   selectedOptions: string[];
 
   @Input()
@@ -23,6 +24,11 @@ export class MultipleSelectComponent {
 
   updateSelectedOptions() {
     this.selectedOptionsChange.emit(this.selectedOptions);
+  }
+
+  selectAll() {
+    this.selectedOptions = this.options;
+    this.updateSelectedOptions();
   }
 
   clearSelectedOptions() {

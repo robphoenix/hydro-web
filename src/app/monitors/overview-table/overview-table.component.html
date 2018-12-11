@@ -1,0 +1,187 @@
+<div class="header">
+  <h2 class="title">Monitors</h2>
+  <a mat-button routerLink="create" color="accent" class="create">
+    <mat-icon class="icon">add</mat-icon>
+    <span>new monitor</span>
+  </a>
+</div>
+<div class="toolbar">
+  <div>
+    <mat-button-toggle-group
+      [value]="filterValues.status"
+      #statusGroup="matButtonToggleGroup"
+      (change)="toggleStatus($event.value)"
+    >
+      <mat-button-toggle value="online">
+        <span>Online</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="offline">
+        <span>Offline</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="all" checked="true">
+        <span>All Monitors</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="clearAllFilters()"
+      class="clear"
+    >
+      <mat-icon class="icon">clear_all</mat-icon>
+      <span>clear filters</span>
+    </button>
+  </div>
+  <app-search-input
+    class="search"
+    [(searchTerm)]="filterValues.searchTerm"
+    [placeHolder]="'Search Monitors'"
+    (searchTermChange)="filterMonitors()"
+  ></app-search-input>
+</div>
+
+<div class="overview-table">
+  <div class="table">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="monitor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <mat-icon class="monitor-icon">flash_on</mat-icon>
+          <h3 class="title">Monitor</h3>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let monitor">
+          <app-cell-monitor
+            class="monitor"
+            [name]="monitor.name"
+            [description]="monitor.description"
+            [id]="monitor.id"
+            [status]="monitor.status"
+          ></app-cell-monitor>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="actions">
+          <mat-icon class="action-icon">report</mat-icon>
+          <h3 class="title">Actions</h3>
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="block">
+              <mat-icon>block</mat-icon>
+              <span>Block</span>
+            </button>
+            <mat-menu #block="matMenu" class="actions--menu">
+              <app-multiple-select
+                [formControl]="blockControl"
+                [placeHolder]="'Filter Block Actions'"
+                [options]="actionGroups['block']"
+                [(selectedOptions)]="filterValues.selectedActions.block"
+                (selectedOptionsChange)="filterMonitors()"
+                ngDefaultControl
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="email">
+              <mat-icon>email</mat-icon>
+              <span>Email</span>
+            </button>
+            <mat-menu #email="matMenu">
+              <app-multiple-select
+                [formControl]="emailControl"
+                [placeHolder]="'Filter Email Actions'"
+                [options]="actionGroups['email']"
+                [(selectedOptions)]="filterValues.selectedActions.email"
+                (selectedOptionsChange)="filterMonitors()"
+                ngDefaultControl
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="store">
+              <mat-icon>check</mat-icon>
+              <span>Store</span>
+            </button>
+            <mat-menu #store="matMenu">
+              <app-multiple-select
+                [formControl]="storeControl"
+                [placeHolder]="'Filter Store Actions'"
+                [options]="actionGroups['store']"
+                [(selectedOptions)]="filterValues.selectedActions.store"
+                (selectedOptionsChange)="filterMonitors()"
+                ngDefaultControl
+              ></app-multiple-select>
+            </mat-menu>
+
+            <button mat-menu-item [matMenuTriggerFor]="other">
+              <mat-icon>subject</mat-icon>
+              <span>Other</span>
+            </button>
+            <mat-menu #other="matMenu">
+              <app-multiple-select
+                [formControl]="otherControl"
+                [placeHolder]="'Filter Other Actions'"
+                [options]="actionGroups['other']"
+                [(selectedOptions)]="filterValues.selectedActions.other"
+                (selectedOptionsChange)="filterMonitors()"
+                ngDefaultControl
+              ></app-multiple-select>
+            </mat-menu>
+          </mat-menu>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let monitor" class="actions">
+          <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="categories">
+        <mat-header-cell *matHeaderCellDef class="categories">
+          <mat-icon class="category-icon">category</mat-icon>
+          <h3 class="title">Categories</h3>
+          <button mat-icon-button [matMenuTriggerFor]="categoriesMenu">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+          <mat-menu #categoriesMenu="matMenu">
+            <app-multiple-select
+              [formControl]="categoriesControl"
+              [placeHolder]="'Filter Categories'"
+              [options]="categories"
+              [(selectedOptions)]="filterValues.selectedCategories"
+              (selectedOptionsChange)="filterMonitors()"
+              ngDefaultControl
+            ></app-multiple-select>
+          </mat-menu>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let monitor" class="categories">
+          <app-cell-categories
+            [categories]="monitor.categories"
+          ></app-cell-categories>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="menu">
+        <mat-header-cell *matHeaderCellDef class="menu">
+          <mat-icon class="menu-icon">more_vert</mat-icon>
+          <h3 class="title">Menu</h3>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let monitor" class="menu menu-cell">
+          <app-cell-menu></app-cell-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator
+    class="paginator"
+    #paginator
+    [length]="monitors.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

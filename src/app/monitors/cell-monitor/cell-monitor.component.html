@@ -1,0 +1,7 @@
+<a class="link" href="/monitors/{{id}}" routerLink="/monitors/{{id}}">
+  <div class="title">
+    <h4 class="name">{{ name }}</h4>
+    <span matTooltip="online" *ngIf="online" class="online"> &#9679; </span>
+  </div>
+  <p class="description">{{ description }}</p>
+</a>

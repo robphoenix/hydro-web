@@ -1,0 +1,44 @@
+.link {
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    .name {
+      color: #ff4081;
+    }
+  }
+
+  &:visited {
+    .name {
+      color: #3f51b5;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.online {
+  margin-left: 5px;
+  color: #2ecc40;
+}
+
+.name {
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 10px 0;
+  line-height: 1.5;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.description {
+  color: #888888;
+  margin: 0;
+  line-height: 1.3;
+  padding-bottom: 10px;
+}

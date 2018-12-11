@@ -1,5 +1,5 @@
 .container {
-  width: 100%;
+  width: 90%;
   display: flex;
   align-items: center;
 
@@ -7,4 +7,16 @@
     margin-left: 10px;
     width: 100%;
   }
+}
+
+.buttons {
+  display: flex;
+}
+
+.button {
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
