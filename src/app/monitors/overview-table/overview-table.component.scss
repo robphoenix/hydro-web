@@ -1,3 +1,19 @@
+.toolbar {
+  display: flex;
+  height: 100px;
+  align-items: center;
+  width: 100%;
+
+  .create {
+    display: flex;
+    align-items: center;
+  }
+
+  .search {
+    flex: 0 0 20%;
+  }
+}
+
 .title {
   margin: 0 0 0 5px;
   text-transform: uppercase;

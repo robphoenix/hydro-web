@@ -1,13 +1,25 @@
-<h3 class="title monitors">Monitors</h3>
-<a mat-button routerLink="create" color="accent" class="create title">
-  <mat-icon class="icon">add</mat-icon>
-  <span>new monitor</span>
-</a>
-<app-search-input
-  class="search"
-  [placeHolder]="'Search Monitors'"
-  (searchTermChange)="searchMonitors($event)"
-></app-search-input>
+<div class="toolbar">
+  <h3 class="title monitors">Monitors</h3>
+  <a mat-raised-button routerLink="create" color="accent" class="create title">
+    <mat-icon class="icon">add</mat-icon>
+    <span>new monitor</span>
+  </a>
+  <button
+    mat-raised-button
+    color="primary"
+    class="title clear"
+    (click)="clearAllFilters()"
+  >
+    <mat-icon>clear_all</mat-icon>
+    <span> clear all filters </span>
+  </button>
+  <app-search-input
+    class="search"
+    [placeHolder]="'Search Monitors'"
+    (searchTermChange)="searchMonitors($event)"
+  ></app-search-input>
+</div>
+
 <div class="overview-table">
   <div class="table">
     <mat-table [dataSource]="dataSource" matSort>

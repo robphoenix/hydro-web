@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { IMonitor, IAction, ICategory } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { MonitorsService } from '../monitors.service';
+import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 
 @Component({
   selector: 'app-overview-table',
@@ -32,9 +33,17 @@ export class OverviewTableComponent implements OnInit {
     email: [],
     other: [],
   };
+  @ViewChild('blockSelect')
+  private blockSelect: MultipleSelectComponent;
   blockControl = new FormControl();
+  @ViewChild('storeSelect')
+  private storeSelect: MultipleSelectComponent;
   storeControl = new FormControl();
+  @ViewChild('emailSelect')
+  private emailSelect: MultipleSelectComponent;
   emailControl = new FormControl();
+  @ViewChild('otherSelect')
+  private otherSelect: MultipleSelectComponent;
   otherControl = new FormControl();
   selectedActions: { [group: string]: string[] } = {
     block: [],
@@ -43,6 +52,8 @@ export class OverviewTableComponent implements OnInit {
     other: [],
   };
 
+  @ViewChild('categoriesSelect')
+  private categoriesSelect: MultipleSelectComponent;
   @Input()
   allCurrentCategories: ICategory[];
   categories: string[];
@@ -90,5 +101,21 @@ export class OverviewTableComponent implements OnInit {
       );
     }
     this.dataSource.data = filtered;
+  }
+
+  public clearAllFilters(): void {
+    this.selectedActions = {
+      block: [],
+      store: [],
+      email: [],
+      other: [],
+    };
+    this.selectedCategories = [];
+    this.dataSource.data = this.monitors;
+    this.categoriesSelect.clearSelectedOptions();
+    this.blockSelect.clearSelectedOptions();
+    this.emailSelect.clearSelectedOptions();
+    this.storeSelect.clearSelectedOptions();
+    this.otherSelect.clearSelectedOptions();
   }
 }
