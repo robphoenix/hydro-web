@@ -54,7 +54,6 @@ export class OverviewTableComponent implements OnInit {
   allCurrentCategories: ICategory[];
   categories: string[];
   categoriesControl = new FormControl();
-  selectedCategories: string[] = [];
 
   filterValues = {
     searchTerm: '',
@@ -65,6 +64,7 @@ export class OverviewTableComponent implements OnInit {
       other: [],
     },
     selectedCategories: [],
+    status: 'all',
   };
 
   constructor(private filterService: FilterService) {}
@@ -75,7 +75,7 @@ export class OverviewTableComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = this.filterPredicate();
+    this.dataSource.filterPredicate = this.filterService.filterPredicate();
 
     this.allCurrentActions.map((action: IAction) => {
       this.actionGroups[action.group] = [
@@ -89,32 +89,6 @@ export class OverviewTableComponent implements OnInit {
       .sort();
   }
 
-  private filterPredicate(): (monitor: IMonitor, filter: string) => boolean {
-    return (monitor: IMonitor, filter: string): boolean => {
-      const { searchTerm, selectedActions, selectedCategories } = JSON.parse(
-        filter,
-      );
-
-      const matchesSearchTerm: boolean = this.filterService.matchesSearchTerm(
-        monitor,
-        searchTerm,
-      );
-      const hasSelectedCategories: boolean = this.filterService.hasCategories(
-        monitor,
-        selectedCategories,
-      );
-      const hasSelectedActions: boolean = this.filterService.hasActions(
-        monitor,
-        Object.keys(selectedActions).reduce(
-          (prev: string[], curr: string) => [...prev, ...selectedActions[curr]],
-          [],
-        ),
-      );
-
-      return matchesSearchTerm && hasSelectedCategories && hasSelectedActions;
-    };
-  }
-
   public filterMonitors(): void {
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
@@ -126,14 +100,16 @@ export class OverviewTableComponent implements OnInit {
       email: [],
       other: [],
     };
-    this.selectedCategories = [];
-    this.dataSource.data = this.monitors;
+    this.filterValues.selectedCategories = [];
+    this.filterValues.status = 'all';
+    this.filterMonitors();
     this.selects.forEach((select: MultipleSelectComponent) =>
       select.clearSelectedOptions(),
     );
   }
 
-  public toggleOnlineOffline(value: string) {
-    console.log({ value });
+  public toggleStatus(value: string) {
+    this.filterValues.status = value;
+    this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 }
