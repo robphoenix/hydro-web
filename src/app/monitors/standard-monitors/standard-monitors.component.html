@@ -1,4 +1,17 @@
-<h2 class="title">Standard Monitors</h2>
+<div class="header">
+  <div class="name">
+    <mat-icon class="icon">flash_on</mat-icon>
+    <h2 class="title">standard monitors</h2>
+  </div>
+
+  <div class="archived">
+    <a mat-button class="title" color="primary" routerLink="/monitors/archived">
+      <mat-icon class="icon">archive</mat-icon>
+      <span>archived monitors</span>
+    </a>
+  </div>
+</div>
+
 <app-overview-table
   *ngIf="standardMonitors.length; else: noMonitors"
   [monitors]="standardMonitors"

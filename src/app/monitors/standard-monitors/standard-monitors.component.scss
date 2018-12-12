@@ -1,8 +1,25 @@
-.title {
+.header {
+  display: flex;
+  align-items: center;
   width: 90%;
   margin: 0 auto;
+  padding: 20px 0 0 0;
+
+  .name {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.title {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  position: relative;
-  padding: 20px 0;
+}
+
+.archived {
+  margin: 0 10px;
+}
+
+.icon {
+  margin-right: 5px;
 }
