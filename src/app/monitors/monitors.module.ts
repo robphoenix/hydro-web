@@ -8,6 +8,7 @@ import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
+import { StandardMonitorsComponent } from './standard-monitors/standard-monitors.component';
 import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
 import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
 import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgroup/monitor-categories-formgroup.component';
@@ -24,7 +25,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: MonitorsComponent },
+      { path: '', redirectTo: 'standard', pathMatch: 'full' },
+      { path: 'standard', component: StandardMonitorsComponent },
       { path: 'create', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
     ]),
@@ -47,6 +49,7 @@ import { RouterModule } from '@angular/router';
     LoadingSpinnerComponent,
     CellMenuComponent,
     CellCategoriesComponent,
+    StandardMonitorsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
   exports: [MonitorsComponent],
