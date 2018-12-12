@@ -18,6 +18,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
+import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       { path: '', redirectTo: 'standard', pathMatch: 'full' },
       { path: 'standard', component: StandardMonitorsComponent },
+      { path: 'archived', component: ArchivedMonitorsComponent },
       { path: 'create', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
     ]),
@@ -48,6 +50,7 @@ import { RouterModule } from '@angular/router';
     CellMenuComponent,
     CellCategoriesComponent,
     StandardMonitorsComponent,
+    ArchivedMonitorsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })

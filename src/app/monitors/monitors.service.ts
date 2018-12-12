@@ -1,4 +1,12 @@
-import { IMonitor, ICategory, IGroup, IAction, LDAPGroup } from './monitor';
+import {
+  IMonitor,
+  ICategory,
+  IGroup,
+  IAction,
+  LDAPGroup,
+  Type,
+  Status,
+} from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -30,6 +38,16 @@ export class MonitorsService {
 
   public getStandardMonitors(): Observable<IMonitor[]> {
     const params = new HttpParams().set('type', 'standard');
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+  }
+
+  public getArchivedMonitors(): Observable<IMonitor[]> {
+    const type: Type = Type.Standard;
+    const status: Status = Status.Archived;
+    const params: HttpParams = new HttpParams()
+      .set('type', type)
+      .set('status', status);
+    // const params = { type, status };
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
