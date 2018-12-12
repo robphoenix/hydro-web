@@ -35,7 +35,12 @@
     [placeHolder]="'Search Monitors'"
     (searchTermChange)="filterMonitors()"
   ></app-search-input>
-  <a mat-raised-button routerLink="create" color="accent" class="create">
+  <a
+    mat-raised-button
+    routerLink="/monitors/create"
+    color="accent"
+    class="create"
+  >
     <mat-icon class="icon">add</mat-icon>
     <span>new monitor</span>
   </a>
