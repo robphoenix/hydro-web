@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MonitorComponent } from './monitor/monitor.component';
-import { MonitorsComponent } from './monitors/monitors.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
@@ -36,7 +35,6 @@ import { RouterModule } from '@angular/router';
     HydroMaterialModule,
   ],
   declarations: [
-    MonitorsComponent,
     MonitorComponent,
     MonitorDeleteDialogComponent,
     AddMonitorComponent,
@@ -52,6 +50,5 @@ import { RouterModule } from '@angular/router';
     StandardMonitorsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
-  exports: [MonitorsComponent],
 })
 export class MonitorsModule {}
