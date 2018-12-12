@@ -10,8 +10,8 @@ import { MonitorsService } from '../monitors.service';
 })
 export class StandardMonitorsComponent implements OnInit {
   standardMonitors: IMonitor[] = [];
-  allCurrentActions: IAction[];
-  allCurrentCategories: ICategory[];
+  allCurrentActions: { [group: string]: string[] };
+  allCurrentCategories: string[];
 
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
@@ -20,8 +20,6 @@ export class StandardMonitorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMonitors();
-    this.getAllCurrentActions();
-    this.getAllCurrentCategories();
   }
 
   private getMonitors(): void {
@@ -31,22 +29,14 @@ export class StandardMonitorsComponent implements OnInit {
         this.standardMonitors = monitors.filter(
           (monitor: IMonitor) => monitor.status !== Status.Archived,
         );
-      });
-  }
 
-  private getAllCurrentActions(): void {
-    this.monitorsService
-      .getAllCurrentActions()
-      .subscribe((actions: IAction[]) => {
-        this.allCurrentActions = actions;
-      });
-  }
+        this.allCurrentCategories = this.monitorsService.allCurrentCategories(
+          this.standardMonitors,
+        );
 
-  private getAllCurrentCategories(): void {
-    this.monitorsService
-      .getAllCurrentCategories()
-      .subscribe((categories: ICategory[]) => {
-        this.allCurrentCategories = categories;
+        this.allCurrentActions = this.monitorsService.allCurrentActions(
+          this.standardMonitors,
+        );
       });
   }
 }
