@@ -20,6 +20,9 @@ export class OverviewTableComponent implements OnInit {
   @Input()
   monitors: IMonitor[];
 
+  @Input()
+  canToggleStatus = true;
+
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
 
@@ -76,6 +79,16 @@ export class OverviewTableComponent implements OnInit {
     ).every((actions: string[]) => !actions.length);
 
     return hasActionsFilters && !this.filterValues.selectedCategories.length;
+  }
+
+  public hasActions(group?: string): boolean {
+    if (!group) {
+      return Object.values(this.allCurrentActions).every(
+        (curr: string[]) => !!curr.length,
+      );
+    }
+    const actions = this.allCurrentActions[group];
+    return actions && actions.length > 0;
   }
 
   public clearAllFilters(): void {

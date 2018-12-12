@@ -19,6 +19,7 @@ import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
 import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors.component';
+import { SystemMonitorsComponent } from './system-monitors/system-monitors.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors
       { path: '', redirectTo: 'standard', pathMatch: 'full' },
       { path: 'standard', component: StandardMonitorsComponent },
       { path: 'archived', component: ArchivedMonitorsComponent },
+      { path: 'system', component: SystemMonitorsComponent },
       { path: 'create', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
     ]),
@@ -51,6 +53,7 @@ import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors
     CellCategoriesComponent,
     StandardMonitorsComponent,
     ArchivedMonitorsComponent,
+    SystemMonitorsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })

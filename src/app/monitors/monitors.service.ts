@@ -37,7 +37,8 @@ export class MonitorsService {
   }
 
   public getStandardMonitors(): Observable<IMonitor[]> {
-    const params = new HttpParams().set('type', 'standard');
+    const type: Type = Type.Standard;
+    const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
@@ -47,7 +48,12 @@ export class MonitorsService {
     const params: HttpParams = new HttpParams()
       .set('type', type)
       .set('status', status);
-    // const params = { type, status };
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+  }
+
+  public getSystemMonitors(): Observable<IMonitor[]> {
+    const type: Type = Type.System;
+    const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
