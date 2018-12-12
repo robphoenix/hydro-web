@@ -3,10 +3,6 @@
   align-items: center;
   width: 90%;
   margin: 0 auto;
-
-  .create {
-    margin-left: 10px;
-  }
 }
 
 .toolbar {
@@ -26,6 +22,10 @@
   .search {
     flex: 0 0 25%;
     margin: 0 20px 0 auto;
+  }
+
+  .create {
+    margin: 0 10px 0 20px;
   }
 }
 

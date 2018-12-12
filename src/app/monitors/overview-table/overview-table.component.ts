@@ -90,6 +90,14 @@ export class OverviewTableComponent implements OnInit {
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
+  public hasFilters(): boolean {
+    const hasActionsFilters = Object.values(
+      this.filterValues.selectedActions,
+    ).every((actions: string[]) => !actions.length);
+
+    return hasActionsFilters && !this.filterValues.selectedCategories.length;
+  }
+
   public clearAllFilters(): void {
     this.filterValues.selectedActions = {
       block: [],
@@ -98,7 +106,6 @@ export class OverviewTableComponent implements OnInit {
       other: [],
     };
     this.filterValues.selectedCategories = [];
-    this.filterValues.status = 'all';
     this.filterMonitors();
     this.selects.forEach((select: MultipleSelectComponent) =>
       select.clearSelectedOptions(),

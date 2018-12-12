@@ -1,10 +1,4 @@
-<div class="header">
-  <h2 class="title">Monitors</h2>
-  <a mat-button routerLink="create" color="accent" class="create">
-    <mat-icon class="icon">add</mat-icon>
-    <span>new monitor</span>
-  </a>
-</div>
+<div class="header"><h2 class="title">Monitors</h2></div>
 <div class="toolbar">
   <div>
     <mat-button-toggle-group
@@ -26,6 +20,7 @@
     <button
       mat-raised-button
       color="primary"
+      [disabled]="hasFilters()"
       (click)="clearAllFilters()"
       class="clear"
     >
@@ -39,6 +34,10 @@
     [placeHolder]="'Search Monitors'"
     (searchTermChange)="filterMonitors()"
   ></app-search-input>
+  <a mat-raised-button routerLink="create" color="accent" class="create">
+    <mat-icon class="icon">add</mat-icon>
+    <span>new monitor</span>
+  </a>
 </div>
 
 <div class="overview-table">
