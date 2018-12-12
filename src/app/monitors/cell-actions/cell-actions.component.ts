@@ -28,4 +28,8 @@ export class CellActionsComponent implements OnInit {
       }
     });
   }
+
+  public hasActions(): boolean {
+    return Object.values(this.groups).length > 0;
+  }
 }
