@@ -2,7 +2,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { DictionarySearchComponent } from './dictionary-search/dictionary-search.component';
 import { DictionaryResultComponent } from './dictionary-result/dictionary-result.component';
 import { BlockHistoryComponent } from './block-history/block-history.component';
@@ -17,7 +16,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     HydroMaterialModule,
     BrowserAnimationsModule,
   ],
