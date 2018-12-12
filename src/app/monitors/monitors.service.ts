@@ -1,4 +1,12 @@
-import { IMonitor, ICategory, IGroup, IAction, LDAPGroup } from './monitor';
+import {
+  IMonitor,
+  ICategory,
+  IGroup,
+  IAction,
+  LDAPGroup,
+  Type,
+  Status,
+} from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -29,7 +37,23 @@ export class MonitorsService {
   }
 
   public getStandardMonitors(): Observable<IMonitor[]> {
-    const params = new HttpParams().set('type', 'standard');
+    const type: Type = Type.Standard;
+    const params = new HttpParams().set('type', type);
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+  }
+
+  public getArchivedMonitors(): Observable<IMonitor[]> {
+    const type: Type = Type.Standard;
+    const status: Status = Status.Archived;
+    const params: HttpParams = new HttpParams()
+      .set('type', type)
+      .set('status', status);
+    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+  }
+
+  public getSystemMonitors(): Observable<IMonitor[]> {
+    const type: Type = Type.System;
+    const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
@@ -57,6 +81,46 @@ export class MonitorsService {
         tap((monitor: IMonitor) => monitor),
         catchError(this.handleError<IMonitor>('getMonitor')),
       );
+  }
+
+  public allCurrentCategories(monitors: IMonitor[]): string[] {
+    return Array.from(
+      new Set(
+        monitors.reduce((prev: string[], curr: IMonitor) => {
+          return [
+            ...prev,
+            ...curr.categories.map((category: ICategory) => category.name),
+          ];
+        }, []),
+      ),
+    ).sort();
+  }
+
+  public allCurrentActions(
+    monitors: IMonitor[],
+  ): { [group: string]: string[] } {
+    const groups: { [group: string]: string[] } = {};
+
+    monitors.forEach((monitor: IMonitor) => {
+      monitor.actions.forEach((action: IAction) => {
+        const group: string = action.group;
+        const name: string = action.name;
+        if (groups[group] === undefined) {
+          // initialise the group array if it doesn't already exist
+          groups[group] = [name];
+        } else if (!groups[group].includes(name)) {
+          // avoid duplicates
+          groups[group].push(name);
+        }
+      });
+    });
+
+    // sort it out mate
+    Object.keys(groups).forEach((group: string) => {
+      groups[group] = groups[group].sort();
+    });
+
+    return groups;
   }
 
   /**

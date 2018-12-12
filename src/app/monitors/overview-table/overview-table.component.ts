@@ -6,9 +6,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { IMonitor, IAction, ICategory } from '../monitor';
+import { IMonitor } from '../monitor';
 import { FormControl } from '@angular/forms';
-import { MonitorsService } from '../monitors.service';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 import { FilterService } from '../filter.service';
 
@@ -20,6 +19,9 @@ import { FilterService } from '../filter.service';
 export class OverviewTableComponent implements OnInit {
   @Input()
   monitors: IMonitor[];
+
+  @Input()
+  canToggleStatus = true;
 
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
@@ -34,23 +36,15 @@ export class OverviewTableComponent implements OnInit {
   private selects: MultipleSelectComponent[];
 
   @Input()
-  allCurrentActions: IAction[];
+  allCurrentActions: { [group: string]: string[] };
 
-  @Input()
-  allCurrentCategories: ICategory[];
-
-  actionGroups: { [group: string]: string[] } = {
-    block: [],
-    store: [],
-    email: [],
-    other: [],
-  };
   blockControl = new FormControl();
   storeControl = new FormControl();
   emailControl = new FormControl();
   otherControl = new FormControl();
 
-  categories: string[];
+  @Input()
+  allCurrentCategories: string[];
   categoriesControl = new FormControl();
 
   filterValues = {
@@ -73,17 +67,6 @@ export class OverviewTableComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-
-    this.allCurrentActions.map((action: IAction) => {
-      this.actionGroups[action.group] = [
-        ...this.actionGroups[action.group],
-        action.name,
-      ].sort();
-    });
-
-    this.categories = this.allCurrentCategories
-      .map((category: ICategory) => category.name)
-      .sort();
   }
 
   public filterMonitors(): void {
@@ -96,6 +79,16 @@ export class OverviewTableComponent implements OnInit {
     ).every((actions: string[]) => !actions.length);
 
     return hasActionsFilters && !this.filterValues.selectedCategories.length;
+  }
+
+  public hasActions(group?: string): boolean {
+    if (!group) {
+      return Object.values(this.allCurrentActions).every(
+        (curr: string[]) => !!curr.length,
+      );
+    }
+    const actions = this.allCurrentActions[group];
+    return actions && actions.length > 0;
   }
 
   public clearAllFilters(): void {

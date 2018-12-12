@@ -20,15 +20,6 @@ import { IMonitorData, IEsperItem } from '../monitor-data';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
-  dataSource: { [key: string]: string }[];
-  displayedColumns: string[];
-  monitors: IMonitor[];
-
-  searchTerm: string;
-
-  categories = new FormControl();
-  categoriesList: string[];
-  selectedCategories: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,36 +28,7 @@ export class MonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getMonitors();
     this.getMonitor();
-  }
-
-  /**
-   * Get the current monitors.
-   *
-   * @memberof MonitorsComponent
-   */
-  getMonitors() {
-    this.monitorService.getMonitors().subscribe((monitors: IMonitor[]) => {
-      this.monitors = monitors;
-      this.setCategories();
-    });
-  }
-
-  /**
-   * Sets a complete list of categories derived from the current monitors.
-   *
-   * @private
-   * @memberof MonitorsComponent
-   */
-  private setCategories() {
-    const categories: Set<string> = new Set();
-    this.monitors.forEach((monitor: IMonitor) => {
-      monitor.categories.forEach((category) =>
-        categories.add(category.name.toLowerCase()),
-      );
-    });
-    this.categoriesList = Array.from(categories).sort();
   }
 
   /**

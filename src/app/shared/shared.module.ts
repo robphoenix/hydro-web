@@ -4,7 +4,6 @@ import { SearchInputComponent } from './search-input/search-input.component';
 import { HydroMaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
-import { ObjectKeysPipe } from './object-keys.pipe';
 
 @NgModule({
   imports: [
@@ -13,15 +12,7 @@ import { ObjectKeysPipe } from './object-keys.pipe';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    SearchInputComponent,
-    MultipleSelectComponent,
-    ObjectKeysPipe,
-  ],
-  exports: [
-    SearchInputComponent,
-    MultipleSelectComponent,
-    ObjectKeysPipe,
-  ],
+  declarations: [SearchInputComponent, MultipleSelectComponent],
+  exports: [SearchInputComponent, MultipleSelectComponent],
 })
 export class SharedModule {}

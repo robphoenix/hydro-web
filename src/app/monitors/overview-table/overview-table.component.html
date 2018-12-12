@@ -1,7 +1,8 @@
-<div class="header"><h2 class="title">Monitors</h2></div>
 <div class="toolbar">
   <div>
     <mat-button-toggle-group
+      class="status-toggle"
+      *ngIf="canToggleStatus"
       [value]="filterValues.status"
       #statusGroup="matButtonToggleGroup"
       (change)="toggleStatus($event.value)"
@@ -63,11 +64,19 @@
         <mat-header-cell *matHeaderCellDef class="actions">
           <mat-icon class="action-icon">report</mat-icon>
           <h3 class="title">Actions</h3>
-          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+          <button
+            mat-icon-button
+            *ngIf="hasActions()"
+            [matMenuTriggerFor]="actionsMenu"
+          >
             <mat-icon>filter_list</mat-icon>
           </button>
           <mat-menu #actionsMenu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="block">
+            <button
+              mat-menu-item
+              *ngIf="hasActions('block')"
+              [matMenuTriggerFor]="block"
+            >
               <mat-icon>block</mat-icon>
               <span>Block</span>
             </button>
@@ -75,14 +84,18 @@
               <app-multiple-select
                 [formControl]="blockControl"
                 [placeHolder]="'Filter Block Actions'"
-                [options]="actionGroups['block']"
+                [options]="allCurrentActions['block']"
                 [(selectedOptions)]="filterValues.selectedActions.block"
                 (selectedOptionsChange)="filterMonitors()"
                 ngDefaultControl
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="email">
+            <button
+              mat-menu-item
+              *ngIf="hasActions('email')"
+              [matMenuTriggerFor]="email"
+            >
               <mat-icon>email</mat-icon>
               <span>Email</span>
             </button>
@@ -90,14 +103,18 @@
               <app-multiple-select
                 [formControl]="emailControl"
                 [placeHolder]="'Filter Email Actions'"
-                [options]="actionGroups['email']"
+                [options]="allCurrentActions['email']"
                 [(selectedOptions)]="filterValues.selectedActions.email"
                 (selectedOptionsChange)="filterMonitors()"
                 ngDefaultControl
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="store">
+            <button
+              mat-menu-item
+              *ngIf="hasActions('store')"
+              [matMenuTriggerFor]="store"
+            >
               <mat-icon>check</mat-icon>
               <span>Store</span>
             </button>
@@ -105,14 +122,18 @@
               <app-multiple-select
                 [formControl]="storeControl"
                 [placeHolder]="'Filter Store Actions'"
-                [options]="actionGroups['store']"
+                [options]="allCurrentActions['store']"
                 [(selectedOptions)]="filterValues.selectedActions.store"
                 (selectedOptionsChange)="filterMonitors()"
                 ngDefaultControl
               ></app-multiple-select>
             </mat-menu>
 
-            <button mat-menu-item [matMenuTriggerFor]="other">
+            <button
+              mat-menu-item
+              *ngIf="hasActions('other')"
+              [matMenuTriggerFor]="other"
+            >
               <mat-icon>subject</mat-icon>
               <span>Other</span>
             </button>
@@ -120,7 +141,7 @@
               <app-multiple-select
                 [formControl]="otherControl"
                 [placeHolder]="'Filter Other Actions'"
-                [options]="actionGroups['other']"
+                [options]="allCurrentActions['other']"
                 [(selectedOptions)]="filterValues.selectedActions.other"
                 (selectedOptionsChange)="filterMonitors()"
                 ngDefaultControl
@@ -137,14 +158,18 @@
         <mat-header-cell *matHeaderCellDef class="categories">
           <mat-icon class="category-icon">category</mat-icon>
           <h3 class="title">Categories</h3>
-          <button mat-icon-button [matMenuTriggerFor]="categoriesMenu">
+          <button
+            *ngIf="allCurrentCategories.length"
+            mat-icon-button
+            [matMenuTriggerFor]="categoriesMenu"
+          >
             <mat-icon>filter_list</mat-icon>
           </button>
           <mat-menu #categoriesMenu="matMenu">
             <app-multiple-select
               [formControl]="categoriesControl"
               [placeHolder]="'Filter Categories'"
-              [options]="categories"
+              [options]="allCurrentCategories"
               [(selectedOptions)]="filterValues.selectedCategories"
               (selectedOptionsChange)="filterMonitors()"
               ngDefaultControl
