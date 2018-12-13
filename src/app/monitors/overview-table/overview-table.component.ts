@@ -6,7 +6,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import { IMonitor } from '../monitor';
+import { IMonitor, MonitorType, MonitorStatus } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 import { FilterService } from '../filter.service';
@@ -22,6 +22,9 @@ export class OverviewTableComponent implements OnInit {
 
   @Input()
   canToggleStatus = true;
+
+  @Input()
+  monitorType: MonitorStatus | MonitorType;
 
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];

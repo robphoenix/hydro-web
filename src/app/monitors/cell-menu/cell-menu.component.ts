@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MonitorStatus } from '../monitor';
 
 @Component({
   selector: 'app-cell-menu',
@@ -6,5 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cell-menu.component.scss'],
 })
 export class CellMenuComponent {
-  showDelay = 1000;
+  showDelay = 500;
+
+  @Input()
+  status: MonitorStatus;
+
+  public get isArchived(): boolean {
+    return this.status === MonitorStatus.Archived;
+  }
 }

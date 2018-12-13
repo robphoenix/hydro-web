@@ -4,8 +4,8 @@ import {
   IGroup,
   IAction,
   LDAPGroup,
-  Type,
-  Status,
+  MonitorType,
+  MonitorStatus,
 } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -37,14 +37,14 @@ export class MonitorsService {
   }
 
   public getStandardMonitors(): Observable<IMonitor[]> {
-    const type: Type = Type.Standard;
+    const type: MonitorType = MonitorType.Standard;
     const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
   public getArchivedMonitors(): Observable<IMonitor[]> {
-    const type: Type = Type.Standard;
-    const status: Status = Status.Archived;
+    const type: MonitorType = MonitorType.Standard;
+    const status: MonitorStatus = MonitorStatus.Archived;
     const params: HttpParams = new HttpParams()
       .set('type', type)
       .set('status', status);
@@ -52,7 +52,7 @@ export class MonitorsService {
   }
 
   public getSystemMonitors(): Observable<IMonitor[]> {
-    const type: Type = Type.System;
+    const type: MonitorType = MonitorType.System;
     const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }

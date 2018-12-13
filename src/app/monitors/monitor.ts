@@ -7,8 +7,8 @@ export interface IMonitor {
   dateUpdated: string;
   createdBy: string | null;
   updatedBy: string | null;
-  status: Status;
-  type: Type;
+  status: MonitorStatus;
+  type: MonitorType;
   categories: ICategory[];
   groups: IGroup[];
   actions: IAction[];
@@ -59,13 +59,13 @@ export enum LDAPGroup {
   JobsOperationsTechnicalSupportTeamLeader = 'Jobs_Operations Technical Support Team Leader',
 }
 
-export enum Status {
+export enum MonitorStatus {
   Archived = 'archived',
   Offline = 'offline',
   Online = 'online',
 }
 
-export enum Type {
+export enum MonitorType {
   Standard = 'standard',
   System = 'system',
 }

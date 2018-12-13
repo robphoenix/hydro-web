@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IMonitor, Status } from '../monitor';
+import { IMonitor } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
 

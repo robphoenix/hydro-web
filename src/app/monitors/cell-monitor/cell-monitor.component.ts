@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Status } from '../monitor';
+import { MonitorStatus } from '../monitor';
 
 @Component({
   selector: 'app-cell-monitor',
@@ -14,11 +14,11 @@ export class CellMonitorComponent implements OnInit {
   @Input()
   description: string;
   @Input()
-  status: Status;
+  status: MonitorStatus;
 
   online: boolean;
 
   ngOnInit(): void {
-    this.online = this.status === Status.Online;
+    this.online = this.status === MonitorStatus.Online;
   }
 }
