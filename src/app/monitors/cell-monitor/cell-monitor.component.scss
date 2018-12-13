@@ -1,3 +1,5 @@
+@import 'main';
+
 .link {
   text-decoration: none;
 
@@ -5,13 +7,13 @@
   &:focus,
   &:active {
     .name {
-      color: #ff4081;
+      color: $material-pink;
     }
   }
 
   &:visited {
     .name {
-      color: #3f51b5;
+      color: $material-indigo;
     }
   }
 }
@@ -23,21 +25,21 @@
 
 .online {
   margin-left: 5px;
-  color: #2ecc40;
+  color: $green;
 }
 
 .name {
-  color: #333;
+  color: $dark-grey;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: $tracked;
   margin: 10px 0;
   line-height: 1.5;
-  -webkit-transition: all 300ms ease-in-out;
-  transition: all 300ms ease-in-out;
+  -webkit-transition: $transition-in-out;
+  transition: $transition-in-out;
 }
 
 .description {
-  color: #888888;
+  color: $grey;
   margin: 0;
   line-height: 1.3;
   padding-bottom: 10px;
