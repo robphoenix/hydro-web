@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'colours';
 
 html,
 body {
   height: 100%;
-  background-color: #fafafa;
+  background-color: $background-color;
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
