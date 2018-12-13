@@ -30,6 +30,9 @@
               "src/styles.scss",
               "node_modules/tachyons/css/tachyons.min.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/sass"]
+            },
             "scripts": []
           },
           "configurations": {

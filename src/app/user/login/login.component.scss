@@ -1,22 +1,24 @@
+@import 'main';
+
 .login {
-  width: 20%;
+  width: $narrow;
   margin: 100px auto;
 
   .title {
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: $tracked;
   }
 
   .subtitle {
-    color: #888888;
+    color: $grey;
   }
 
   .error-message {
     padding-bottom: 20px;
-    border: 1px solid #f44336;
+    border: 1px solid $red;
     padding: 10px;
     border-radius: 2px;
-    background: rgba(244, 67, 54, 0.05);
+    background-color: $washed-red;
   }
 
   .form {

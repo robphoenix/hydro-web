@@ -1,11 +1,13 @@
+@import 'main';
+
 .container {
-  width: 90%;
+  width: $wide;
   display: flex;
   align-items: center;
 
   .select {
     margin-left: 10px;
-    width: 100%;
+    width: $full-width;
   }
 }
 
@@ -18,5 +20,5 @@
   display: flex;
   align-items: center;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: $tracked;
 }
