@@ -8,9 +8,8 @@ describe('ArchivedMonitorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArchivedMonitorsComponent ]
-    })
-    .compileComponents();
+      declarations: [ArchivedMonitorsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
