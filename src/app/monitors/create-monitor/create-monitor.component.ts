@@ -6,6 +6,7 @@ import {
   AbstractControl,
   FormControl,
 } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-monitor',
@@ -17,11 +18,15 @@ export class CreateMonitorComponent implements OnInit {
   descriptionMessage: string;
   formGroup: FormGroup;
   nameControl: FormControl;
+  descriptionControl: FormControl;
 
   validationMessages = {
     name: {
       required: `You must enter a monitor name`,
       pattern: `Monitor name cannot contain punctuation characters`,
+    },
+    description: {
+      required: `You must enter a monitor description`,
     },
   };
 
@@ -30,50 +35,25 @@ export class CreateMonitorComponent implements OnInit {
       Validators.required,
       Validators.pattern('[a-zA-Z0-9]+'),
     ]);
+    this.descriptionControl = new FormControl('', [Validators.required]);
     this.formGroup = this.fb.group({
       name: this.nameControl,
       status: ['offline', Validators.required],
-      description: ['', Validators.required],
+      description: this.descriptionControl,
     });
   }
 
   ngOnInit() {
-    this.nameControl.valueChanges.subscribe(() => this.setNameMessage());
-  }
+    this.nameControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
+      this.nameControl.markAsDirty();
+      this.nameControl.markAsTouched();
+    });
 
-  setNameMessage(): void {
-    const nc = this.nameControl;
-    this.nameMessage = '';
-    if ((nc.touched || nc.dirty) && nc.errors) {
-      nc.markAsTouched(); // we need to mark the element as touched for mat-error to work.
-      this.nameMessage = Object.keys(nc.errors).reduce(
-        (prev: string, curr: string) => {
-          return `${prev} ${this.validationMessages.name[curr]}`;
-        },
-        '',
-      );
-    }
-  }
-
-  setMessage(c: AbstractControl, controlName: string): void {
-    const validationMessages = {
-      required: `Please enter a monitor ${controlName}`,
-      pattern: `Monitor ${controlName} cannot contain punctuation characters`,
-    };
-    // I don't know why, but we need to call this, otherwise mat-error doesn't
-    // show on a failed pattern validation.
-    // c.markAsTouched();
-    let msg: string;
-    if ((c.touched || c.dirty) && c.errors) {
-      msg = Object.keys(c.errors)
-        .map((error) => validationMessages[error])
-        .join(' ');
-    }
-    if (controlName === 'name') {
-      this.nameMessage = msg;
-    }
-    if (controlName === 'description') {
-      this.descriptionMessage = msg;
-    }
+    this.descriptionControl.valueChanges
+      .pipe(debounceTime(800))
+      .subscribe(() => {
+        this.descriptionControl.markAsDirty();
+        this.descriptionControl.markAsTouched();
+      });
   }
 }

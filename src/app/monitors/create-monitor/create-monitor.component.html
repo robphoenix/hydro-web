@@ -8,7 +8,12 @@
           placeholder="Please enter a monitor name"
           formControlName="name"
         />
-        <mat-error *ngIf="nameMessage"> {{ nameMessage }} </mat-error>
+        <mat-error *ngIf="nameControl.hasError('required')">
+          {{ validationMessages.name.required }}
+        </mat-error>
+        <mat-error *ngIf="nameControl.hasError('pattern')">
+          {{ validationMessages.name.pattern }}
+        </mat-error>
       </mat-form-field>
 
       <mat-radio-group formControlName="status" class="status">
@@ -17,6 +22,22 @@
         >
         <mat-radio-button value="online">Online</mat-radio-button>
       </mat-radio-group>
+    </section>
+    <section class="description">
+      <mat-form-field>
+        <textarea
+          class="textarea"
+          matInput
+          placeholder="Description"
+          formControlName="description"
+          matTextareaAutosize
+          matAutosizeMinRows="1"
+          matAutosizeMaxRows="5"
+        ></textarea>
+        <mat-error *ngIf="descriptionControl.hasError('required')">
+          {{ validationMessages.description.required }}
+        </mat-error>
+      </mat-form-field>
     </section>
   </form>
 </div>

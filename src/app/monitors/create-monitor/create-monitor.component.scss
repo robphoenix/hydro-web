@@ -5,14 +5,6 @@
   flex-direction: column;
   width: $wide;
   margin: 120px auto;
-
-  .description {
-    textarea {
-      width: 100%;
-      height: 50px;
-      max-height: 50px;
-    }
-  }
 }
 
 .name-container {
@@ -31,13 +23,21 @@
   }
 }
 
-.textarea {
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
+.description {
+  display: flex;
+
+  .mat-form-field {
+    flex: 0 0 50%;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.26);
+  .textarea {
+    &::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.26);
+    }
   }
 }
