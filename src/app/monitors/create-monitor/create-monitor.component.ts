@@ -13,14 +13,14 @@ import {
   styleUrls: ['./create-monitor.component.scss'],
 })
 export class CreateMonitorComponent implements OnInit {
-  nameMessage = '';
+  nameMessage: string;
   descriptionMessage: string;
   formGroup: FormGroup;
   nameControl: FormControl;
 
   validationMessages = {
     name: {
-      required: `Please enter a monitor name`,
+      required: `You must enter a monitor name`,
       pattern: `Monitor name cannot contain punctuation characters`,
     },
   };

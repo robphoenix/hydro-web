@@ -1,13 +1,22 @@
 <div class="form-fields">
   <form [formGroup]="formGroup">
-    <mat-form-field class="name">
-      <mat-label> Name </mat-label>
-      <input
-        matInput
-        placeholder="Please enter a monitor name"
-        formControlName="name"
-      />
-      <mat-error *ngIf="nameMessage"> {{ nameMessage }} </mat-error>
-    </mat-form-field>
+    <section class="name-container">
+      <mat-form-field class="name">
+        <mat-label> Name </mat-label>
+        <input
+          matInput
+          placeholder="Please enter a monitor name"
+          formControlName="name"
+        />
+        <mat-error *ngIf="nameMessage"> {{ nameMessage }} </mat-error>
+      </mat-form-field>
+
+      <mat-radio-group formControlName="status" class="status">
+        <mat-radio-button value="offline" [checked]="true" class="offline"
+          >Offline</mat-radio-button
+        >
+        <mat-radio-button value="online">Online</mat-radio-button>
+      </mat-radio-group>
+    </section>
   </form>
 </div>

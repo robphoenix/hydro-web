@@ -1,22 +1,32 @@
+@import 'main';
+
 .form-fields {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: $wide;
   margin: 120px auto;
-
-  .name,
-  .description {
-    width: 100%;
-  }
-
-  .status {
-  }
 
   .description {
     textarea {
       width: 100%;
       height: 50px;
       max-height: 50px;
+    }
+  }
+}
+
+.name-container {
+  display: flex;
+  align-items: center;
+
+  .name {
+    flex: 0 0 25%;
+    margin-right: 20px;
+  }
+
+  .status {
+    .offline {
+      margin-right: 10px;
     }
   }
 }
