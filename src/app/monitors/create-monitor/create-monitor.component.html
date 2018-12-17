@@ -1,0 +1,13 @@
+<div class="form-fields">
+  <form [formGroup]="formGroup">
+    <mat-form-field class="name">
+      <mat-label> Name </mat-label>
+      <input
+        matInput
+        placeholder="Please enter a monitor name"
+        formControlName="name"
+      />
+      <mat-error *ngIf="nameMessage"> {{ nameMessage }} </mat-error>
+    </mat-form-field>
+  </form>
+</div>

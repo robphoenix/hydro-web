@@ -65,11 +65,11 @@ export class LoginComponent implements OnInit {
       } characters`,
     };
 
-    return (this.passwordControl.touched || this.passwordControl.dirty) &&
-      this.passwordControl.errors
-      ? Object.keys(this.passwordControl.errors)
-          .map((error) => validationMessages[error])
-          .join(' ')
+    const c = this.passwordControl;
+    return (c.touched || c.dirty) && c.errors
+      ? Object.keys(c.errors).reduce((prev: string, curr: string) => {
+          return `${prev} ${validationMessages[curr]}`;
+        }, '')
       : '';
   }
 }

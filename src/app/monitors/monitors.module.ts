@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
-import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { StandardMonitorsComponent } from './standard-monitors/standard-monitors.component';
 import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
 import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
@@ -20,6 +19,7 @@ import { CellCategoriesComponent } from './cell-categories/cell-categories.compo
 import { RouterModule } from '@angular/router';
 import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors.component';
 import { SystemMonitorsComponent } from './system-monitors/system-monitors.component';
+import { CreateMonitorComponent } from './create-monitor/create-monitor.component';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { SystemMonitorsComponent } from './system-monitors/system-monitors.compo
       { path: 'standard', component: StandardMonitorsComponent },
       { path: 'archived', component: ArchivedMonitorsComponent },
       { path: 'system', component: SystemMonitorsComponent },
-      { path: 'create', component: AddMonitorComponent },
+      { path: 'create', component: CreateMonitorComponent },
       { path: ':id', component: MonitorComponent },
     ]),
     FormsModule,
@@ -41,7 +41,6 @@ import { SystemMonitorsComponent } from './system-monitors/system-monitors.compo
   declarations: [
     MonitorComponent,
     MonitorDeleteDialogComponent,
-    AddMonitorComponent,
     MonitorDetailsFormComponent,
     MonitorDefinitionFormgroupComponent,
     MonitorCategoriesFormgroupComponent,
@@ -54,6 +53,7 @@ import { SystemMonitorsComponent } from './system-monitors/system-monitors.compo
     StandardMonitorsComponent,
     ArchivedMonitorsComponent,
     SystemMonitorsComponent,
+    CreateMonitorComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })
