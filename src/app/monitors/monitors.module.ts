@@ -7,9 +7,6 @@ import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 import { StandardMonitorsComponent } from './standard-monitors/standard-monitors.component';
-import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
-import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
-import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgroup/monitor-categories-formgroup.component';
 import { OverviewTableComponent } from './overview-table/overview-table.component';
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
 import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
@@ -41,9 +38,6 @@ import { CreateMonitorComponent } from './create-monitor/create-monitor.componen
   declarations: [
     MonitorComponent,
     MonitorDeleteDialogComponent,
-    MonitorDetailsFormComponent,
-    MonitorDefinitionFormgroupComponent,
-    MonitorCategoriesFormgroupComponent,
     OverviewTableComponent,
     CellActionsComponent,
     CellMonitorComponent,
