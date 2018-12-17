@@ -30,13 +30,56 @@
           matInput
           placeholder="Description"
           formControlName="description"
+          rows="3"
           matTextareaAutosize
           matAutosizeMinRows="1"
-          matAutosizeMaxRows="5"
+          matAutosizeMaxRows="3"
         ></textarea>
         <mat-error *ngIf="descriptionControl.hasError('required')">
           {{ validationMessages.description.required }}
         </mat-error>
+      </mat-form-field>
+    </section>
+    <section class="categories">
+      <mat-form-field class="categories-form-field">
+        <mat-chip-list #chipList formControlName="categories">
+          <mat-chip
+            *ngFor="let category of selectedCategories"
+            [selectable]="categoriesOptions.selectable"
+            [removable]="categoriesOptions.removable"
+            (removed)="remove(category)"
+          >
+            {{ category }}
+            <mat-icon matChipRemove *ngIf="categoriesOptions.removable"
+              >cancel</mat-icon
+            >
+          </mat-chip>
+          <input
+            placeholder="Select categories..."
+            #categoryInput
+            matInput
+            [formControl]="categoriesControl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="
+              categoriesOptions.separatorKeysCodes
+            "
+            [matChipInputAddOnBlur]="categoriesOptions.addOnBlur"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          class="autocomplete"
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          <mat-option
+            *ngFor="let category of (filteredCategories | async)"
+            [value]="category"
+          >
+            {{ category }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </section>
   </form>

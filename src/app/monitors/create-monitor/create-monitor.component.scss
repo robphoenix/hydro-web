@@ -26,18 +26,30 @@
 .description {
   display: flex;
 
+  .textarea {
+    height: auto;
+  }
+
   .mat-form-field {
     flex: 0 0 50%;
   }
+}
 
-  .textarea {
-    &::-webkit-scrollbar {
-      height: 4px;
-      width: 4px;
-    }
+.textarea {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.26);
-    }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.26);
+  }
+}
+
+.categories {
+  width: $full-width;
+
+  .categories-form-field {
+    width: 50%;
   }
 }
