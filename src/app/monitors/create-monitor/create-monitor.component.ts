@@ -95,9 +95,13 @@ export class CreateMonitorComponent implements OnInit {
         if (!term) {
           return this.availableCategories;
         }
-        return this.availableCategories.filter((c) =>
-          c.toLowerCase().includes(term.toLowerCase()),
-        );
+        return this.availableCategories
+          .filter(
+            (category: string) => !this.selectedCategories.includes(category),
+          )
+          .filter((category: string) =>
+            category.toLowerCase().includes(term.toLowerCase()),
+          );
       }),
     );
   }
@@ -138,7 +142,6 @@ export class CreateMonitorComponent implements OnInit {
     const value = event.option.viewValue;
     const index = this.availableCategories.indexOf(value);
     this.selectedCategories.push(value);
-    this.availableCategories.splice(index, 1);
     this.categoryInput.nativeElement.value = '';
     this.categoriesControl.setValue(null);
   }
