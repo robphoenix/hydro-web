@@ -9,10 +9,10 @@
           formControlName="name"
         />
         <mat-error *ngIf="nameControl.hasError('required')">
-          {{ validationMessages.name.required }}
+          {{ validationMessages['name'].required }}
         </mat-error>
         <mat-error *ngIf="nameControl.hasError('pattern')">
-          {{ validationMessages.name.pattern }}
+          {{ validationMessages['name'].pattern }}
         </mat-error>
       </mat-form-field>
 
@@ -36,11 +36,16 @@
           matAutosizeMaxRows="3"
         ></textarea>
         <mat-error *ngIf="descriptionControl.hasError('required')">
-          {{ validationMessages.description.required }}
+          {{ validationMessages['description'].required }}
         </mat-error>
       </mat-form-field>
     </section>
-    <section class="categories">
+    <section *ngIf="loadingCategories" class="categories">
+      <mat-form-field class="categories-form-field">
+        <input placeholder="Select categories..." matInput />
+      </mat-form-field>
+    </section>
+    <section *ngIf="!loadingCategories" class="categories">
       <mat-form-field class="categories-form-field">
         <mat-chip-list #chipList formControlName="categories">
           <mat-chip

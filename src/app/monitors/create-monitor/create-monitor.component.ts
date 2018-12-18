@@ -13,6 +13,8 @@ import {
 } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
+import { MonitorsService } from '../monitors.service';
+import { ICategory } from '../monitor';
 
 @Component({
   selector: 'app-create-monitor',
@@ -38,37 +40,10 @@ export class CreateMonitorComponent implements OnInit {
     addOnBlur: true,
     separatorKeysCodes: [ENTER, COMMA, SPACE],
   };
+  availableCategories: string[] = [''];
   selectedCategories: string[] = [];
   filteredCategories: Observable<string[]>;
-  availableCategories: string[] = [
-    'script-attack',
-    'Mobile',
-    'Sports Book',
-    'JohnSnow',
-    'BetSlip',
-    'GavinEdwards',
-    'Scrapers',
-    'China Arbs',
-    'bettingslip',
-    'Extra',
-    'FRM',
-    'Alerts',
-    'NewLoginDefault',
-    'Members',
-    'Monitor',
-    'Blocking',
-    'Investigation',
-    'HoneyPot',
-    'Publisher',
-    'Datacenter',
-    'LoginAttack',
-    'Bookmaker',
-    'hostingfacility',
-    'geo',
-    'Martin',
-    'OpenAccount',
-    'Ragbag',
-  ];
+  loadingCategories = false;
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -80,7 +55,13 @@ export class CreateMonitorComponent implements OnInit {
     },
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private monitorsService: MonitorsService,
+  ) {
+    this.loadingCategories = true;
+    this.getAvailableCategories();
+
     this.nameControl = new FormControl('', [
       Validators.required,
       Validators.pattern('[a-zA-Z0-9]+'),
@@ -112,13 +93,22 @@ export class CreateMonitorComponent implements OnInit {
       startWith(null),
       map((term: string) => {
         if (!term) {
-          return this.availableCategories.slice();
+          return this.availableCategories;
         }
         return this.availableCategories.filter((c) =>
           c.toLowerCase().includes(term.toLowerCase()),
         );
       }),
     );
+  }
+
+  private getAvailableCategories(): void {
+    this.monitorsService
+      .getAllCurrentCategories()
+      .subscribe((categories: ICategory[]) => {
+        this.availableCategories = categories.map((c) => c.name);
+        this.loadingCategories = false;
+      });
   }
 
   add(event: MatChipInputEvent): void {
@@ -141,7 +131,6 @@ export class CreateMonitorComponent implements OnInit {
 
     if (index >= 0) {
       this.selectedCategories.splice(index, 1);
-      this.availableCategories.push(category);
     }
   }
 
