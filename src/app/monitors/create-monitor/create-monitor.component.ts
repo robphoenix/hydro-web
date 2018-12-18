@@ -70,7 +70,7 @@ export class CreateMonitorComponent implements OnInit {
     'Ragbag',
   ];
 
-  validationMessages = {
+  validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
       required: `You must enter a monitor name`,
       pattern: `Monitor name cannot contain punctuation characters`,

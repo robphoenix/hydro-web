@@ -20,8 +20,8 @@
         formControlName="username"
         (click)="loginErrorMessage = ''"
       />
-      <mat-error *ngIf="usernameControl.invalid">
-        {{ usernameValidationMessage() }}
+      <mat-error *ngIf="usernameControl.hasError('required')">
+        {{ validationMessages.username.required }}
       </mat-error>
     </mat-form-field>
 
@@ -41,8 +41,11 @@
       >
         {{ hidePassword ? 'visibility' : 'visibility_off' }}
       </mat-icon>
-      <mat-error *ngIf="passwordControl.invalid">
-        {{ passwordValidationMessage() }}
+      <mat-error *ngIf="passwordControl.hasError('required')">
+        {{ validationMessages.password.required }}
+      </mat-error>
+      <mat-error *ngIf="passwordControl.hasError('minlength')">
+        {{ validationMessages.password.minlength }}
       </mat-error>
     </mat-form-field>
   </form>

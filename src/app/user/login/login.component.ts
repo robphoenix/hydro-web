@@ -20,6 +20,18 @@ export class LoginComponent implements OnInit {
   attemptingLogIn = false;
   loginErrorMessage: string;
 
+  validationMessages: { [key: string]: { [key: string]: string } } = {
+    username: {
+      required: `You must enter your bet365 username`,
+    },
+    password: {
+      required: `Please enter your bet365 password`,
+      minlength: `Password must be at least ${
+        this.minPasswordLength
+      } characters`,
+    },
+  };
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
@@ -48,28 +60,5 @@ export class LoginComponent implements OnInit {
           this.loginErrorMessage = err;
         },
       );
-  }
-
-  usernameValidationMessage(): string {
-    return (this.usernameControl.touched || this.usernameControl.dirty) &&
-      this.usernameControl.errors
-      ? 'Please enter your bet365 username'
-      : '';
-  }
-
-  passwordValidationMessage(): string {
-    const validationMessages = {
-      required: 'Please enter your bet365 password',
-      minlength: `Password must be at least ${
-        this.minPasswordLength
-      } characters`,
-    };
-
-    const c = this.passwordControl;
-    return (c.touched || c.dirty) && c.errors
-      ? Object.keys(c.errors).reduce((prev: string, curr: string) => {
-          return `${prev} ${validationMessages[curr]}`;
-        }, '')
-      : '';
   }
 }
