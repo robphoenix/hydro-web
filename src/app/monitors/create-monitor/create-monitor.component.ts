@@ -44,6 +44,7 @@ export class CreateMonitorComponent implements OnInit {
   selectedCategories: string[] = [];
   filteredCategories: Observable<string[]>;
   loadingCategories = false;
+  maxSelectedCategories = 4;
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -92,16 +93,15 @@ export class CreateMonitorComponent implements OnInit {
     this.filteredCategories = this.categoriesControl.valueChanges.pipe(
       startWith(null),
       map((term: string) => {
+        const availableCategories = this.availableCategories.filter(
+          (category: string) => !this.selectedCategories.includes(category),
+        );
         if (!term) {
-          return this.availableCategories;
+          return availableCategories;
         }
-        return this.availableCategories
-          .filter(
-            (category: string) => !this.selectedCategories.includes(category),
-          )
-          .filter((category: string) =>
-            category.toLowerCase().includes(term.toLowerCase()),
-          );
+        return availableCategories.filter((category: string) =>
+          category.toLowerCase().includes(term.toLowerCase()),
+        );
       }),
     );
   }
@@ -116,23 +116,28 @@ export class CreateMonitorComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = (event.value || '').trim();
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = (event.value || '').trim();
 
-    if (value && !this.selectedCategories.includes(value)) {
-      this.selectedCategories.push(value);
+      if (
+        value &&
+        !this.selectedCategories.includes(value) &&
+        this.selectedCategories.length < this.maxSelectedCategories
+      ) {
+        this.selectedCategories.push(value);
+      }
+
+      if (input) {
+        input.value = '';
+      }
+
+      this.categoriesControl.setValue(null);
     }
-
-    if (input) {
-      input.value = '';
-    }
-
-    this.categoriesControl.setValue(null);
   }
 
   remove(category: string): void {
     const index = this.selectedCategories.indexOf(category);
-
     if (index >= 0) {
       this.selectedCategories.splice(index, 1);
     }
@@ -141,7 +146,9 @@ export class CreateMonitorComponent implements OnInit {
   selected(event: MatAutocompleteSelectedEvent): void {
     const value = event.option.viewValue;
     const index = this.availableCategories.indexOf(value);
-    this.selectedCategories.push(value);
+    if (this.selectedCategories.length < this.maxSelectedCategories) {
+      this.selectedCategories.push(value);
+    }
     this.categoryInput.nativeElement.value = '';
     this.categoriesControl.setValue(null);
   }
