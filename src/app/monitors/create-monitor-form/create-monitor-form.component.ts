@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {
   FormGroup,
+  FormControl,
   FormBuilder,
   Validators,
-  FormControl,
 } from '@angular/forms';
-import { debounceTime, startWith, map } from 'rxjs/operators';
 import {
   MatAutocomplete,
   MatChipInputEvent,
@@ -14,14 +13,15 @@ import {
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { MonitorsService } from '../monitors.service';
+import { debounceTime, startWith, map } from 'rxjs/operators';
 import { ICategory } from '../monitor';
 
 @Component({
-  selector: 'app-create-monitor',
-  templateUrl: './create-monitor.component.html',
-  styleUrls: ['./create-monitor.component.scss'],
+  selector: 'app-create-monitor-form',
+  templateUrl: './create-monitor-form.component.html',
+  styleUrls: ['./create-monitor-form.component.scss'],
 })
-export class CreateMonitorComponent implements OnInit {
+export class CreateMonitorFormComponent implements OnInit {
   nameMessage: string;
   descriptionMessage: string;
   formGroup: FormGroup;

@@ -16,7 +16,7 @@ import { CellCategoriesComponent } from './cell-categories/cell-categories.compo
 import { RouterModule } from '@angular/router';
 import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors.component';
 import { SystemMonitorsComponent } from './system-monitors/system-monitors.component';
-import { CreateMonitorComponent } from './create-monitor/create-monitor.component';
+import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
 
 @NgModule({
   imports: [
@@ -27,7 +27,7 @@ import { CreateMonitorComponent } from './create-monitor/create-monitor.componen
       { path: 'standard', component: StandardMonitorsComponent },
       { path: 'archived', component: ArchivedMonitorsComponent },
       { path: 'system', component: SystemMonitorsComponent },
-      { path: 'create', component: CreateMonitorComponent },
+      { path: 'create', component: CreateMonitorFormComponent },
       { path: ':id', component: MonitorComponent },
     ]),
     FormsModule,
@@ -47,7 +47,7 @@ import { CreateMonitorComponent } from './create-monitor/create-monitor.componen
     StandardMonitorsComponent,
     ArchivedMonitorsComponent,
     SystemMonitorsComponent,
-    CreateMonitorComponent,
+    CreateMonitorFormComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })
