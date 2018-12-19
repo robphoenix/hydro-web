@@ -7,21 +7,20 @@
   margin: 120px auto;
 }
 
-.container {
+.section {
   display: flex;
   align-items: center;
 
   .name,
   .description {
     flex: 0 0 25%;
+  }
+
+  .name {
     margin-right: 20px;
   }
-}
 
-.categories {
-  width: $full-width;
-
-  .categories-form-field {
-    width: $half-width;
+  .categories {
+    flex: 0 0 50%;
   }
 }

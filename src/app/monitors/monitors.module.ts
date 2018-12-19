@@ -21,6 +21,7 @@ import { CreateMonitorsFormNameComponent } from './create-monitors-form-name/cre
 import { OverviewNavComponent } from './overview-nav/overview-nav.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
+import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-des
     OverviewNavComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
+    CreateMonitorFormCategoriesComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })

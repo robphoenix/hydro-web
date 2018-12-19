@@ -1,6 +1,6 @@
 <div class="form-fields">
   <form [formGroup]="formGroup">
-    <section class="container">
+    <section class="section">
       <app-create-monitors-form-name
         class="name"
         [parent]="formGroup"
@@ -15,7 +15,7 @@
       ></app-create-monitor-form-status>
     </section>
 
-    <section class="container">
+    <section class="section">
       <app-create-monitor-form-description
         class="description"
         [parent]="formGroup"
@@ -24,55 +24,18 @@
       ></app-create-monitor-form-description>
     </section>
 
-    <section *ngIf="loadingCategories" class="categories">
-      <mat-form-field class="categories-form-field">
-        <input placeholder="Select categories..." matInput />
-      </mat-form-field>
-    </section>
-    <section *ngIf="!loadingCategories" class="categories">
-      <mat-form-field class="categories-form-field">
-        <mat-chip-list #chipList formControlName="categories">
-          <mat-chip
-            *ngFor="let category of selectedCategories"
-            [selectable]="categoriesAutocompleteOptions.selectable"
-            [removable]="categoriesAutocompleteOptions.removable"
-            (removed)="remove(category)"
-          >
-            {{ category }}
-            <mat-icon
-              matChipRemove
-              *ngIf="categoriesAutocompleteOptions.removable"
-              >cancel</mat-icon
-            >
-          </mat-chip>
-          <input
-            placeholder="Select categories..."
-            #categoryInput
-            matInput
-            [formControl]="categoriesControl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="
-              categoriesAutocompleteOptions.separatorKeysCodes
-            "
-            [matChipInputAddOnBlur]="categoriesAutocompleteOptions.addOnBlur"
-            (matChipInputTokenEnd)="add($event)"
-          />
-        </mat-chip-list>
-
-        <mat-autocomplete
-          class="autocomplete"
-          #auto="matAutocomplete"
-          (optionSelected)="selected($event)"
-        >
-          <mat-option
-            *ngFor="let category of (filteredCategories | async)"
-            [value]="category"
-          >
-            {{ category }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+    <section class="section">
+      <app-create-monitor-form-categories
+        class="categories"
+        [parent]="formGroup"
+        [loading]="loadingCategories"
+        [selectedCategories]="selectedCategories"
+        [autocompleteOptions]="categoriesAutocompleteOptions"
+        [filteredCategories]="filteredCategories"
+        (removeCategory)="removeCategory($event)"
+        (addCategory)="addCategory($event)"
+        (selectedCategory)="selectedCategory($event)"
+      ></app-create-monitor-form-categories>
     </section>
   </form>
 </div>
