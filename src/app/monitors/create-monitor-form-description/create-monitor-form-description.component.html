@@ -1,0 +1,15 @@
+<mat-form-field [formGroup]="parent" class="description">
+  <textarea
+    class="textarea"
+    matInput
+    placeholder="Description"
+    formControlName="description"
+    rows="3"
+    matTextareaAutosize
+    matAutosizeMinRows="1"
+    matAutosizeMaxRows="3"
+  ></textarea>
+  <mat-error *ngIf="parent.get('description').hasError('required')">
+    {{ validationMessages['required'] }}
+  </mat-error>
+</mat-form-field>

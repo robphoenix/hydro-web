@@ -7,36 +7,14 @@
   margin: 120px auto;
 }
 
-.name-container {
+.container {
   display: flex;
   align-items: center;
 
-  .name {
+  .name,
+  .description {
     flex: 0 0 25%;
     margin-right: 20px;
-  }
-}
-
-.description {
-  display: flex;
-
-  .textarea {
-    height: auto;
-  }
-
-  .mat-form-field {
-    flex: 0 0 50%;
-  }
-}
-
-.textarea {
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.26);
   }
 }
 
@@ -44,6 +22,6 @@
   width: $full-width;
 
   .categories-form-field {
-    width: 50%;
+    width: $half-width;
   }
 }

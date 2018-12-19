@@ -1,6 +1,6 @@
 <div class="form-fields">
   <form [formGroup]="formGroup">
-    <section class="name-container">
+    <section class="container">
       <app-create-monitors-form-name
         class="name"
         [parent]="formGroup"
@@ -14,23 +14,16 @@
         ngDefaultControl
       ></app-create-monitor-form-status>
     </section>
-    <section class="description">
-      <mat-form-field>
-        <textarea
-          class="textarea"
-          matInput
-          placeholder="Description"
-          formControlName="description"
-          rows="3"
-          matTextareaAutosize
-          matAutosizeMinRows="1"
-          matAutosizeMaxRows="3"
-        ></textarea>
-        <mat-error *ngIf="descriptionControl.hasError('required')">
-          {{ validationMessages['description'].required }}
-        </mat-error>
-      </mat-form-field>
+
+    <section class="container">
+      <app-create-monitor-form-description
+        class="description"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['description']"
+        ngDefaultControl
+      ></app-create-monitor-form-description>
     </section>
+
     <section *ngIf="loadingCategories" class="categories">
       <mat-form-field class="categories-form-field">
         <input placeholder="Select categories..." matInput />
