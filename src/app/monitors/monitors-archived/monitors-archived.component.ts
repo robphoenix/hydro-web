@@ -9,6 +9,8 @@ import { MonitorsService } from '../monitors.service';
   styleUrls: ['./monitors-archived.component.scss'],
 })
 export class MonitorsArchivedComponent implements OnInit {
+  currentPage = 'archived';
+  pageLinks: string[] = ['system', 'standard'];
   archivedMonitors: IMonitor[] = [];
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
