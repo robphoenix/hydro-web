@@ -1,0 +1,8 @@
+<div [formGroup]="parent">
+  <mat-radio-group formControlName="status">
+    <mat-radio-button value="offline" [checked]="true" class="offline">
+      Offline
+    </mat-radio-button>
+    <mat-radio-button value="online"> Online </mat-radio-button>
+  </mat-radio-group>
+</div>

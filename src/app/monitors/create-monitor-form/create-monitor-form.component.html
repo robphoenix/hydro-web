@@ -8,12 +8,11 @@
         ngDefaultControl
       ></app-create-monitors-form-name>
 
-      <mat-radio-group formControlName="status" class="status">
-        <mat-radio-button value="offline" [checked]="true" class="offline"
-          >Offline</mat-radio-button
-        >
-        <mat-radio-button value="online">Online</mat-radio-button>
-      </mat-radio-group>
+      <app-create-monitor-form-status
+        class="status"
+        [parent]="formGroup"
+        ngDefaultControl
+      ></app-create-monitor-form-status>
     </section>
     <section class="description">
       <mat-form-field>
