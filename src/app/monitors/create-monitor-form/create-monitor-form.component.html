@@ -1,0 +1,41 @@
+<div class="form-fields">
+  <form [formGroup]="formGroup">
+    <section class="section">
+      <app-create-monitors-form-name
+        class="name"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['name']"
+        ngDefaultControl
+      ></app-create-monitors-form-name>
+
+      <app-create-monitor-form-status
+        class="status"
+        [parent]="formGroup"
+        ngDefaultControl
+      ></app-create-monitor-form-status>
+    </section>
+
+    <section class="section">
+      <app-create-monitor-form-description
+        class="description"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['description']"
+        ngDefaultControl
+      ></app-create-monitor-form-description>
+    </section>
+
+    <section class="section">
+      <app-create-monitor-form-categories
+        class="categories"
+        [parent]="formGroup"
+        [loading]="loadingCategories"
+        [selectedCategories]="selectedCategories"
+        [autocompleteOptions]="categoriesAutocompleteOptions"
+        [filteredCategories]="filteredCategories"
+        (removeCategory)="removeCategory($event)"
+        (addCategory)="addCategory($event)"
+        (selectedCategory)="selectedCategory($event)"
+      ></app-create-monitor-form-categories>
+    </section>
+  </form>
+</div>

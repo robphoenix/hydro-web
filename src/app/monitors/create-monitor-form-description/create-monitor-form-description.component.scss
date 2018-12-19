@@ -1,0 +1,20 @@
+@import 'main';
+
+.description {
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  height: auto;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background: $light-grey;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $mid-grey;
+  }
+}

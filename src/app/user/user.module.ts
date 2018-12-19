@@ -8,6 +8,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { LoginGuard } from './login.guard';
 import { HydroMaterialModule } from '../material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from '../shared/shared.module';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -20,6 +21,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HydroMaterialModule,
+    SharedModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

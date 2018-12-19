@@ -6,11 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
-import { AddMonitorComponent } from './add-monitor/add-monitor.component';
-import { StandardMonitorsComponent } from './standard-monitors/standard-monitors.component';
-import { MonitorDetailsFormComponent } from './monitor-details-form/monitor-details-form.component';
-import { MonitorDefinitionFormgroupComponent } from './monitor-definition-formgroup/monitor-definition-formgroup.component';
-import { MonitorCategoriesFormgroupComponent } from './monitor-categories-formgroup/monitor-categories-formgroup.component';
 import { OverviewTableComponent } from './overview-table/overview-table.component';
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
 import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
@@ -18,8 +13,15 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
-import { ArchivedMonitorsComponent } from './archived-monitors/archived-monitors.component';
-import { SystemMonitorsComponent } from './system-monitors/system-monitors.component';
+import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
+import { MonitorsStandardComponent } from './monitors-standard/monitors-standard.component';
+import { MonitorsSystemComponent } from './monitors-system/monitors-system.component';
+import { MonitorsArchivedComponent } from './monitors-archived/monitors-archived.component';
+import { CreateMonitorsFormNameComponent } from './create-monitors-form-name/create-monitors-form-name.component';
+import { OverviewNavComponent } from './overview-nav/overview-nav.component';
+import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
+import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
+import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
 
 @NgModule({
   imports: [
@@ -27,10 +29,10 @@ import { SystemMonitorsComponent } from './system-monitors/system-monitors.compo
     SharedModule,
     RouterModule.forChild([
       { path: '', redirectTo: 'standard', pathMatch: 'full' },
-      { path: 'standard', component: StandardMonitorsComponent },
-      { path: 'archived', component: ArchivedMonitorsComponent },
-      { path: 'system', component: SystemMonitorsComponent },
-      { path: 'create', component: AddMonitorComponent },
+      { path: 'standard', component: MonitorsStandardComponent },
+      { path: 'archived', component: MonitorsArchivedComponent },
+      { path: 'system', component: MonitorsSystemComponent },
+      { path: 'create', component: CreateMonitorFormComponent },
       { path: ':id', component: MonitorComponent },
     ]),
     FormsModule,
@@ -41,19 +43,21 @@ import { SystemMonitorsComponent } from './system-monitors/system-monitors.compo
   declarations: [
     MonitorComponent,
     MonitorDeleteDialogComponent,
-    AddMonitorComponent,
-    MonitorDetailsFormComponent,
-    MonitorDefinitionFormgroupComponent,
-    MonitorCategoriesFormgroupComponent,
     OverviewTableComponent,
     CellActionsComponent,
     CellMonitorComponent,
     LoadingSpinnerComponent,
     CellMenuComponent,
     CellCategoriesComponent,
-    StandardMonitorsComponent,
-    ArchivedMonitorsComponent,
-    SystemMonitorsComponent,
+    CreateMonitorFormComponent,
+    MonitorsStandardComponent,
+    MonitorsSystemComponent,
+    MonitorsArchivedComponent,
+    CreateMonitorsFormNameComponent,
+    OverviewNavComponent,
+    CreateMonitorFormStatusComponent,
+    CreateMonitorFormDescriptionComponent,
+    CreateMonitorFormCategoriesComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })

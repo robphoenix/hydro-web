@@ -1,0 +1,15 @@
+<app-overview-nav
+  [currentPage]="currentPage"
+  [pageLinks]="pageLinks"
+></app-overview-nav>
+
+<app-overview-table
+  *ngIf="systemMonitors.length; else: noMonitors"
+  [monitors]="systemMonitors"
+  [allCurrentActions]="allCurrentActions"
+  [allCurrentCategories]="allCurrentCategories"
+></app-overview-table>
+
+<ng-template #noMonitors>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

@@ -1,0 +1,26 @@
+@import 'main';
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  width: $wide;
+  margin: 120px auto;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+
+  .name,
+  .description {
+    flex: 0 0 25%;
+  }
+
+  .name {
+    margin-right: 20px;
+  }
+
+  .categories {
+    flex: 0 0 50%;
+  }
+}

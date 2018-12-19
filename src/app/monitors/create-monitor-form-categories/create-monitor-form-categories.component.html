@@ -1,0 +1,43 @@
+<!--
+  this is a dummy input that is displayed until the categories are fetched
+-->
+<mat-form-field *ngIf="loading" class="categories">
+  <input placeholder="Loading categories..." matInput />
+</mat-form-field>
+
+<!-- this is the real form element -->
+<mat-form-field class="categories" *ngIf="!loading" [formGroup]="parent">
+  <mat-chip-list #chipList>
+    <mat-chip
+      *ngFor="let category of selectedCategories"
+      [selectable]="autocompleteOptions['selectable']"
+      [removable]="autocompleteOptions['removable']"
+      (removed)="remove(category)"
+    >
+      {{ category }}
+      <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
+        cancel
+      </mat-icon>
+    </mat-chip>
+
+    <input
+      placeholder="Select categories"
+      #categoryInput
+      matInput
+      formControlName="categories"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="
+        autocompleteOptions['separatorKeysCodes']
+      "
+      [matChipInputAddOnBlur]="autocompleteOptions['addOnBlur']"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-list>
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let category of availableCategories" [value]="category">
+      {{ category }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
