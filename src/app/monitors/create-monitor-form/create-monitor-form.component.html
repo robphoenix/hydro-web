@@ -1,20 +1,12 @@
 <div class="form-fields">
   <form [formGroup]="formGroup">
     <section class="name-container">
-      <mat-form-field class="name">
-        <mat-label> Name </mat-label>
-        <input
-          matInput
-          placeholder="Please enter a monitor name"
-          formControlName="name"
-        />
-        <mat-error *ngIf="nameControl.hasError('required')">
-          {{ validationMessages['name'].required }}
-        </mat-error>
-        <mat-error *ngIf="nameControl.hasError('pattern')">
-          {{ validationMessages['name'].pattern }}
-        </mat-error>
-      </mat-form-field>
+      <app-create-monitors-form-name
+        class="name"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['name']"
+        ngDefaultControl
+      ></app-create-monitors-form-name>
 
       <mat-radio-group formControlName="status" class="status">
         <mat-radio-button value="offline" [checked]="true" class="offline"

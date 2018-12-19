@@ -1,0 +1,14 @@
+<mat-form-field class="name" [formGroup]="parent">
+  <mat-label> Name </mat-label>
+  <input
+    matInput
+    placeholder="Please enter a monitor name"
+    formControlName="name"
+  />
+  <mat-error *ngIf="parent.get('name').hasError('required')">
+    {{ validationMessages['required'] }}
+  </mat-error>
+  <mat-error *ngIf="parent.get('name').hasError('pattern')">
+    {{ validationMessages['pattern'] }}
+  </mat-error>
+</mat-form-field>
