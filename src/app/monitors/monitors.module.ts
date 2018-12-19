@@ -17,8 +17,8 @@ import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor
 import { MonitorsStandardComponent } from './monitors-standard/monitors-standard.component';
 import { MonitorsSystemComponent } from './monitors-system/monitors-system.component';
 import { MonitorsArchivedComponent } from './monitors-archived/monitors-archived.component';
-import { MonitorsOverviewNavComponent } from './monitors-overview-nav/monitors-overview-nav.component';
 import { CreateMonitorsFormNameComponent } from './create-monitors-form-name/create-monitors-form-name.component';
+import { OverviewNavComponent } from './overview-nav/overview-nav.component';
 
 @NgModule({
   imports: [
@@ -50,8 +50,8 @@ import { CreateMonitorsFormNameComponent } from './create-monitors-form-name/cre
     MonitorsStandardComponent,
     MonitorsSystemComponent,
     MonitorsArchivedComponent,
-    MonitorsOverviewNavComponent,
     CreateMonitorsFormNameComponent,
+    OverviewNavComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })
