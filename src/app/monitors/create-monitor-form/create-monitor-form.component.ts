@@ -34,7 +34,7 @@ export class CreateMonitorFormComponent implements OnInit {
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
 
-  categoriesOptions = {
+  categoriesAutocompleteOptions = {
     selectable: true,
     removable: true,
     addOnBlur: true,
@@ -144,10 +144,8 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    const value = event.option.viewValue;
-    const index = this.availableCategories.indexOf(value);
     if (this.selectedCategories.length < this.maxSelectedCategories) {
-      this.selectedCategories.push(value);
+      this.selectedCategories.push(event.option.viewValue);
     }
     this.categoryInput.nativeElement.value = '';
     this.categoriesControl.setValue(null);

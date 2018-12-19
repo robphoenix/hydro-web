@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IMonitor } from '../monitor';
+import { IMonitor, MonitorStatus } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
 
 @Component({
-  selector: 'app-archived-monitors',
-  templateUrl: './archived-monitors.component.html',
-  styleUrls: ['./archived-monitors.component.scss'],
+  selector: 'app-monitors-standard',
+  templateUrl: './monitors-standard.component.html',
+  styleUrls: ['./monitors-standard.component.scss'],
 })
-export class ArchivedMonitorsComponent implements OnInit {
-  archivedMonitors: IMonitor[] = [];
+export class MonitorsStandardComponent implements OnInit {
+  standardMonitors: IMonitor[] = [];
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
 
@@ -24,16 +24,18 @@ export class ArchivedMonitorsComponent implements OnInit {
 
   private getMonitors(): void {
     this.monitorsService
-      .getArchivedMonitors()
+      .getStandardMonitors()
       .subscribe((monitors: IMonitor[]) => {
-        this.archivedMonitors = monitors;
+        this.standardMonitors = monitors.filter(
+          (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
+        );
 
         this.allCurrentCategories = this.monitorsService.allCurrentCategories(
-          this.archivedMonitors,
+          this.standardMonitors,
         );
 
         this.allCurrentActions = this.monitorsService.allCurrentActions(
-          this.archivedMonitors,
+          this.standardMonitors,
         );
       });
   }

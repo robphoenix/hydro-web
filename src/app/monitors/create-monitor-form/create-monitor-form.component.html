@@ -50,12 +50,14 @@
         <mat-chip-list #chipList formControlName="categories">
           <mat-chip
             *ngFor="let category of selectedCategories"
-            [selectable]="categoriesOptions.selectable"
-            [removable]="categoriesOptions.removable"
+            [selectable]="categoriesAutocompleteOptions.selectable"
+            [removable]="categoriesAutocompleteOptions.removable"
             (removed)="remove(category)"
           >
             {{ category }}
-            <mat-icon matChipRemove *ngIf="categoriesOptions.removable"
+            <mat-icon
+              matChipRemove
+              *ngIf="categoriesAutocompleteOptions.removable"
               >cancel</mat-icon
             >
           </mat-chip>
@@ -67,12 +69,13 @@
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="
-              categoriesOptions.separatorKeysCodes
+              categoriesAutocompleteOptions.separatorKeysCodes
             "
-            [matChipInputAddOnBlur]="categoriesOptions.addOnBlur"
+            [matChipInputAddOnBlur]="categoriesAutocompleteOptions.addOnBlur"
             (matChipInputTokenEnd)="add($event)"
           />
         </mat-chip-list>
+
         <mat-autocomplete
           class="autocomplete"
           #auto="matAutocomplete"
