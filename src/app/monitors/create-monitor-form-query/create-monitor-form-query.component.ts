@@ -4,12 +4,13 @@ import {
   ElementRef,
   AfterViewInit,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
-import { EditorFromTextArea } from 'codemirror';
+import { Editor, EditorFromTextArea } from 'codemirror';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/addon/display/placeholder';
 import sqlFormatter from 'sql-formatter';
-import { FormGroup } from '@angular/forms';
 
 declare var require: any;
 
@@ -20,10 +21,10 @@ declare var require: any;
 })
 export class CreateMonitorFormQueryComponent implements AfterViewInit {
   @Input()
-  parent: FormGroup;
-
-  @Input()
   validationMessages: { [key: string]: string };
+
+  @Output()
+  enterQuery = new EventEmitter<string>();
 
   @ViewChild('textarea')
   textarea: ElementRef;
@@ -41,11 +42,10 @@ export class CreateMonitorFormQueryComponent implements AfterViewInit {
     const { fromTextArea } = require('codemirror');
     this.editor = fromTextArea(this.textarea.nativeElement, this.options);
 
-    // I'm just going to leave this here for future me.
-    // this.editor.on('change', (editor: Editor) => {
-    //   const value = editor.getDoc().getValue();
-    //   console.log({ value });
-    // });
+    this.editor.on('changes', (editor: Editor) => {
+      const value = editor.getDoc().getValue();
+      this.enterQuery.emit(value);
+    });
   }
 
   format() {

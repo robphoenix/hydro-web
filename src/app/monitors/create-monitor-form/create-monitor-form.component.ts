@@ -56,8 +56,12 @@ export class CreateMonitorFormComponent implements OnInit {
       description: ['', Validators.required],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      query: ['', Validators.required],
+      query: [''],
     });
+  }
+
+  updateQuery(query: string) {
+    this.formGroup.get('query').setValue(query);
   }
 
   ngOnInit() {
@@ -71,6 +75,8 @@ export class CreateMonitorFormComponent implements OnInit {
     descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       descriptionControl.markAsDirty();
       descriptionControl.markAsTouched();
+      const form = this.formGroup.value;
+      console.log({ form });
     });
 
     const queryControl = this.formGroup.get('query');
