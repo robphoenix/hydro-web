@@ -5,8 +5,9 @@
     placeholder="Description"
     formControlName="description"
     rows="3"
+    cols="100"
     matTextareaAutosize
-    matAutosizeMinRows="1"
+    matAutosizeMinRows="3"
     matAutosizeMaxRows="3"
   ></textarea>
   <mat-error *ngIf="parent.get('description').hasError('required')">

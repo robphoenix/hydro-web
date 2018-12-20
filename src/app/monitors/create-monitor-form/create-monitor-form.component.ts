@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ElementRef,
-  AfterViewInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   MatChipInputEvent,
@@ -16,26 +10,12 @@ import { ICategory } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 
-import { Editor, EditorFromTextArea } from 'codemirror';
-import 'codemirror/mode/sql/sql';
-declare var require: any;
-
 @Component({
   selector: 'app-create-monitor-form',
   templateUrl: './create-monitor-form.component.html',
   styleUrls: ['./create-monitor-form.component.scss'],
 })
-export class CreateMonitorFormComponent implements OnInit, AfterViewInit {
-  codemirrorConfig = {
-    mode: 'text/x-sql',
-    lineWrapping: false,
-    lineNumbers: true,
-    theme: 'base16-light',
-  };
-  codeMirror: EditorFromTextArea;
-  @ViewChild('ref')
-  ref: ElementRef;
-
+export class CreateMonitorFormComponent implements OnInit {
   formGroup: FormGroup;
 
   categoriesAutocompleteOptions = {
@@ -73,20 +53,6 @@ export class CreateMonitorFormComponent implements OnInit, AfterViewInit {
       description: ['', Validators.required],
       categories: [this.selectedCategories],
     });
-  }
-
-  ngAfterViewInit() {
-    const { fromTextArea } = require('codemirror');
-    this.codeMirror = fromTextArea(
-      this.ref.nativeElement,
-      this.codemirrorConfig,
-    );
-
-    this.codeMirror.on('change', (editor: Editor) => {
-      const value = editor.getDoc().getValue();
-      console.log({ value });
-    });
-    this.codeMirror.setSize('600px', '600px');
   }
 
   ngOnInit() {
