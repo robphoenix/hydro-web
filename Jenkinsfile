@@ -28,6 +28,7 @@ pipeline {
     stage('Install Dependencies') {
       steps {
         sh '''
+        npm config set strict-ssl false
         npm set registry https://proget/npm/Production-npm/
         npm ci
         '''
