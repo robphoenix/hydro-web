@@ -54,6 +54,8 @@ export class CreateMonitorFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
+      categories: [this.selectedCategories],
+      categoriesInput: [''],
       query: ['', Validators.required],
     });
   }
@@ -69,17 +71,16 @@ export class CreateMonitorFormComponent implements OnInit {
     descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       descriptionControl.markAsDirty();
       descriptionControl.markAsTouched();
+    });
+
     const queryControl = this.formGroup.get('query');
     queryControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       queryControl.markAsDirty();
       queryControl.markAsTouched();
-
-      console.log(this.formGroup);
     });
-  }
 
-    const categoriesControl = this.formGroup.get('categories');
-    this.filteredCategories = categoriesControl.valueChanges.pipe(
+    const categoriesInputControl = this.formGroup.get('categoriesInput');
+    this.filteredCategories = categoriesInputControl.valueChanges.pipe(
       startWith(null),
       map((term: string) => {
         const availableCategories = this.availableCategories.filter(
@@ -120,7 +121,7 @@ export class CreateMonitorFormComponent implements OnInit {
       input.value = '';
     }
 
-    this.formGroup.get('categories').setValue(null);
+    this.formGroup.get('categoriesInput').setValue(null);
   }
 
   removeCategory(category: string): void {
@@ -134,6 +135,6 @@ export class CreateMonitorFormComponent implements OnInit {
     if (this.selectedCategories.length < this.maxSelectedCategories) {
       this.selectedCategories.push(event.option.viewValue);
     }
-    this.formGroup.get('categories').setValue(null);
+    this.formGroup.get('categoriesInput').setValue(null);
   }
 }
