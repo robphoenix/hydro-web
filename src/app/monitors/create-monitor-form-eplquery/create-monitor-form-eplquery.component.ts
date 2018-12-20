@@ -5,9 +5,11 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Editor, EditorFromTextArea } from 'codemirror';
+import { EditorFromTextArea } from 'codemirror';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/addon/display/placeholder';
+import sqlFormatter from 'sql-formatter';
+
 declare var require: any;
 
 @Component({
@@ -15,11 +17,11 @@ declare var require: any;
   templateUrl: './create-monitor-form-eplquery.component.html',
   styleUrls: ['./create-monitor-form-eplquery.component.scss'],
 })
-export class CreateMonitorFormEplqueryComponent
-  implements OnInit, AfterViewInit {
-  editor: EditorFromTextArea;
+export class CreateMonitorFormEplqueryComponent implements AfterViewInit {
   @ViewChild('textarea')
   textarea: ElementRef;
+
+  editor: EditorFromTextArea;
   placeholder = 'Enter your EPL query here...';
   options = {
     mode: 'text/x-sql',
@@ -28,17 +30,19 @@ export class CreateMonitorFormEplqueryComponent
     theme: 'base16-light',
   };
 
-  constructor() {}
-
   ngAfterViewInit() {
     const { fromTextArea } = require('codemirror');
     this.editor = fromTextArea(this.textarea.nativeElement, this.options);
 
-    this.editor.on('change', (editor: Editor) => {
-      const value = editor.getDoc().getValue();
-      console.log({ value });
-    });
+    // I'm just going to leave this here for future me.
+    // this.editor.on('change', (editor: Editor) => {
+    //   const value = editor.getDoc().getValue();
+    //   console.log({ value });
+    // });
   }
 
-  ngOnInit() {}
+  format() {
+    const value: string = this.editor.getDoc().getValue();
+    this.editor.getDoc().setValue(sqlFormatter.format(value));
+  }
 }
