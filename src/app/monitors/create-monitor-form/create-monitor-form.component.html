@@ -41,6 +41,8 @@
     <section class="section">
       <app-create-monitor-form-query
         class="query"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['query']"
       ></app-create-monitor-form-query>
     </section>
   </form>

@@ -39,7 +39,7 @@ export class CreateMonitorFormComponent implements OnInit {
       required: `You must enter a monitor description`,
     },
     query: {
-      required: `You must enter a monitor description`,
+      required: `You must enter a monitor EPL query`,
     },
   };
 
@@ -54,7 +54,7 @@ export class CreateMonitorFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
-      categories: [this.selectedCategories],
+      query: ['', Validators.required],
     });
   }
 
@@ -69,7 +69,14 @@ export class CreateMonitorFormComponent implements OnInit {
     descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       descriptionControl.markAsDirty();
       descriptionControl.markAsTouched();
+    const queryControl = this.formGroup.get('query');
+    queryControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
+      queryControl.markAsDirty();
+      queryControl.markAsTouched();
+
+      console.log(this.formGroup);
     });
+  }
 
     const categoriesControl = this.formGroup.get('categories');
     this.filteredCategories = categoriesControl.valueChanges.pipe(
