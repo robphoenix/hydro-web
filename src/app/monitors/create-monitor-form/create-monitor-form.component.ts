@@ -38,6 +38,9 @@ export class CreateMonitorFormComponent implements OnInit {
     description: {
       required: `You must enter a monitor description`,
     },
+    query: {
+      required: `You must enter a monitor description`,
+    },
   };
 
   constructor(

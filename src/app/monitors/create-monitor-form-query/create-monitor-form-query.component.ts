@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { EditorFromTextArea } from 'codemirror';
 import 'codemirror/mode/sql/sql';
 import 'codemirror/addon/display/placeholder';
@@ -13,11 +7,11 @@ import sqlFormatter from 'sql-formatter';
 declare var require: any;
 
 @Component({
-  selector: 'app-create-monitor-form-eplquery',
-  templateUrl: './create-monitor-form-eplquery.component.html',
-  styleUrls: ['./create-monitor-form-eplquery.component.scss'],
+  selector: 'app-create-monitor-form-query',
+  templateUrl: './create-monitor-form-query.component.html',
+  styleUrls: ['./create-monitor-form-query.component.scss'],
 })
-export class CreateMonitorFormEplqueryComponent implements AfterViewInit {
+export class CreateMonitorFormQueryComponent implements AfterViewInit {
   @ViewChild('textarea')
   textarea: ElementRef;
 
