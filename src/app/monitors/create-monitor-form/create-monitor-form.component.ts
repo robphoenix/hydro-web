@@ -104,7 +104,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   private getAvailableCategories(): void {
     this.monitorsService
-      .getAllCurrentCategories()
+      .getCategories()
       .subscribe((categories: ICategory[]) => {
         this.availableCategories = categories.map((c) => c.name);
         this.loadingCategories = false;

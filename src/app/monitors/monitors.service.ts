@@ -57,11 +57,11 @@ export class MonitorsService {
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
-  public getAllCurrentActions(): Observable<IAction[]> {
+  public getActions(): Observable<IAction[]> {
     return this.http.get<IAction[]>(this.allCurrentActionsUrl, { headers });
   }
 
-  public getAllCurrentCategories(): Observable<ICategory[]> {
+  public getCategories(): Observable<ICategory[]> {
     return this.http.get<ICategory[]>(this.allCurrentCategoriesUrl, {
       headers,
     });
