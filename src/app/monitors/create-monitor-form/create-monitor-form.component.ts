@@ -38,6 +38,9 @@ export class CreateMonitorFormComponent implements OnInit {
     description: {
       required: `You must enter a monitor description`,
     },
+    query: {
+      required: `You must enter a monitor EPL query`,
+    },
   };
 
   constructor(
@@ -48,11 +51,17 @@ export class CreateMonitorFormComponent implements OnInit {
     this.getAvailableCategories();
 
     this.formGroup = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
       categories: [this.selectedCategories],
+      categoriesInput: [''],
+      query: [''],
     });
+  }
+
+  updateQuery(query: string) {
+    this.formGroup.get('query').setValue(query);
   }
 
   ngOnInit() {
@@ -66,10 +75,18 @@ export class CreateMonitorFormComponent implements OnInit {
     descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       descriptionControl.markAsDirty();
       descriptionControl.markAsTouched();
+      const form = this.formGroup.value;
+      console.log({ form });
     });
 
-    const categoriesControl = this.formGroup.get('categories');
-    this.filteredCategories = categoriesControl.valueChanges.pipe(
+    const queryControl = this.formGroup.get('query');
+    queryControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
+      queryControl.markAsDirty();
+      queryControl.markAsTouched();
+    });
+
+    const categoriesInputControl = this.formGroup.get('categoriesInput');
+    this.filteredCategories = categoriesInputControl.valueChanges.pipe(
       startWith(null),
       map((term: string) => {
         const availableCategories = this.availableCategories.filter(
@@ -110,7 +127,7 @@ export class CreateMonitorFormComponent implements OnInit {
       input.value = '';
     }
 
-    this.formGroup.get('categories').setValue(null);
+    this.formGroup.get('categoriesInput').setValue(null);
   }
 
   removeCategory(category: string): void {
@@ -124,6 +141,6 @@ export class CreateMonitorFormComponent implements OnInit {
     if (this.selectedCategories.length < this.maxSelectedCategories) {
       this.selectedCategories.push(event.option.viewValue);
     }
-    this.formGroup.get('categories').setValue(null);
+    this.formGroup.get('categoriesInput').setValue(null);
   }
 }

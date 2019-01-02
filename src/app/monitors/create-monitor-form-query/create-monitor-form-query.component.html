@@ -1,0 +1,17 @@
+<form class="query">
+  <textarea
+    #textarea
+    matInput
+    placeholder="{{placeholder}}"
+    rows="10"
+    cols="100"
+    matTextareaAutosize
+    matAutosizeMinRows="10"
+    matAutosizeMaxRows="10"
+  ></textarea>
+  <div class="button">
+    <button mat-raised-button color="accent" (click)="format()" class="format">
+      format query
+    </button>
+  </div>
+</form>

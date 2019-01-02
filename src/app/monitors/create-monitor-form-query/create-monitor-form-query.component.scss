@@ -1,0 +1,31 @@
+@import 'main';
+
+::ng-deep .CodeMirror-vscrollbar {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background: $light-grey;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $mid-grey;
+  }
+}
+
+::ng-deep pre.CodeMirror-placeholder {
+  color: $grey;
+  font-size: 16px;
+}
+
+::ng-deep .CodeMirror-linenumber,
+::ng-deep pre.CodeMirror-line {
+  font-size: 16px;
+}
+
+.button {
+  display: flex;
+
+  .format {
+    margin: 10px 0 0 auto;
+  }
+}

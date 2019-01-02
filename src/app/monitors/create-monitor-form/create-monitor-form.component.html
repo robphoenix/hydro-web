@@ -37,5 +37,13 @@
         (selectedCategory)="selectedCategory($event)"
       ></app-create-monitor-form-categories>
     </section>
+
+    <section class="section">
+      <app-create-monitor-form-query
+        class="query"
+        [validationMessages]="validationMessages['query']"
+        (enterQuery)="updateQuery($event)"
+      ></app-create-monitor-form-query>
+    </section>
   </form>
 </div>

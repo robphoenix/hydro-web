@@ -7,7 +7,7 @@
 
 <!-- this is the real form element -->
 <mat-form-field class="categories" *ngIf="!loading" [formGroup]="parent">
-  <mat-chip-list #chipList>
+  <mat-chip-list #chipList formControlName="categories">
     <mat-chip
       *ngFor="let category of selectedCategories"
       [selectable]="autocompleteOptions['selectable']"
@@ -24,7 +24,7 @@
       placeholder="Select categories"
       #categoryInput
       matInput
-      formControlName="categories"
+      formControlName="categoriesInput"
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="

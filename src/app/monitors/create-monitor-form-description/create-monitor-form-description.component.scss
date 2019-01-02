@@ -1,12 +1,13 @@
 @import 'main';
 
 .description {
-  width: 100%;
+  width: $full-width;
 }
 
 .textarea {
-  width: 100%;
+  width: $full-width;
   height: auto;
+  overflow: auto;
 
   &::-webkit-scrollbar {
     height: 4px;
