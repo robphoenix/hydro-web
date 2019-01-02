@@ -30,8 +30,7 @@ export class CreateMonitorFormComponent implements OnInit {
   loadingCategories = false;
   maxSelectedCategories = 4;
 
-  availableActions: { [group: string]: IAction[] };
-  selectedActions: IAction[];
+  availableActions: { [group: string]: IAction[] } = {};
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -152,16 +151,13 @@ export class CreateMonitorFormComponent implements OnInit {
       const groups: { [group: string]: IAction[] } = {};
 
       actions.forEach((action: IAction) => {
-        const group: string = action.group;
-        if (groups[group] === undefined) {
-          // initialise the group array if it doesn't already exist
-          groups[group] = [action];
+        if (groups[action.group] === undefined) {
+          groups[action.group] = [action];
         } else {
-          groups[group].push(action);
+          groups[action.group].push(action);
         }
       });
 
-      // sort actions
       Object.keys(groups).forEach((group: string) => {
         groups[group] = groups[group].sort((a: IAction, b: IAction) =>
           a.name.localeCompare(b.name),
@@ -170,5 +166,9 @@ export class CreateMonitorFormComponent implements OnInit {
 
       this.availableActions = groups;
     });
+  }
+
+  selectedActions(actions: IAction[]): void {
+    this.formGroup.patchValue({ actions });
   }
 }

@@ -1,1 +1,11 @@
 @import 'main';
+
+.title {
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: 20px;
+  }
+}
