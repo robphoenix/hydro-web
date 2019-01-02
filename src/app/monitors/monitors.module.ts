@@ -23,6 +23,7 @@ import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/c
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
 import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
 import { CreateMonitorFormQueryComponent } from './create-monitor-form-query/create-monitor-form-query.component';
+import { CreateMonitorFormActionsComponent } from './create-monitor-form-actions/create-monitor-form-actions.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { CreateMonitorFormQueryComponent } from './create-monitor-form-query/cre
     CreateMonitorFormDescriptionComponent,
     CreateMonitorFormCategoriesComponent,
     CreateMonitorFormQueryComponent,
+    CreateMonitorFormActionsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })
