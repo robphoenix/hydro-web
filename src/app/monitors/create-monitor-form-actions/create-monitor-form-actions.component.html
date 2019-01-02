@@ -1,0 +1,20 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let group of monitorsService.actionsGroups">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="title">
+        <mat-icon class="icon">{{
+          monitorsService.actionsIcons[group]
+        }}</mat-icon>
+        {{ group }} actions
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-selection-list (selectionChange)="selectionChange()">
+      <mat-list-option
+        *ngFor="let action of availableActions[group]"
+        [value]="action"
+      >
+        {{ action.name }}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+</mat-accordion>

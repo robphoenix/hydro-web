@@ -6,7 +6,7 @@ import {
 } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory } from '../monitor';
+import { ICategory, IAction } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 
@@ -30,6 +30,8 @@ export class CreateMonitorFormComponent implements OnInit {
   loadingCategories = false;
   maxSelectedCategories = 4;
 
+  availableActions: { [group: string]: IAction[] } = {};
+
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
       required: `You must enter a monitor name`,
@@ -49,6 +51,7 @@ export class CreateMonitorFormComponent implements OnInit {
   ) {
     this.loadingCategories = true;
     this.getAvailableCategories();
+    this.getAvailableActions();
 
     this.formGroup = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
@@ -57,6 +60,7 @@ export class CreateMonitorFormComponent implements OnInit {
       categories: [this.selectedCategories],
       categoriesInput: [''],
       query: [''],
+      actions: [[]],
     });
   }
 
@@ -75,8 +79,6 @@ export class CreateMonitorFormComponent implements OnInit {
     descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       descriptionControl.markAsDirty();
       descriptionControl.markAsTouched();
-      const form = this.formGroup.value;
-      console.log({ form });
     });
 
     const queryControl = this.formGroup.get('query');
@@ -104,7 +106,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   private getAvailableCategories(): void {
     this.monitorsService
-      .getAllCurrentCategories()
+      .getCategories()
       .subscribe((categories: ICategory[]) => {
         this.availableCategories = categories.map((c) => c.name);
         this.loadingCategories = false;
@@ -142,5 +144,31 @@ export class CreateMonitorFormComponent implements OnInit {
       this.selectedCategories.push(event.option.viewValue);
     }
     this.formGroup.get('categoriesInput').setValue(null);
+  }
+
+  getAvailableActions(): void {
+    this.monitorsService.getActions().subscribe((actions: IAction[]) => {
+      const groups: { [group: string]: IAction[] } = {};
+
+      actions.forEach((action: IAction) => {
+        if (groups[action.group] === undefined) {
+          groups[action.group] = [action];
+        } else {
+          groups[action.group].push(action);
+        }
+      });
+
+      Object.keys(groups).forEach((group: string) => {
+        groups[group] = groups[group].sort((a: IAction, b: IAction) =>
+          a.name.localeCompare(b.name),
+        );
+      });
+
+      this.availableActions = groups;
+    });
+  }
+
+  selectedActions(actions: IAction[]): void {
+    this.formGroup.patchValue({ actions });
   }
 }

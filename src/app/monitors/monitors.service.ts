@@ -1,9 +1,7 @@
 import {
   IMonitor,
   ICategory,
-  IGroup,
   IAction,
-  LDAPGroup,
   MonitorType,
   MonitorStatus,
 } from './monitor';
@@ -29,6 +27,14 @@ export class MonitorsService {
   optionsUrl = `${this.monitorsUrl}/options`;
   allCurrentActionsUrl = `${this.optionsUrl}/actions`;
   allCurrentCategoriesUrl = `${this.optionsUrl}/categories`;
+
+  readonly actionsGroups: string[] = ['block', 'email', 'store', 'other'];
+  readonly actionsIcons: { [group: string]: string } = {
+    block: 'block',
+    email: 'mail_outline',
+    store: 'check',
+    other: 'subject',
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -57,11 +63,11 @@ export class MonitorsService {
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
 
-  public getAllCurrentActions(): Observable<IAction[]> {
+  public getActions(): Observable<IAction[]> {
     return this.http.get<IAction[]>(this.allCurrentActionsUrl, { headers });
   }
 
-  public getAllCurrentCategories(): Observable<ICategory[]> {
+  public getCategories(): Observable<ICategory[]> {
     return this.http.get<ICategory[]>(this.allCurrentCategoriesUrl, {
       headers,
     });

@@ -45,5 +45,13 @@
         (enterQuery)="updateQuery($event)"
       ></app-create-monitor-form-query>
     </section>
+
+    <section class="section">
+      <app-create-monitor-form-actions
+        class="actions"
+        [availableActions]="availableActions"
+        (selectedActions)="selectedActions($event)"
+      ></app-create-monitor-form-actions>
+    </section>
   </form>
 </div>
