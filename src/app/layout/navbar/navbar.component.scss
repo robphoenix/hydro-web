@@ -2,7 +2,7 @@
 
 .toolbar {
   position: fixed;
-  z-index: 9999;
+  z-index: 900;
   top: 0;
   box-shadow: $box-shadow;
 
@@ -12,7 +12,14 @@
 
   .nav {
     margin-left: auto;
-    text-transform: uppercase;
-    letter-spacing: $tracked;
   }
+}
+
+.nav-menu {
+  z-index: 1000;
+}
+
+.nav-item {
+  text-transform: uppercase;
+  letter-spacing: $tracked;
 }
