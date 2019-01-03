@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import {
   MatChipInputEvent,
   MatAutocompleteSelectedEvent,
@@ -9,6 +14,7 @@ import { Observable } from 'rxjs';
 import { ICategory, IAction } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -24,9 +30,9 @@ export class CreateMonitorFormComponent implements OnInit {
     addOnBlur: true,
     separatorKeysCodes: [ENTER, COMMA, SPACE],
   };
-  availableCategories: string[] = [];
-  selectedCategories: string[] = [];
-  filteredCategories: Observable<string[]>;
+  availableCategories: ICategory[] = [];
+  selectedCategories: ICategory[] = [];
+  filteredCategories: Observable<ICategory[]>;
   loadingCategories = false;
   maxSelectedCategories = 4;
 
@@ -90,15 +96,18 @@ export class CreateMonitorFormComponent implements OnInit {
     const categoriesInputControl = this.formGroup.get('categoriesInput');
     this.filteredCategories = categoriesInputControl.valueChanges.pipe(
       startWith(null),
-      map((term: string) => {
+      map((term: string | ICategory) => {
         const availableCategories = this.availableCategories.filter(
-          (category: string) => !this.selectedCategories.includes(category),
+          (category: ICategory) =>
+            !this.selectedCategories
+              .map((selected: ICategory) => selected.id)
+              .includes(category.id),
         );
-        if (!term) {
+        if (!term || typeof term !== 'string') {
           return availableCategories;
         }
-        return availableCategories.filter((category: string) =>
-          category.toLowerCase().includes(term.toLowerCase()),
+        return availableCategories.filter((category: ICategory) =>
+          category.name.toLowerCase().includes(term.toLowerCase()),
         );
       }),
     );
@@ -108,42 +117,31 @@ export class CreateMonitorFormComponent implements OnInit {
     this.monitorsService
       .getCategories()
       .subscribe((categories: ICategory[]) => {
-        this.availableCategories = categories.map((c) => c.name);
+        this.availableCategories = categories;
         this.loadingCategories = false;
       });
   }
 
-  addCategory(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = (event.value || '').trim();
-
-    if (
-      value &&
-      !this.selectedCategories.includes(value) &&
-      this.selectedCategories.length < this.maxSelectedCategories
-    ) {
-      this.selectedCategories.push(value);
-    }
-
-    if (input) {
-      input.value = '';
-    }
-
-    this.formGroup.get('categoriesInput').setValue(null);
-  }
-
-  removeCategory(category: string): void {
-    const index = this.selectedCategories.indexOf(category);
-    if (index >= 0) {
-      this.selectedCategories.splice(index, 1);
+  removeCategory(category: ICategory): void {
+    this.selectedCategories = this.selectedCategories.filter(
+      (selected: ICategory) => selected.id !== category.id,
+    );
+    const ctrl = this.formGroup.get('categoriesInput');
+    if (ctrl.disabled) {
+      ctrl.enable();
     }
   }
 
   selectedCategory(event: MatAutocompleteSelectedEvent): void {
     if (this.selectedCategories.length < this.maxSelectedCategories) {
-      this.selectedCategories.push(event.option.viewValue);
+      this.selectedCategories.push(event.option.value);
     }
-    this.formGroup.get('categoriesInput').setValue(null);
+
+    const ctrl = this.formGroup.get('categoriesInput');
+    if (this.selectedCategories.length >= this.maxSelectedCategories) {
+      ctrl.disable();
+    }
+    ctrl.setValue(null);
   }
 
   getAvailableActions(): void {

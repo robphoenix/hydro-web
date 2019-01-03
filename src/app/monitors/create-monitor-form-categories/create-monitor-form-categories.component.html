@@ -13,8 +13,9 @@
       [selectable]="autocompleteOptions['selectable']"
       [removable]="autocompleteOptions['removable']"
       (removed)="remove(category)"
+      color="accent"
     >
-      {{ category }}
+      {{ category.name }}
       <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
         cancel
       </mat-icon>
@@ -30,14 +31,12 @@
       [matChipInputSeparatorKeyCodes]="
         autocompleteOptions['separatorKeysCodes']
       "
-      [matChipInputAddOnBlur]="autocompleteOptions['addOnBlur']"
-      (matChipInputTokenEnd)="add($event)"
     />
   </mat-chip-list>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
     <mat-option *ngFor="let category of availableCategories" [value]="category">
-      {{ category }}
+      {{ category.name }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
