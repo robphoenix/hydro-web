@@ -5,7 +5,7 @@
       <span> monitors </span>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
-    <mat-menu #monitors="matMenu" class="nav-menu">
+    <mat-menu #monitors="matMenu" class="nav-menu" [overlapTrigger]="false">
       <a mat-menu-item routerLink="/monitors/standard">
         <mat-icon>flash_on</mat-icon>
         <span> Standard Monitors </span>
@@ -28,7 +28,7 @@
       <mat-icon>account_circle</mat-icon>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
-    <mat-menu #user="matMenu" class="nav-menu">
+    <mat-menu #user="matMenu" class="nav-menu" [overlapTrigger]="false">
       <a mat-button (click)="authService.logout()">
         <mat-icon>exit_to_app</mat-icon>
         <span> Log Out {{ authService.userDisplayName }} </span>
