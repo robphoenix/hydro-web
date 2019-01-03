@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
@@ -15,6 +14,7 @@ import {
   MatAutocomplete,
 } from '@angular/material';
 import { Observable } from 'rxjs';
+import { ICategory } from '../monitor';
 
 @Component({
   selector: 'app-create-monitor-form-categories',
@@ -29,38 +29,30 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges {
   loading: boolean;
 
   @Input()
-  selectedCategories: string[];
+  selectedCategories: ICategory[];
 
   @Input()
   autocompleteOptions: { [key: string]: any };
 
   @Input()
-  filteredCategories: Observable<string[]>;
+  filteredCategories: Observable<ICategory[]>;
 
   @Output()
-  removeCategory = new EventEmitter<string>();
-
-  @Output()
-  addCategory = new EventEmitter<MatChipInputEvent>();
+  removeCategory = new EventEmitter<ICategory>();
 
   @Output()
   selectedCategory = new EventEmitter<MatAutocompleteSelectedEvent>();
 
-  availableCategories: string[];
+  availableCategories: ICategory[];
 
   @ViewChild('categoryInput')
-  categoryInput: ElementRef<HTMLInputElement>;
+  categoryInput: ElementRef;
+
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
 
-  remove(category: string) {
+  remove(category: ICategory) {
     this.removeCategory.emit(category);
-  }
-
-  add(event: MatChipInputEvent) {
-    if (!this.matAutocomplete.isOpen) {
-      this.addCategory.emit(event);
-    }
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
