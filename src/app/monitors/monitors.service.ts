@@ -4,6 +4,7 @@ import {
   IAction,
   MonitorType,
   MonitorStatus,
+  IGroup,
 } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -74,8 +75,8 @@ export class MonitorsService {
     });
   }
 
-  public getGroups(): Observable<IAction[]> {
-    return this.http.get<IAction[]>(this.groupsUrl, { headers });
+  public getGroups(): Observable<IGroup[]> {
+    return this.http.get<IGroup[]>(this.groupsUrl, { headers });
   }
 
   /**

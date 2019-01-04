@@ -1,4 +1,4 @@
-import { LDAPGroup } from '../monitors/monitor';
+import { IGroup } from '../monitors/monitor';
 
 /**
  * Describes the user.
@@ -9,5 +9,5 @@ import { LDAPGroup } from '../monitors/monitor';
 export interface IUser {
   username: string;
   displayName: string;
-  groups: LDAPGroup[];
+  groups: IGroup[];
 }
