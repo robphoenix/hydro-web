@@ -37,20 +37,32 @@
       ></app-create-monitor-form-categories>
     </section>
 
-    <section class="section">
-      <app-create-monitor-form-query
-        class="query"
-        [validationMessages]="validationMessages['query']"
-        (enterQuery)="updateQuery($event)"
-      ></app-create-monitor-form-query>
-    </section>
+    <!--
+      <section class="section">
+        <app-create-monitor-form-query
+          class="query"
+          [validationMessages]="validationMessages['query']"
+          (enterQuery)="updateQuery($event)"
+        ></app-create-monitor-form-query>
+      </section>
+    -->
 
     <section class="section">
-      <app-create-monitor-form-actions
-        class="actions"
-        [availableActions]="availableActions"
-        (selectedActions)="selectedActions($event)"
-      ></app-create-monitor-form-actions>
+      <app-create-monitor-form-groups
+        class="groups"
+        [parent]="formGroup"
+        [availableGroups]="availableGroups"
+      ></app-create-monitor-form-groups>
     </section>
+
+    <!--
+      <section class="section">
+        <app-create-monitor-form-actions
+          class="actions"
+          [availableActions]="availableActions"
+          (selectedActions)="selectedActions($event)"
+        ></app-create-monitor-form-actions>
+      </section>
+    -->
   </form>
 </div>

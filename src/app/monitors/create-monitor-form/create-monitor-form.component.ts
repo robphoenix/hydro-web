@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
-import {
-  MatChipInputEvent,
-  MatAutocompleteSelectedEvent,
-} from '@angular/material';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction } from '../monitor';
+import { ICategory, IAction, IGroup } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
-import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -38,6 +29,9 @@ export class CreateMonitorFormComponent implements OnInit {
 
   availableActions: { [group: string]: IAction[] } = {};
 
+  availableGroups: IGroup[];
+  selectedGroups: IGroup[];
+
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
       required: `You must enter a monitor name`,
@@ -49,6 +43,9 @@ export class CreateMonitorFormComponent implements OnInit {
     query: {
       required: `You must enter a monitor EPL query`,
     },
+    groups: {
+      required: `You must grant access to at least one group`,
+    },
   };
 
   constructor(
@@ -58,6 +55,7 @@ export class CreateMonitorFormComponent implements OnInit {
     this.loadingCategories = true;
     this.getAvailableCategories();
     this.getAvailableActions();
+    this.getAvailableGroups();
 
     this.formGroup = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
@@ -67,6 +65,7 @@ export class CreateMonitorFormComponent implements OnInit {
       categoriesInput: [''],
       query: [''],
       actions: [[]],
+      groups: [this.selectedGroups, Validators.required],
     });
   }
 
@@ -168,5 +167,11 @@ export class CreateMonitorFormComponent implements OnInit {
 
   selectedActions(actions: IAction[]): void {
     this.formGroup.patchValue({ actions });
+  }
+
+  getAvailableGroups(): void {
+    this.monitorsService.getGroups().subscribe((groups: IGroup[]) => {
+      this.availableGroups = groups;
+    });
   }
 }
