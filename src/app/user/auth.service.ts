@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
 import { ILoginResponse } from './login-response';
+import { LDAPGroup } from '../monitors/monitor';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -108,10 +109,12 @@ export class AuthService {
             // set the current user
             const {
               username: currentUsername,
+              groups,
               displayName,
             } = this.jwtHelper.decodeToken(token) as IAccessToken;
 
             this.username = currentUsername;
+            this.userGroups = groups;
             this.userDisplayName = displayName;
             // initialise the subscriptions
             this.initSubscriptions();
@@ -274,6 +277,14 @@ export class AuthService {
       this.currentUser.username = username;
     }
     return this.currentUser.username;
+  }
+
+  set userGroups(groups: LDAPGroup[]) {
+    this.currentUser.groups = groups;
+  }
+
+  get userGroups(): LDAPGroup[] {
+    return this.currentUser.groups;
   }
 
   /**
