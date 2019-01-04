@@ -17,8 +17,10 @@ export class CellMonitorComponent implements OnInit {
   status: MonitorStatus;
 
   online: boolean;
+  offline: boolean;
 
   ngOnInit(): void {
     this.online = this.status === MonitorStatus.Online;
+    this.offline = this.status === MonitorStatus.Offline;
   }
 }
