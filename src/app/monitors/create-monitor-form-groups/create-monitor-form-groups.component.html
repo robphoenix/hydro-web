@@ -1,0 +1,41 @@
+<!--
+  this is a dummy input that is displayed until the categories are fetched
+-->
+<mat-form-field *ngIf="loading" class="groups">
+  <input placeholder="Loading groups..." matInput />
+</mat-form-field>
+
+<!-- this is the real form element -->
+<mat-form-field class="groups" *ngIf="!loading" [formGroup]="parent">
+  <mat-chip-list #chipList formControlName="groups">
+    <mat-chip
+      *ngFor="let group of selectedGroups"
+      [selectable]="autocompleteOptions['selectable']"
+      [removable]="autocompleteOptions['removable']"
+      (removed)="remove(group)"
+    >
+      {{ group.name }}
+      <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
+        cancel
+      </mat-icon>
+    </mat-chip>
+
+    <input
+      placeholder="Select Groups"
+      #inputElement
+      matInput
+      formControlName="groupsInput"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="
+        autocompleteOptions['separatorKeysCodes']
+      "
+    />
+  </mat-chip-list>
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let group of availableGroups" [value]="group">
+      {{ group.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

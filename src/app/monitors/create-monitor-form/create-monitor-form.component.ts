@@ -15,12 +15,13 @@ import { debounceTime, startWith, map } from 'rxjs/operators';
 export class CreateMonitorFormComponent implements OnInit {
   formGroup: FormGroup;
 
-  categoriesAutocompleteOptions = {
+  autocompleteOptions = {
     selectable: true,
     removable: true,
     addOnBlur: true,
     separatorKeysCodes: [ENTER, COMMA, SPACE],
   };
+
   availableCategories: ICategory[] = [];
   selectedCategories: ICategory[] = [];
   filteredCategories: Observable<ICategory[]>;
@@ -29,8 +30,10 @@ export class CreateMonitorFormComponent implements OnInit {
 
   availableActions: { [group: string]: IAction[] } = {};
 
-  availableGroups: IGroup[];
-  selectedGroups: IGroup[];
+  availableGroups: IGroup[] = [];
+  selectedGroups: IGroup[] = [];
+  filteredGroups: Observable<IGroup[]>;
+  loadingGroups = false;
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -53,6 +56,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private monitorsService: MonitorsService,
   ) {
     this.loadingCategories = true;
+    this.loadingGroups = true;
     this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
@@ -65,7 +69,8 @@ export class CreateMonitorFormComponent implements OnInit {
       categoriesInput: [''],
       query: [''],
       actions: [[]],
-      groups: [this.selectedGroups, Validators.required],
+      groups: [this.selectedGroups],
+      groupsInput: [''],
     });
   }
 
@@ -96,17 +101,36 @@ export class CreateMonitorFormComponent implements OnInit {
     this.filteredCategories = categoriesInputControl.valueChanges.pipe(
       startWith(null),
       map((term: string | ICategory) => {
-        const availableCategories = this.availableCategories.filter(
+        const available = this.availableCategories.filter(
           (category: ICategory) =>
             !this.selectedCategories
               .map((selected: ICategory) => selected.id)
               .includes(category.id),
         );
         if (!term || typeof term !== 'string') {
-          return availableCategories;
+          return available;
         }
-        return availableCategories.filter((category: ICategory) =>
+        return available.filter((category: ICategory) =>
           category.name.toLowerCase().includes(term.toLowerCase()),
+        );
+      }),
+    );
+
+    const groupsInputControl = this.formGroup.get('groupsInput');
+    this.filteredGroups = groupsInputControl.valueChanges.pipe(
+      startWith(null),
+      map((term: string | IGroup) => {
+        const available = this.availableGroups.filter(
+          (group: IGroup) =>
+            !this.selectedGroups
+              .map((selected: IGroup) => selected.id)
+              .includes(group.id),
+        );
+        if (!term || typeof term !== 'string') {
+          return available;
+        }
+        return available.filter((group: IGroup) =>
+          group.name.toLowerCase().includes(term.toLowerCase()),
         );
       }),
     );
@@ -172,6 +196,18 @@ export class CreateMonitorFormComponent implements OnInit {
   getAvailableGroups(): void {
     this.monitorsService.getGroups().subscribe((groups: IGroup[]) => {
       this.availableGroups = groups;
+      this.loadingGroups = false;
     });
+  }
+
+  removeGroup(group: IGroup): void {
+    this.selectedGroups = this.selectedGroups.filter(
+      (selected: IGroup) => selected.id !== group.id,
+    );
+  }
+
+  selectedGroup(event: MatAutocompleteSelectedEvent): void {
+    this.selectedGroups.push(event.option.value);
+    this.formGroup.get('groupsInput').setValue(null);
   }
 }

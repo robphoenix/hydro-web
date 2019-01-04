@@ -30,7 +30,7 @@
         [parent]="formGroup"
         [loading]="loadingCategories"
         [selectedCategories]="selectedCategories"
-        [autocompleteOptions]="categoriesAutocompleteOptions"
+        [autocompleteOptions]="autocompleteOptions"
         [filteredCategories]="filteredCategories"
         (removeCategory)="removeCategory($event)"
         (selectedCategory)="selectedCategory($event)"
@@ -51,7 +51,12 @@
       <app-create-monitor-form-groups
         class="groups"
         [parent]="formGroup"
-        [availableGroups]="availableGroups"
+        [loading]="loadingCategories"
+        [selectedGroups]="selectedGroups"
+        [autocompleteOptions]="autocompleteOptions"
+        [filteredGroups]="filteredGroups"
+        (removeGroup)="removeGroup($event)"
+        (selectedGroup)="selectedGroup($event)"
       ></app-create-monitor-form-groups>
     </section>
 
