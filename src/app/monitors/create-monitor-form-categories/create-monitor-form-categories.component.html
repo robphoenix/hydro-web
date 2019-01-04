@@ -13,7 +13,6 @@
       [selectable]="autocompleteOptions['selectable']"
       [removable]="autocompleteOptions['removable']"
       (removed)="remove(category)"
-      color="accent"
     >
       {{ category.name }}
       <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
