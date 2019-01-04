@@ -25,19 +25,6 @@
     </section>
 
     <section class="section">
-      <app-create-monitor-form-categories
-        class="categories"
-        [parent]="formGroup"
-        [loading]="loadingCategories"
-        [selectedCategories]="selectedCategories"
-        [autocompleteOptions]="categoriesAutocompleteOptions"
-        [filteredCategories]="filteredCategories"
-        (removeCategory)="removeCategory($event)"
-        (selectedCategory)="selectedCategory($event)"
-      ></app-create-monitor-form-categories>
-    </section>
-
-    <section class="section">
       <app-create-monitor-form-query
         class="query"
         [validationMessages]="validationMessages['query']"
@@ -46,11 +33,39 @@
     </section>
 
     <section class="section">
-      <app-create-monitor-form-actions
-        class="actions"
-        [availableActions]="availableActions"
-        (selectedActions)="selectedActions($event)"
-      ></app-create-monitor-form-actions>
+      <app-create-monitor-form-categories
+        class="categories"
+        [parent]="formGroup"
+        [loading]="loadingCategories"
+        [selectedCategories]="selectedCategories"
+        [autocompleteOptions]="autocompleteOptions"
+        [filteredCategories]="filteredCategories"
+        (removeCategory)="removeCategory($event)"
+        (selectedCategory)="selectedCategory($event)"
+      ></app-create-monitor-form-categories>
     </section>
+
+    <section class="section">
+      <app-create-monitor-form-groups
+        class="groups"
+        [parent]="formGroup"
+        [loading]="loadingGroups"
+        [selectedGroups]="selectedGroups"
+        [autocompleteOptions]="autocompleteOptions"
+        [filteredGroups]="filteredGroups"
+        (removeGroup)="removeGroup($event)"
+        (selectedGroup)="selectedGroup($event)"
+      ></app-create-monitor-form-groups>
+    </section>
+
+    <!--
+      <section class="section">
+        <app-create-monitor-form-actions
+          class="actions"
+          [availableActions]="availableActions"
+          (selectedActions)="selectedActions($event)"
+        ></app-create-monitor-form-actions>
+      </section>
+    -->
   </form>
 </div>

@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { IAction } from '../monitor';
-import { MatSelectionList } from '@angular/material';
+import { MatSelectionList, MatListOption } from '@angular/material';
 import { MonitorsService } from '../monitors.service';
 
 @Component({
@@ -32,7 +32,9 @@ export class CreateMonitorFormActionsComponent {
       (prev: IAction[], curr: MatSelectionList) => {
         return [
           ...prev,
-          ...curr.selectedOptions.selected.map((option) => option.value),
+          ...curr.selectedOptions.selected.map(
+            (option: MatListOption) => option.value,
+          ),
         ];
       },
       [],

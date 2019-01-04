@@ -25,6 +25,7 @@ import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-cate
 import { CreateMonitorFormQueryComponent } from './create-monitor-form-query/create-monitor-form-query.component';
 import { CreateMonitorFormActionsComponent } from './create-monitor-form-actions/create-monitor-form-actions.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
+import { CreateMonitorFormGroupsComponent } from './create-monitor-form-groups/create-monitor-form-groups.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { AddMonitorComponent } from './add-monitor/add-monitor.component';
     CreateMonitorFormQueryComponent,
     CreateMonitorFormActionsComponent,
     AddMonitorComponent,
+    CreateMonitorFormGroupsComponent,
   ],
   entryComponents: [MonitorDeleteDialogComponent],
 })

@@ -4,6 +4,7 @@ import {
   IAction,
   MonitorType,
   MonitorStatus,
+  IGroup,
 } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -25,8 +26,9 @@ export class MonitorsService {
   baseUrl = 'http://mn2splmfe001sd0:6080';
   monitorsUrl = `${this.baseUrl}/p/monitors`;
   optionsUrl = `${this.monitorsUrl}/options`;
-  allCurrentActionsUrl = `${this.optionsUrl}/actions`;
-  allCurrentCategoriesUrl = `${this.optionsUrl}/categories`;
+  actionsUrl = `${this.optionsUrl}/actions`;
+  categoriesUrl = `${this.optionsUrl}/categories`;
+  groupsUrl = `${this.optionsUrl}/groups`;
 
   readonly actionsGroups: string[] = ['block', 'email', 'store', 'other'];
   readonly actionsIcons: { [group: string]: string } = {
@@ -64,13 +66,17 @@ export class MonitorsService {
   }
 
   public getActions(): Observable<IAction[]> {
-    return this.http.get<IAction[]>(this.allCurrentActionsUrl, { headers });
+    return this.http.get<IAction[]>(this.actionsUrl, { headers });
   }
 
   public getCategories(): Observable<ICategory[]> {
-    return this.http.get<ICategory[]>(this.allCurrentCategoriesUrl, {
+    return this.http.get<ICategory[]>(this.categoriesUrl, {
       headers,
     });
+  }
+
+  public getGroups(): Observable<IGroup[]> {
+    return this.http.get<IGroup[]>(this.groupsUrl, { headers });
   }
 
   /**

@@ -7,13 +7,13 @@
   &:focus,
   &:active {
     .name {
-      color: $material-pink;
+      color: mat-color($accent);
     }
   }
 
   &:visited {
     .name {
-      color: $material-indigo;
+      color: mat-color($primary);
     }
   }
 }

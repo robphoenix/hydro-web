@@ -1,30 +1,30 @@
 <!--
   this is a dummy input that is displayed until the categories are fetched
 -->
-<mat-form-field *ngIf="loading" class="categories">
-  <input placeholder="Loading categories..." matInput />
+<mat-form-field *ngIf="loading" class="groups">
+  <input placeholder="Loading groups..." matInput />
 </mat-form-field>
 
 <!-- this is the real form element -->
-<mat-form-field class="categories" *ngIf="!loading" [formGroup]="parent">
-  <mat-chip-list #chipList formControlName="categories">
+<mat-form-field class="groups" *ngIf="!loading" [formGroup]="parent">
+  <mat-chip-list #chipList formControlName="groups">
     <mat-chip
-      *ngFor="let category of selectedCategories"
+      *ngFor="let group of selectedGroups"
       [selectable]="autocompleteOptions['selectable']"
       [removable]="autocompleteOptions['removable']"
-      (removed)="remove(category)"
+      (removed)="remove(group)"
     >
-      {{ category.name }}
+      {{ group.name }}
       <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
         cancel
       </mat-icon>
     </mat-chip>
 
     <input
-      placeholder="Select Categories"
-      #categoryInput
+      placeholder="Select Groups"
+      #inputElement
       matInput
-      formControlName="categoriesInput"
+      formControlName="groupsInput"
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="
@@ -34,8 +34,8 @@
   </mat-chip-list>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let category of availableCategories" [value]="category">
-      {{ category.name }}
+    <mat-option *ngFor="let group of availableGroups" [value]="group">
+      {{ group.name }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from './user';
 import { Router } from '@angular/router';
 import { ILoginResponse } from './login-response';
+import { IGroup } from '../monitors/monitor';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -274,6 +275,14 @@ export class AuthService {
       this.currentUser.username = username;
     }
     return this.currentUser.username;
+  }
+
+  set userGroups(groups: IGroup[]) {
+    this.currentUser.groups = groups;
+  }
+
+  get userGroups(): IGroup[] {
+    return this.currentUser.groups;
   }
 
   /**
