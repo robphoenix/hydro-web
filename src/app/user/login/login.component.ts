@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       required: `You must enter your bet365 username`,
     },
     password: {
-      required: `Please enter your bet365 password`,
+      required: `You must enter your bet365 password`,
       minlength: `Password must be at least ${
         this.minPasswordLength
       } characters`,
