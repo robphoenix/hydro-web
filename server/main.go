@@ -4,58 +4,26 @@
 package main
 
 import (
-	"encoding/json"
-	"flag"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 )
 
-var (
-	index bool
-	api   bool
-)
-
-func init() {
-	flag.BoolVar(&index, "index", true, "serve up the hydro-web index.html file")
-	flag.BoolVar(&api, "api", true, "serve up the hydro-web mock JSON API")
-	flag.Parse()
-}
-
 func main() {
-	// Router for Angular client
 	staticRouter := mux.NewRouter()
 	staticRouter.PathPrefix("/").Handler(wrapHandler(http.FileServer(http.Dir("../dist/hydro-web"))))
 
-	// Router for JSON Mock API
-	jsonRouter := mux.NewRouter()
-	jsonRouter.HandleFunc("/search", searchData).Methods("GET")
-
 	shutdown := make(chan bool)
 
-	// Serve both routers in different ports
-	if index {
-		go func() {
-			log.Println("Serving static content on 4200")
-			err := http.ListenAndServe(":4200", staticRouter)
-			if err != nil {
-				panic("ListenAndServe: " + err.Error())
-			}
-			shutdown <- true
-		}()
-	}
-	if api {
-		go func() {
-			log.Println("Serving json mock data on 3000")
-			err := http.ListenAndServe(":3000", &MyServer{jsonRouter})
-			if err != nil {
-				panic("ListenAndServe: " + err.Error())
-			}
-			shutdown <- true
-		}()
-	}
+	go func() {
+		log.Println("Serving static content on 4200")
+		err := http.ListenAndServe(":4200", staticRouter)
+		if err != nil {
+			panic("ListenAndServe: " + err.Error())
+		}
+		shutdown <- true
+	}()
 	// Blocks and waits until it receives a bool
 	<-shutdown
 }
@@ -109,19 +77,4 @@ func (s *MyServer) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	}
 	// Lets Gorilla work
 	s.r.ServeHTTP(rw, req)
-}
-
-func searchData(w http.ResponseWriter, r *http.Request) {
-	log.Printf("GET /search")
-
-	f, err := os.Open("./data/search.json")
-	if err != nil {
-		log.Println("error opening search.json")
-	}
-	defer f.Close()
-
-	var data interface{}
-
-	json.NewDecoder(f).Decode(&data)
-	json.NewEncoder(w).Encode(data)
 }
