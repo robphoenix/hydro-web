@@ -46,7 +46,7 @@
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="monitor">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <mat-icon class="monitor-icon">flash_on</mat-icon>
+          <app-icon [type]="'monitor'"></app-icon>
           <h3 class="title">Monitor</h3>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor">
@@ -62,7 +62,7 @@
 
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="actions">
-          <mat-icon class="action-icon">report</mat-icon>
+          <app-icon [type]="'actions'"></app-icon>
           <h3 class="title">Actions</h3>
           <button
             mat-icon-button
@@ -156,7 +156,7 @@
 
       <ng-container matColumnDef="categories">
         <mat-header-cell *matHeaderCellDef class="categories">
-          <mat-icon class="category-icon">category</mat-icon>
+          <app-icon [type]="'categories'"></app-icon>
           <h3 class="title">Categories</h3>
           <button
             *ngIf="allCurrentCategories.length"
