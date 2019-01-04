@@ -25,6 +25,14 @@
     </section>
 
     <section class="section">
+      <app-create-monitor-form-query
+        class="query"
+        [validationMessages]="validationMessages['query']"
+        (enterQuery)="updateQuery($event)"
+      ></app-create-monitor-form-query>
+    </section>
+
+    <section class="section">
       <app-create-monitor-form-categories
         class="categories"
         [parent]="formGroup"
@@ -37,21 +45,11 @@
       ></app-create-monitor-form-categories>
     </section>
 
-    <!--
-      <section class="section">
-        <app-create-monitor-form-query
-          class="query"
-          [validationMessages]="validationMessages['query']"
-          (enterQuery)="updateQuery($event)"
-        ></app-create-monitor-form-query>
-      </section>
-    -->
-
     <section class="section">
       <app-create-monitor-form-groups
         class="groups"
         [parent]="formGroup"
-        [loading]="loadingCategories"
+        [loading]="loadingGroups"
         [selectedGroups]="selectedGroups"
         [autocompleteOptions]="autocompleteOptions"
         [filteredGroups]="filteredGroups"
