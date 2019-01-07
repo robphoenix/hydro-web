@@ -1,5 +1,5 @@
 <div class="form-fields">
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (ngSubmit)="addMonitor()">
     <section class="section">
       <app-create-monitors-form-name
         class="name"
@@ -67,5 +67,13 @@
         ></app-create-monitor-form-actions>
       </section>
     -->
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="!formGroup.valid"
+    >
+      add monitor
+    </button>
   </form>
 </div>

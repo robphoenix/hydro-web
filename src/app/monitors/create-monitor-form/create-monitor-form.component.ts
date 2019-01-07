@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction, IGroup } from '../monitor';
+import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -54,6 +55,7 @@ export class CreateMonitorFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
+    private router: Router,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -129,6 +131,34 @@ export class CreateMonitorFormComponent implements OnInit {
           group.name.toLowerCase().includes(term.toLowerCase()),
         );
       }),
+    );
+  }
+
+  addMonitor() {
+    const {
+      name,
+      description,
+      query,
+      categories,
+      groups,
+    } = this.formGroup.value;
+
+    const monitor = {
+      name,
+      description,
+      query,
+      categories,
+      groups,
+    } as IMonitor;
+
+    this.monitorsService.addMonitor(monitor).subscribe(
+      (res: IMonitor) => {
+        this.formGroup.reset();
+        this.router.navigate(['/monitors/standard']);
+      },
+      (err: string) => {
+        console.log({ err });
+      },
     );
   }
 
