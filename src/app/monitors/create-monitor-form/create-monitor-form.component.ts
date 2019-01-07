@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatSnackBar } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
@@ -56,6 +56,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
     private router: Router,
+    public snackBar: MatSnackBar,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -153,8 +154,12 @@ export class CreateMonitorFormComponent implements OnInit {
 
     this.monitorsService.addMonitor(monitor).subscribe(
       (res: IMonitor) => {
+        const { id } = res;
         this.formGroup.reset();
-        this.router.navigate(['/monitors/standard']);
+        this.router.navigate([`/monitors/${id}`]);
+        this.snackBar.open(`Monitor ${name} created.`, '', {
+          duration: 2000,
+        });
       },
       (err: string) => {
         console.log({ err });
