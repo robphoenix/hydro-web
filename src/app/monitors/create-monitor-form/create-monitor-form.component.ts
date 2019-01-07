@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import {
+  MatAutocompleteSelectedEvent,
+  MatSnackBar,
+  MatDialog,
+} from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction, IGroup } from '../monitor';
+import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -54,6 +60,9 @@ export class CreateMonitorFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
+    private router: Router,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -67,15 +76,11 @@ export class CreateMonitorFormComponent implements OnInit {
       description: ['', Validators.required],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      query: [''],
+      query: ['', Validators.required],
       actions: [[]],
       groups: [this.selectedGroups],
       groupsInput: [''],
     });
-  }
-
-  updateQuery(query: string) {
-    this.formGroup.get('query').setValue(query);
   }
 
   ngOnInit() {
@@ -133,6 +138,40 @@ export class CreateMonitorFormComponent implements OnInit {
           group.name.toLowerCase().includes(term.toLowerCase()),
         );
       }),
+    );
+  }
+
+  addMonitor() {
+    const {
+      name,
+      description,
+      query,
+      categories,
+      groups,
+    } = this.formGroup.value;
+
+    const monitor = {
+      name,
+      description,
+      query,
+      categories,
+      groups,
+    } as IMonitor;
+
+    this.monitorsService.addMonitor(monitor).subscribe(
+      (res: IMonitor) => {
+        const { id } = res;
+        this.formGroup.reset();
+        this.router.navigate([`/monitors/${id}`]);
+        this.snackBar.open(`Monitor ${name} created.`, '', {
+          duration: 2000,
+        });
+      },
+      (err: string) => {
+        this.dialog.open(CreateMonitorErrorDialogComponent, {
+          data: { err },
+        });
+      },
     );
   }
 

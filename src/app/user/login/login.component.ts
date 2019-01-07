@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { ILoginResponse } from '../login-response';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,10 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)
       .subscribe(
-        () => {
+        (res: ILoginResponse) => {
+          // TODO: https://jira/browse/SWKFMP-2533
+          console.log({ res });
+
           this.router.navigateByUrl(
             this.authService.redirectUrl || '/monitors',
           );

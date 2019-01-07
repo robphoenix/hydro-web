@@ -39,14 +39,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           // The backend returned an unsuccessful response code.
           // Until otherwise necessary, we're only going to deal
           // with the first error message sent back from the server
-          const [{ message }] = error.error as IErrorMessage[];
-          msg = message;
+          const [{ cause }] = error.error as IErrorMessage[];
+          msg = cause;
         } else if (!error.status) {
           msg = 'Unknown error. Please check your network connection.';
         } else {
           // A client-side or network error occurred. Handle it accordingly.
           msg = error.message;
         }
+
         // return an observable with a user-facing error message
         return throwError(msg);
       }),

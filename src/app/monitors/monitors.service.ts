@@ -95,6 +95,12 @@ export class MonitorsService {
       );
   }
 
+  public addMonitor(body: IMonitor): Observable<IMonitor> {
+    return this.http
+      .post<IMonitor>(this.monitorsUrl, body, { headers })
+      .pipe(tap((monitor: IMonitor) => monitor));
+  }
+
   public allCurrentCategories(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(
