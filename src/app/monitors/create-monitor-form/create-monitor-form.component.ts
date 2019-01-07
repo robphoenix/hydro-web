@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatSnackBar } from '@angular/material';
+import {
+  MatAutocompleteSelectedEvent,
+  MatSnackBar,
+  MatDialog,
+} from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -57,6 +62,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private monitorsService: MonitorsService,
     private router: Router,
     public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -162,7 +168,9 @@ export class CreateMonitorFormComponent implements OnInit {
         });
       },
       (err: string) => {
-        console.log({ err });
+        this.dialog.open(CreateMonitorErrorDialogComponent, {
+          data: { err },
+        });
       },
     );
   }
