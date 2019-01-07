@@ -1,17 +1,16 @@
-<form class="query">
+<mat-form-field [formGroup]="parent" class="query">
   <textarea
-    #textarea
+    class="textarea"
     matInput
-    placeholder="{{placeholder}}"
-    rows="10"
+    placeholder="Enter your EPL query here..."
+    formControlName="query"
+    rows="15"
     cols="100"
     matTextareaAutosize
-    matAutosizeMinRows="10"
-    matAutosizeMaxRows="10"
+    matAutosizeMinRows="15"
+    matAutosizeMaxRows="15"
   ></textarea>
-  <div class="button">
-    <button mat-raised-button color="accent" (click)="format()" class="format">
-      format query
-    </button>
-  </div>
-</form>
+  <mat-error *ngIf="parent.get('query').hasError('required')">
+    {{ validationMessages['required'] }}
+  </mat-error>
+</mat-form-field>

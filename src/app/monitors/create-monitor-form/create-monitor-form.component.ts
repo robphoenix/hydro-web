@@ -67,15 +67,11 @@ export class CreateMonitorFormComponent implements OnInit {
       description: ['', Validators.required],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      query: [''],
+      query: ['', Validators.required],
       actions: [[]],
       groups: [this.selectedGroups],
       groupsInput: [''],
     });
-  }
-
-  updateQuery(query: string) {
-    this.formGroup.get('query').setValue(query);
   }
 
   ngOnInit() {

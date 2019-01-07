@@ -27,8 +27,8 @@
     <section class="section">
       <app-create-monitor-form-query
         class="query"
+        [parent]="formGroup"
         [validationMessages]="validationMessages['query']"
-        (enterQuery)="updateQuery($event)"
       ></app-create-monitor-form-query>
     </section>
 
