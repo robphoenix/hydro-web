@@ -25,6 +25,9 @@ export class CreateMonitorFormGroupsComponent implements OnChanges {
   parent: FormGroup;
 
   @Input()
+  placeholder: string;
+
+  @Input()
   loading: boolean;
 
   @Input()
@@ -36,6 +39,9 @@ export class CreateMonitorFormGroupsComponent implements OnChanges {
   @Input()
   filteredGroups: Observable<IGroup[]>;
 
+  @Input()
+  validationMessages: { [key: string]: string };
+
   @Output()
   removeGroup = new EventEmitter<IGroup>();
 
@@ -43,6 +49,8 @@ export class CreateMonitorFormGroupsComponent implements OnChanges {
   selectedGroup = new EventEmitter<MatAutocompleteSelectedEvent>();
 
   availableGroups: IGroup[];
+  // tslint:disable-next-line:max-line-length
+  hint = `Selected groups will have access to this monitor. By default, a monitor will only be visible to members of the group that created the monitor.`;
 
   @ViewChild('inputElement')
   inputElement: ElementRef;

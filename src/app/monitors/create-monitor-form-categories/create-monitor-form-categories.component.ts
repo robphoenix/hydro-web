@@ -6,6 +6,7 @@ import {
   OnChanges,
   ViewChild,
   ElementRef,
+  OnInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -21,7 +22,7 @@ import { ICategory } from '../monitor';
   templateUrl: './create-monitor-form-categories.component.html',
   styleUrls: ['./create-monitor-form-categories.component.scss'],
 })
-export class CreateMonitorFormCategoriesComponent implements OnChanges {
+export class CreateMonitorFormCategoriesComponent implements OnChanges, OnInit {
   @Input()
   parent: FormGroup;
 
@@ -37,12 +38,22 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges {
   @Input()
   filteredCategories: Observable<ICategory[]>;
 
+  @Input()
+  maxSelectedCategories: number;
+
+  @Input()
+  validationMessages: { [key: string]: string };
+
+  @Input()
+  placeholder: string;
+
   @Output()
   removeCategory = new EventEmitter<ICategory>();
 
   @Output()
   selectedCategory = new EventEmitter<MatAutocompleteSelectedEvent>();
 
+  hint = '';
   availableCategories: ICategory[];
 
   @ViewChild('categoryInput')
@@ -50,6 +61,10 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges {
 
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
+
+  ngOnInit(): void {
+    this.hint = `You can apply up to ${this.maxSelectedCategories} categories`;
+  }
 
   remove(category: ICategory) {
     this.removeCategory.emit(category);

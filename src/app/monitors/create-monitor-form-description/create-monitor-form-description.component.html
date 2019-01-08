@@ -1,8 +1,9 @@
-<mat-form-field [formGroup]="parent" class="description">
+<mat-form-field [formGroup]="parent" class="description" appearance="outline">
+  <mat-label>Description*</mat-label>
   <textarea
     class="textarea"
     matInput
-    placeholder="Description"
+    placeholder="{{placeholder}}"
     formControlName="description"
     rows="3"
     cols="100"
@@ -10,6 +11,7 @@
     matAutosizeMinRows="3"
     matAutosizeMaxRows="3"
   ></textarea>
+  <mat-hint align="end"> *Required </mat-hint>
   <mat-error *ngIf="parent.get('description').hasError('required')">
     {{ validationMessages['required'] }}
   </mat-error>

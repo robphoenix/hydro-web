@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   MatAutocompleteSelectedEvent,
@@ -12,6 +12,7 @@ import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -19,6 +20,9 @@ import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialo
   styleUrls: ['./create-monitor-form.component.scss'],
 })
 export class CreateMonitorFormComponent implements OnInit {
+  @Input()
+  title: string;
+
   formGroup: FormGroup;
 
   autocompleteOptions = {
@@ -33,6 +37,7 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredCategories: Observable<ICategory[]>;
   loadingCategories = false;
   maxSelectedCategories = 4;
+  placeholderCategories = 'Please select monitor categories';
 
   availableActions: { [group: string]: IAction[] } = {};
 
@@ -57,18 +62,30 @@ export class CreateMonitorFormComponent implements OnInit {
     },
   };
 
+  placeholders = {
+    name: `Please enter a monitor name`,
+    description: `Please enter a monitor description`,
+    query: `Please enter a valid EPL Query`,
+    categories: this.placeholderCategories,
+    groups: `Please select monitor access groups`,
+  };
+
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
     private router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
+    public authService: AuthService,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
+
+    // set the default access groups
+    this.selectedGroups = this.authService.userGroups || [];
 
     this.formGroup = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
@@ -78,7 +95,7 @@ export class CreateMonitorFormComponent implements OnInit {
       categoriesInput: [''],
       query: ['', Validators.required],
       actions: [[]],
-      groups: [this.selectedGroups],
+      groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
     });
   }
@@ -191,6 +208,7 @@ export class CreateMonitorFormComponent implements OnInit {
     const ctrl = this.formGroup.get('categoriesInput');
     if (ctrl.disabled) {
       ctrl.enable();
+      this.placeholders.categories = this.placeholderCategories;
     }
   }
 
@@ -202,6 +220,7 @@ export class CreateMonitorFormComponent implements OnInit {
     const ctrl = this.formGroup.get('categoriesInput');
     if (this.selectedCategories.length >= this.maxSelectedCategories) {
       ctrl.disable();
+      this.placeholders.categories = '';
     }
     ctrl.setValue(null);
   }
@@ -243,10 +262,16 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.selectedGroups.filter(
       (selected: IGroup) => selected.id !== group.id,
     );
+    const groups = this.formGroup.get('groups');
+    groups.setValue(this.selectedGroups);
+    // mark as touched in case the user removes the default groups,
+    // otherwise the validation error message won't show.
+    groups.markAsTouched();
   }
 
   selectedGroup(event: MatAutocompleteSelectedEvent): void {
     this.selectedGroups.push(event.option.value);
+    this.formGroup.get('groups').setValue(this.selectedGroups);
     this.formGroup.get('groupsInput').setValue(null);
   }
 }

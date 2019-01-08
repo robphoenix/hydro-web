@@ -75,7 +75,6 @@ export class AuthService {
   // this should be used with `takeUntil` in any subscriptions.
   private unsubscribe: Subject<void> = new Subject();
 
-  isLoggedIn = false;
   redirectUrl: string;
 
   constructor(
@@ -104,16 +103,6 @@ export class AuthService {
           if (!this.jwtHelper.isTokenExpired(token)) {
             // set the access token
             localStorage.setItem(this.accessTokenName, token);
-
-            this.isLoggedIn = true;
-            // set the current user
-            const {
-              username: currentUsername,
-              displayName,
-            } = this.jwtHelper.decodeToken(token) as IAccessToken;
-
-            this.username = currentUsername;
-            this.userDisplayName = displayName;
             // initialise the subscriptions
             this.initSubscriptions();
           }
@@ -148,7 +137,6 @@ export class AuthService {
    */
   initSubscriptions() {
     const token = localStorage.getItem(this.accessTokenName);
-    this.isLoggedIn = !this.jwtHelper.isTokenExpired(token);
     // Only start subscriptions if logged in
     if (!this.isLoggedIn) {
       return;
@@ -171,7 +159,6 @@ export class AuthService {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         (isValid: boolean) => {
-          this.isLoggedIn = isValid;
           if (!isValid) {
             this.logout();
           }
@@ -237,81 +224,49 @@ export class AuthService {
    * @memberof AuthService
    */
   logout(): void {
-    this.isLoggedIn = false;
-
     localStorage.removeItem(this.accessTokenName);
-
-    this.username = null;
 
     this.unsubscribeAll();
 
     this.router.navigate(['/login']);
   }
 
-  /**
-   * Sets the current user's username.
-   *
-   * @memberof AuthService
-   */
-  set username(value: string) {
-    this.currentUser.username = value;
+  get isLoggedIn(): boolean {
+    return !this.jwtHelper.isTokenExpired(
+      localStorage.getItem(this.accessTokenName),
+    );
   }
 
   /**
-   * Gets the current user's username.
-   * If there is no current user details but the user is authenticated,
-   * then we get the username from the valid user token.
-   * This can happen if the application is closed and the reopened
-   * while the access token is still valid.
+   * Gets the current user's username from the JWT token in local storage.
    *
    * @type {string}
    * @memberof AuthService
    */
   get username(): string {
-    if (!this.currentUser.username && this.isLoggedIn) {
-      const { username } = this.jwtHelper.decodeToken(
-        localStorage.getItem(this.accessTokenName),
-      ) as IAccessToken;
-      this.currentUser.username = username;
-    }
-    return this.currentUser.username;
-  }
-
-  set userGroups(groups: IGroup[]) {
-    this.currentUser.groups = groups;
+    const { username } = this.jwtHelper.decodeToken(
+      localStorage.getItem(this.accessTokenName),
+    ) as IAccessToken;
+    return username;
   }
 
   get userGroups(): IGroup[] {
-    return this.currentUser.groups;
+    const { groups } = this.jwtHelper.decodeToken(
+      localStorage.getItem(this.accessTokenName),
+    ) as IAccessToken;
+    return groups;
   }
 
   /**
-   * Sets the current user's display name.
-   *
-   * @memberof AuthService
-   */
-  set userDisplayName(value: string) {
-    this.currentUser.displayName = value;
-  }
-
-  /**
-   * Gets the current user's display name.
-   *
-   * If there is no current user details but the user is authenticated,
-   * then we get the display name from the valid user token.
-   * This can happen if the application is closed and the reopened
-   * while the access token is still valid.
+   * Gets the current user's display name from local storage.
    *
    * @type {string}
    * @memberof AuthService
    */
   get userDisplayName(): string {
-    if (!this.currentUser.displayName && this.isLoggedIn) {
-      const { displayName } = this.jwtHelper.decodeToken(
-        localStorage.getItem(this.accessTokenName),
-      ) as IAccessToken;
-      this.currentUser.displayName = displayName;
-    }
-    return this.currentUser.displayName;
+    const { displayName } = this.jwtHelper.decodeToken(
+      localStorage.getItem(this.accessTokenName),
+    ) as IAccessToken;
+    return displayName;
   }
 }

@@ -12,4 +12,7 @@ export class CreateMonitorFormQueryComponent {
 
   @Input()
   parent: FormGroup;
+
+  @Input()
+  placeholder: string;
 }

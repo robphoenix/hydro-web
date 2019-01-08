@@ -1,13 +1,27 @@
-<div class="form-fields">
+<div class="form">
+  <h1 class="title">{{ title }}</h1>
   <form [formGroup]="formGroup" (ngSubmit)="addMonitor()">
     <section class="section">
       <app-create-monitors-form-name
         class="name"
         [parent]="formGroup"
         [validationMessages]="validationMessages['name']"
+        [placeholder]="placeholders.name"
         ngDefaultControl
       ></app-create-monitors-form-name>
+    </section>
 
+    <section class="section">
+      <app-create-monitor-form-description
+        class="description"
+        [parent]="formGroup"
+        [validationMessages]="validationMessages['description']"
+        [placeholder]="placeholders.description"
+        ngDefaultControl
+      ></app-create-monitor-form-description>
+    </section>
+
+    <section class="section">
       <app-create-monitor-form-status
         class="status"
         [parent]="formGroup"
@@ -16,19 +30,11 @@
     </section>
 
     <section class="section">
-      <app-create-monitor-form-description
-        class="description"
-        [parent]="formGroup"
-        [validationMessages]="validationMessages['description']"
-        ngDefaultControl
-      ></app-create-monitor-form-description>
-    </section>
-
-    <section class="section">
       <app-create-monitor-form-query
         class="query"
         [parent]="formGroup"
         [validationMessages]="validationMessages['query']"
+        [placeholder]="placeholders.query"
       ></app-create-monitor-form-query>
     </section>
 
@@ -40,6 +46,9 @@
         [selectedCategories]="selectedCategories"
         [autocompleteOptions]="autocompleteOptions"
         [filteredCategories]="filteredCategories"
+        [maxSelectedCategories]="maxSelectedCategories"
+        [validationMessages]="validationMessages['categories']"
+        [placeholder]="placeholders.categories"
         (removeCategory)="removeCategory($event)"
         (selectedCategory)="selectedCategory($event)"
       ></app-create-monitor-form-categories>
@@ -53,6 +62,8 @@
         [selectedGroups]="selectedGroups"
         [autocompleteOptions]="autocompleteOptions"
         [filteredGroups]="filteredGroups"
+        [placeholder]="placeholders.groups"
+        [validationMessages]="validationMessages['groups']"
         (removeGroup)="removeGroup($event)"
         (selectedGroup)="selectedGroup($event)"
       ></app-create-monitor-form-groups>

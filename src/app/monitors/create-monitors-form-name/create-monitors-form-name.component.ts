@@ -12,4 +12,7 @@ export class CreateMonitorsFormNameComponent {
 
   @Input()
   parent: FormGroup;
+
+  @Input()
+  placeholder: string;
 }

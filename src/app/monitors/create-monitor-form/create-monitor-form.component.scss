@@ -1,26 +1,33 @@
 @import 'main';
 
-.form-fields {
+.form {
   display: flex;
   flex-direction: column;
-  width: $wide;
-  margin: 120px auto;
+  width: $half-width;
+  margin: 80px auto;
+}
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: $tracked;
 }
 
 .section {
   display: flex;
   align-items: center;
   margin: 20px 0;
+  width: $full-width;
+}
 
-  .name {
-    flex: 0 0 25%;
-    margin-right: 20px;
-  }
+.status {
+  margin-left: 10px;
+}
 
-  .description,
-  .categories,
-  .query,
-  .groups {
-    flex: 0 0 50%;
-  }
+.name,
+.status,
+.description,
+.query,
+.categories,
+.groups {
+  width: $full-width;
 }
