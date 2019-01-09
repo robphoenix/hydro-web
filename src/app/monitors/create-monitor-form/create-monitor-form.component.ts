@@ -125,23 +125,15 @@ export class CreateMonitorFormComponent implements OnInit {
         ),
       );
 
-    const groupsInputControl = this.formGroup.get('groupsInput');
-    this.filteredGroups = groupsInputControl.valueChanges.pipe(
+    this.filteredGroups = this.formGroup.get('groupsInput').valueChanges.pipe(
       startWith(null),
-      map((term: string | IGroup) => {
-        const available = this.availableGroups.filter(
-          (group: IGroup) =>
-            !this.selectedGroups
-              .map((selected: IGroup) => selected.id)
-              .includes(group.id),
-        );
-        if (!term || typeof term !== 'string') {
-          return available;
-        }
-        return available.filter((group: IGroup) =>
-          group.name.toLowerCase().includes(term.toLowerCase()),
-        );
-      }),
+      map((term: string | IGroup) =>
+        this.filterService.filterGroups(
+          term,
+          this.availableGroups,
+          this.selectedGroups,
+        ),
+      ),
     );
   }
 

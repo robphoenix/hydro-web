@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMonitor, ICategory, IAction } from './monitor';
+import { IMonitor, ICategory, IAction, IGroup } from './monitor';
 
 @Injectable({
   providedIn: 'root',
@@ -80,6 +80,22 @@ export class FilterService {
     }
     return availableCategories.filter((category: ICategory) =>
       category.name.toLowerCase().includes(term.toLowerCase()),
+    );
+  }
+
+  public filterGroups(
+    term: string | IGroup,
+    available: IGroup[],
+    selected: IGroup[],
+  ): IGroup[] {
+    const availableGroups = available.filter(
+      (group: IGroup) => !selected.map((s: IGroup) => s.id).includes(group.id),
+    );
+    if (!term || typeof term !== 'string') {
+      return availableGroups;
+    }
+    return availableGroups.filter((group: IGroup) =>
+      group.name.toLowerCase().includes(term.toLowerCase()),
     );
   }
 }
