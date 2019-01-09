@@ -99,15 +99,19 @@ export class AuthService {
       .post(this.loginUrl, { username, password }, httpOptions)
       .pipe(
         tap((resp: ILoginResponse) => {
-          const { token } = resp;
-          if (!this.jwtHelper.isTokenExpired(token)) {
-            // set the access token
-            localStorage.setItem(this.accessTokenName, token);
-            // initialise the subscriptions
-            this.initSubscriptions();
-          }
+          this.setup(resp);
         }),
       );
+  }
+
+  private setup(resp: ILoginResponse): void {
+    const { token } = resp;
+    if (!this.jwtHelper.isTokenExpired(token)) {
+      // set the access token
+      localStorage.setItem(this.accessTokenName, token);
+      // initialise the subscriptions
+      this.initSubscriptions();
+    }
   }
 
   /**
