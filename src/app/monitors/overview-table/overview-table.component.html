@@ -1,40 +1,38 @@
 <div class="toolbar">
-  <div>
-    <mat-button-toggle-group
-      class="status-toggle"
-      *ngIf="canToggleStatus"
-      [value]="filterValues.status"
-      #statusGroup="matButtonToggleGroup"
-      (change)="toggleStatus($event.value)"
-    >
-      <mat-button-toggle value="online">
-        <span>Online</span>
-      </mat-button-toggle>
-      <mat-button-toggle value="offline">
-        <span>Offline</span>
-      </mat-button-toggle>
-      <mat-button-toggle value="all" checked="true">
-        <span>All Monitors</span>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+  <mat-button-toggle-group
+    class="status-toggle"
+    *ngIf="canToggleStatus"
+    [value]="filterValues.status"
+    #statusGroup="matButtonToggleGroup"
+    (change)="toggleStatus($event.value)"
+  >
+    <mat-button-toggle value="online"> <span>Online</span> </mat-button-toggle>
+    <mat-button-toggle value="offline">
+      <span>Offline</span>
+    </mat-button-toggle>
+    <mat-button-toggle value="all" checked="true">
+      <span>All Monitors</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="hasFilters()"
-      (click)="clearAllFilters()"
-      class="clear"
-    >
-      <mat-icon class="icon">clear_all</mat-icon>
-      <span>clear filters</span>
-    </button>
-  </div>
   <app-search-input
     class="search"
     [(searchTerm)]="filterValues.searchTerm"
     [placeHolder]="'Search Monitors'"
     (searchTermChange)="filterMonitors()"
   ></app-search-input>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="hasFilters()"
+    (click)="clearAllFilters()"
+    class="clear"
+  >
+    <mat-icon class="icon">clear_all</mat-icon>
+    <span>clear filters</span>
+  </button>
+
   <a mat-raised-button routerLink="/monitors/add" color="accent" class="create">
     <mat-icon class="icon">add</mat-icon>
     <span>new monitor</span>
