@@ -18,6 +18,12 @@ export class CreateMonitorFormComponent implements OnInit {
   @Input()
   title: string;
 
+  @Input()
+  buttonText: string;
+
+  @Input()
+  monitor: IMonitor;
+
   @Output()
   submitForm = new EventEmitter<IMonitor>();
 
@@ -76,6 +82,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private filterService: FilterService,
     public authService: AuthService,
   ) {
+    this.buttonText = this.buttonText || this.title;
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.getAvailableCategories();
@@ -86,12 +93,12 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.authService.userGroups || [];
 
     this.formGroup = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
+      query: ['', Validators.required],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      query: ['', Validators.required],
       actions: [[]],
       groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
@@ -99,6 +106,19 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.monitor) {
+      this.formGroup.patchValue({
+        name: this.monitor.name,
+        description: this.monitor.description,
+        status: this.monitor.status,
+        query: this.monitor.query,
+      });
+      this.selectedCategories = this.monitor.categories;
+      this.formGroup.get('categories').setValue(this.selectedCategories);
+      this.selectedGroups = this.monitor.groups;
+      this.formGroup.get('groups').setValue(this.selectedGroups);
+    }
+
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
     this.filteredCategories = this.formGroup
@@ -211,7 +231,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   selectedActions(actions: IAction[]): void {
-    this.formGroup.patchValue({ actions });
+    this.formGroup.get('actions').setValue(actions);
   }
 
   getAvailableGroups(): void {

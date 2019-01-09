@@ -1,1 +1,6 @@
-<app-create-monitor-form [title]="title"></app-create-monitor-form>
+<app-create-monitor-form
+  *ngIf="monitor"
+  [title]="title"
+  [buttonText]="buttonText"
+  [monitor]="monitor"
+></app-create-monitor-form>
