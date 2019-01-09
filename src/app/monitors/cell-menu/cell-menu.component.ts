@@ -12,6 +12,9 @@ export class CellMenuComponent {
   @Input()
   status: MonitorStatus;
 
+  @Input()
+  id: number;
+
   public get isArchived(): boolean {
     return this.status === MonitorStatus.Archived;
   }

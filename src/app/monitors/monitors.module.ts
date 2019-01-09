@@ -27,6 +27,7 @@ import { CreateMonitorFormActionsComponent } from './create-monitor-form-actions
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { CreateMonitorFormGroupsComponent } from './create-monitor-form-groups/create-monitor-form-groups.component';
 import { CreateMonitorErrorDialogComponent } from './create-monitor-error-dialog/create-monitor-error-dialog.component';
+import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { CreateMonitorErrorDialogComponent } from './create-monitor-error-dialog
       { path: 'system', component: MonitorsSystemComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
+      { path: ':id/edit', component: EditMonitorComponent },
     ]),
     FormsModule,
     ReactiveFormsModule,
@@ -68,6 +70,7 @@ import { CreateMonitorErrorDialogComponent } from './create-monitor-error-dialog
     AddMonitorComponent,
     CreateMonitorFormGroupsComponent,
     CreateMonitorErrorDialogComponent,
+    EditMonitorComponent,
   ],
   entryComponents: [
     MonitorDeleteDialogComponent,

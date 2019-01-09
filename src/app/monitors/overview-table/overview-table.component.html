@@ -187,7 +187,10 @@
           <h3 class="title">Menu</h3>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor" class="menu menu-cell">
-          <app-cell-menu [status]="monitor.status"></app-cell-menu>
+          <app-cell-menu
+            [status]="monitor.status"
+            [id]="monitor.id"
+          ></app-cell-menu>
         </mat-cell>
       </ng-container>
 
