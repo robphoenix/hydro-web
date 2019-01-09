@@ -101,6 +101,12 @@ export class MonitorsService {
       .pipe(tap((monitor: IMonitor) => monitor));
   }
 
+  public patchMonitor(id: number, body: IMonitor): Observable<IMonitor> {
+    return this.http
+      .patch(`${this.monitorsUrl}/${id}`, body, { headers })
+      .pipe(tap((monitor: IMonitor) => monitor));
+  }
+
   public allCurrentCategories(monitors: IMonitor[]): string[] {
     return Array.from(
       new Set(

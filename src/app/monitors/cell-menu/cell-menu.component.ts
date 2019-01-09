@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MonitorStatus } from '../monitor';
 
 @Component({
@@ -14,6 +14,13 @@ export class CellMenuComponent {
 
   @Input()
   id: number;
+
+  @Output()
+  archiveMonitor = new EventEmitter<number>();
+
+  public archive(id: number) {
+    this.archiveMonitor.emit(id);
+  }
 
   public get isArchived(): boolean {
     return this.status === MonitorStatus.Archived;

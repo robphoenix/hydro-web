@@ -190,6 +190,7 @@
           <app-cell-menu
             [status]="monitor.status"
             [id]="monitor.id"
+            (archiveMonitor)="archiveMonitor($event)"
           ></app-cell-menu>
         </mat-cell>
       </ng-container>

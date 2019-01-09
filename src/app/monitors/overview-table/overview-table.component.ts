@@ -4,19 +4,28 @@ import {
   Input,
   ViewChild,
   ViewChildren,
+  OnChanges,
 } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import {
+  MatPaginator,
+  MatTableDataSource,
+  MatSort,
+  MatSnackBar,
+  MatDialog,
+} from '@angular/material';
 import { IMonitor, MonitorType, MonitorStatus } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 import { FilterService } from '../filter.service';
+import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
+import { MonitorsService } from '../monitors.service';
 
 @Component({
   selector: 'app-overview-table',
   templateUrl: './overview-table.component.html',
   styleUrls: ['./overview-table.component.scss'],
 })
-export class OverviewTableComponent implements OnInit {
+export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   monitors: IMonitor[];
 
@@ -62,7 +71,12 @@ export class OverviewTableComponent implements OnInit {
     status: 'all',
   };
 
-  constructor(private filterService: FilterService) {}
+  constructor(
+    private filterService: FilterService,
+    private monitorsService: MonitorsService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.monitors);
@@ -70,6 +84,12 @@ export class OverviewTableComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
+  }
+
+  ngOnChanges(): void {
+    if (this.dataSource) {
+      this.dataSource.data = this.monitors;
+    }
   }
 
   public filterMonitors(): void {
@@ -111,5 +131,28 @@ export class OverviewTableComponent implements OnInit {
   public toggleStatus(value: string) {
     this.filterValues.status = value;
     this.dataSource.filter = JSON.stringify(this.filterValues);
+  }
+
+  public archiveMonitor(id: number) {
+    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const dialogRef = this.dialog.open(ArchiveMonitorDialogComponent, {
+      data: { monitor },
+    });
+
+    dialogRef.afterClosed().subscribe((archive: boolean) => {
+      if (!archive) {
+        return;
+      }
+      const body = { status: MonitorStatus.Archived } as IMonitor;
+      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+        () => {
+          this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
+            duration: 2000,
+          });
+        },
+        // TODO: generalise error dialog and use it here.
+        (err) => console.log({ err }),
+      );
+    });
   }
 }
