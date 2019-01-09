@@ -1,6 +1,6 @@
 <div class="form">
   <h2 class="title">{{ title }}</h2>
-  <form [formGroup]="formGroup" (ngSubmit)="addMonitor()">
+  <form [formGroup]="formGroup" (ngSubmit)="submit()">
     <section class="section">
       <app-create-monitors-form-name
         class="name"
@@ -84,7 +84,7 @@
       type="submit"
       [disabled]="!formGroup.valid"
     >
-      add monitor
+      {{ title }}
     </button>
   </form>
 </div>

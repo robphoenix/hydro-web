@@ -1,22 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import {
-  MatAutocompleteSelectedEvent,
-  MatSnackBar,
-  MatDialog,
-} from '@angular/material';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
 import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
 
@@ -28,6 +17,9 @@ import { FilterService } from '../filter.service';
 export class CreateMonitorFormComponent implements OnInit {
   @Input()
   title: string;
+
+  @Output()
+  submitForm = new EventEmitter<IMonitor>();
 
   formGroup: FormGroup;
 
@@ -82,9 +74,6 @@ export class CreateMonitorFormComponent implements OnInit {
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
     private filterService: FilterService,
-    private router: Router,
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
     public authService: AuthService,
   ) {
     this.loadingCategories = true;
@@ -145,7 +134,7 @@ export class CreateMonitorFormComponent implements OnInit {
     });
   }
 
-  addMonitor() {
+  public submit() {
     const {
       name,
       description,
@@ -162,21 +151,8 @@ export class CreateMonitorFormComponent implements OnInit {
       groups,
     } as IMonitor;
 
-    this.monitorsService.addMonitor(monitor).subscribe(
-      (res: IMonitor) => {
-        const { id } = res;
-        this.formGroup.reset();
-        this.router.navigate([`/monitors/${id}`]);
-        this.snackBar.open(`Monitor ${name} created.`, '', {
-          duration: 2000,
-        });
-      },
-      (err: string) => {
-        this.dialog.open(CreateMonitorErrorDialogComponent, {
-          data: { err },
-        });
-      },
-    );
+    this.submitForm.emit(monitor);
+    this.formGroup.reset();
   }
 
   private getAvailableCategories(): void {

@@ -1,1 +1,4 @@
-<app-create-monitor-form [title]="title"></app-create-monitor-form>
+<app-create-monitor-form
+  [title]="title"
+  (submitForm)="addMonitor($event)"
+></app-create-monitor-form>
