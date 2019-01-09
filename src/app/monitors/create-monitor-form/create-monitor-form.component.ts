@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import {
   MatAutocompleteSelectedEvent,
   MatSnackBar,
@@ -45,6 +50,8 @@ export class CreateMonitorFormComponent implements OnInit {
   selectedGroups: IGroup[] = [];
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
+
+  private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -101,23 +108,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    const nameControl = this.formGroup.get('name');
-    nameControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      nameControl.markAsDirty();
-      nameControl.markAsTouched();
-    });
-
-    const descriptionControl = this.formGroup.get('description');
-    descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      descriptionControl.markAsDirty();
-      descriptionControl.markAsTouched();
-    });
-
-    const queryControl = this.formGroup.get('query');
-    queryControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      queryControl.markAsDirty();
-      queryControl.markAsTouched();
-    });
+    this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
     const categoriesInputControl = this.formGroup.get('categoriesInput');
     this.filteredCategories = categoriesInputControl.valueChanges.pipe(
@@ -156,6 +147,14 @@ export class CreateMonitorFormComponent implements OnInit {
         );
       }),
     );
+  }
+
+  private markControl(name: string): void {
+    const control = this.formGroup.get(name);
+    control.valueChanges.pipe(debounceTime(800)).subscribe(() => {
+      control.markAsDirty();
+      control.markAsTouched();
+    });
   }
 
   addMonitor() {
