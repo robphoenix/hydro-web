@@ -18,6 +18,7 @@ import { debounceTime, startWith, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
 import { AuthService } from 'src/app/user/auth.service';
+import { FilterService } from '../filter.service';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -80,6 +81,7 @@ export class CreateMonitorFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
+    private filterService: FilterService,
     private router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
@@ -110,24 +112,18 @@ export class CreateMonitorFormComponent implements OnInit {
   ngOnInit() {
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
-    const categoriesInputControl = this.formGroup.get('categoriesInput');
-    this.filteredCategories = categoriesInputControl.valueChanges.pipe(
-      startWith(null),
-      map((term: string | ICategory) => {
-        const available = this.availableCategories.filter(
-          (category: ICategory) =>
-            !this.selectedCategories
-              .map((selected: ICategory) => selected.id)
-              .includes(category.id),
-        );
-        if (!term || typeof term !== 'string') {
-          return available;
-        }
-        return available.filter((category: ICategory) =>
-          category.name.toLowerCase().includes(term.toLowerCase()),
-        );
-      }),
-    );
+    this.filteredCategories = this.formGroup
+      .get('categoriesInput')
+      .valueChanges.pipe(
+        startWith(null),
+        map((term: string | ICategory) =>
+          this.filterService.filterCategories(
+            term,
+            this.availableCategories,
+            this.selectedCategories,
+          ),
+        ),
+      );
 
     const groupsInputControl = this.formGroup.get('groupsInput');
     this.filteredGroups = groupsInputControl.valueChanges.pipe(

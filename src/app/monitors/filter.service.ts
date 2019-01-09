@@ -65,4 +65,21 @@ export class FilterService {
   hasStatus(monitor: IMonitor, status: string): boolean {
     return status === 'all' ? true : monitor.status === status;
   }
+
+  public filterCategories(
+    term: string | ICategory,
+    available: ICategory[],
+    selected: ICategory[],
+  ): ICategory[] {
+    const availableCategories = available.filter(
+      (category: ICategory) =>
+        !selected.map((s: ICategory) => s.id).includes(category.id),
+    );
+    if (!term || typeof term !== 'string') {
+      return availableCategories;
+    }
+    return availableCategories.filter((category: ICategory) =>
+      category.name.toLowerCase().includes(term.toLowerCase()),
+    );
+  }
 }
