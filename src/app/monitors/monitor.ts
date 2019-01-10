@@ -50,6 +50,7 @@ export enum LDAPGroup {
   AppForensicMonitoringOTSManagers = 'App_Forensic Monitoring OTS Managers',
   AppForensicMonitoringPublisherAbuse = 'App_Forensic Monitoring Publisher Abuse',
   AppForensicMonitoringRAndD = 'App_Forensic Monitoring R and D',
+  AppForensicMonitoringS1 = 'App_Forensic Monitoring S1',
   JobsFinancialAnalyst = 'Jobs_Financial Analyst',
   JobsOperationsTechnicalSupportAdvisor = 'Jobs_Operations Technical Support Advisor',
   JobsOperationsTechnicalSupportAdvisorNightShift = 'Jobs_Operations Technical Support Advisor (Night Shift)',

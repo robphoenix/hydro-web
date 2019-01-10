@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
+import { ICategory, IAction, IGroup, IMonitor, LDAPGroup } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
@@ -238,8 +238,16 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   getAvailableGroups(): void {
+    // this is a test group that will eventually be filtered out on the server
+    const ignoreGroup: IGroup = {
+      id: 547,
+      name: LDAPGroup.AppForensicMonitoringS1,
+    } as IGroup;
+
     this.monitorsService.getGroups().subscribe((groups: IGroup[]) => {
-      this.availableGroups = groups;
+      this.availableGroups = groups.filter(
+        (group: IGroup) => group.id !== ignoreGroup.id,
+      );
       this.loadingGroups = false;
     });
   }
