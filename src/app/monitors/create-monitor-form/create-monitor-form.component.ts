@@ -172,6 +172,9 @@ export class CreateMonitorFormComponent implements OnInit {
     } as IMonitor;
 
     this.submitForm.emit(monitor);
+  }
+
+  reset() {
     this.formGroup.reset();
   }
 

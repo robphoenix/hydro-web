@@ -14,7 +14,13 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [SearchInputComponent, MultipleSelectComponent, IconComponent, ErrorDialogComponent],
+  declarations: [
+    SearchInputComponent,
+    MultipleSelectComponent,
+    IconComponent,
+    ErrorDialogComponent,
+  ],
   exports: [SearchInputComponent, MultipleSelectComponent, IconComponent],
+  entryComponents: [ErrorDialogComponent],
 })
 export class SharedModule {}
