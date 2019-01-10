@@ -5,6 +5,7 @@ import { HydroMaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { IconComponent } from './icon/icon.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { IconComponent } from './icon/icon.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [SearchInputComponent, MultipleSelectComponent, IconComponent],
+  declarations: [SearchInputComponent, MultipleSelectComponent, IconComponent, ErrorDialogComponent],
   exports: [SearchInputComponent, MultipleSelectComponent, IconComponent],
 })
 export class SharedModule {}

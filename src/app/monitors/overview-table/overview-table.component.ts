@@ -19,6 +19,7 @@ import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple
 import { FilterService } from '../filter.service';
 import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 import { MonitorsService } from '../monitors.service';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-overview-table',
@@ -150,8 +151,12 @@ export class OverviewTableComponent implements OnInit, OnChanges {
             duration: 2000,
           });
         },
-        // TODO: generalise error dialog and use it here.
-        (err) => console.log({ err }),
+        (err) => {
+          const title = 'archive monitor error';
+          this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+        },
       );
     });
   }
