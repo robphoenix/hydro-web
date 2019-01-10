@@ -24,6 +24,9 @@ export class CreateMonitorFormComponent implements OnInit {
   @Input()
   monitor: IMonitor;
 
+  @Input()
+  monitorName: string;
+
   @Output()
   submitForm = new EventEmitter<IMonitor>();
 
@@ -108,7 +111,7 @@ export class CreateMonitorFormComponent implements OnInit {
   ngOnInit() {
     if (this.monitor) {
       this.formGroup.patchValue({
-        name: this.monitor.name,
+        name: this.monitorName || this.monitor.name,
         description: this.monitor.description,
         status: this.monitor.status,
         query: this.monitor.query,

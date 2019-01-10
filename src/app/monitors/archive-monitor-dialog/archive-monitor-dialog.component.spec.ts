@@ -8,9 +8,8 @@ describe('ArchiveMonitorDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArchiveMonitorDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ArchiveMonitorDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

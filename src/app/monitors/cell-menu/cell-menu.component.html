@@ -14,13 +14,14 @@
   >
     <mat-icon color="accent">edit</mat-icon>
   </a>
-  <button
+  <a
     mat-icon-button
     matTooltip="Duplicate"
     [matTooltipShowDelay]="showDelay"
+    routerLink="/monitors/{{id}}/duplicate"
   >
     <mat-icon color="accent">file_copy</mat-icon>
-  </button>
+  </a>
   <button
     mat-icon-button
     matTooltip="Disable"

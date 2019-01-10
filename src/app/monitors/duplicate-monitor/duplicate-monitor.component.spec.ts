@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditMonitorComponent } from './edit-monitor.component';
+import { DuplicateMonitorComponent } from './duplicate-monitor.component';
 
-describe('EditMonitorComponent', () => {
-  let component: EditMonitorComponent;
-  let fixture: ComponentFixture<EditMonitorComponent>;
+describe('DuplicateMonitorComponent', () => {
+  let component: DuplicateMonitorComponent;
+  let fixture: ComponentFixture<DuplicateMonitorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditMonitorComponent],
+      declarations: [DuplicateMonitorComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditMonitorComponent);
+    fixture = TestBed.createComponent(DuplicateMonitorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

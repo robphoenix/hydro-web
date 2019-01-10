@@ -28,6 +28,7 @@ import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { CreateMonitorFormGroupsComponent } from './create-monitor-form-groups/create-monitor-form-groups.component';
 import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
 import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-monitor-dialog.component';
+import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },
+      { path: ':id/duplicate', component: DuplicateMonitorComponent },
     ]),
     FormsModule,
     ReactiveFormsModule,
@@ -71,6 +73,7 @@ import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-
     CreateMonitorFormGroupsComponent,
     EditMonitorComponent,
     ArchiveMonitorDialogComponent,
+    DuplicateMonitorComponent,
   ],
   entryComponents: [
     MonitorDeleteDialogComponent,
