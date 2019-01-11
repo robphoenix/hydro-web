@@ -1,0 +1,15 @@
+@import 'main';
+
+.title {
+  text-transform: capitalize;
+}
+
+.error {
+  color: mat-color($warn);
+}
+
+.button {
+  text-transform: uppercase;
+  letter-spacing: $tracked;
+  margin-left: auto;
+}

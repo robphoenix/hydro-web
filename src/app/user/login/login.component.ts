@@ -51,10 +51,7 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)
       .subscribe(
-        (res: ILoginResponse) => {
-          // TODO: https://jira/browse/SWKFMP-2533
-          console.log({ res });
-
+        () => {
           this.router.navigateByUrl(
             this.authService.redirectUrl || '/monitors',
           );

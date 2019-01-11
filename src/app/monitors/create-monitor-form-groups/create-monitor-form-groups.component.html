@@ -1,12 +1,19 @@
 <!--
   this is a dummy input that is displayed until the categories are fetched
 -->
-<mat-form-field *ngIf="loading" class="groups">
+<mat-form-field *ngIf="loading" class="groups" appearance="outline">
+  <mat-label>Groups*</mat-label>
   <input placeholder="Loading groups..." matInput />
 </mat-form-field>
 
 <!-- this is the real form element -->
-<mat-form-field class="groups" *ngIf="!loading" [formGroup]="parent">
+<mat-form-field
+  class="groups"
+  *ngIf="!loading"
+  [formGroup]="parent"
+  appearance="outline"
+>
+  <mat-label>Groups*</mat-label>
   <mat-chip-list #chipList formControlName="groups">
     <mat-chip
       *ngFor="let group of selectedGroups"
@@ -21,7 +28,7 @@
     </mat-chip>
 
     <input
-      placeholder="Select Groups"
+      placeholder="{{placeholder}}"
       #inputElement
       matInput
       formControlName="groupsInput"
@@ -38,4 +45,9 @@
       {{ group.name }}
     </mat-option>
   </mat-autocomplete>
+  <mat-hint align="start">{{ hint }}</mat-hint>
+  <mat-hint align="end"> *Required </mat-hint>
+  <mat-error *ngIf="parent.get('groups').hasError('required')">
+    {{ validationMessages['required'] }}
+  </mat-error>
 </mat-form-field>

@@ -1,4 +1,6 @@
 <app-create-monitor-form
+  *ngIf="monitor"
   [title]="title"
-  (submitForm)="addMonitor($event)"
+  [buttonText]="buttonText"
+  [monitor]="monitor"
 ></app-create-monitor-form>

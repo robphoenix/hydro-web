@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {
-  MatAutocompleteSelectedEvent,
-  MatSnackBar,
-  MatDialog,
-} from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction, IGroup, IMonitor } from '../monitor';
+import { ICategory, IAction, IGroup, IMonitor, LDAPGroup } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialog/create-monitor-error-dialog.component';
+import { AuthService } from 'src/app/user/auth.service';
+import { FilterService } from '../filter.service';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -19,6 +15,21 @@ import { CreateMonitorErrorDialogComponent } from '../create-monitor-error-dialo
   styleUrls: ['./create-monitor-form.component.scss'],
 })
 export class CreateMonitorFormComponent implements OnInit {
+  @Input()
+  title: string;
+
+  @Input()
+  buttonText: string;
+
+  @Input()
+  monitor: IMonitor;
+
+  @Input()
+  monitorName: string;
+
+  @Output()
+  submitForm = new EventEmitter<IMonitor>();
+
   formGroup: FormGroup;
 
   autocompleteOptions = {
@@ -33,6 +44,7 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredCategories: Observable<ICategory[]>;
   loadingCategories = false;
   maxSelectedCategories = 4;
+  placeholderCategories = 'Please select monitor categories';
 
   availableActions: { [group: string]: IAction[] } = {};
 
@@ -40,6 +52,8 @@ export class CreateMonitorFormComponent implements OnInit {
   selectedGroups: IGroup[] = [];
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
+
+  private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -57,91 +71,93 @@ export class CreateMonitorFormComponent implements OnInit {
     },
   };
 
+  placeholders = {
+    name: `Please enter a monitor name`,
+    description: `Please enter a monitor description`,
+    query: `Please enter a valid EPL Query`,
+    categories: this.placeholderCategories,
+    groups: `Please select monitor access groups`,
+  };
+
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
-    private router: Router,
-    public snackBar: MatSnackBar,
-    public dialog: MatDialog,
+    private filterService: FilterService,
+    public authService: AuthService,
   ) {
+    this.buttonText = this.buttonText || this.title;
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
 
+    // set the default access groups
+    this.selectedGroups = this.authService.userGroups || [];
+
     this.formGroup = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 ]+')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
+      query: ['', Validators.required],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      query: ['', Validators.required],
       actions: [[]],
-      groups: [this.selectedGroups],
+      groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
     });
   }
 
   ngOnInit() {
-    const nameControl = this.formGroup.get('name');
-    nameControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      nameControl.markAsDirty();
-      nameControl.markAsTouched();
-    });
+    if (this.monitor) {
+      this.formGroup.patchValue({
+        name: this.monitorName || this.monitor.name,
+        description: this.monitor.description,
+        status: this.monitor.status,
+        query: this.monitor.query,
+      });
+      this.selectedCategories = this.monitor.categories;
+      this.formGroup.get('categories').setValue(this.selectedCategories);
+      this.selectedGroups = this.monitor.groups;
+      this.formGroup.get('groups').setValue(this.selectedGroups);
+    }
 
-    const descriptionControl = this.formGroup.get('description');
-    descriptionControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      descriptionControl.markAsDirty();
-      descriptionControl.markAsTouched();
-    });
+    this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
-    const queryControl = this.formGroup.get('query');
-    queryControl.valueChanges.pipe(debounceTime(800)).subscribe(() => {
-      queryControl.markAsDirty();
-      queryControl.markAsTouched();
-    });
+    this.filteredCategories = this.formGroup
+      .get('categoriesInput')
+      .valueChanges.pipe(
+        startWith(null),
+        map((term: string | ICategory) =>
+          this.filterService.filterCategories(
+            term,
+            this.availableCategories,
+            this.selectedCategories,
+          ),
+        ),
+      );
 
-    const categoriesInputControl = this.formGroup.get('categoriesInput');
-    this.filteredCategories = categoriesInputControl.valueChanges.pipe(
+    this.filteredGroups = this.formGroup.get('groupsInput').valueChanges.pipe(
       startWith(null),
-      map((term: string | ICategory) => {
-        const available = this.availableCategories.filter(
-          (category: ICategory) =>
-            !this.selectedCategories
-              .map((selected: ICategory) => selected.id)
-              .includes(category.id),
-        );
-        if (!term || typeof term !== 'string') {
-          return available;
-        }
-        return available.filter((category: ICategory) =>
-          category.name.toLowerCase().includes(term.toLowerCase()),
-        );
-      }),
-    );
-
-    const groupsInputControl = this.formGroup.get('groupsInput');
-    this.filteredGroups = groupsInputControl.valueChanges.pipe(
-      startWith(null),
-      map((term: string | IGroup) => {
-        const available = this.availableGroups.filter(
-          (group: IGroup) =>
-            !this.selectedGroups
-              .map((selected: IGroup) => selected.id)
-              .includes(group.id),
-        );
-        if (!term || typeof term !== 'string') {
-          return available;
-        }
-        return available.filter((group: IGroup) =>
-          group.name.toLowerCase().includes(term.toLowerCase()),
-        );
-      }),
+      map((term: string | IGroup) =>
+        this.filterService.filterGroups(
+          term,
+          this.availableGroups,
+          this.selectedGroups,
+        ),
+      ),
     );
   }
 
-  addMonitor() {
+  private markControl(name: string): void {
+    const control = this.formGroup.get(name);
+    control.valueChanges.pipe(debounceTime(800)).subscribe(() => {
+      control.markAsDirty();
+      control.markAsTouched();
+    });
+  }
+
+  public submit() {
     const {
       name,
       description,
@@ -158,21 +174,11 @@ export class CreateMonitorFormComponent implements OnInit {
       groups,
     } as IMonitor;
 
-    this.monitorsService.addMonitor(monitor).subscribe(
-      (res: IMonitor) => {
-        const { id } = res;
-        this.formGroup.reset();
-        this.router.navigate([`/monitors/${id}`]);
-        this.snackBar.open(`Monitor ${name} created.`, '', {
-          duration: 2000,
-        });
-      },
-      (err: string) => {
-        this.dialog.open(CreateMonitorErrorDialogComponent, {
-          data: { err },
-        });
-      },
-    );
+    this.submitForm.emit(monitor);
+  }
+
+  reset() {
+    this.formGroup.reset();
   }
 
   private getAvailableCategories(): void {
@@ -191,6 +197,7 @@ export class CreateMonitorFormComponent implements OnInit {
     const ctrl = this.formGroup.get('categoriesInput');
     if (ctrl.disabled) {
       ctrl.enable();
+      this.placeholders.categories = this.placeholderCategories;
     }
   }
 
@@ -202,6 +209,7 @@ export class CreateMonitorFormComponent implements OnInit {
     const ctrl = this.formGroup.get('categoriesInput');
     if (this.selectedCategories.length >= this.maxSelectedCategories) {
       ctrl.disable();
+      this.placeholders.categories = '';
     }
     ctrl.setValue(null);
   }
@@ -229,12 +237,20 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   selectedActions(actions: IAction[]): void {
-    this.formGroup.patchValue({ actions });
+    this.formGroup.get('actions').setValue(actions);
   }
 
   getAvailableGroups(): void {
+    // this is a test group that will eventually be filtered out on the server
+    const ignoreGroup: IGroup = {
+      id: 547,
+      name: LDAPGroup.AppForensicMonitoringS1,
+    } as IGroup;
+
     this.monitorsService.getGroups().subscribe((groups: IGroup[]) => {
-      this.availableGroups = groups;
+      this.availableGroups = groups.filter(
+        (group: IGroup) => group.id !== ignoreGroup.id,
+      );
       this.loadingGroups = false;
     });
   }
@@ -243,10 +259,16 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.selectedGroups.filter(
       (selected: IGroup) => selected.id !== group.id,
     );
+    const groups = this.formGroup.get('groups');
+    groups.setValue(this.selectedGroups);
+    // mark as touched in case the user removes the default groups,
+    // otherwise the validation error message won't show.
+    groups.markAsTouched();
   }
 
   selectedGroup(event: MatAutocompleteSelectedEvent): void {
     this.selectedGroups.push(event.option.value);
+    this.formGroup.get('groups').setValue(this.selectedGroups);
     this.formGroup.get('groupsInput').setValue(null);
   }
 }
