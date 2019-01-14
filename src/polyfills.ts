@@ -74,3 +74,8 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// Add global to window, assigning the value of window itself.
+// necessary for vertx eventbus client
+// https://github.com/angular/angular-cli/issues/8160#issuecomment-386153833
+(window as any).global = window;
