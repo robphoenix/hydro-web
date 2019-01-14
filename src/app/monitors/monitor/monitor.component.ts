@@ -3,8 +3,9 @@ import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { IMonitorData, IEsperItem } from '../monitor-data';
+// import * as vertx from 'vertx3-eventbus-client';
+// import * as EventBus from 'vertx3-eventbus-client';
+// import EventBus from 'vertx3-eventbus-client';
 
 /**
  * Describes a single monitor.
@@ -20,12 +21,21 @@ import { IMonitorData, IEsperItem } from '../monitor-data';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
+  // private eb;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private monitorService: MonitorsService,
-  ) {}
+  ) {
+    // this.eb = new EventBus(`http://url`);
+    // this.eb.onopen = () => {
+    //   this.eb.registerHandler('some-address', (error, message) => {
+    //     console.log({ message });
+    //     console.log({ error });
+    //   });
+    // };
+  }
 
   ngOnInit() {
     this.getMonitor();
