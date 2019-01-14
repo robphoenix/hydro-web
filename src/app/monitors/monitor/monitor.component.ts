@@ -21,7 +21,7 @@ import * as EventBus from 'vertx3-eventbus-client';
 })
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
-  private eb;
+  private eb: EventBus.EventBus;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,8 +29,9 @@ export class MonitorComponent implements OnInit {
     private monitorService: MonitorsService,
   ) {
     this.eb = new EventBus(`http://url`);
+    const headers = {};
     this.eb.onopen = () => {
-      this.eb.registerHandler('some-address', (error, message) => {
+      this.eb.registerHandler('some-address', headers, (error, message) => {
         console.log({ message });
         console.log({ error });
       });
