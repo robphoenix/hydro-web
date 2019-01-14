@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IMonitor } from '../monitor';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MonitorsService } from '../monitors.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar, MatDialog } from '@angular/material';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-edit-monitor',
@@ -18,6 +20,9 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private monitorsService: MonitorsService,
+    private router: Router,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -34,5 +39,24 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  saveMonitor(monitor: IMonitor) {
+    this.monitorsService.patchMonitor(monitor.id, monitor).subscribe(
+      () => {
+        this.router.navigate([`/monitors`]);
+        this.snackBar.open(`Monitor ${monitor.name} edited`, '', {
+          duration: 2000,
+        });
+      },
+      (err: string) => {
+        console.log({ err });
+
+        const title = 'error editing monitor';
+        this.dialog.open(ErrorDialogComponent, {
+          data: { title, err },
+        });
+      },
+    );
   }
 }
