@@ -39,4 +39,8 @@ export class MonitorsArchivedComponent implements OnInit {
         );
       });
   }
+
+  refresh() {
+    this.getMonitors();
+  }
 }

@@ -18,8 +18,15 @@ export class CellMenuComponent {
   @Output()
   archiveMonitor = new EventEmitter<number>();
 
+  @Output()
+  unArchiveMonitor = new EventEmitter<number>();
+
   public archive(id: number) {
     this.archiveMonitor.emit(id);
+  }
+
+  public unArchive(id: number) {
+    this.unArchiveMonitor.emit(id);
   }
 
   public get isArchived(): boolean {

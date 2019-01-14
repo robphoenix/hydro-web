@@ -29,6 +29,7 @@ import { CreateMonitorFormGroupsComponent } from './create-monitor-form-groups/c
 import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
 import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-monitor-dialog.component';
 import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor.component';
+import { UnarchiveMonitorDialogComponent } from './unarchive-monitor-dialog/unarchive-monitor-dialog.component';
 
 @NgModule({
   imports: [
@@ -74,10 +75,12 @@ import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor
     EditMonitorComponent,
     ArchiveMonitorDialogComponent,
     DuplicateMonitorComponent,
+    UnarchiveMonitorDialogComponent,
   ],
   entryComponents: [
     MonitorDeleteDialogComponent,
     ArchiveMonitorDialogComponent,
+    UnarchiveMonitorDialogComponent,
   ],
 })
 export class MonitorsModule {}
