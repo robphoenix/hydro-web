@@ -8,9 +8,8 @@ describe('UnarchiveMonitorDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnarchiveMonitorDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UnarchiveMonitorDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

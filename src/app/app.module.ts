@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './user/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
-import { ErrorInterceptor } from './error.interceptor';
+import { ErrorInterceptor } from './shared/error.interceptor';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
