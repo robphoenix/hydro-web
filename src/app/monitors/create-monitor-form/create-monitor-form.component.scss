@@ -1,5 +1,9 @@
 @import 'main';
 
+.divider {
+  border: 1px solid $grey;
+}
+
 .form {
   display: flex;
   flex-direction: column;
