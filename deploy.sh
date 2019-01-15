@@ -1,8 +1,7 @@
-
 HYDRO_DIR="/usr/local/bet365/hydro-web-server"
 SERVER_DIR="/usr/local/bet365/hydro-web-server/server"
 USER="middleware"
-HOST="mn2splmfe001sd0"
+HOST="mn2formlt0001d0"
 
 echo "====> Attempting to kill running Hydro web server..."
 ssh ${USER}@${HOST} /bin/bash <<'EOT'
