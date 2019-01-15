@@ -96,6 +96,7 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.authService.userGroups || [];
 
     this.formGroup = this.fb.group({
+      id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       status: ['offline', Validators.required],
       description: ['', Validators.required],
@@ -111,6 +112,7 @@ export class CreateMonitorFormComponent implements OnInit {
   ngOnInit() {
     if (this.monitor) {
       this.formGroup.patchValue({
+        id: this.monitor.id,
         name: this.monitorName || this.monitor.name,
         description: this.monitor.description,
         status: this.monitor.status,
@@ -159,7 +161,10 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public submit() {
     const {
+      id,
       name,
+      status,
+      type,
       description,
       query,
       categories,
@@ -168,11 +173,17 @@ export class CreateMonitorFormComponent implements OnInit {
 
     const monitor = {
       name,
+      status,
+      type,
       description,
       query,
       categories,
       groups,
     } as IMonitor;
+
+    if (id) {
+      monitor.id = id;
+    }
 
     this.submitForm.emit(monitor);
   }

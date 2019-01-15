@@ -5,6 +5,8 @@ import {
   ViewChild,
   ViewChildren,
   OnChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   MatPaginator,
@@ -20,6 +22,7 @@ import { FilterService } from '../filter.service';
 import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { UnarchiveMonitorDialogComponent } from '../unarchive-monitor-dialog/unarchive-monitor-dialog.component';
 
 @Component({
   selector: 'app-overview-table',
@@ -59,6 +62,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
+
+  @Output()
+  refresh = new EventEmitter();
 
   filterValues = {
     searchTerm: '',
@@ -147,12 +153,50 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       const body = { status: MonitorStatus.Archived } as IMonitor;
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
+          this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
             duration: 2000,
           });
         },
         (err) => {
           const title = 'archive monitor error';
+          this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+        },
+      );
+    });
+  }
+
+  public unArchiveMonitor(id: number) {
+    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const dialogRef = this.dialog.open(UnarchiveMonitorDialogComponent, {
+      data: { monitor },
+    });
+
+    dialogRef.afterClosed().subscribe((newStatus: string) => {
+      if (!newStatus) {
+        return;
+      }
+
+      const status: MonitorStatus = newStatus as MonitorStatus;
+      const body = { status } as IMonitor;
+
+      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+        () => {
+          this.refresh.emit();
+          this.snackBar.open(
+            `Monitor ${monitor.name} unarchived, now ${newStatus}`,
+            '',
+            {
+              duration: 2000,
+            },
+          );
+        },
+        (err) => {
+          console.log({ err });
+
+          const title = 'unarchive monitor error';
           this.dialog.open(ErrorDialogComponent, {
             data: { title, err },
           });

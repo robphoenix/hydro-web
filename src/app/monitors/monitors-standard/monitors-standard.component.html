@@ -8,6 +8,7 @@
   [monitors]="standardMonitors"
   [allCurrentActions]="allCurrentActions"
   [allCurrentCategories]="allCurrentCategories"
+  (refresh)="refresh()"
 ></app-overview-table>
 <ng-template #noMonitors>
   <app-loading-spinner></app-loading-spinner>

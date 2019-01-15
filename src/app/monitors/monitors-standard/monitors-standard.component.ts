@@ -41,4 +41,8 @@ export class MonitorsStandardComponent implements OnInit {
         );
       });
   }
+
+  refresh() {
+    this.getMonitors();
+  }
 }
