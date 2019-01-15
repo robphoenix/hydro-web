@@ -22,6 +22,7 @@ import * as EventBus from 'vertx3-eventbus-client';
 export class MonitorComponent implements OnInit {
   monitor: IMonitor;
   private eb: EventBus.EventBus;
+  private headers: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +30,7 @@ export class MonitorComponent implements OnInit {
     private monitorService: MonitorsService,
   ) {
     this.eb = new EventBus(`http://url`);
-    const headers = {};
-    this.eb.onopen = () => {
-      this.eb.registerHandler('some-address', headers, (error, message) => {
-        console.log({ message });
-        console.log({ error });
-      });
-    };
+    this.headers = {};
   }
 
   ngOnInit() {
@@ -52,8 +47,24 @@ export class MonitorComponent implements OnInit {
       const id: number = +params.get('id');
       this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
+        this.subscribe();
       });
     });
+  }
+
+  subscribe() {
+    const id = this.monitor.id;
+    this.eb.send('result.pub.subscribe', this.headers, { id });
+    this.eb.onopen = () => {
+      this.eb.registerHandler(
+        'some-address',
+        this.headers,
+        (error, message) => {
+          console.log({ message });
+          console.log({ error });
+        },
+      );
+    };
   }
 
   /**
