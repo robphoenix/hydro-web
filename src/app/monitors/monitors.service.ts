@@ -23,7 +23,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   providedIn: 'root',
 })
 export class MonitorsService {
-  baseUrl = 'http://mn2splmfe001sd0:6080';
+  readonly baseUrl = `http://mn2formlt0001d0:6080`;
   monitorsUrl = `${this.baseUrl}/p/monitors`;
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;
