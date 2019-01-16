@@ -31,6 +31,16 @@ ssh ${USER}@${HOST} /bin/bash <<'EOT'
 	
     kill -9 $(ps aux | grep -v grep | grep hydro-web-server | awk '{print $2}') || true
 EOT
+EXIT_STATUS=$?
+	if [ $EXIT_STATUS -eq 0 ]; 
+    then
+    	echo "Checks okay"
+  	else
+   		echo "Checks failed."
+        exit 1
+	fi
+
+
 
 echo "executing script on ${HOST}"
 echo "====> Transferring files to DEV server..."
