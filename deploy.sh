@@ -4,9 +4,8 @@ USER="middleware"
 HOST="mn2formlt0001d0"
 
 ssh ${USER}@${HOST} /bin/bash <<'EOT'
-    echo "executing script on ${hostname}"
+    echo "executing script on ${HOST}"
     echo "====> Attempting to kill running Hydro web server..."
-    echo "executing script on ${hostname}"
 	#create the directory if it doesnt exist
     if [ ! -d /usr/local/bet365/hydro-web-server ]; then
       # Directory does not exist. lets create it
@@ -33,7 +32,7 @@ ssh ${USER}@${HOST} /bin/bash <<'EOT'
     kill -9 $(ps aux | grep -v grep | grep hydro-web-server | awk '{print $2}') || true
 EOT
 
-echo "executing script on ${hostname}"
+echo "executing script on ${HOST}"
 echo "====> Transferring files to DEV server..."
 scp -i ~/.ssh/id_rsa -r dist ${USER}@${HOST}:${HYDRO_DIR}
 scp -i ~/.ssh/id_rsa server/hydro-web-server ${USER}@${HOST}:${SERVER_DIR}
