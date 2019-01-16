@@ -1,10 +1,4 @@
 <div class="menu">
-  <!--
-    <a mat-raised-button routerLink="/monitors/add" color="accent" class="create">
-      <mat-icon class="icon">add</mat-icon>
-      <span>new monitor</span>
-    </a>
-  -->
   <a
     *ngIf="!isArchived"
     mat-icon-button
@@ -12,7 +6,7 @@
     [matTooltipShowDelay]="showDelay"
     routerLink="/monitors/{{id}}/edit"
   >
-    <mat-icon color="accent">edit</mat-icon>
+    <mat-icon class="icon">edit</mat-icon>
   </a>
   <a
     mat-icon-button
@@ -20,14 +14,14 @@
     [matTooltipShowDelay]="showDelay"
     routerLink="/monitors/{{id}}/duplicate"
   >
-    <mat-icon color="accent">file_copy</mat-icon>
+    <mat-icon class="icon">file_copy</mat-icon>
   </a>
   <button
     mat-icon-button
     matTooltip="Disable"
     [matTooltipShowDelay]="showDelay"
   >
-    <mat-icon color="accent">flash_off</mat-icon>
+    <mat-icon class="icon">flash_off</mat-icon>
   </button>
   <button
     *ngIf="!isArchived"
@@ -36,7 +30,7 @@
     [matTooltipShowDelay]="showDelay"
     (click)="archive(id)"
   >
-    <mat-icon color="accent">archive</mat-icon>
+    <mat-icon class="icon">archive</mat-icon>
   </button>
   <button
     *ngIf="isArchived"
@@ -45,6 +39,6 @@
     [matTooltipShowDelay]="showDelay"
     (click)="unArchive(id)"
   >
-    <mat-icon color="accent">unarchive</mat-icon>
+    <mat-icon class="icon">unarchive</mat-icon>
   </button>
 </div>

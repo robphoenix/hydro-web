@@ -62,18 +62,7 @@
     padding: 5px;
 
     .menu-cell {
-      opacity: 0;
-      visibility: hidden;
-      -webkit-transition: $slower-transition-in-out;
-      transition: $slower-transition-in-out;
       justify-content: center;
-    }
-
-    &:hover {
-      .menu-cell {
-        visibility: visible;
-        opacity: 1;
-      }
     }
   }
 }
