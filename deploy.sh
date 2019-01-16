@@ -3,6 +3,7 @@ SERVER_DIR="/usr/local/bet365/hydro-web-server/server"
 USER="middleware"
 HOST="mn2formlt0001d0"
 
+echo "executing script on ${hostname}"
 	#create the directory if it doesnt exist
     if [ ! -d /usr/local/bet365/hydro-web-server ]; then
       # Directory does not exist. lets create it
