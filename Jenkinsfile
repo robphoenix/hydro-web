@@ -51,7 +51,7 @@ pipeline {
         env GO111MODULE=on go build
         '''
 
-        sh 'ng build --prod'
+        sh 'npm run build:prod'
 
         sh 'sh deploy.sh'
       }
