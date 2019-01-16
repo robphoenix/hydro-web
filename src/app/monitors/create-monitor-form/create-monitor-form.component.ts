@@ -121,6 +121,7 @@ export class CreateMonitorFormComponent implements OnInit {
         status: this.monitor.status,
         query: this.monitor.query,
       });
+
       if (this.editForm) {
         this.formGroup.get('name').disable();
       }
