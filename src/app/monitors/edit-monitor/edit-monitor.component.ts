@@ -16,6 +16,7 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   buttonText = 'save monitor';
   monitor: IMonitor;
   sub: Subscription;
+  editForm = true;
 
   constructor(
     private route: ActivatedRoute,

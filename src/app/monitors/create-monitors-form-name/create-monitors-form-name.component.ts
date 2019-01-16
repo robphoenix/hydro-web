@@ -15,4 +15,7 @@ export class CreateMonitorsFormNameComponent {
 
   @Input()
   placeholder: string;
+
+  @Input()
+  editForm: boolean;
 }
