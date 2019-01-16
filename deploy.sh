@@ -18,7 +18,18 @@ ssh ${USER}@${HOST} /bin/bash <<'EOT'
       # Directory does not exist. lets create it
       mkdir /usr/local/bet365/hydro-web-server/server
 	fi
-
+	
+	#check npm is installed as its a pre-requsite
+	npm -v
+	EXIT_STATUS=$?
+	if [ $EXIT_STATUS -eq 0 ]; 
+    then
+    	echo "npm is installed. Continuing"
+  	else
+   		echo "npm is not installed. Aborting"
+        exit 1
+	fi
+	
     kill -9 $(ps aux | grep -v grep | grep hydro-web-server | awk '{print $2}') || true
 EOT
 
