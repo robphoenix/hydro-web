@@ -25,7 +25,7 @@ pipeline {
     }
   }
   stages {
-    stage('Install Dependencies') {
+    stage('NPM Install') {
       steps {
         sh '''
         npm config set strict-ssl false
@@ -34,26 +34,28 @@ pipeline {
         '''
       }
     }
-    stage('Format') {
-      steps {
-        sh 'npm run format:ci'
+    stage('Checks') {
+      parallel {
+        stage('Format') {
+          steps {
+            sh 'npm run format:ci'
+          }
+        }
+        stage('Lint') {
+          steps {
+            sh 'npm run lint'
+          }
+        }
       }
     }
-    stage('Lint') {
+    stage('Build') {
       steps {
-        sh 'npm run lint'
-      }
-    }
-    stage('Build & Deploy') {
-      steps {
-        sh '''
-        cd server
-        env GO111MODULE=on go build
-        '''
-
         sh 'npm run build:prod'
-
-        sh 'sh deploy.sh'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
       }
     }
   }
