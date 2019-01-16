@@ -41,7 +41,13 @@
 
 <div class="overview-table">
   <div class="table">
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="name"
+      matSortDirection="asc"
+      matSortDisableClear
+    >
       <ng-container matColumnDef="monitor">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <app-icon [type]="'monitor'"></app-icon>

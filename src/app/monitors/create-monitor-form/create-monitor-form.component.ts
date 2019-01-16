@@ -27,6 +27,9 @@ export class CreateMonitorFormComponent implements OnInit {
   @Input()
   monitorName: string;
 
+  @Input()
+  editForm: boolean;
+
   @Output()
   submitForm = new EventEmitter<IMonitor>();
 
@@ -118,6 +121,10 @@ export class CreateMonitorFormComponent implements OnInit {
         status: this.monitor.status,
         query: this.monitor.query,
       });
+
+      if (this.editForm) {
+        this.formGroup.get('name').disable();
+      }
       this.selectedCategories = this.monitor.categories;
       this.formGroup.get('categories').setValue(this.selectedCategories);
       this.selectedGroups = this.monitor.groups;

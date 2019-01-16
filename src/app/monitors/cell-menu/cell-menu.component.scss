@@ -1,0 +1,9 @@
+@import 'main';
+
+.icon {
+  color: $mid-grey;
+
+  &:hover {
+    color: mat-color($accent);
+  }
+}

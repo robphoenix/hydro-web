@@ -3,9 +3,7 @@ import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
-// import * as vertx from 'vertx3-eventbus-client';
 import * as EventBus from 'vertx3-eventbus-client';
-// import EventBus from 'vertx3-eventbus-client';
 
 /**
  * Describes a single monitor.
@@ -23,13 +21,15 @@ export class MonitorComponent implements OnInit {
   monitor: IMonitor;
   private eb: EventBus.EventBus;
   private headers: any;
+  public messages: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private monitorService: MonitorsService,
   ) {
-    this.eb = new EventBus(`http://url`);
+    this.eb = new EventBus('http://mn2formlt0001d0:6081/eventbus');
+
     this.headers = {};
   }
 
@@ -53,15 +53,16 @@ export class MonitorComponent implements OnInit {
   }
 
   subscribe() {
-    const id = this.monitor.id;
-    this.eb.send('result.pub.subscribe', this.headers, { id });
     this.eb.onopen = () => {
       this.eb.registerHandler(
-        'some-address',
+        'result.pub.output',
         this.headers,
         (error, message) => {
-          console.log({ message });
-          console.log({ error });
+          if (error) {
+            console.log(error);
+          }
+          this.messages.push(message);
+          console.log(message);
         },
       );
     };
