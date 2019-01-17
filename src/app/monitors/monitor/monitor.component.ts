@@ -28,7 +28,7 @@ export class MonitorComponent implements OnInit {
     private location: Location,
     private monitorService: MonitorsService,
   ) {
-    this.eb = new EventBus('http://mn2formlt0001d0:6081/eventbus');
+    this.eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
 
     this.headers = {};
   }
