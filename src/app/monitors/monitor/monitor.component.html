@@ -1,5 +1,27 @@
-{{ monitor | json }}
+<div class="content" *ngIf="dataSource && dataSource.data.length; else: noData">
+  <header class="header">
+    <h2 class="title">{{ monitor.name }}</h2>
+    <div class="info">
+      <p class="description">{{ monitor.description }}</p>
+      <button class="show-epl" mat-raised-button color="accent">
+        show epl
+      </button>
+    </div>
+  </header>
+  <table mat-table [dataSource]="dataSource">
+    <!-- Position Column -->
+    <ng-container
+      *ngFor="let column of displayedColumns"
+      matColumnDef="{{column}}"
+    >
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[column] || '-' }}</td>
+    </ng-container>
 
-<h1>messages</h1>
-<h3>{{ messages.length }} messages so far</h3>
-<p *ngFor="let msg of messages">{{ msg | json }}</p>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<ng-template #noData>
+  <app-loading-spinner [title]="'monitor data'"></app-loading-spinner>
+</ng-template>
