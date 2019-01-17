@@ -1,0 +1,38 @@
+@import 'main';
+
+.header {
+  margin: 80px 0 20px 0;
+}
+
+.title {
+  text-transform: uppercase;
+  letter-spacing: $tracked;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+
+  .description {
+    color: $grey;
+  }
+
+  .show-epl {
+    text-transform: uppercase;
+    letter-spacing: $tracked;
+    margin-left: auto;
+  }
+}
+
+.content {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.mat-header-cell {
+  padding: 5px 10px;
+}
+
+.mat-cell {
+  padding: 5px 10px;
+}

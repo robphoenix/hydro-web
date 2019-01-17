@@ -30,6 +30,7 @@ import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
 import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-monitor-dialog.component';
 import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor.component';
 import { UnarchiveMonitorDialogComponent } from './unarchive-monitor-dialog/unarchive-monitor-dialog.component';
+import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.component';
 
 @NgModule({
   imports: [
@@ -76,11 +77,13 @@ import { UnarchiveMonitorDialogComponent } from './unarchive-monitor-dialog/unar
     ArchiveMonitorDialogComponent,
     DuplicateMonitorComponent,
     UnarchiveMonitorDialogComponent,
+    EplQueryDialogComponent,
   ],
   entryComponents: [
     MonitorDeleteDialogComponent,
     ArchiveMonitorDialogComponent,
     UnarchiveMonitorDialogComponent,
+    EplQueryDialogComponent,
   ],
 })
 export class MonitorsModule {}

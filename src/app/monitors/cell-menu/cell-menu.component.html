@@ -17,6 +17,7 @@
     <mat-icon class="icon">file_copy</mat-icon>
   </a>
   <button
+    *ngIf="!isArchived"
     mat-icon-button
     matTooltip="Disable"
     [matTooltipShowDelay]="showDelay"
