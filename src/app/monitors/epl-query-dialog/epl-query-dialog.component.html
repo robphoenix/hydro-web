@@ -1,0 +1,13 @@
+<h1 mat-dialog-title class="title">{{ data.monitor.name }} EPL Query</h1>
+<div mat-dialog-content class="query">{{ data.monitor.query }}</div>
+<div mat-dialog-actions class="buttons">
+  <button
+    mat-raised-button
+    (click)="dialogRef.close()"
+    class="title"
+    color="accent"
+    cdkFocusInitial
+  >
+    close
+  </button>
+</div>

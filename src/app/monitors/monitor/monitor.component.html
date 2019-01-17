@@ -3,7 +3,12 @@
     <h2 class="title">{{ monitor.name }}</h2>
     <div class="info">
       <p class="description">{{ monitor.description }}</p>
-      <button class="show-epl" mat-raised-button color="accent">
+      <button
+        class="show-epl"
+        mat-raised-button
+        color="accent"
+        (click)="showEpl()"
+      >
         show epl
       </button>
     </div>

@@ -4,12 +4,13 @@ import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import * as EventBus from 'vertx3-eventbus-client';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import {
   IMonitorDataAttributes,
   IMonitorData,
   IMonitorDataMessage,
 } from '../monitor-data';
+import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 
 /**
  * Describes a single monitor.
@@ -41,6 +42,7 @@ export class MonitorComponent implements OnInit, OnChanges {
     private route: ActivatedRoute,
     private location: Location,
     private monitorService: MonitorsService,
+    public dialog: MatDialog,
   ) {
     this.eb = new EventBus(this.eventBusUrl);
   }
@@ -97,6 +99,13 @@ export class MonitorComponent implements OnInit, OnChanges {
         },
       );
     };
+  }
+
+  showEpl() {
+    this.dialog.open(EplQueryDialogComponent, {
+      data: { monitor: this.monitor },
+      width: '1000px',
+    });
   }
 
   /**
