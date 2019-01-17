@@ -1,10 +1,21 @@
-import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  OnDestroy,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
 import * as EventBus from 'vertx3-eventbus-client';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatPaginator,
+  MatDialog,
+  MatSort,
+} from '@angular/material';
 import {
   IMonitorDataAttributes,
   IMonitorData,
@@ -24,7 +35,7 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss'],
 })
-export class MonitorComponent implements OnInit, OnChanges {
+export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
   private eventBusAddress = 'result.pub.output';
   private eb: EventBus.EventBus;
@@ -34,9 +45,13 @@ export class MonitorComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<IMonitorDataAttributes>;
   displayedColumns: string[];
   attributes: IMonitorDataAttributes[] = [];
+  c = 0;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
+
+  @ViewChild(MatSort)
+  private sort: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +65,7 @@ export class MonitorComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.attributes);
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.getMonitor();
   }
 
@@ -57,6 +73,10 @@ export class MonitorComponent implements OnInit, OnChanges {
     if (this.dataSource) {
       this.dataSource.data = this.attributes;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.eb.close();
   }
 
   /**
@@ -84,6 +104,10 @@ export class MonitorComponent implements OnInit, OnChanges {
             console.error(error);
           }
 
+          if (this.c > 1) {
+            return;
+          }
+          this.c++;
           const messages: IMonitorDataMessage[] = data.body.messages;
 
           if (!this.displayedColumns) {
