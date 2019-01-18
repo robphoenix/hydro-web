@@ -57,14 +57,12 @@
       color="accent"
       class="spinner"
     ></mat-spinner>
-    <button
-      *ngIf="!attemptingLogIn"
-      mat-raised-button
-      color="accent"
-      (click)="attemptingLogIn = true; login()"
+
+    <app-accent-button
+      *ngIf="!attemptingLogin"
+      (click)="login()"
       [disabled]="!loginForm.valid"
-    >
-      log in
-    </button>
+      [text]="buttonText"
+    ></app-accent-button>
   </div>
 </div>

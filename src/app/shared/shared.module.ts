@@ -28,6 +28,7 @@ import { AccentLinkButtonComponent } from './accent-link-button/accent-link-butt
     SearchInputComponent,
     MultipleSelectComponent,
     IconComponent,
+    AccentButtonComponent,
     AccentLinkButtonComponent,
   ],
   entryComponents: [ErrorDialogComponent],
