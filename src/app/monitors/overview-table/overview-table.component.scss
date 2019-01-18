@@ -11,23 +11,19 @@
   }
 
   .clear {
-    .icon {
-      margin-right: 5px;
-    }
   }
 
   .search {
     flex: 0 0 25%;
     margin: 0 20px 0 auto;
   }
+}
 
-  .create {
-    margin: 0 10px 0 20px;
-  }
+.new-monitor-button {
+  margin: 0 10px 0 20px;
 }
 
 .title,
-.create,
 .clear {
   text-transform: uppercase;
   letter-spacing: $tracked;
