@@ -10,9 +10,6 @@
     margin: 0 10px 0 0;
   }
 
-  .clear {
-  }
-
   .search {
     flex: 0 0 25%;
     margin: 0 20px 0 auto;
@@ -24,11 +21,6 @@
 }
 
 .title,
-.clear {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-}
-
 .table {
   max-height: 700px;
   overflow: auto;

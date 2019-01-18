@@ -22,16 +22,12 @@
     (searchTermChange)="filterMonitors()"
   ></app-search-input>
 
-  <button
-    mat-raised-button
-    color="primary"
+  <app-primary-button
     [disabled]="hasFilters()"
+    [icon]="'clear_all'"
+    [text]="'clear filters'"
     (click)="clearAllFilters()"
-    class="clear"
-  >
-    <mat-icon class="icon">clear_all</mat-icon>
-    <span>clear filters</span>
-  </button>
+  ></app-primary-button>
 
   <app-accent-link-button
     class="new-monitor-button"
