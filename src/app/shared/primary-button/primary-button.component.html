@@ -6,5 +6,5 @@
   (click)="click.emit()"
 >
   <mat-icon *ngIf="icon" class="icon">{{ icon }}</mat-icon>
-  {{ text }}
+  <ng-content></ng-content>
 </button>

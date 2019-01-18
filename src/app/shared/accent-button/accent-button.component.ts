@@ -7,9 +7,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class AccentButtonComponent {
   @Input()
-  text: string;
-
-  @Input()
   disabled: boolean;
 
   @Input()

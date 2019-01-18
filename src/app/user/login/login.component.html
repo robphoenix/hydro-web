@@ -62,7 +62,8 @@
       *ngIf="!attemptingLogin"
       (click)="login()"
       [disabled]="!loginForm.valid"
-      [text]="buttonText"
-    ></app-accent-button>
+    >
+      {{ buttonText }}
+    </app-accent-button>
   </div>
 </div>

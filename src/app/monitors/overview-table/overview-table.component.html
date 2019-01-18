@@ -25,16 +25,18 @@
   <app-primary-button
     [disabled]="hasFilters()"
     [icon]="'clear_all'"
-    [text]="'clear filters'"
     (click)="clearAllFilters()"
-  ></app-primary-button>
+  >
+    clear filters
+  </app-primary-button>
 
   <app-accent-link-button
     class="new-monitor-button"
     [routerLink]="'/monitors/add'"
     [icon]="'add'"
-    [text]="'new monitor'"
-  ></app-accent-link-button>
+  >
+    new monitor
+  </app-accent-link-button>
 </div>
 
 <div class="overview-table">

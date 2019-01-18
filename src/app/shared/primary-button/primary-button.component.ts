@@ -7,9 +7,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PrimaryButtonComponent {
   @Input()
-  text: string;
-
-  @Input()
   disabled: boolean;
 
   @Input()

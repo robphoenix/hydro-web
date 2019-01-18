@@ -70,10 +70,8 @@
       ></app-create-monitor-form-groups>
     </section>
 
-    <app-accent-button
-      type="submit"
-      [disabled]="!formGroup.valid"
-      [text]="buttonText"
-    ></app-accent-button>
+    <app-accent-button type="submit" [disabled]="!formGroup.valid">
+      {{ buttonText }}
+    </app-accent-button>
   </form>
 </div>

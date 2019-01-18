@@ -11,7 +11,4 @@ export class AccentLinkButtonComponent {
 
   @Input()
   icon: string;
-
-  @Input()
-  text: string;
 }

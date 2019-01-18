@@ -3,14 +3,9 @@
     <h2 class="title">{{ monitor.name }}</h2>
     <div class="info">
       <p class="description">{{ monitor.description }}</p>
-      <button
-        class="show-epl"
-        mat-raised-button
-        color="accent"
-        (click)="showEpl()"
-      >
-        show epl
-      </button>
+      <app-accent-button (click)="showEpl()" class="show-epl">
+        show epl query
+      </app-accent-button>
     </div>
   </header>
   <table mat-table matSort [dataSource]="dataSource">
