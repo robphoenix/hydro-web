@@ -88,7 +88,6 @@ export class CreateMonitorFormComponent implements OnInit {
     private filterService: FilterService,
     public authService: AuthService,
   ) {
-    this.buttonText = this.buttonText || this.title;
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.getAvailableCategories();
