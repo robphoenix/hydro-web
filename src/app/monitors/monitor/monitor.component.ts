@@ -42,10 +42,10 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   private headers: { [key: string]: any } = {};
 
   monitor: IMonitor;
+  editLink: string;
   dataSource: MatTableDataSource<IMonitorDataAttributes>;
   displayedColumns: string[];
   attributes: IMonitorDataAttributes[] = [];
-  c = 0;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -87,6 +87,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   getMonitor() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
+      this.editLink = `/monitors/${id}/edit`;
       this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
         this.subscribe();
@@ -104,10 +105,6 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
             console.error(error);
           }
 
-          if (this.c > 1) {
-            return;
-          }
-          this.c++;
           const messages: IMonitorDataMessage[] = data.body.messages;
 
           if (!this.displayedColumns) {

@@ -16,9 +16,13 @@
   .description {
     color: $grey;
   }
+}
 
-  .show-epl {
-    margin-left: auto;
+.buttons {
+  margin-left: auto;
+
+  .button {
+    margin-left: 10px;
   }
 }
 
