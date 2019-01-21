@@ -17,19 +17,29 @@
     <mat-icon class="icon">file_copy</mat-icon>
   </a>
   <button
-    *ngIf="!isArchived"
+    *ngIf="!isArchived && isOnline"
     mat-icon-button
     matTooltip="Disable"
     [matTooltipShowDelay]="showDelay"
+    (click)="disableMonitor.emit(id)"
   >
     <mat-icon class="icon">flash_off</mat-icon>
+  </button>
+  <button
+    *ngIf="!isArchived && isOffline"
+    mat-icon-button
+    matTooltip="Enable"
+    [matTooltipShowDelay]="showDelay"
+    (click)="enableMonitor.emit(id)"
+  >
+    <mat-icon class="icon">flash_on</mat-icon>
   </button>
   <button
     *ngIf="!isArchived"
     mat-icon-button
     matTooltip="Archive"
     [matTooltipShowDelay]="showDelay"
-    (click)="archive(id)"
+    (click)="archiveMonitor.emit(id)"
   >
     <mat-icon class="icon">archive</mat-icon>
   </button>
@@ -38,7 +48,7 @@
     mat-icon-button
     matTooltip="Unarchive"
     [matTooltipShowDelay]="showDelay"
-    (click)="unArchive(id)"
+    (click)="unArchiveMonitor.emit(id)"
   >
     <mat-icon class="icon">unarchive</mat-icon>
   </button>

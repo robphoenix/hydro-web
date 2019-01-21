@@ -1,12 +1,12 @@
 @import 'main';
 
 .search {
-  width: $full-width;
+  width: $largest;
   display: flex;
   align-items: center;
 
   .input {
-    width: $full-width;
+    width: $largest;
     margin-left: 10px;
   }
 }

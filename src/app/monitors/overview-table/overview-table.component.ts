@@ -204,4 +204,32 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       );
     });
   }
+
+  public enableMonitor(id: number) {
+    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const dialogRef = this.dialog.open(ArchiveMonitorDialogComponent, {
+      data: { monitor },
+    });
+
+    dialogRef.afterClosed().subscribe((archive: boolean) => {
+      if (!archive) {
+        return;
+      }
+      const body = { status: MonitorStatus.Archived } as IMonitor;
+      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+        () => {
+          this.refresh.emit();
+          this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
+            duration: 2000,
+          });
+        },
+        (err) => {
+          const title = 'archive monitor error';
+          this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+        },
+      );
+    });
+  }
 }

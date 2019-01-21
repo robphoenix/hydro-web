@@ -3,7 +3,7 @@
 .toolbar {
   display: flex;
   align-items: center;
-  width: $wide;
+  width: $larger;
   margin: 0 auto;
 
   .status-toggle {
@@ -37,7 +37,7 @@
 }
 
 .overview-table {
-  width: $wide;
+  width: $larger;
   margin: 10px auto 40px auto;
   border: 1px solid $light-grey;
   box-shadow: $box-shadow;
@@ -56,7 +56,7 @@
 }
 
 .monitor {
-  width: $full-width;
+  width: $largest;
 }
 
 .menu-icon {
