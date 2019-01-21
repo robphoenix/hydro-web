@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="title">{{ data.action }} monitor</h1>
+<div mat-dialog-content>
+  <p>
+    Are you sure you want to {{ data.action }} <b> {{ data.monitor.name }} </b>?
+  </p>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button
+    mat-raised-button
+    (click)="noThanks()"
+    class="title"
+    color="primary"
+    cdkFocusInitial
+  >
+    no thanks
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="true"
+    class="title"
+    color="accent"
+  >
+    {{ data.action }}
+  </button>
+</div>

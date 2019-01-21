@@ -22,7 +22,7 @@ import { FilterService } from '../filter.service';
 import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-import { UnarchiveMonitorDialogComponent } from '../unarchive-monitor-dialog/unarchive-monitor-dialog.component';
+import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
 
 @Component({
   selector: 'app-overview-table',
@@ -142,8 +142,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public archiveMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const dialogRef = this.dialog.open(ArchiveMonitorDialogComponent, {
-      data: { monitor },
+    const action = `archive`;
+    const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
+      data: { monitor, action },
     });
 
     dialogRef.afterClosed().subscribe((archive: boolean) => {
@@ -170,28 +171,24 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public unArchiveMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const dialogRef = this.dialog.open(UnarchiveMonitorDialogComponent, {
-      data: { monitor },
+    const action = `unarchive`;
+    const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
+      data: { monitor, action },
     });
 
-    dialogRef.afterClosed().subscribe((newStatus: string) => {
-      if (!newStatus) {
+    dialogRef.afterClosed().subscribe((unarchive: boolean) => {
+      if (!unarchive) {
         return;
       }
 
-      const status: MonitorStatus = newStatus as MonitorStatus;
-      const body = { status } as IMonitor;
+      const body = { status: MonitorStatus.Offline } as IMonitor;
 
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
-          this.snackBar.open(
-            `Monitor ${monitor.name} unarchived, now ${newStatus}`,
-            '',
-            {
-              duration: 2000,
-            },
-          );
+          this.snackBar.open(`Monitor ${monitor.name} unarchived`, '', {
+            duration: 2000,
+          });
         },
         (err) => {
           console.log({ err });
@@ -207,19 +204,49 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public enableMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const dialogRef = this.dialog.open(ArchiveMonitorDialogComponent, {
-      data: { monitor },
+    const action = `enable`;
+    const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
+      data: { monitor, action },
     });
 
-    dialogRef.afterClosed().subscribe((archive: boolean) => {
-      if (!archive) {
+    dialogRef.afterClosed().subscribe((enable: boolean) => {
+      if (!enable) {
         return;
       }
-      const body = { status: MonitorStatus.Archived } as IMonitor;
+      const body = { status: MonitorStatus.Online } as IMonitor;
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
-          this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
+          this.snackBar.open(`Monitor ${monitor.name} enabled`, '', {
+            duration: 2000,
+          });
+        },
+        (err) => {
+          const title = 'archive monitor error';
+          this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+        },
+      );
+    });
+  }
+
+  public disableMonitor(id: number) {
+    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const action = `disable`;
+    const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
+      data: { monitor, action },
+    });
+
+    dialogRef.afterClosed().subscribe((disable: boolean) => {
+      if (!disable) {
+        return;
+      }
+      const body = { status: MonitorStatus.Offline } as IMonitor;
+      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+        () => {
+          this.refresh.emit();
+          this.snackBar.open(`Monitor ${monitor.name} disabled`, '', {
             duration: 2000,
           });
         },
