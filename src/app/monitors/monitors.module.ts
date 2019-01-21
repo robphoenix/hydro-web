@@ -27,10 +27,9 @@ import { CreateMonitorFormActionsComponent } from './create-monitor-form-actions
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
 import { CreateMonitorFormGroupsComponent } from './create-monitor-form-groups/create-monitor-form-groups.component';
 import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
-import { ArchiveMonitorDialogComponent } from './archive-monitor-dialog/archive-monitor-dialog.component';
 import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor.component';
-import { UnarchiveMonitorDialogComponent } from './unarchive-monitor-dialog/unarchive-monitor-dialog.component';
 import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.component';
+import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dialog/monitor-status-change-dialog.component';
 
 @NgModule({
   imports: [
@@ -74,16 +73,14 @@ import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.com
     AddMonitorComponent,
     CreateMonitorFormGroupsComponent,
     EditMonitorComponent,
-    ArchiveMonitorDialogComponent,
     DuplicateMonitorComponent,
-    UnarchiveMonitorDialogComponent,
     EplQueryDialogComponent,
+    MonitorStatusChangeDialogComponent,
   ],
   entryComponents: [
     MonitorDeleteDialogComponent,
-    ArchiveMonitorDialogComponent,
-    UnarchiveMonitorDialogComponent,
     EplQueryDialogComponent,
+    MonitorStatusChangeDialogComponent,
   ],
 })
 export class MonitorsModule {}

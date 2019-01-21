@@ -16,11 +16,13 @@
   .description {
     color: $grey;
   }
+}
 
-  .show-epl {
-    text-transform: uppercase;
-    letter-spacing: $tracked;
-    margin-left: auto;
+.buttons {
+  margin-left: auto;
+
+  .button {
+    margin-left: 10px;
   }
 }
 

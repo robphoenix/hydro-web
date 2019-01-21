@@ -1,7 +1,7 @@
-<h1 mat-dialog-title class="title">archive monitor</h1>
+<h1 mat-dialog-title class="title">{{ data.action }} monitor</h1>
 <div mat-dialog-content>
   <p>
-    Are you sure you want to archive <b> {{ data.monitor.name }} </b>?
+    Are you sure you want to {{ data.action }} <b> {{ data.monitor.name }} </b>?
   </p>
 </div>
 <div mat-dialog-actions class="buttons">
@@ -20,6 +20,6 @@
     class="title"
     color="accent"
   >
-    archive
+    {{ data.action }}
   </button>
 </div>

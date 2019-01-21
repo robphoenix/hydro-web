@@ -22,21 +22,21 @@
     (searchTermChange)="filterMonitors()"
   ></app-search-input>
 
-  <button
-    mat-raised-button
-    color="primary"
+  <app-primary-button
     [disabled]="hasFilters()"
+    [icon]="'clear_all'"
     (click)="clearAllFilters()"
-    class="clear"
   >
-    <mat-icon class="icon">clear_all</mat-icon>
-    <span>clear filters</span>
-  </button>
+    clear filters
+  </app-primary-button>
 
-  <a mat-raised-button routerLink="/monitors/add" color="accent" class="create">
-    <mat-icon class="icon">add</mat-icon>
-    <span>new monitor</span>
-  </a>
+  <app-accent-link-button
+    class="new-monitor-button"
+    [routerLink]="'/monitors/add'"
+    [icon]="'add'"
+  >
+    new monitor
+  </app-accent-link-button>
 </div>
 
 <div class="overview-table">
@@ -198,6 +198,8 @@
             [id]="monitor.id"
             (archiveMonitor)="archiveMonitor($event)"
             (unArchiveMonitor)="unArchiveMonitor($event)"
+            (enableMonitor)="enableMonitor($event)"
+            (disableMonitor)="disableMonitor($event)"
           ></app-cell-menu>
         </mat-cell>
       </ng-container>

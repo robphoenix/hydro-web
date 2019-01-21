@@ -3,14 +3,24 @@
     <h2 class="title">{{ monitor.name }}</h2>
     <div class="info">
       <p class="description">{{ monitor.description }}</p>
-      <button
-        class="show-epl"
-        mat-raised-button
-        color="accent"
-        (click)="showEpl()"
-      >
-        show epl
-      </button>
+
+      <div class="buttons">
+        <app-accent-button
+          (click)="showEpl()"
+          class="button"
+          [icon]="'image_search'"
+        >
+          show epl query
+        </app-accent-button>
+
+        <app-accent-link-button
+          [routerLink]="editLink"
+          [icon]="'edit'"
+          class="button"
+        >
+          edit monitor
+        </app-accent-link-button>
+      </div>
     </div>
   </header>
   <table mat-table matSort [dataSource]="dataSource">

@@ -3,36 +3,24 @@
 .toolbar {
   display: flex;
   align-items: center;
-  width: $wide;
+  width: $larger;
   margin: 0 auto;
 
   .status-toggle {
     margin: 0 10px 0 0;
   }
 
-  .clear {
-    .icon {
-      margin-right: 5px;
-    }
-  }
-
   .search {
     flex: 0 0 25%;
     margin: 0 20px 0 auto;
   }
+}
 
-  .create {
-    margin: 0 10px 0 20px;
-  }
+.new-monitor-button {
+  margin: 0 10px 0 20px;
 }
 
 .title,
-.create,
-.clear {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-}
-
 .table {
   max-height: 700px;
   overflow: auto;
@@ -49,7 +37,7 @@
 }
 
 .overview-table {
-  width: $wide;
+  width: $larger;
   margin: 10px auto 40px auto;
   border: 1px solid $light-grey;
   box-shadow: $box-shadow;
@@ -68,7 +56,7 @@
 }
 
 .monitor {
-  width: $full-width;
+  width: $largest;
 }
 
 .menu-icon {

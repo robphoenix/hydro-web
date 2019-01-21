@@ -21,15 +21,21 @@ export class CellMenuComponent {
   @Output()
   unArchiveMonitor = new EventEmitter<number>();
 
-  public archive(id: number) {
-    this.archiveMonitor.emit(id);
-  }
+  @Output()
+  enableMonitor = new EventEmitter<number>();
 
-  public unArchive(id: number) {
-    this.unArchiveMonitor.emit(id);
-  }
+  @Output()
+  disableMonitor = new EventEmitter<number>();
 
   public get isArchived(): boolean {
     return this.status === MonitorStatus.Archived;
+  }
+
+  public get isOnline(): boolean {
+    return this.status === MonitorStatus.Online;
+  }
+
+  public get isOffline(): boolean {
+    return this.status === MonitorStatus.Offline;
   }
 }

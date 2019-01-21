@@ -70,22 +70,8 @@
       ></app-create-monitor-form-groups>
     </section>
 
-    <!--
-      <section class="section">
-        <app-create-monitor-form-actions
-          class="actions"
-          [availableActions]="availableActions"
-          (selectedActions)="selectedActions($event)"
-        ></app-create-monitor-form-actions>
-      </section>
-    -->
-    <button
-      mat-raised-button
-      color="accent"
-      type="submit"
-      [disabled]="!formGroup.valid"
-    >
+    <app-accent-button type="submit" [disabled]="!formGroup.valid">
       {{ buttonText }}
-    </button>
+    </app-accent-button>
   </form>
 </div>

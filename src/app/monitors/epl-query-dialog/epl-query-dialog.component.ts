@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 
 @Component({
   selector: 'app-epl-query-dialog',
@@ -9,7 +8,7 @@ import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive
 })
 export class EplQueryDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<ArchiveMonitorDialogComponent>,
+    public dialogRef: MatDialogRef<EplQueryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 }

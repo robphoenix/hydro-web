@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { AccentButtonComponent } from './accent-button/accent-button.component';
+import { AccentLinkButtonComponent } from './accent-link-button/accent-link-button.component';
+import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 
 @NgModule({
   imports: [
@@ -19,8 +22,18 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     MultipleSelectComponent,
     IconComponent,
     ErrorDialogComponent,
+    AccentButtonComponent,
+    AccentLinkButtonComponent,
+    PrimaryButtonComponent,
   ],
-  exports: [SearchInputComponent, MultipleSelectComponent, IconComponent],
+  exports: [
+    SearchInputComponent,
+    MultipleSelectComponent,
+    IconComponent,
+    AccentButtonComponent,
+    AccentLinkButtonComponent,
+    PrimaryButtonComponent,
+  ],
   entryComponents: [ErrorDialogComponent],
 })
 export class SharedModule {}

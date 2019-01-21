@@ -3,11 +3,11 @@
 @import 'main';
 
 .query {
-  width: $full-width;
+  width: $largest;
 }
 
 .textarea {
-  width: $full-width;
+  width: $largest;
   font-family: monospace;
   font-size: 16px;
   height: auto;

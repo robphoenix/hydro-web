@@ -1,13 +1,13 @@
 @import 'main';
 
 .container {
-  width: $wide;
+  width: $larger;
   display: flex;
   align-items: center;
 
   .select {
     margin-left: 10px;
-    width: $full-width;
+    width: $largest;
   }
 }
 

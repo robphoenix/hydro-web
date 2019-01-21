@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { ILoginResponse } from '../login-response';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +14,7 @@ export class LoginComponent implements OnInit {
   passwordControl: FormControl;
 
   title = 'login';
+  buttonText = 'log in';
   subtitle = 'Please enter your bet365 credentials';
   hidePassword = true;
   minPasswordLength = 8;
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.attemptingLogIn = true;
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)
       .subscribe(
