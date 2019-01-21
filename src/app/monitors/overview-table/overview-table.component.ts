@@ -19,7 +19,6 @@ import { IMonitor, MonitorType, MonitorStatus } from '../monitor';
 import { FormControl } from '@angular/forms';
 import { MultipleSelectComponent } from 'src/app/shared/multiple-select/multiple-select.component';
 import { FilterService } from '../filter.service';
-import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';

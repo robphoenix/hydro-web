@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive-monitor-dialog.component';
 
 @Component({
   selector: 'app-monitor-status-change-dialog',
@@ -9,7 +8,7 @@ import { ArchiveMonitorDialogComponent } from '../archive-monitor-dialog/archive
 })
 export class MonitorStatusChangeDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<ArchiveMonitorDialogComponent>,
+    public dialogRef: MatDialogRef<MonitorStatusChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
