@@ -3,7 +3,7 @@
   color="accent"
   class="button"
   [disabled]="disabled"
-  (click)="click.emit()"
+  (click)="clicked.emit()"
 >
   <mat-icon *ngIf="icon" class="icon">{{ icon }}</mat-icon>
   <ng-content></ng-content>

@@ -6,13 +6,12 @@
 
       <div class="buttons">
         <app-accent-button
-          (click)="showEpl()"
+          (clicked)="showEpl()"
           class="button"
           [icon]="'image_search'"
         >
           show epl query
         </app-accent-button>
-
         <app-accent-link-button
           [routerLink]="editLink"
           [icon]="'edit'"

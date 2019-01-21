@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { MonitorDeleteDialogComponent } from './monitor-delete-dialog/monitor-delete-dialog.component';
 import { OverviewTableComponent } from './overview-table/overview-table.component';
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
 import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
@@ -52,7 +51,6 @@ import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dial
   ],
   declarations: [
     MonitorComponent,
-    MonitorDeleteDialogComponent,
     OverviewTableComponent,
     CellActionsComponent,
     CellMonitorComponent,
@@ -78,7 +76,6 @@ import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dial
     MonitorStatusChangeDialogComponent,
   ],
   entryComponents: [
-    MonitorDeleteDialogComponent,
     EplQueryDialogComponent,
     MonitorStatusChangeDialogComponent,
   ],
