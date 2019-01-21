@@ -60,7 +60,7 @@
 
     <app-accent-button
       *ngIf="!attemptingLogIn"
-      (clicked)="login()"
+      (click)="login()"
       [disabled]="!loginForm.valid"
     >
       {{ buttonText }}
