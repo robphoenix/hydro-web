@@ -1,0 +1,16 @@
+<script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.4/vertx-eventbus.js'></script>
+
+<script>
+
+var eb = new EventBus('http://mn2formlt0001d0:6081/eventbus');
+
+eb.onopen = function() {
+
+ // set a handler to receive a message
+ eb.registerHandler('result.pub.output', function(error, message) {
+   console.log('received a message: ' + JSON.stringify(message));
+ });
+}
+
+</script>
