@@ -14,7 +14,7 @@ export class CreateMonitorFormPriorityComponent {
   showTicks = true;
   step = 1;
   thumbLabel = true;
-  value = MonitorPriority.Lowest;
+  value = MonitorPriority.Mid;
   tickInterval = 2;
 
   private priorities: string[] = ['lowest', 'low', 'mid', 'high', 'highest'];
@@ -28,6 +28,6 @@ export class CreateMonitorFormPriorityComponent {
   }
 
   constructor() {
-    this.priority = this.priorities[0];
+    this.priority = this.priorities[this.value - 1];
   }
 }

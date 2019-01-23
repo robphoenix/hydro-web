@@ -42,6 +42,8 @@ export class CreateMonitorFormComponent implements OnInit {
 
   formGroup: FormGroup;
 
+  readonly defaultPriority = MonitorPriority.Mid;
+
   autocompleteOptions = {
     selectable: true,
     removable: true,
@@ -108,7 +110,7 @@ export class CreateMonitorFormComponent implements OnInit {
       id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       status: ['offline', Validators.required],
-      priority: [MonitorPriority.Lowest],
+      priority: [this.defaultPriority],
       description: ['', Validators.required],
       query: ['', Validators.required],
       categories: [this.selectedCategories],
@@ -126,7 +128,7 @@ export class CreateMonitorFormComponent implements OnInit {
         name: this.monitorName || this.monitor.name,
         description: this.monitor.description,
         status: this.monitor.status,
-        priority: this.monitor.priority || MonitorPriority.Lowest,
+        priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
       });
 
