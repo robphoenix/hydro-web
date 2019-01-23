@@ -23,10 +23,20 @@
   width: $largest;
 }
 
+.status-priority-wrapper {
+  display: flex;
+  width: $largest;
+}
+
 .status {
   margin-left: 10px;
 }
 
+.priority {
+  margin-right: 10px;
+}
+
+.priority,
 .name,
 .status,
 .description,

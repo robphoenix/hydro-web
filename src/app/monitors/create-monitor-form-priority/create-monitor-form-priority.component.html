@@ -1,0 +1,16 @@
+<div class="wrapper" [formGroup]="parent">
+  <mat-label class="label">Priority*</mat-label>
+  <div class="slider-wrapper">
+    <mat-slider
+      formControlName="priority"
+      class="slider"
+      [max]="max"
+      [min]="min"
+      [step]="step"
+      [thumbLabel]="thumbLabel"
+      [tickInterval]="tickInterval"
+      (input)="onInputChange($event)"
+    ></mat-slider>
+    <span class="priority">{{ priority }} priority</span>
+  </div>
+</div>

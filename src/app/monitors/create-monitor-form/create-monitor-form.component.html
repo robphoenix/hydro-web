@@ -22,13 +22,23 @@
       ></app-create-monitor-form-description>
     </section>
 
-    <section class="section">
-      <app-create-monitor-form-status
-        class="status"
-        [parent]="formGroup"
-        ngDefaultControl
-      ></app-create-monitor-form-status>
-    </section>
+    <div class="status-priority-wrapper">
+      <section class="section">
+        <app-create-monitor-form-status
+          class="status"
+          [parent]="formGroup"
+          ngDefaultControl
+        ></app-create-monitor-form-status>
+      </section>
+
+      <section class="section">
+        <app-create-monitor-form-priority
+          class="priority"
+          [parent]="formGroup"
+          ngDefaultControl
+        ></app-create-monitor-form-priority>
+      </section>
+    </div>
 
     <section class="section">
       <app-create-monitor-form-query

@@ -29,6 +29,7 @@ import { EditMonitorComponent } from './edit-monitor/edit-monitor.component';
 import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor.component';
 import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.component';
 import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dialog/monitor-status-change-dialog.component';
+import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priority/create-monitor-form-priority.component';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dial
     DuplicateMonitorComponent,
     EplQueryDialogComponent,
     MonitorStatusChangeDialogComponent,
+    CreateMonitorFormPriorityComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
