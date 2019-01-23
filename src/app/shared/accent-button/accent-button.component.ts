@@ -11,7 +11,4 @@ export class AccentButtonComponent {
 
   @Input()
   icon: string;
-
-  @Output()
-  click = new EventEmitter();
 }
