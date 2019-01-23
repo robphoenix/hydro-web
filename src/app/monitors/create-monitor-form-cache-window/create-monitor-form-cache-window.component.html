@@ -1,0 +1,20 @@
+<div class="wrapper" [formGroup]="parent">
+  <div class="label">
+    <mat-label>Cache Window </mat-label>
+    <mat-icon
+      class="icon"
+      matTooltip="{{tooltip}}"
+      [matTooltipPosition]="'right'"
+      [matTooltipClass]="'tooltip'"
+      >info</mat-icon
+    >
+  </div>
+  <span class="duration">{{ duration }} </span>
+  <mat-slider
+    formControlName="cacheWindow"
+    class="slider"
+    [max]="max"
+    [min]="min"
+    (input)="onInputChange($event)"
+  ></mat-slider>
+</div>

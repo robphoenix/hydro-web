@@ -3,7 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
-import { ICategory, IAction, IGroup, IMonitor, LDAPGroup } from '../monitor';
+import {
+  ICategory,
+  IAction,
+  IGroup,
+  IMonitor,
+  LDAPGroup,
+  MonitorPriority,
+} from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
@@ -34,6 +41,8 @@ export class CreateMonitorFormComponent implements OnInit {
   submitForm = new EventEmitter<IMonitor>();
 
   formGroup: FormGroup;
+
+  readonly defaultPriority = MonitorPriority.Mid;
 
   autocompleteOptions = {
     selectable: true,
@@ -100,9 +109,11 @@ export class CreateMonitorFormComponent implements OnInit {
     this.formGroup = this.fb.group({
       id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
-      status: ['offline', Validators.required],
       description: ['', Validators.required],
+      status: ['offline', Validators.required],
+      priority: [this.defaultPriority],
       query: ['', Validators.required],
+      cacheWindow: [0],
       categories: [this.selectedCategories],
       categoriesInput: [''],
       actions: [[]],
@@ -118,6 +129,7 @@ export class CreateMonitorFormComponent implements OnInit {
         name: this.monitorName || this.monitor.name,
         description: this.monitor.description,
         status: this.monitor.status,
+        priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
       });
 
@@ -170,6 +182,8 @@ export class CreateMonitorFormComponent implements OnInit {
       id,
       name,
       status,
+      // uncomment when API has been updated
+      // priority,
       type,
       description,
       query,
@@ -180,6 +194,8 @@ export class CreateMonitorFormComponent implements OnInit {
     const monitor = {
       name,
       status,
+      // uncomment when API has been updated
+      // priority,
       type,
       description,
       query,
@@ -251,10 +267,6 @@ export class CreateMonitorFormComponent implements OnInit {
 
       this.availableActions = groups;
     });
-  }
-
-  selectedActions(actions: IAction[]): void {
-    this.formGroup.get('actions').setValue(actions);
   }
 
   getAvailableGroups(): void {

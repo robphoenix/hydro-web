@@ -1,0 +1,37 @@
+@import 'main';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 10px;
+}
+
+.label {
+  margin-bottom: 20px;
+  color: $dark-grey;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    color: $grey;
+    margin-left: 10px;
+    cursor: help;
+  }
+}
+
+::ng-deep .tooltip {
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.slider {
+  width: $largest;
+}
+
+.duration {
+  color: $darker-grey;
+  font-weight: 500;
+  text-transform: capitalize;
+}

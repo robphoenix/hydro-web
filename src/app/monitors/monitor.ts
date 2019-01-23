@@ -8,6 +8,7 @@ export interface IMonitor {
   createdBy: string | null;
   updatedBy: string | null;
   status: MonitorStatus;
+  priority: MonitorPriority;
   type: MonitorType;
   categories: ICategory[];
   groups: IGroup[];
@@ -69,4 +70,12 @@ export enum MonitorStatus {
 export enum MonitorType {
   Standard = 'standard',
   System = 'system',
+}
+
+export enum MonitorPriority {
+  Lowest = 1,
+  Low = 2,
+  Mid = 3,
+  High = 4,
+  Highest = 5,
 }

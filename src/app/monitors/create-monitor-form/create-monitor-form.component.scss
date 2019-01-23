@@ -23,10 +23,24 @@
   width: $largest;
 }
 
+.status-priority-wrapper {
+  display: flex;
+  align-items: baseline;
+  width: $largest;
+}
+
+.cache-window,
 .status {
   margin-left: 10px;
 }
 
+.cache-window,
+.priority {
+  margin-right: 10px;
+}
+
+.cache-window,
+.priority,
 .name,
 .status,
 .description,
