@@ -30,6 +30,7 @@ import { DuplicateMonitorComponent } from './duplicate-monitor/duplicate-monitor
 import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.component';
 import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priority/create-monitor-form-priority.component';
+import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cache-window/create-monitor-form-cache-window.component';
 
 @NgModule({
   imports: [
@@ -76,6 +77,7 @@ import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priori
     EplQueryDialogComponent,
     MonitorStatusChangeDialogComponent,
     CreateMonitorFormPriorityComponent,
+    CreateMonitorFormCacheWindowComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

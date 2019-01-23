@@ -27,7 +27,6 @@
         <app-create-monitor-form-status
           class="status"
           [parent]="formGroup"
-          ngDefaultControl
         ></app-create-monitor-form-status>
       </section>
 
@@ -35,7 +34,6 @@
         <app-create-monitor-form-priority
           class="priority"
           [parent]="formGroup"
-          ngDefaultControl
         ></app-create-monitor-form-priority>
       </section>
     </div>
@@ -47,6 +45,13 @@
         [validationMessages]="validationMessages['query']"
         [placeholder]="placeholders.query"
       ></app-create-monitor-form-query>
+    </section>
+
+    <section class="section">
+      <app-create-monitor-form-cache-window
+        class="cache-window"
+        [parent]="formGroup"
+      ></app-create-monitor-form-cache-window>
     </section>
 
     <section class="section">

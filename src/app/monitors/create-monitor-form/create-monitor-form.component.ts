@@ -109,10 +109,11 @@ export class CreateMonitorFormComponent implements OnInit {
     this.formGroup = this.fb.group({
       id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
+      description: ['', Validators.required],
       status: ['offline', Validators.required],
       priority: [this.defaultPriority],
-      description: ['', Validators.required],
       query: ['', Validators.required],
+      cacheWindow: [0],
       categories: [this.selectedCategories],
       categoriesInput: [''],
       actions: [[]],
