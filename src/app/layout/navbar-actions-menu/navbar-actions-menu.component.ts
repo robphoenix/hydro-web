@@ -12,7 +12,7 @@ export class NavbarActionsMenuComponent {
     {
       name: 'All Actions',
       url: '',
-      icon: 'done_all',
+      icon: 'actions',
     },
     {
       name: 'Add New Action',

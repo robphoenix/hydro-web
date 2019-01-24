@@ -7,9 +7,10 @@ import { NavbarMonitorsMenuComponent } from './navbar-monitors-menu/navbar-monit
 import { NavbarUserMenuComponent } from './navbar-user-menu/navbar-user-menu.component';
 import { NavbarActionsMenuComponent } from './navbar-actions-menu/navbar-actions-menu.component';
 import { PrimaryNavbarButtonComponent } from './primary-navbar-button/primary-navbar-button.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, HydroMaterialModule],
+  imports: [CommonModule, SharedModule, RouterModule, HydroMaterialModule],
   exports: [NavbarComponent],
   declarations: [
     NavbarComponent,

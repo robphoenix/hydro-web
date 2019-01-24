@@ -10,7 +10,7 @@
     *ngFor="let item of menuItems"
     routerLink="/actions/{{item.url}}"
   >
-    <mat-icon>{{ item.icon }}</mat-icon>
+    <app-icon [type]="item.icon"></app-icon>
     <span>{{ item.name }}</span>
   </a>
 </mat-menu>

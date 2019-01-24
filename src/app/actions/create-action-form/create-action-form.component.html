@@ -1,3 +1,19 @@
-<p>
-  create-action-form works!
-</p>
+<div class="form">
+  <h2 class="title">{{ title }}</h2>
+  <section>
+    <mat-button-toggle-group #group="matButtonToggleGroup">
+      <mat-button-toggle value="block">
+        <mat-icon>block</mat-icon>
+        <span class="title">block</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="email">
+        <mat-icon>email</mat-icon>
+        <span class="title">email</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="other">
+        <mat-icon>graphic_eq</mat-icon>
+        <span class="title">other</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </section>
+</div>

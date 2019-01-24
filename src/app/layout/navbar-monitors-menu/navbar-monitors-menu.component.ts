@@ -12,17 +12,17 @@ export class NavbarMonitorsMenuComponent {
     {
       name: 'Standard Monitors',
       url: 'standard',
-      icon: 'flash_on',
+      icon: 'standard',
     },
     {
       name: 'Archived Monitors',
       url: 'archived',
-      icon: 'archive',
+      icon: 'archived',
     },
     {
       name: 'System Monitors',
       url: 'system',
-      icon: 'tune',
+      icon: 'system',
     },
     {
       name: 'Add New Monitor',

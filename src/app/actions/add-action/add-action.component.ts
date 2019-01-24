@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-action.component.scss'],
 })
 export class AddActionComponent implements OnInit {
+  title = 'add action';
   constructor() {}
 
   ngOnInit() {}
