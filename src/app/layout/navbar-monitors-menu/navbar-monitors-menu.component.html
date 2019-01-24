@@ -1,22 +1,16 @@
-<button mat-button [matMenuTriggerFor]="monitors" class="button">
-  <span> monitors </span>
-  <mat-icon>arrow_drop_down</mat-icon>
-</button>
+<app-primary-navbar-button
+  [matMenuTriggerFor]="monitors"
+  [buttonText]="buttonText"
+  [menu]="menu"
+></app-primary-navbar-button>
+
 <mat-menu #monitors="matMenu" [overlapTrigger]="false">
-  <a mat-menu-item routerLink="/monitors/standard">
-    <mat-icon>flash_on</mat-icon>
-    <span> Standard Monitors </span>
-  </a>
-  <a mat-menu-item routerLink="/monitors/archived">
-    <mat-icon>archive</mat-icon>
-    <span> Archived Monitors </span>
-  </a>
-  <a mat-menu-item routerLink="/monitors/system">
-    <mat-icon>tune</mat-icon>
-    <span> System Monitors </span>
-  </a>
-  <a mat-menu-item routerLink="/monitors/add">
-    <mat-icon>add</mat-icon>
-    <span> New Monitor </span>
+  <a
+    mat-menu-item
+    *ngFor="let item of menuItems"
+    routerLink="/monitors/{{item.url}}"
+  >
+    <mat-icon>{{ item.icon }}</mat-icon>
+    <span>{{ item.name }}</span>
   </a>
 </mat-menu>
