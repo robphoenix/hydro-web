@@ -3,10 +3,16 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HydroMaterialModule } from '../material/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarMonitorsMenuComponent } from './navbar-monitors-menu/navbar-monitors-menu.component';
+import { NavbarUserMenuComponent } from './navbar-user-menu/navbar-user-menu.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, HydroMaterialModule],
   exports: [NavbarComponent],
-  declarations: [NavbarComponent],
+  declarations: [
+    NavbarComponent,
+    NavbarMonitorsMenuComponent,
+    NavbarUserMenuComponent,
+  ],
 })
 export class LayoutModule {}
