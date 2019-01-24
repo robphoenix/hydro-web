@@ -1,0 +1,14 @@
+<button mat-button [matMenuTriggerFor]="actions" class="button">
+  <span> actions </span>
+  <mat-icon>arrow_drop_down</mat-icon>
+</button>
+<mat-menu #actions="matMenu" [overlapTrigger]="false">
+  <a mat-menu-item routerLink="">
+    <mat-icon>done_all</mat-icon>
+    <span> All Actions </span>
+  </a>
+  <a mat-menu-item routerLink="">
+    <mat-icon>add</mat-icon>
+    <span> New Action </span>
+  </a>
+</mat-menu>
