@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
+import { CreateActionFormSectionBlockComponent } from './create-action-form-section-block/create-action-form-section-block.component';
+import { CreateActionFormSectionEmailComponent } from './create-action-form-section-email/create-action-form-section-email.component';
+import { CreateActionFormSectionOtherComponent } from './create-action-form-section-other/create-action-form-section-other.component';
 
 @NgModule({
   imports: [
@@ -18,6 +21,6 @@ import { HydroMaterialModule } from '../material/material.module';
     HttpClientModule,
     HydroMaterialModule,
   ],
-  declarations: [CreateActionFormComponent, AddActionComponent],
+  declarations: [CreateActionFormComponent, AddActionComponent, CreateActionFormSectionBlockComponent, CreateActionFormSectionEmailComponent, CreateActionFormSectionOtherComponent],
 })
 export class ActionsModule {}
