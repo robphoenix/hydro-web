@@ -8,9 +8,8 @@ describe('CreateActionFormSectionEmailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionFormSectionEmailComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionFormSectionEmailComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

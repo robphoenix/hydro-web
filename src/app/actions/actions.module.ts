@@ -21,6 +21,12 @@ import { CreateActionFormSectionOtherComponent } from './create-action-form-sect
     HttpClientModule,
     HydroMaterialModule,
   ],
-  declarations: [CreateActionFormComponent, AddActionComponent, CreateActionFormSectionBlockComponent, CreateActionFormSectionEmailComponent, CreateActionFormSectionOtherComponent],
+  declarations: [
+    CreateActionFormComponent,
+    AddActionComponent,
+    CreateActionFormSectionBlockComponent,
+    CreateActionFormSectionEmailComponent,
+    CreateActionFormSectionOtherComponent,
+  ],
 })
 export class ActionsModule {}

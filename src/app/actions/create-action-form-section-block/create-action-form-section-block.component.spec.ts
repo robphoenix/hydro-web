@@ -8,9 +8,8 @@ describe('CreateActionFormSectionBlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionFormSectionBlockComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionFormSectionBlockComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

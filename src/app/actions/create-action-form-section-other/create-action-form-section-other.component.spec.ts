@@ -8,9 +8,8 @@ describe('CreateActionFormSectionOtherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionFormSectionOtherComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionFormSectionOtherComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
