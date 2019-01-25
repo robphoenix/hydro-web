@@ -1,3 +1,85 @@
-<p>
-  create-action-form-section-block works!
-</p>
+<div class="block">
+  <span>
+    Name: Block {{ selected }}
+    <span *ngIf="!permanently && durationLength && durationType">
+      for {{ durationLength }} {{ durationType }}
+    </span>
+    <span *ngIf="!permanently && delayLength && delayType">
+      with {{ delayLength }} {{ delayType }} delay
+    </span>
+    <span *ngIf="permanently"> permanently </span>
+  </span>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      placeholder="'Description'"
+      rows="3"
+      cols="100"
+      matTextareaAutosize
+      matAutosizeMinRows="3"
+      matAutosizeMaxRows="3"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Item to block on" [(value)]="selected">
+      <mat-option *ngFor="let item of blockItems" [value]="item">
+        {{ item }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle [(ngModel)]="permanently" class="permanently">
+    Block Permanently
+  </mat-slide-toggle>
+
+  <div class="duration" *ngIf="!permanently">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Block Duration</mat-label>
+
+        <input
+          matInput
+          placeholder="Block duration"
+          [(ngModel)]="durationLength"
+          (click)="permanently = false"
+        />
+      </mat-form-field>
+      <mat-button-toggle-group
+        #group="matButtonToggleGroup"
+        [(value)]="durationType"
+      >
+        <mat-button-toggle value="minutes" [checked]="true">
+          Minutes
+        </mat-button-toggle>
+        <mat-button-toggle value="hours"> Hours </mat-button-toggle>
+        <mat-button-toggle value="days"> Days </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <div class="delay" *ngIf="!permanently">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Block Delay</mat-label>
+        <input
+          matInput
+          placeholder="Block delay"
+          [(ngModel)]="delayLength"
+          (click)="permanently = false"
+        />
+      </mat-form-field>
+      <mat-button-toggle-group
+        #group="matButtonToggleGroup"
+        [(value)]="delayType"
+      >
+        <mat-button-toggle value="seconds" [checked]="true">
+          Seconds
+        </mat-button-toggle>
+        <mat-button-toggle value="minutes"> Minutes </mat-button-toggle>
+        <mat-button-toggle value="hours"> Hours </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+</div>
