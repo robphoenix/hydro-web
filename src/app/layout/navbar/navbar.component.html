@@ -1,38 +1,13 @@
 <mat-toolbar color="primary" class="toolbar">
-  <img class="logo" height="40" [src]="logo" alt="logo" />
+  <a href="/" routerLink="/" class="logo">
+    <img height="40" [src]="logo" alt="logo" />
+  </a>
   <nav class="nav" *ngIf="authService.isLoggedIn">
-    <button mat-button [matMenuTriggerFor]="monitors" class="nav-item">
-      <span> monitors </span>
-      <mat-icon>arrow_drop_down</mat-icon>
-    </button>
-    <mat-menu #monitors="matMenu" class="nav-menu" [overlapTrigger]="false">
-      <a mat-menu-item routerLink="/monitors/standard">
-        <mat-icon>flash_on</mat-icon>
-        <span> Standard Monitors </span>
-      </a>
-      <a mat-menu-item routerLink="/monitors/archived">
-        <mat-icon>archive</mat-icon>
-        <span> Archived Monitors </span>
-      </a>
-      <a mat-menu-item routerLink="/monitors/system">
-        <mat-icon>tune</mat-icon>
-        <span> System Monitors </span>
-      </a>
-      <a mat-menu-item routerLink="/monitors/add">
-        <mat-icon>add</mat-icon>
-        <span> New Monitor </span>
-      </a>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="user">
-      <mat-icon>account_circle</mat-icon>
-      <mat-icon>arrow_drop_down</mat-icon>
-    </button>
-    <mat-menu #user="matMenu" class="nav-menu" [overlapTrigger]="false">
-      <a mat-menu-item (click)="authService.logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span> Log Out {{ authService.userDisplayName }} </span>
-      </a>
-    </mat-menu>
+    <app-navbar-monitors-menu></app-navbar-monitors-menu>
+    <app-navbar-actions-menu></app-navbar-actions-menu>
+    <app-navbar-user-menu
+      [name]="authService.userDisplayName"
+      (logout)="authService.logout()"
+    ></app-navbar-user-menu>
   </nav>
 </mat-toolbar>

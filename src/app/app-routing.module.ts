@@ -15,6 +15,11 @@ import { UserModule } from './user/user.module';
           canActivate: [AuthGuard],
           loadChildren: './monitors/monitors.module#MonitorsModule',
         },
+        {
+          path: 'actions',
+          canActivate: [AuthGuard],
+          loadChildren: './actions/actions.module#ActionsModule',
+        },
         { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
         { path: '', redirectTo: 'monitors', pathMatch: 'full' },
       ],

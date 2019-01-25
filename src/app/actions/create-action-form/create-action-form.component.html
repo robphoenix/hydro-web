@@ -1,0 +1,28 @@
+<div class="form">
+  <h2 class="title">{{ title }}</h2>
+  <section>
+    <mat-button-toggle-group #group="matButtonToggleGroup">
+      <mat-button-toggle value="block" [checked]="true">
+        <mat-icon>block</mat-icon>
+        <span class="title">block</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="email">
+        <mat-icon>email</mat-icon>
+        <span class="title">email</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="other">
+        <mat-icon>graphic_eq</mat-icon>
+        <span class="title">other</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </section>
+  <section *ngIf="group.value === 'block'">
+    <app-create-action-form-section-block></app-create-action-form-section-block>
+  </section>
+  <section *ngIf="group.value === 'email'">
+    <app-create-action-form-section-email></app-create-action-form-section-email>
+  </section>
+  <section *ngIf="group.value === 'other'">
+    <app-create-action-form-section-other></app-create-action-form-section-other>
+  </section>
+</div>

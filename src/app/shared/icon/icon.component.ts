@@ -10,8 +10,12 @@ export class IconComponent {
   type: string;
 
   icons: { [type: string]: string } = {
-    actions: 'report',
+    add: 'add',
+    actions: 'report_problem',
     categories: 'category',
     monitor: 'flash_on',
+    standard: 'flash_on',
+    archived: 'archive',
+    system: 'tune',
   };
 }

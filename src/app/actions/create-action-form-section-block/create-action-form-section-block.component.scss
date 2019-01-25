@@ -1,0 +1,16 @@
+@import 'main';
+
+.block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.duration {
+  display: flex;
+  flex-direction: column;
+}
+
+.permanently {
+  margin: 20px 0;
+}
