@@ -1,5 +1,19 @@
 <div class="form">
   <h2 class="title">{{ title }}</h2>
+  <section class="description">
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Description"
+        rows="3"
+        cols="100"
+        matTextareaAutosize
+        matAutosizeMinRows="3"
+        matAutosizeMaxRows="3"
+      ></textarea>
+    </mat-form-field>
+  </section>
   <section>
     <mat-button-toggle-group #group="matButtonToggleGroup">
       <mat-button-toggle value="block" [checked]="true">
@@ -7,7 +21,7 @@
         <span class="title">block</span>
       </mat-button-toggle>
       <mat-button-toggle value="email">
-        <mat-icon>email</mat-icon>
+        <mat-icon>mail_outline</mat-icon>
         <span class="title">email</span>
       </mat-button-toggle>
       <mat-button-toggle value="other">
