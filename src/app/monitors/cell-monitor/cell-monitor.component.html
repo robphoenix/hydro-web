@@ -1,8 +1,19 @@
-<a class="link" href="/monitors/{{id}}" routerLink="/monitors/{{id}}">
+<a
+  *ngIf="online"
+  class="link"
+  href="/monitors/{{id}}"
+  routerLink="/monitors/{{id}}"
+>
   <div class="title">
-    <h4 class="name">{{ name }}</h4>
-    <span matTooltip="online" *ngIf="online" class="online"> &#9679; </span>
-    <span matTooltip="offline" *ngIf="offline" class="offline"> &#9679; </span>
+    <h4 class="online-name">{{ name }}</h4>
+    <span matTooltip="online" class="online"> &#9679; </span>
   </div>
   <p class="description">{{ description }}</p>
 </a>
+<span *ngIf="!online">
+  <div class="title">
+    <h4 class="offline-name">{{ name }}</h4>
+    <span matTooltip="offline" class="offline"> &#9679; </span>
+  </div>
+  <p class="description">{{ description }}</p>
+</span>

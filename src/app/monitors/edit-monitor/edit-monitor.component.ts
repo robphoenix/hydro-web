@@ -29,12 +29,12 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.paramMap.subscribe((params) => {
       const id = +params.get('id');
-      this.monitorsService
-        .getMonitor(id)
-        .subscribe(
-          (monitor: IMonitor) => (this.monitor = monitor),
-          (error: any) => console.log({ error }),
-        );
+      this.monitorsService.getMonitor(id).subscribe(
+        (monitor: IMonitor) => {
+          this.monitor = monitor;
+        },
+        (error: any) => console.log({ error }),
+      );
     });
   }
 

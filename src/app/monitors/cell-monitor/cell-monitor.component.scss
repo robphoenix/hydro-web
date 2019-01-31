@@ -28,12 +28,7 @@
   color: $green;
 }
 
-.offline {
-  margin-left: 5px;
-  color: $red;
-}
-
-.name {
+.online-name {
   color: $darker-grey;
   text-transform: uppercase;
   letter-spacing: $tracked;
@@ -41,6 +36,20 @@
   line-height: 1.5;
   -webkit-transition: $transition-in-out;
   transition: $transition-in-out;
+}
+
+.offline {
+  margin-left: 5px;
+  color: $red;
+}
+
+.offline-name {
+  color: $grey;
+  text-transform: uppercase;
+  letter-spacing: $tracked;
+  margin: 10px 0;
+  line-height: 1.5;
+  cursor: not-allowed;
 }
 
 .description {
