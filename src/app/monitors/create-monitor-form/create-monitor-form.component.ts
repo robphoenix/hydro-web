@@ -184,6 +184,7 @@ export class CreateMonitorFormComponent implements OnInit {
       status,
       // uncomment when API has been updated
       // priority,
+      cacheWindow,
       type,
       description,
       query,
@@ -196,6 +197,7 @@ export class CreateMonitorFormComponent implements OnInit {
       status,
       // uncomment when API has been updated
       // priority,
+      cacheWindow,
       type,
       description,
       query,
@@ -206,6 +208,8 @@ export class CreateMonitorFormComponent implements OnInit {
     if (id) {
       monitor.id = id;
     }
+
+    console.log({ monitor });
 
     this.submitForm.emit(monitor);
   }
@@ -299,5 +303,9 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups.push(event.option.value);
     this.formGroup.get('groups').setValue(this.selectedGroups);
     this.formGroup.get('groupsInput').setValue(null);
+  }
+
+  updateCacheWindow(duration: number) {
+    this.formGroup.get('cacheWindow').setValue(duration);
   }
 }

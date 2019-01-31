@@ -10,6 +10,7 @@ export interface IMonitor {
   status: MonitorStatus;
   priority: MonitorPriority;
   type: MonitorType;
+  cacheWindow: number;
   categories: ICategory[];
   groups: IGroup[];
   actions: IAction[];
