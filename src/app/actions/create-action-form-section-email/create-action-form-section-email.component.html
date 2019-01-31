@@ -1,3 +1,106 @@
-<p>
-  create-action-form-section-email works!
-</p>
+<div class="email">
+  <section class="name">
+    <span>
+      Name: Email
+      <span *ngIf="selectedEmails && selectedEmails.length">
+        {{ selectedEmails.join(', ') }}
+      </span>
+      <span *ngIf="selectedTemplate"> with {{ selectedTemplate }} </span>
+      <span *ngIf="selectedEmailType === 'Rate' && sendLimit >= 0">
+        <span *ngIf="sendLimit === 0">unlimited</span>
+        <span *ngIf="sendLimit > 0">up to {{ sendLimit }}</span> emails per hour
+      </span>
+      <span
+        *ngIf="selectedEmailType === 'Batch' && batchTime && batchTimeOfDay"
+      >
+        at {{ batchTime }} {{ batchTimeOfDay }} every day
+      </span>
+      <span
+        *ngIf="
+          selectedEmailType === 'Alert' &&
+          selectedFields &&
+          selectedFields.length
+        "
+        >alerting on {{ selectedFields.join(', ') }}</span
+      >
+    </span>
+  </section>
+  <mat-form-field appearance="outline" class="recipients">
+    <mat-label>Distribution List(s)*</mat-label>
+    <mat-select
+      placeholder="Distribution List(s)*"
+      multiple
+      [(ngModel)]="selectedEmails"
+    >
+      <mat-option *ngFor="let email of emails" [value]="email">
+        {{ email }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="template">
+    <mat-label>Email Template</mat-label>
+    <mat-select placeholder="Email Template" [(ngModel)]="selectedTemplate">
+      <mat-option *ngFor="let template of templates" [value]="template">
+        {{ template }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <app-accent-button
+    class="button"
+    [icon]="'image_search'"
+    [disabled]="!selectedTemplate"
+  >
+    view email template
+  </app-accent-button>
+  <mat-form-field appearance="outline" class="email-type">
+    <mat-label>Email Type</mat-label>
+    <mat-select placeholder="Email Type" [(ngModel)]="selectedEmailType">
+      <mat-option *ngFor="let type of emailTypes" [value]="type">
+        {{ type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" *ngIf="selectedEmailType === 'Rate'">
+    <mat-label>Email Send Limit</mat-label>
+    <input
+      type="number"
+      min="0"
+      matInput
+      placeholder="Email Send Limit"
+      [(ngModel)]="sendLimit"
+    />
+  </mat-form-field>
+
+  <div *ngIf="selectedEmailType === 'Batch'">
+    <mat-form-field appearance="outline">
+      <mat-label>Send email every day at</mat-label>
+      <input
+        matInput
+        type="time"
+        placeholder="Send email every day at"
+        [(ngModel)]="batchTime"
+      />
+    </mat-form-field>
+    <mat-button-toggle-group [(ngModel)]="batchTimeOfDay">
+      <mat-button-toggle value="AM">AM</mat-button-toggle>
+      <mat-button-toggle value="PM">PM</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <mat-form-field
+    appearance="outline"
+    class="fields"
+    *ngIf="selectedEmailType === 'Alert'"
+  >
+    <mat-label>Alert on fields*</mat-label>
+    <mat-select
+      placeholder="Alert on fields*"
+      multiple
+      [(ngModel)]="selectedFields"
+    >
+      <mat-option *ngFor="let field of fields" [value]="field">
+        {{ field }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

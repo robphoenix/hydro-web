@@ -1,0 +1,19 @@
+@import 'main';
+
+.email {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.email-type,
+.template,
+.recipients {
+  width: $largest;
+  margin: 10px 0;
+}
+
+.email-type,
+.recipients {
+  margin-top: 20px;
+}

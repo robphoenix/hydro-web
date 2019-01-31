@@ -16,9 +16,9 @@ export class CreateActionFormSectionBlockComponent implements OnInit {
   ];
   selected: string;
 
-  durationLength = 0;
+  durationLength: number;
   durationType: string;
-  delayLength = 0;
+  delayLength: number;
   delayType: string;
   permanently = false;
 

@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-action-form-section-other.component.scss'],
 })
 export class CreateActionFormSectionOtherComponent implements OnInit {
+  options: string[] = ['Database', 'Results Processing', 'Miscellaneous'];
+  selectedOption: string;
+
   constructor() {}
 
   ngOnInit() {}
