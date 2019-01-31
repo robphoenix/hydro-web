@@ -90,15 +90,21 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
       this.editLink = `/monitors/${id}/edit`;
       this.monitorService.getMonitor(id).subscribe((monitor) => {
         this.monitor = monitor;
+        const name = monitor.name;
+        console.log({ name });
+
         this.subscribe();
       });
     });
   }
 
   subscribe() {
+    const address = `${this.eventBusAddress}.${this.monitor.name}`;
+    console.log({ address });
+
     this.eb.onopen = () => {
       this.eb.registerHandler(
-        this.eventBusAddress,
+        address,
         this.headers,
         (error, data: IMonitorData) => {
           if (error) {
