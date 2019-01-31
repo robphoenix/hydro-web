@@ -131,6 +131,7 @@ export class CreateMonitorFormComponent implements OnInit {
         status: this.monitor.status,
         priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
+        cacheWindow: this.monitor.cacheWindow || 0,
       });
 
       if (this.editForm) {
@@ -208,8 +209,6 @@ export class CreateMonitorFormComponent implements OnInit {
     if (id) {
       monitor.id = id;
     }
-
-    console.log({ monitor });
 
     this.submitForm.emit(monitor);
   }
