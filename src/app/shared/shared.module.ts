@@ -9,6 +9,8 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AccentButtonComponent } from './accent-button/accent-button.component';
 import { AccentLinkButtonComponent } from './accent-link-button/accent-link-button.component';
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
+import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
+import { WarnButtonComponent } from './warn-button/warn-button.component';
 
 @NgModule({
   imports: [
@@ -25,6 +27,8 @@ import { PrimaryButtonComponent } from './primary-button/primary-button.componen
     AccentButtonComponent,
     AccentLinkButtonComponent,
     PrimaryButtonComponent,
+    AccentSubmitButtonComponent,
+    WarnButtonComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -32,7 +36,9 @@ import { PrimaryButtonComponent } from './primary-button/primary-button.componen
     IconComponent,
     AccentButtonComponent,
     AccentLinkButtonComponent,
+    AccentSubmitButtonComponent,
     PrimaryButtonComponent,
+    WarnButtonComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

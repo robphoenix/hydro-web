@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
@@ -15,6 +16,7 @@ import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -96,6 +98,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private monitorsService: MonitorsService,
     private filterService: FilterService,
     public authService: AuthService,
+    private router: Router,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -306,5 +309,9 @@ export class CreateMonitorFormComponent implements OnInit {
 
   updateCacheWindow(duration: number) {
     this.formGroup.get('cacheWindow').setValue(duration);
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/monitors');
   }
 }

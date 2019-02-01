@@ -85,8 +85,13 @@
       ></app-create-monitor-form-groups>
     </section>
 
-    <app-accent-button type="submit" [disabled]="!formGroup.valid">
-      {{ buttonText }}
-    </app-accent-button>
+    <section class="buttons">
+      <app-accent-submit-button [disabled]="!formGroup.valid">
+        {{ buttonText }}
+      </app-accent-submit-button>
+      <app-warn-button class="cancel" (click)="cancel()">
+        cancel
+      </app-warn-button>
+    </section>
   </form>
 </div>

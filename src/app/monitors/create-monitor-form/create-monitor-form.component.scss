@@ -49,3 +49,13 @@
 .groups {
   width: $largest;
 }
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+
+  .cancel {
+    margin-left: 20px;
+  }
+}
