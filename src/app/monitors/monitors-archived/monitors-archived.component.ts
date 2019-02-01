@@ -15,9 +15,6 @@ export class MonitorsArchivedComponent implements OnInit {
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
 
-  @ViewChild(OverviewTableComponent)
-  overviewTable: OverviewTableComponent;
-
   constructor(private monitorsService: MonitorsService) {}
 
   ngOnInit(): void {

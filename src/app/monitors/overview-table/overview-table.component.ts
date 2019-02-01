@@ -62,6 +62,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
 
+  @Input()
+  initialStatus = 'all';
+
   @Output()
   refresh = new EventEmitter();
 
@@ -74,7 +77,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       other: [],
     },
     selectedCategories: [],
-    status: 'all',
+    status: '',
   };
 
   constructor(
@@ -90,6 +93,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
+    this.filterValues.status = this.initialStatus;
+    this.filterMonitors();
   }
 
   ngOnChanges(): void {
@@ -100,6 +105,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public filterMonitors(): void {
     this.dataSource.filter = JSON.stringify(this.filterValues);
+  }
+
+  public showAllMonitors(): void {
+    this.filterValues.status = 'all';
+    this.filterMonitors();
   }
 
   public hasFilters(): boolean {
@@ -136,7 +146,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public toggleStatus(value: string) {
     this.filterValues.status = value;
-    this.dataSource.filter = JSON.stringify(this.filterValues);
+    this.filterMonitors();
   }
 
   public archiveMonitor(id: number) {
