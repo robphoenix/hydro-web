@@ -8,9 +8,8 @@ describe('AccentSubmitButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccentSubmitButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [AccentSubmitButtonComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
