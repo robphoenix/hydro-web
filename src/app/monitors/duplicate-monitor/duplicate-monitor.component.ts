@@ -6,6 +6,7 @@ import { MonitorsService } from '../monitors.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
+import { IMonitorSubmit } from '../monitor-submit';
 
 @Component({
   selector: 'app-duplicate-monitor',
@@ -47,12 +48,14 @@ export class DuplicateMonitorComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addMonitor(monitor: IMonitor) {
+  addMonitor(event: IMonitorSubmit) {
+    const { monitor, view } = event;
     this.monitorsService.addMonitor(monitor).subscribe(
       (res: IMonitor) => {
         this.form.reset();
         const { id, name } = res;
-        this.router.navigate([`/monitors/${id}`]);
+        const redirectUrl = view ? `/monitors/${id}` : `/monitors`;
+        this.router.navigate([redirectUrl]);
         this.snackBar.open(`Monitor ${name} created`, '', {
           duration: 2000,
         });

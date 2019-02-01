@@ -5,6 +5,7 @@ import { MonitorsService } from '../monitors.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { IMonitorSubmit } from '../monitor-submit';
 
 @Component({
   selector: 'app-edit-monitor',
@@ -42,17 +43,17 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  saveMonitor(monitor: IMonitor) {
+  saveMonitor(event: IMonitorSubmit) {
+    const { monitor, view } = event;
     this.monitorsService.patchMonitor(monitor.id, monitor).subscribe(
       () => {
-        this.router.navigate([`/monitors`]);
+        const redirectUrl = view ? `/monitors/${monitor.id}` : `/monitors`;
+        this.router.navigate([redirectUrl]);
         this.snackBar.open(`Monitor ${this.monitor.name} edited`, '', {
           duration: 2000,
         });
       },
       (err: string) => {
-        console.log({ err });
-
         const title = 'error editing monitor';
         this.dialog.open(ErrorDialogComponent, {
           data: { title, err },

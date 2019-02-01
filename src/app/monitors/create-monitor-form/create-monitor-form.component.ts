@@ -17,6 +17,7 @@ import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
 import { Router } from '@angular/router';
+import { IMonitorSubmit } from '../monitor-submit';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -40,7 +41,7 @@ export class CreateMonitorFormComponent implements OnInit {
   editForm: boolean;
 
   @Output()
-  submitForm = new EventEmitter<IMonitor>();
+  submitForm = new EventEmitter<IMonitorSubmit>();
 
   formGroup: FormGroup;
 
@@ -181,7 +182,7 @@ export class CreateMonitorFormComponent implements OnInit {
     });
   }
 
-  public submit() {
+  public submit(view: boolean = false) {
     const {
       id,
       name,
@@ -213,7 +214,7 @@ export class CreateMonitorFormComponent implements OnInit {
       monitor.id = id;
     }
 
-    this.submitForm.emit(monitor);
+    this.submitForm.emit({ monitor, view } as IMonitorSubmit);
   }
 
   reset() {
