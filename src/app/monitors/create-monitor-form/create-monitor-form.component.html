@@ -92,7 +92,7 @@
       <app-accent-button
         class="view"
         (click)="submit(true)"
-        [disabled]="!formGroup.valid"
+        [disabled]="!canViewMonitor"
       >
         {{ buttonText }} and view
       </app-accent-button>

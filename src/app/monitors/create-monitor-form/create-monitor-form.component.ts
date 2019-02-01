@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
@@ -11,6 +10,7 @@ import {
   IMonitor,
   LDAPGroup,
   MonitorPriority,
+  MonitorStatus,
 } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
@@ -114,7 +114,7 @@ export class CreateMonitorFormComponent implements OnInit {
       id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       description: ['', Validators.required],
-      status: ['offline', Validators.required],
+      status: [MonitorStatus.Offline, Validators.required],
       priority: [this.defaultPriority],
       query: ['', Validators.required],
       cacheWindow: [0],
@@ -171,6 +171,13 @@ export class CreateMonitorFormComponent implements OnInit {
           this.selectedGroups,
         ),
       ),
+    );
+  }
+
+  get canViewMonitor(): boolean {
+    return (
+      this.formGroup.valid &&
+      this.formGroup.get('status').value === MonitorStatus.Online
     );
   }
 
