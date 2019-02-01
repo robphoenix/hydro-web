@@ -5,6 +5,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { IMonitor } from '../monitor';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
+import { IMonitorSubmit } from '../monitor-submit';
 
 @Component({
   selector: 'app-add-monitor',
@@ -24,12 +25,14 @@ export class AddMonitorComponent {
     public dialog: MatDialog,
   ) {}
 
-  addMonitor(monitor: IMonitor) {
+  addMonitor(event: IMonitorSubmit) {
+    const { monitor, view } = event;
     this.monitorsService.addMonitor(monitor).subscribe(
       (res: IMonitor) => {
         this.form.reset();
         const { id, name } = res;
-        this.router.navigate([`/monitors/${id}`]);
+        const redirectUrl = view ? `/monitors/${id}` : `/monitors`;
+        this.router.navigate([redirectUrl]);
         this.snackBar.open(`Monitor ${name} created`, '', {
           duration: 2000,
         });

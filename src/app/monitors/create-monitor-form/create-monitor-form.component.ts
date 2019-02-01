@@ -10,11 +10,14 @@ import {
   IMonitor,
   LDAPGroup,
   MonitorPriority,
+  MonitorStatus,
 } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
+import { Router } from '@angular/router';
+import { IMonitorSubmit } from '../monitor-submit';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -38,7 +41,7 @@ export class CreateMonitorFormComponent implements OnInit {
   editForm: boolean;
 
   @Output()
-  submitForm = new EventEmitter<IMonitor>();
+  submitForm = new EventEmitter<IMonitorSubmit>();
 
   formGroup: FormGroup;
 
@@ -96,6 +99,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private monitorsService: MonitorsService,
     private filterService: FilterService,
     public authService: AuthService,
+    private router: Router,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -110,7 +114,7 @@ export class CreateMonitorFormComponent implements OnInit {
       id: null,
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
       description: ['', Validators.required],
-      status: ['offline', Validators.required],
+      status: [MonitorStatus.Offline, Validators.required],
       priority: [this.defaultPriority],
       query: ['', Validators.required],
       cacheWindow: [0],
@@ -170,6 +174,13 @@ export class CreateMonitorFormComponent implements OnInit {
     );
   }
 
+  get canViewMonitor(): boolean {
+    return (
+      this.formGroup.valid &&
+      this.formGroup.get('status').value === MonitorStatus.Online
+    );
+  }
+
   private markControl(name: string): void {
     const control = this.formGroup.get(name);
     control.valueChanges.pipe(debounceTime(800)).subscribe(() => {
@@ -178,7 +189,7 @@ export class CreateMonitorFormComponent implements OnInit {
     });
   }
 
-  public submit() {
+  public submit(view: boolean = false) {
     const {
       id,
       name,
@@ -210,7 +221,7 @@ export class CreateMonitorFormComponent implements OnInit {
       monitor.id = id;
     }
 
-    this.submitForm.emit(monitor);
+    this.submitForm.emit({ monitor, view } as IMonitorSubmit);
   }
 
   reset() {
@@ -306,5 +317,9 @@ export class CreateMonitorFormComponent implements OnInit {
 
   updateCacheWindow(duration: number) {
     this.formGroup.get('cacheWindow').setValue(duration);
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/monitors');
   }
 }

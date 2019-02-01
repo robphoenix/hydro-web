@@ -6,13 +6,9 @@
     #statusGroup="matButtonToggleGroup"
     (change)="toggleStatus($event.value)"
   >
-    <mat-button-toggle value="online"> <span>Online</span> </mat-button-toggle>
-    <mat-button-toggle value="offline">
-      <span>Offline</span>
-    </mat-button-toggle>
-    <mat-button-toggle value="all" checked="true">
-      <span>All Monitors</span>
-    </mat-button-toggle>
+    <mat-button-toggle value="online"> Online </mat-button-toggle>
+    <mat-button-toggle value="offline"> Offline </mat-button-toggle>
+    <mat-button-toggle value="all"> All Monitors </mat-button-toggle>
   </mat-button-toggle-group>
 
   <app-search-input
