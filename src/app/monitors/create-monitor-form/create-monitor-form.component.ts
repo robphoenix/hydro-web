@@ -69,12 +69,16 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
 
+  private nameMaxCharLength = 50;
   private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
       required: `You must enter a monitor name`,
-      pattern: `Monitor name cannot contain punctuation characters`,
+      pattern: `Monitor name cannot contain punctuation marks, except dashes and underscores`,
+      maxlength: `Monitor name must be ${
+        this.nameMaxCharLength
+      } characters or less`,
     },
     description: {
       required: `You must enter a monitor description`,
@@ -120,7 +124,14 @@ export class CreateMonitorFormComponent implements OnInit {
       groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
       id: null,
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-zA-Z0-9 _-]+'),
+          Validators.maxLength(this.nameMaxCharLength),
+        ],
+      ],
       priority: [this.defaultPriority],
       query: ['', Validators.required],
       status: [MonitorStatus.Offline, Validators.required],

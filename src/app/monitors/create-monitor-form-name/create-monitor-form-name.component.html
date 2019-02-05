@@ -12,4 +12,7 @@
   <mat-error *ngIf="parent.get('name').hasError('pattern')">
     {{ validationMessages['pattern'] }}
   </mat-error>
+  <mat-error *ngIf="parent.get('name').hasError('maxlength')">
+    {{ validationMessages['maxlength'] }}
+  </mat-error>
 </mat-form-field>
