@@ -3,6 +3,8 @@
 .button {
   text-transform: uppercase;
   letter-spacing: $tracked;
+  display: flex;
+  align-items: center;
 }
 
 .icon {

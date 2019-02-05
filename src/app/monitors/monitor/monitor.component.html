@@ -5,6 +5,9 @@
       <p class="description">{{ monitor.description }}</p>
 
       <div class="buttons">
+        <app-primary-button (click)="togglePause()" [icon]="pauseIcon">
+          {{ paused ? 'run' : 'pause' }}
+        </app-primary-button>
         <app-accent-button
           (click)="showEpl()"
           class="button"

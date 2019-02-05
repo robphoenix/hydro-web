@@ -46,6 +46,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   dataSource: MatTableDataSource<IMonitorDataAttributes>;
   displayedColumns: string[];
   attributes: IMonitorDataAttributes[] = [];
+  paused = false;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -77,6 +78,31 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.eb.close();
+  }
+
+  pause() {
+    this.paused = true;
+    this.eb.close();
+  }
+
+  unpause() {
+    this.eb = new EventBus(this.eventBusUrl);
+    this.subscribe();
+    this.paused = false;
+  }
+
+  togglePause() {
+    if (this.paused) {
+      this.eb = new EventBus(this.eventBusUrl);
+      this.subscribe();
+    } else {
+      this.eb.close();
+    }
+    this.paused = !this.paused;
+  }
+
+  get pauseIcon(): string {
+    return this.paused ? 'play_arrow' : 'pause';
   }
 
   /**
@@ -118,8 +144,6 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
             (message: IMonitorDataMessage) => message.attributes,
           );
           this.dataSource.data = this.attributes;
-
-          console.log(data);
         },
       );
     };

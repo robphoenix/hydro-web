@@ -11,7 +11,4 @@ export class PrimaryButtonComponent {
 
   @Input()
   icon: string;
-
-  @Output()
-  click = new EventEmitter();
 }
