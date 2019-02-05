@@ -2,14 +2,14 @@
   <h2 class="title">{{ title }}</h2>
   <form [formGroup]="formGroup" (ngSubmit)="submit()">
     <section class="section">
-      <app-create-monitors-form-name
+      <app-create-monitor-form-name
         class="name"
         [parent]="formGroup"
         [validationMessages]="validationMessages['name']"
         [placeholder]="placeholders.name"
         [editForm]="editForm"
         ngDefaultControl
-      ></app-create-monitors-form-name>
+      ></app-create-monitor-form-name>
     </section>
 
     <section class="section">
