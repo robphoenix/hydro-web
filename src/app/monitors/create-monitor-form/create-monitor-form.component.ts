@@ -11,6 +11,7 @@ import {
   LDAPGroup,
   MonitorPriority,
   MonitorStatus,
+  MonitorType,
 } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
@@ -111,31 +112,33 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.authService.userGroups || [];
 
     this.formGroup = this.fb.group({
-      id: null,
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
-      description: ['', Validators.required],
-      status: [MonitorStatus.Offline, Validators.required],
-      priority: [this.defaultPriority],
-      query: ['', Validators.required],
+      actions: [[]],
       cacheWindow: [0],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      actions: [[]],
+      description: ['', Validators.required],
       groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
+      id: null,
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
+      priority: [this.defaultPriority],
+      query: ['', Validators.required],
+      status: [MonitorStatus.Offline, Validators.required],
+      type: [MonitorType.Standard, Validators.required],
     });
   }
 
   ngOnInit() {
     if (this.monitor) {
       this.formGroup.patchValue({
+        cacheWindow: this.monitor.cacheWindow || 0,
+        description: this.monitor.description,
         id: this.monitor.id,
         name: this.monitorName || this.monitor.name,
-        description: this.monitor.description,
-        status: this.monitor.status,
         priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
-        cacheWindow: this.monitor.cacheWindow || 0,
+        status: this.monitor.status,
+        type: this.monitor.type,
       });
 
       if (this.editForm) {
@@ -191,30 +194,26 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public submit(view: boolean = false) {
     const {
+      cacheWindow,
+      categories,
+      description,
+      groups,
       id,
       name,
-      status,
-      // uncomment when API has been updated
-      // priority,
-      cacheWindow,
-      type,
-      description,
       query,
-      categories,
-      groups,
+      status,
+      type,
     } = this.formGroup.value;
 
     const monitor = {
-      name,
-      status,
-      // uncomment when API has been updated
-      // priority,
       cacheWindow,
-      type,
-      description,
-      query,
       categories,
+      description,
       groups,
+      name,
+      query,
+      status,
+      type,
     } as IMonitor;
 
     if (id) {

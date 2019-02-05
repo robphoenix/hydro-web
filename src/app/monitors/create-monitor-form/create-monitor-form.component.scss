@@ -25,24 +25,27 @@
 
 .status-priority-wrapper {
   display: flex;
+  justify-content: space-between;
   align-items: baseline;
   width: $largest;
 }
 
-.cache-window,
-.status {
-  margin-left: 10px;
+.status,
+.type {
+  flex: 0 0 1;
+}
+.priority {
+  flex: 0 0 2;
 }
 
-.cache-window,
-.priority {
+.cache-window {
   margin-right: 10px;
+  margin-left: 10px;
 }
 
 .cache-window,
 .priority,
 .name,
-.status,
 .description,
 .query,
 .categories,
