@@ -22,6 +22,7 @@ import { FilterService } from '../filter.service';
 import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
+import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 
 @Component({
   selector: 'app-overview-table',
@@ -266,6 +267,14 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
       );
+    });
+  }
+
+  public viewEplQuery(id: number) {
+    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    this.dialog.open(EplQueryDialogComponent, {
+      data: { monitor },
+      width: '1000px',
     });
   }
 }

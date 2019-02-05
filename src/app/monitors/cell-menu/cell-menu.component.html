@@ -1,4 +1,12 @@
 <div class="menu">
+  <button
+    mat-icon-button
+    matTooltip="View EPL Query"
+    [matTooltipShowDelay]="showDelay"
+    (click)="viewEplQuery.emit(id)"
+  >
+    <mat-icon class="icon">visibility</mat-icon>
+  </button>
   <a
     *ngIf="!isArchived"
     mat-icon-button
