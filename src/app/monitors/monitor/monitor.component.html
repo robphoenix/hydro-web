@@ -25,8 +25,8 @@
       </div>
     </div>
   </header>
+
   <table mat-table matSort [dataSource]="dataSource">
-    <!-- Position Column -->
     <ng-container
       *ngFor="let column of displayedColumns"
       matColumnDef="{{column}}"

@@ -136,14 +136,15 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
           const messages: IMonitorDataMessage[] = data.body.messages;
 
-          if (!this.displayedColumns) {
-            this.displayedColumns = Object.keys(messages[0].attributes);
-          }
+          const columns = Object.keys(messages[0].attributes);
+          this.displayedColumns = columns;
 
           this.attributes = messages.map(
             (message: IMonitorDataMessage) => message.attributes,
           );
           this.dataSource.data = this.attributes;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         },
       );
     };
