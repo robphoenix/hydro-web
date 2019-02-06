@@ -16,7 +16,6 @@ import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor
 import { MonitorsStandardComponent } from './monitors-standard/monitors-standard.component';
 import { MonitorsSystemComponent } from './monitors-system/monitors-system.component';
 import { MonitorsArchivedComponent } from './monitors-archived/monitors-archived.component';
-import { CreateMonitorsFormNameComponent } from './create-monitors-form-name/create-monitors-form-name.component';
 import { OverviewNavComponent } from './overview-nav/overview-nav.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
@@ -31,6 +30,8 @@ import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.com
 import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priority/create-monitor-form-priority.component';
 import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cache-window/create-monitor-form-cache-window.component';
+import { CreateMonitorFormNameComponent } from './create-monitor-form-name/create-monitor-form-name.component';
+import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,6 @@ import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cac
     MonitorsStandardComponent,
     MonitorsSystemComponent,
     MonitorsArchivedComponent,
-    CreateMonitorsFormNameComponent,
     OverviewNavComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
@@ -78,6 +78,8 @@ import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cac
     MonitorStatusChangeDialogComponent,
     CreateMonitorFormPriorityComponent,
     CreateMonitorFormCacheWindowComponent,
+    CreateMonitorFormNameComponent,
+    CreateMonitorFormTypeComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

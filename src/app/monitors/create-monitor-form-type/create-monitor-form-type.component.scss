@@ -1,0 +1,17 @@
+@import 'main';
+
+.type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 10px;
+}
+
+.label {
+  margin-bottom: 20px;
+  color: $dark-grey;
+}
+
+.standard {
+  margin-right: 10px;
+}

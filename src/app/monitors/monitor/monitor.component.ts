@@ -46,6 +46,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   dataSource: MatTableDataSource<IMonitorDataAttributes>;
   displayedColumns: string[];
   attributes: IMonitorDataAttributes[] = [];
+  paused = false;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -79,6 +80,31 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
     this.eb.close();
   }
 
+  pause() {
+    this.paused = true;
+    this.eb.close();
+  }
+
+  unpause() {
+    this.eb = new EventBus(this.eventBusUrl);
+    this.subscribe();
+    this.paused = false;
+  }
+
+  togglePause() {
+    if (this.paused) {
+      this.eb = new EventBus(this.eventBusUrl);
+      this.subscribe();
+    } else {
+      this.eb.close();
+    }
+    this.paused = !this.paused;
+  }
+
+  get pauseIcon(): string {
+    return this.paused ? 'play_arrow' : 'pause';
+  }
+
   /**
    * Get details about the monitor itself.
    *
@@ -110,16 +136,15 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
           const messages: IMonitorDataMessage[] = data.body.messages;
 
-          if (!this.displayedColumns) {
-            this.displayedColumns = Object.keys(messages[0].attributes);
-          }
+          const columns = Object.keys(messages[0].attributes);
+          this.displayedColumns = columns;
 
           this.attributes = messages.map(
             (message: IMonitorDataMessage) => message.attributes,
           );
           this.dataSource.data = this.attributes;
-
-          console.log(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         },
       );
     };

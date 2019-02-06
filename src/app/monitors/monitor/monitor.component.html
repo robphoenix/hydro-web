@@ -5,6 +5,9 @@
       <p class="description">{{ monitor.description }}</p>
 
       <div class="buttons">
+        <app-primary-button (click)="togglePause()" [icon]="pauseIcon">
+          {{ paused ? 'run' : 'pause' }}
+        </app-primary-button>
         <app-accent-button
           (click)="showEpl()"
           class="button"
@@ -22,8 +25,8 @@
       </div>
     </div>
   </header>
+
   <table mat-table matSort [dataSource]="dataSource">
-    <!-- Position Column -->
     <ng-container
       *ngFor="let column of displayedColumns"
       matColumnDef="{{column}}"

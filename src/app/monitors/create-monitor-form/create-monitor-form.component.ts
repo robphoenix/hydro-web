@@ -11,6 +11,7 @@ import {
   LDAPGroup,
   MonitorPriority,
   MonitorStatus,
+  MonitorType,
 } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { debounceTime, startWith, map } from 'rxjs/operators';
@@ -68,12 +69,16 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
 
+  private nameMaxCharLength = 50;
   private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
     name: {
       required: `You must enter a monitor name`,
-      pattern: `Monitor name cannot contain punctuation characters`,
+      pattern: `Monitor name cannot contain punctuation marks, except dashes and underscores`,
+      maxlength: `Monitor name must be ${
+        this.nameMaxCharLength
+      } characters or less`,
     },
     description: {
       required: `You must enter a monitor description`,
@@ -111,31 +116,40 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.authService.userGroups || [];
 
     this.formGroup = this.fb.group({
-      id: null,
-      name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9 _]+')]],
-      description: ['', Validators.required],
-      status: [MonitorStatus.Offline, Validators.required],
-      priority: [this.defaultPriority],
-      query: ['', Validators.required],
+      actions: [[]],
       cacheWindow: [0],
       categories: [this.selectedCategories],
       categoriesInput: [''],
-      actions: [[]],
+      description: ['', Validators.required],
       groups: [this.selectedGroups, Validators.required],
       groupsInput: [''],
+      id: null,
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[a-zA-Z0-9 _-]+'),
+          Validators.maxLength(this.nameMaxCharLength),
+        ],
+      ],
+      priority: [this.defaultPriority],
+      query: ['', Validators.required],
+      status: [MonitorStatus.Offline, Validators.required],
+      type: [MonitorType.Standard, Validators.required],
     });
   }
 
   ngOnInit() {
     if (this.monitor) {
       this.formGroup.patchValue({
+        cacheWindow: this.monitor.cacheWindow || 0,
+        description: this.monitor.description,
         id: this.monitor.id,
         name: this.monitorName || this.monitor.name,
-        description: this.monitor.description,
-        status: this.monitor.status,
         priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
-        cacheWindow: this.monitor.cacheWindow || 0,
+        status: this.monitor.status,
+        type: this.monitor.type,
       });
 
       if (this.editForm) {
@@ -191,30 +205,26 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public submit(view: boolean = false) {
     const {
+      cacheWindow,
+      categories,
+      description,
+      groups,
       id,
       name,
-      status,
-      // uncomment when API has been updated
-      // priority,
-      cacheWindow,
-      type,
-      description,
       query,
-      categories,
-      groups,
+      status,
+      type,
     } = this.formGroup.value;
 
     const monitor = {
-      name,
-      status,
-      // uncomment when API has been updated
-      // priority,
       cacheWindow,
-      type,
-      description,
-      query,
       categories,
+      description,
       groups,
+      name,
+      query,
+      status,
+      type,
     } as IMonitor;
 
     if (id) {
