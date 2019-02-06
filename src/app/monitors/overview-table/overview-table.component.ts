@@ -96,9 +96,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.filterValues.status =
+    this.monitorsStatus =
       this.userService.lastMonitorsStatus || this.initialStatus;
-    this.filterMonitors();
   }
 
   ngOnChanges(): void {
@@ -113,6 +112,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   set monitorsStatus(status: string) {
     this.filterValues.status = status;
+    this.filterMonitors();
   }
 
   public filterMonitors(): void {
@@ -121,7 +121,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public showAllMonitors(): void {
     this.monitorsStatus = 'all';
-    this.filterMonitors();
   }
 
   public hasFilters(): boolean {
@@ -159,7 +158,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   public toggleStatus(value: string) {
     this.monitorsStatus = value;
     this.userService.lastMonitorsStatus = this.monitorsStatus;
-    this.filterMonitors();
   }
 
   public archiveMonitor(id: number) {
@@ -239,6 +237,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
+          this.monitorsStatus = 'online';
           this.snackBar.open(`Monitor ${monitor.name} enabled`, '', {
             duration: 2000,
           });
@@ -268,6 +267,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
+          this.monitorsStatus = 'offline';
           this.snackBar.open(`Monitor ${monitor.name} disabled`, '', {
             duration: 2000,
           });
