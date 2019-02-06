@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IMonitor, MonitorStatus } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-monitors-standard',
@@ -18,9 +19,13 @@ export class MonitorsStandardComponent implements OnInit {
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
 
-  constructor(private monitorsService: MonitorsService) {}
+  constructor(
+    private monitorsService: MonitorsService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
+    this.userService.lastMonitorsUrl = `/monitors/${this.currentPage}`;
     this.getMonitors();
   }
 

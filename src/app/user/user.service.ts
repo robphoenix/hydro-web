@@ -1,48 +1,25 @@
 import { Injectable } from '@angular/core';
 
-/**
- * Handles the current user's profile.
- *
- * @export
- * @class UserService
- */
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private favouriteMonitors: number[] = [892, 894];
+  private lastMonitorsStatusName = 'lastMonitorsStatus';
+  private lastMonitorsPageUrl = 'lastMonitorsUrl';
 
-  /**
-   * Gets the id's of the current user's favourite monitors.
-   *
-   * @returns {number[]}
-   * @memberof UserService
-   */
-  getFavouriteMonitors(): number[] {
-    return this.favouriteMonitors;
+  public set lastMonitorsStatus(status: string) {
+    localStorage.setItem(this.lastMonitorsStatusName, status);
   }
 
-  /**
-   * Adds a monitor id to the current user's favourite monitors.
-   *
-   * @param {number} id
-   * @memberof UserService
-   */
-  addToFavouriteMonitors(id: number) {
-    this.favouriteMonitors.push(id);
+  public get lastMonitorsStatus() {
+    return localStorage.getItem(this.lastMonitorsStatusName);
   }
 
-  /**
-   * Removes the given monitor id from the current user's favourite monitors.
-   *
-   * @param {number} id
-   * @memberof UserService
-   */
-  removeFromFavouriteMonitors(id: number) {
-    this.favouriteMonitors = this.favouriteMonitors.filter(
-      (monitor) => monitor !== id,
-    );
+  public set lastMonitorsUrl(url: string) {
+    localStorage.setItem(this.lastMonitorsPageUrl, url);
   }
 
-  constructor() {}
+  public get lastMonitorsUrl() {
+    return localStorage.getItem(this.lastMonitorsPageUrl);
+  }
 }

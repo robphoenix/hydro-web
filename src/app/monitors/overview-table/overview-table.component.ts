@@ -23,6 +23,7 @@ import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-overview-table',
@@ -84,6 +85,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   constructor(
     private filterService: FilterService,
     private monitorsService: MonitorsService,
+    private userService: UserService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
   ) {}
@@ -94,8 +96,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.filterValues.status = this.initialStatus;
-    this.filterMonitors();
+    this.monitorsStatus =
+      this.userService.lastMonitorsStatus || this.initialStatus;
   }
 
   ngOnChanges(): void {
@@ -104,13 +106,21 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     }
   }
 
+  get monitorsStatus(): string {
+    return this.filterValues.status;
+  }
+
+  set monitorsStatus(status: string) {
+    this.filterValues.status = status;
+    this.filterMonitors();
+  }
+
   public filterMonitors(): void {
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
   public showAllMonitors(): void {
-    this.filterValues.status = 'all';
-    this.filterMonitors();
+    this.monitorsStatus = 'all';
   }
 
   public hasFilters(): boolean {
@@ -146,8 +156,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   }
 
   public toggleStatus(value: string) {
-    this.filterValues.status = value;
-    this.filterMonitors();
+    this.monitorsStatus = value;
+    this.userService.lastMonitorsStatus = this.monitorsStatus;
   }
 
   public archiveMonitor(id: number) {
@@ -227,6 +237,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
+          this.monitorsStatus = 'online';
           this.snackBar.open(`Monitor ${monitor.name} enabled`, '', {
             duration: 2000,
           });
@@ -256,6 +267,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.monitorsService.patchMonitor(monitor.id, body).subscribe(
         () => {
           this.refresh.emit();
+          this.monitorsStatus = 'offline';
           this.snackBar.open(`Monitor ${monitor.name} disabled`, '', {
             duration: 2000,
           });
