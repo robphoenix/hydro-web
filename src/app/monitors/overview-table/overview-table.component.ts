@@ -23,6 +23,7 @@ import { MonitorsService } from '../monitors.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-overview-table',
@@ -84,6 +85,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   constructor(
     private filterService: FilterService,
     private monitorsService: MonitorsService,
+    private userService: UserService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
   ) {}
@@ -94,7 +96,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.filterValues.status = this.initialStatus;
+    this.filterValues.status =
+      this.userService.lastMonitorsStatus || this.initialStatus;
     this.filterMonitors();
   }
 
@@ -104,12 +107,20 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     }
   }
 
+  get monitorsStatus(): string {
+    return this.filterValues.status;
+  }
+
+  set monitorsStatus(status: string) {
+    this.filterValues.status = status;
+  }
+
   public filterMonitors(): void {
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
   public showAllMonitors(): void {
-    this.filterValues.status = 'all';
+    this.monitorsStatus = 'all';
     this.filterMonitors();
   }
 
@@ -146,7 +157,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   }
 
   public toggleStatus(value: string) {
-    this.filterValues.status = value;
+    this.monitorsStatus = value;
+    this.userService.lastMonitorsStatus = this.monitorsStatus;
     this.filterMonitors();
   }
 

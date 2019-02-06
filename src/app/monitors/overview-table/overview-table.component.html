@@ -2,7 +2,7 @@
   <mat-button-toggle-group
     class="status-toggle"
     *ngIf="canToggleStatus"
-    [value]="filterValues.status"
+    [value]="monitorsStatus"
     #statusGroup="matButtonToggleGroup"
     (change)="toggleStatus($event.value)"
   >
