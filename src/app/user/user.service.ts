@@ -5,14 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   private lastMonitorsStatusName = 'lastMonitorsStatus';
+  private lastMonitorsPageUrl = 'lastMonitorsUrl';
 
   public set lastMonitorsStatus(status: string) {
-    console.log({ status });
-
     localStorage.setItem(this.lastMonitorsStatusName, status);
   }
 
   public get lastMonitorsStatus() {
     return localStorage.getItem(this.lastMonitorsStatusName);
+  }
+
+  public set lastMonitorsUrl(url: string) {
+    localStorage.setItem(this.lastMonitorsPageUrl, url);
+  }
+
+  public get lastMonitorsUrl() {
+    return localStorage.getItem(this.lastMonitorsPageUrl);
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IMonitor } from '../monitor';
-import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-monitors-archived',
@@ -15,9 +15,13 @@ export class MonitorsArchivedComponent implements OnInit {
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
 
-  constructor(private monitorsService: MonitorsService) {}
+  constructor(
+    private monitorsService: MonitorsService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
+    this.userService.lastMonitorsUrl = `/monitors/${this.currentPage}`;
     this.getMonitors();
   }
 
