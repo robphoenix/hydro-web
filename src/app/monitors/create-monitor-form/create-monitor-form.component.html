@@ -1,10 +1,10 @@
 <div class="form">
   <h2 class="title">{{ title }}</h2>
-  <form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <form [formGroup]="createMonitorForm" (ngSubmit)="submit()">
     <section class="section">
       <app-create-monitor-form-name
         class="name"
-        [parent]="formGroup"
+        [parent]="createMonitorForm"
         [validationMessages]="validationMessages['name']"
         [placeholder]="placeholders.name"
         [editForm]="editForm"
@@ -15,7 +15,7 @@
     <section class="section">
       <app-create-monitor-form-description
         class="description"
-        [parent]="formGroup"
+        [parent]="createMonitorForm"
         [validationMessages]="validationMessages['description']"
         [placeholder]="placeholders.description"
         ngDefaultControl
@@ -26,21 +26,21 @@
       <section class="section">
         <app-create-monitor-form-status
           class="status"
-          [parent]="formGroup"
+          [parent]="createMonitorForm"
         ></app-create-monitor-form-status>
       </section>
 
       <section class="section">
         <app-create-monitor-form-type
           class="type"
-          [parent]="formGroup"
+          [parent]="createMonitorForm"
         ></app-create-monitor-form-type>
       </section>
 
       <section class="section">
         <app-create-monitor-form-priority
           class="priority"
-          [parent]="formGroup"
+          [parent]="createMonitorForm"
         ></app-create-monitor-form-priority>
       </section>
     </div>
@@ -48,7 +48,7 @@
     <section class="section">
       <app-create-monitor-form-query
         class="query"
-        [parent]="formGroup"
+        [parent]="createMonitorForm"
         [validationMessages]="validationMessages['query']"
         [placeholder]="placeholders.query"
       ></app-create-monitor-form-query>
@@ -64,7 +64,7 @@
     <section class="section">
       <app-create-monitor-form-categories
         class="categories"
-        [parent]="formGroup"
+        [parent]="createMonitorForm"
         [loading]="loadingCategories"
         [selectedCategories]="selectedCategories"
         [autocompleteOptions]="autocompleteOptions"
@@ -80,7 +80,7 @@
     <section class="section">
       <app-create-monitor-form-groups
         class="groups"
-        [parent]="formGroup"
+        [parent]="createMonitorForm"
         [loading]="loadingGroups"
         [selectedGroups]="selectedGroups"
         [autocompleteOptions]="autocompleteOptions"
@@ -93,7 +93,7 @@
     </section>
 
     <section class="buttons">
-      <app-accent-submit-button [disabled]="!formGroup.valid">
+      <app-accent-submit-button [disabled]="!createMonitorForm.valid">
         {{ buttonText }}
       </app-accent-submit-button>
       <app-accent-button

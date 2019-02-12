@@ -1,26 +1,21 @@
 <div class="block">
-  <section class="name">
-    <span>
-      Name: Block {{ selected }}
-      <span *ngIf="!permanently && durationLength && durationType">
-        for {{ durationLength }} {{ durationType }}
-      </span>
-      <span *ngIf="!permanently && delayLength && delayType">
-        with {{ delayLength }} {{ delayType }} delay
-      </span>
-      <span *ngIf="permanently"> permanently </span>
-    </span>
-  </section>
-
   <mat-form-field>
-    <mat-select placeholder="Item to block on" [(value)]="selected">
+    <mat-select
+      placeholder="Item to block on"
+      [(value)]="selected"
+      (selectionChange)="updateName()"
+    >
       <mat-option *ngFor="let item of blockItems" [value]="item">
         {{ item }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-slide-toggle [(ngModel)]="permanently" class="permanently">
+  <mat-slide-toggle
+    [(ngModel)]="permanently"
+    (change)="updateName()"
+    class="permanently"
+  >
     Block Permanently
   </mat-slide-toggle>
 
@@ -34,11 +29,13 @@
           placeholder="Block duration"
           [(ngModel)]="durationLength"
           (click)="permanently = false"
+          (change)="updateName()"
         />
       </mat-form-field>
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
         [(value)]="durationType"
+        (valueChange)="updateName()"
       >
         <mat-button-toggle value="minutes"> Minutes </mat-button-toggle>
         <mat-button-toggle value="hours"> Hours </mat-button-toggle>
@@ -46,6 +43,7 @@
       </mat-button-toggle-group>
     </div>
   </div>
+
   <div class="delay" *ngIf="!permanently">
     <div>
       <mat-form-field appearance="outline">
@@ -55,11 +53,13 @@
           placeholder="Block delay"
           [(ngModel)]="delayLength"
           (click)="permanently = false"
+          (change)="updateName()"
         />
       </mat-form-field>
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
         [(value)]="delayType"
+        (valueChange)="updateName()"
       >
         <mat-button-toggle value="seconds"> Seconds </mat-button-toggle>
         <mat-button-toggle value="minutes"> Minutes </mat-button-toggle>

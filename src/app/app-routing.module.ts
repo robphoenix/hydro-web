@@ -17,7 +17,7 @@ import { UserModule } from './user/user.module';
         },
         {
           path: 'actions',
-          canActivate: [AuthGuard],
+          // canActivate: [AuthGuard],
           loadChildren: './actions/actions.module#ActionsModule',
         },
         { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
