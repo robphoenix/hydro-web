@@ -37,21 +37,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" class="template">
-    <mat-label>Email Template</mat-label>
-    <mat-select placeholder="Email Template" [(ngModel)]="selectedTemplate">
-      <mat-option *ngFor="let template of templates" [value]="template">
-        {{ template }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <app-accent-button
-    class="button"
-    [icon]="'image_search'"
-    [disabled]="!selectedTemplate"
-  >
-    view email template
-  </app-accent-button>
   <mat-form-field appearance="outline" class="email-type">
     <mat-label>Email Type</mat-label>
     <mat-select placeholder="Email Type" [(ngModel)]="selectedEmailType">
@@ -103,4 +88,11 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <section class="editor">
+    <quill
+      (contentChange)="onContentChange($event)"
+      (selectionChange)="onSelectionChange($event)"
+    >
+    </quill>
+  </section>
 </div>

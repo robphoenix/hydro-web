@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-create-action-form-section-email',
@@ -17,6 +17,17 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;
+
+  @Output()
+  editorContentChange = new EventEmitter<string>();
+
+  onContentChange(event) {
+    const { html } = event;
+    this.editorContentChange.emit(html);
+
+    console.log('content change');
+    console.log({ event });
+  }
 
   constructor() {}
 
