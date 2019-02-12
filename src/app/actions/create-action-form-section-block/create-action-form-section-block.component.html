@@ -1,70 +1,55 @@
 <div class="block">
-  <mat-form-field>
-    <mat-select
-      placeholder="Item to block on"
-      [(value)]="selected"
-      (selectionChange)="updateName()"
+  <form [formGroup]="parent" class="block">
+    <mat-form-field appearance="outline">
+      <mat-label>Item to block on</mat-label>
+      <mat-select
+        placeholder="Item to block on"
+        (selectionChange)="onNameChange()"
+        formControlName="item"
+        ngDefaultControl
+      >
+        <mat-option *ngFor="let item of blockItems" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-slide-toggle
+      class="permanently"
+      formControlName="permanently"
+      (change)="onNameChange()"
     >
-      <mat-option *ngFor="let item of blockItems" [value]="item">
-        {{ item }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      Block Permanently
+    </mat-slide-toggle>
+  </form>
 
-  <mat-slide-toggle
-    [(ngModel)]="permanently"
-    (change)="updateName()"
-    class="permanently"
-  >
-    Block Permanently
-  </mat-slide-toggle>
-
-  <div class="duration" *ngIf="!permanently">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Block Duration</mat-label>
-
+  <div *ngIf="!parent.get('permanently').value">
+    <form
+      *ngFor="let blockValue of blockValues"
+      [formGroup]="blockValue.formGroup"
+      class="block-values"
+    >
+      <mat-form-field appearance="outline" class="block-values-input">
+        <mat-label>{{ blockValue.label }}</mat-label>
         <input
           matInput
-          placeholder="Block duration"
-          [(ngModel)]="durationLength"
-          (click)="permanently = false"
-          (change)="updateName()"
+          placeholder="{{blockValue.label}}"
+          formControlName="value"
+          (change)="onBlockValueChange()"
         />
       </mat-form-field>
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
-        [(value)]="durationType"
-        (valueChange)="updateName()"
+        formControlName="unit"
+        (valueChange)="onBlockValueChange()"
       >
-        <mat-button-toggle value="minutes"> Minutes </mat-button-toggle>
-        <mat-button-toggle value="hours"> Hours </mat-button-toggle>
-        <mat-button-toggle value="days"> Days </mat-button-toggle>
+        <mat-button-toggle
+          *ngFor="let unit of blockValue.units"
+          value="{{unit}}"
+        >
+          <span class="unit"> {{ unit }} </span>
+        </mat-button-toggle>
       </mat-button-toggle-group>
-    </div>
-  </div>
-
-  <div class="delay" *ngIf="!permanently">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Block Delay</mat-label>
-        <input
-          matInput
-          placeholder="Block delay"
-          [(ngModel)]="delayLength"
-          (click)="permanently = false"
-          (change)="updateName()"
-        />
-      </mat-form-field>
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        [(value)]="delayType"
-        (valueChange)="updateName()"
-      >
-        <mat-button-toggle value="seconds"> Seconds </mat-button-toggle>
-        <mat-button-toggle value="minutes"> Minutes </mat-button-toggle>
-        <mat-button-toggle value="hours"> Hours </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
+    </form>
   </div>
 </div>
