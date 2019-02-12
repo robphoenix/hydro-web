@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-action-form',
@@ -9,21 +9,29 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class CreateActionFormComponent implements OnInit {
   createActionForm: FormGroup;
   blockDataForm: FormGroup;
+  validationMessages: { [key: string]: { [key: string]: string } } = {
+    description: {
+      required: `You must enter an action description`,
+    },
+    item: {
+      required: `You must choose an item to block on`,
+    },
+  };
 
   @Input()
   title: string;
 
   constructor(private fb: FormBuilder) {
     this.blockDataForm = this.fb.group({
-      item: [''],
+      item: ['', Validators.required],
       permanently: [false],
       duration: [0],
       delay: [0],
     });
     this.createActionForm = this.fb.group({
       name: [''],
-      description: [''],
-      type: ['block'],
+      description: ['', Validators.required],
+      type: ['block', Validators.required],
       blockData: this.blockDataForm,
     });
   }

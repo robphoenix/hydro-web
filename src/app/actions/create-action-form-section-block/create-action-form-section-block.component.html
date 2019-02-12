@@ -1,7 +1,7 @@
 <div class="block">
   <form [formGroup]="parent" class="block">
     <mat-form-field appearance="outline">
-      <mat-label>Item to block on</mat-label>
+      <mat-label>Block Item*</mat-label>
       <mat-select
         placeholder="Item to block on"
         (selectionChange)="onNameChange()"
@@ -12,6 +12,10 @@
           {{ item }}
         </mat-option>
       </mat-select>
+      <mat-hint align="end"> *Required </mat-hint>
+      <mat-error *ngIf="parent.get('item').hasError('required')">
+        {{ validationMessages['item']['required'] }}
+      </mat-error>
     </mat-form-field>
 
     <mat-slide-toggle
@@ -23,7 +27,7 @@
     </mat-slide-toggle>
   </form>
 
-  <div *ngIf="!parent.get('permanently').value">
+  <div *ngIf="!parent.get('permanently').value" class="block-values-container">
     <form
       *ngFor="let blockValue of blockValues"
       [formGroup]="blockValue.formGroup"

@@ -37,6 +37,9 @@ export class CreateActionFormSectionBlockComponent implements OnInit {
   @Input()
   parent: FormGroup;
 
+  @Input()
+  validationMessages: { [key: string]: { [key: string]: string } };
+
   @Output()
   nameChange = new EventEmitter<string>();
 

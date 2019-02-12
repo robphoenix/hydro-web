@@ -7,7 +7,7 @@
   <form [formGroup]="createActionForm">
     <section class="description">
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>Description*</mat-label>
         <textarea
           matInput
           placeholder="Description"
@@ -18,6 +18,12 @@
           matAutosizeMaxRows="3"
           formControlName="description"
         ></textarea>
+        <mat-hint align="end"> *Required </mat-hint>
+        <mat-error
+          *ngIf="createActionForm.get('description').hasError('required')"
+        >
+          {{ validationMessages['description']['required'] }}
+        </mat-error>
       </mat-form-field>
     </section>
 
@@ -47,6 +53,7 @@
         (durationChange)="onDurationChange($event)"
         (delayChange)="onDelayChange($event)"
         [parent]="blockDataForm"
+        [validationMessages]="validationMessages"
       ></app-create-action-form-section-block>
     </section>
     <section *ngIf="group.value === 'email'">
