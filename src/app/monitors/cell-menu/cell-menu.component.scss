@@ -1,5 +1,12 @@
 @import 'main';
 
+.menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .icon {
   color: $mid-grey;
   vertical-align: middle;

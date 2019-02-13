@@ -51,7 +51,7 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor">
           <app-cell-monitor
-            class="monitor"
+            class="full-width"
             [name]="monitor.name"
             [description]="monitor.description"
             [id]="monitor.id"
@@ -188,8 +188,9 @@
           <mat-icon class="menu-icon">more_vert</mat-icon>
           <h3 class="title">Menu</h3>
         </mat-header-cell>
-        <mat-cell *matCellDef="let monitor" class="menu menu-cell">
+        <mat-cell *matCellDef="let monitor" class="menu">
           <app-cell-menu
+            class="full-width"
             [status]="monitor.status"
             [id]="monitor.id"
             (archiveMonitor)="archiveMonitor($event)"
