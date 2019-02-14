@@ -1,17 +1,148 @@
 <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.4/vertx-eventbus.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hydro Eventbus check</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
 
+        background-image: linear-gradient(lemonchiffon, white);
+      }
+      h1 {
+        font-size: 2.5em;
+        color: hotpink;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 7px solid hotpink;
+        padding: 10px 20px;
+      }
+      p {
+        font-size: 1.5em;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .inner-wrapper {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+      }
+      .monitor-name {
+        display: flex;
+        justify-content: space-between;
+      }
+      .label {
+        color: hotpink;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .name {
+        border: 5px solid hotpink;
+        padding: 15px;
+        margin: 0;
+        flex: 2;
+        margin: 0 10px 0 0;
+        font-size: 20px;
+        font-family: Consolas, monaco, monospace;
+      }
+      .check {
+        flex: 1;
+        border: 5px solid hotpink;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: white;
+        background: hotpink;
+        font-size: 1.3em;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .check:hover {
+        background: white;
+        color: hotpink;
+      }
+      .address {
+        color: hotpink;
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .result {
+        font-family: Consolas, monaco, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hydro Eventbus Check</h1>
+      <section class="inner-wrapper">
+        <label for="monitor" class="label">
+          Which monitor do you want to check?
+        </label>
+        <section class="monitor-name">
+          <input
+            type="text"
+            name="monitor"
+            class="name"
+            placeholder="Monitor Name"
+            required
+          />
+          <button class="check" onclick="onCheck()">check</button>
+        </section>
+
+        <p class="address"></p>
+
+        <pre class="result"></pre>
+      </section>
+    </div>
+  </body>
+</html>
 <script>
-  const eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
+  let monitorName;
+  const onCheck = () => {
+    monitorName = document.querySelector('.name').value.trim();
+    checkMonitor(monitorName);
+  };
 
-  eb.onopen = () => {
-    // set a handler to receive a message
-    const address = 'result.pub.output.testingSprint2';
-    console.log({ address });
+  const checkMonitor = (name) => {
+    const eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
+    const address = `result.pub.output.${name}`;
+    document.querySelector('.address').innerHTML = `Checking: ${address}`;
 
-    eb.registerHandler(address, (error, message) => {
-      message && console.log({ message });
-      error && console.log({ error });
-    });
+    eb.onopen = () => {
+      eb.registerHandler(address, (error, message) => {
+        if (error) {
+          console.error({ error });
+          displayResult(error);
+        } else if (message) {
+          console.log({ message });
+          displayResult(message);
+        }
+      });
+    };
+  };
+
+  const displayResult = (result) => {
+    let parsed = '';
+    try {
+      parsed = JSON.parse(result);
+    } catch (error) {
+      document.querySelector('.result').innerHTML = error;
+      return;
+    }
+    document.querySelector('.result').innerHTML = JSON.stringify(
+      parsed,
+      null,
+      2,
+    );
+    console.log({ result });
   };
 </script>
