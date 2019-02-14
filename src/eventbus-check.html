@@ -5,28 +5,27 @@
   <head>
     <title>Hydro Eventbus check</title>
     <style>
+      :root {
+        --main-color: hotpink;
+      }
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
           'Segoe UI Symbol';
-
         background-image: linear-gradient(lemonchiffon, white);
-      }
-      h1 {
-        font-size: 2.5em;
-        color: hotpink;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        border: 7px solid hotpink;
-        padding: 10px 20px;
-      }
-      p {
-        font-size: 1.5em;
       }
       .container {
         display: flex;
         flex-direction: column;
         align-items: center;
+      }
+      .title {
+        font-size: 2.5em;
+        color: var(--main-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 7px solid var(--main-color);
+        padding: 10px 20px;
       }
       .inner-wrapper {
         width: 40%;
@@ -38,7 +37,7 @@
         justify-content: space-between;
       }
       .label {
-        color: hotpink;
+        color: var(--main-color);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         margin: 20px auto;
@@ -46,7 +45,7 @@
         font-weight: 600;
       }
       .name {
-        border: 5px solid hotpink;
+        border: 5px solid var(--main-color);
         padding: 15px;
         margin: 0;
         flex: 2;
@@ -56,33 +55,34 @@
       }
       .check {
         flex: 1;
-        border: 5px solid hotpink;
+        border: 5px solid var(--main-color);
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: white;
-        background: hotpink;
+        background: var(--main-color);
         font-size: 1.3em;
         font-weight: 800;
         cursor: pointer;
       }
       .check:hover {
         background: white;
-        color: hotpink;
+        color: var(--main-color);
       }
       .address {
-        color: hotpink;
+        color: var(--main-color);
         margin: 20px auto;
         font-size: 1.3em;
         font-weight: 600;
       }
       .result {
         font-family: Consolas, monaco, monospace;
+        margin: 0 auto;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Hydro Eventbus Check</h1>
+      <h1 class="title">Hydro Eventbus Check</h1>
       <section class="inner-wrapper">
         <label for="monitor" class="label">
           Which monitor do you want to check?
@@ -115,27 +115,49 @@
   const checkMonitor = (name) => {
     const eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
     const address = `result.pub.output.${name}`;
-    document.querySelector('.address').innerHTML = `Checking: ${address}`;
 
     eb.onopen = () => {
+      document.querySelector(
+        '.address',
+      ).innerHTML = `Connection opened with ${address}`;
+
+      let e = '';
+      let m = '';
+
       eb.registerHandler(address, (error, message) => {
+        e = '';
+        m = '';
         if (error) {
-          console.error({ error });
+          e = error;
           displayResult(error);
-        } else if (message) {
-          console.log({ message });
+        }
+        if (message) {
+          m = message;
           displayResult(message);
         }
       });
+
+      let seconds = 0;
+
+      setInterval(() => {
+        if (!m && !e) {
+          console.log('no dice');
+          displayResult(
+            `Sorry, No Data Available. Connection open for ${seconds}s`,
+          );
+          seconds++;
+        }
+      }, 1000);
     };
   };
 
   const displayResult = (result) => {
+    console.log({ result });
     let parsed = '';
     try {
       parsed = JSON.parse(result);
-    } catch (error) {
-      document.querySelector('.result').innerHTML = error;
+    } catch {
+      document.querySelector('.result').innerHTML = result;
       return;
     }
     document.querySelector('.result').innerHTML = JSON.stringify(
