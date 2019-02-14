@@ -1,8 +1,7 @@
 <div class="form">
   <h2 class="title">{{ title }}</h2>
 
-  <h4>{{ this.createActionForm.get('name').value }}</h4>
-  <h4>{{ this.createActionForm.get('blockData').value | json }}</h4>
+  <h4>Action Name: {{ this.name }}</h4>
 
   <form [formGroup]="createActionForm">
     <section class="description">
@@ -49,9 +48,6 @@
 
     <section *ngIf="group.value === 'block'">
       <app-create-action-form-section-block
-        (nameChange)="onNameChange($event)"
-        (durationChange)="onDurationChange($event)"
-        (delayChange)="onDelayChange($event)"
         [parent]="blockDataForm"
         [validationMessages]="validationMessages"
       ></app-create-action-form-section-block>

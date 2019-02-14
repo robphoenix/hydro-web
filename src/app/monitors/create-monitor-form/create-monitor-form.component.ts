@@ -156,7 +156,9 @@ export class CreateMonitorFormComponent implements OnInit {
         this.createMonitorForm.get('name').disable();
       }
       this.selectedCategories = this.monitor.categories;
-      this.createMonitorForm.get('categories').setValue(this.selectedCategories);
+      this.createMonitorForm
+        .get('categories')
+        .setValue(this.selectedCategories);
       this.selectedGroups = this.monitor.groups;
       this.createMonitorForm.get('groups').setValue(this.selectedGroups);
     }
@@ -176,16 +178,18 @@ export class CreateMonitorFormComponent implements OnInit {
         ),
       );
 
-    this.filteredGroups = this.createMonitorForm.get('groupsInput').valueChanges.pipe(
-      startWith(null),
-      map((term: string | IGroup) =>
-        this.filterService.filterGroups(
-          term,
-          this.availableGroups,
-          this.selectedGroups,
+    this.filteredGroups = this.createMonitorForm
+      .get('groupsInput')
+      .valueChanges.pipe(
+        startWith(null),
+        map((term: string | IGroup) =>
+          this.filterService.filterGroups(
+            term,
+            this.availableGroups,
+            this.selectedGroups,
+          ),
         ),
-      ),
-    );
+      );
   }
 
   get canViewMonitor(): boolean {

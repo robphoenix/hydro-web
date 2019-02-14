@@ -25,35 +25,57 @@
     >
       Block Permanently
     </mat-slide-toggle>
-  </form>
 
-  <div *ngIf="!parent.get('permanently').value" class="block-values-container">
-    <form
-      *ngFor="let blockValue of blockValues"
-      [formGroup]="blockValue.formGroup"
-      class="block-values"
-    >
-      <mat-form-field appearance="outline" class="block-values-input">
-        <mat-label>{{ blockValue.label }}</mat-label>
-        <input
-          matInput
-          placeholder="{{blockValue.label}}"
-          formControlName="value"
-          (change)="onBlockValueChange()"
-        />
-      </mat-form-field>
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        formControlName="unit"
-        (valueChange)="onBlockValueChange()"
-      >
-        <mat-button-toggle
-          *ngFor="let unit of blockValue.units"
-          value="{{unit}}"
+    <div *ngIf="!parent.get('permanently').value">
+      <div class="block-values">
+        <mat-form-field appearance="outline" class="block-values-input">
+          <mat-label>Block Duration</mat-label>
+          <input
+            matInput
+            placeholder="Block Duration"
+            formControlName="durationValue"
+          />
+        </mat-form-field>
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          formControlName="durationUnit"
         >
-          <span class="unit"> {{ unit }} </span>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </form>
-  </div>
+          <mat-button-toggle value="minutes">
+            <span class="unit">minutes</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="hours">
+            <span class="unit">hours</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="days">
+            <span class="unit">days</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="block-values">
+        <mat-form-field appearance="outline" class="block-values-input">
+          <mat-label>Block Delay</mat-label>
+          <input
+            matInput
+            placeholder="Block Delay"
+            formControlName="delayValue"
+          />
+        </mat-form-field>
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          formControlName="delayUnit"
+        >
+          <mat-button-toggle value="seconds">
+            <span class="unit">seconds</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="minutes">
+            <span class="unit">minutes</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="hours">
+            <span class="unit">hours</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+  </form>
 </div>
