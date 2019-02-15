@@ -37,12 +37,12 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   private eb: EventBus.EventBus;
   private eventbusHeaders: { [key: string]: any } = {};
 
-  monitor: IMonitor;
-  editLink: string;
-  dataSource: MatTableDataSource<IMonitorDataAttributes>;
-  displayedColumns: string[];
-  monitorData: IMonitorDataAttributes[] = [];
-  paused = false;
+  public monitor: IMonitor;
+  public editLink: string;
+  public dataSource: MatTableDataSource<IMonitorDataAttributes>;
+  public displayedColumns: string[];
+  public monitorData: IMonitorDataAttributes[] = [];
+  public paused = false;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -52,7 +52,6 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private monitorService: MonitorsService,
     public dialog: MatDialog,
   ) {
@@ -76,17 +75,29 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
     this.eb.close();
   }
 
-  togglePause() {
+  /**
+   * Toggles the eventbus connection on and off
+   *
+   * @memberof MonitorComponent
+   */
+  public togglePause() {
     if (this.paused) {
       this.eb = new EventBus(this.eventBusUrl);
-      this.subscribe();
+      this.subscribeToEventbus();
     } else {
       this.eb.close();
     }
     this.paused = !this.paused;
   }
 
-  get pauseIcon(): string {
+  /**
+   * Specifies the correct icon for whether the monitor is paused or not
+   *
+   * @readonly
+   * @type {string}
+   * @memberof MonitorComponent
+   */
+  public get pauseIcon(): string {
     return this.paused ? 'play_arrow' : 'pause';
   }
 
@@ -95,7 +106,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
    *
    * @memberof MonitorComponent
    */
-  getMonitor() {
+  private getMonitor() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
       this.editLink = `/monitors/${id}/edit`;
@@ -103,12 +114,18 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
         this.monitor = monitor;
         const name = monitor.name;
         console.log({ name });
-        this.subscribe();
+        this.subscribeToEventbus();
       });
     });
   }
 
-  subscribe() {
+  /**
+   * Subscribe to the eventbus messages for the current monitor
+   *
+   * @private
+   * @memberof MonitorComponent
+   */
+  private subscribeToEventbus() {
     this.eb.enableReconnect(true);
     const address = `${this.eventBusAddress}.${this.monitor.name}`;
     this.eb.onerror = () => console.log('erorrrr');
@@ -122,48 +139,51 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
           if (error) {
             console.error({ error });
           }
-
-          const { body } = message;
-          const { h: headers, d: data } = body;
-
-          this.displayedColumns = headers.map((header) => {
-            const { n: name } = header;
-            return name;
-          });
-
-          this.monitorData = data.map(
-            (attributes: (string | number | boolean)[]) => {
-              return attributes.reduce(
-                (prev: {}, curr: string | number | boolean, i: number) => {
-                  prev[this.displayedColumns[i]] = curr;
-                  return prev;
-                },
-                {},
-              );
-            },
-          );
-
-          this.dataSource.data = this.monitorData;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          this.displayMessageData(message);
         },
       );
     };
   }
 
-  showEpl() {
+  /**
+   * Display the Monitor data in the table
+   *
+   * @param {IMonitorData} message
+   * @memberof MonitorComponent
+   */
+  displayMessageData(message: IMonitorData) {
+    const { body } = message;
+    const { h: headers, d: data } = body;
+
+    this.displayedColumns = headers.map((header) => {
+      const { n: name } = header;
+      return name;
+    });
+
+    this.monitorData = data.map((attributes: (string | number | boolean)[]) => {
+      return attributes.reduce(
+        (prev: {}, curr: string | number | boolean, i: number) => {
+          prev[this.displayedColumns[i]] = curr;
+          return prev;
+        },
+        {},
+      );
+    });
+
+    this.dataSource.data = this.monitorData;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * Open a dialog that displays the current monitor's EPL Query
+   *
+   * @memberof MonitorComponent
+   */
+  public showEpl() {
     this.dialog.open(EplQueryDialogComponent, {
       data: { monitor: this.monitor },
       width: '1000px',
     });
-  }
-
-  /**
-   * Navigates to the previous URL.
-   *
-   * @memberof MonitorComponent
-   */
-  goBack() {
-    this.location.back();
   }
 }
