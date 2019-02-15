@@ -5,13 +5,23 @@
   z-index: 900;
   top: 0;
   box-shadow: $box-shadow;
+}
 
-  .logo {
-    display: flex;
-    margin-left: 20px;
-  }
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
 
-  .nav {
-    margin-left: auto;
-  }
+.logo-image {
+  filter: invert(100%);
+  margin-right: 10px;
+}
+.name {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nav {
+  margin-left: auto;
 }

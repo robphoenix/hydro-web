@@ -1,6 +1,7 @@
 <mat-toolbar color="primary" class="toolbar">
   <a href="/" routerLink="/" class="logo">
-    <img height="40" [src]="logo" alt="logo" />
+    <img height="40" [src]="logo" alt="hydro logo" class="logo-image" />
+    <img height="30" [src]="name" alt="hydro" />
   </a>
   <nav class="nav" *ngIf="authService.isLoggedIn">
     <app-navbar-monitors-menu></app-navbar-monitors-menu>
