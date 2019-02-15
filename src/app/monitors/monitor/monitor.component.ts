@@ -16,7 +16,11 @@ import {
   MatDialog,
   MatSort,
 } from '@angular/material';
-import { IMonitorData, IMonitorDataAttributes } from '../monitor-data';
+import {
+  IMonitorData,
+  IMonitorDataAttributes,
+  MonitorDataHeadersBandwidthSaver,
+} from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 
 /**
@@ -153,12 +157,13 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
    */
   displayMessageData(message: IMonitorData) {
     const { body } = message;
-    const { h: headers, d: data } = body;
+    console.log({ body });
 
-    this.displayedColumns = headers.map((header) => {
-      const { n: name } = header;
-      return name;
-    });
+    const { headers, data } = body;
+
+    this.displayedColumns = headers.map(
+      (header: MonitorDataHeadersBandwidthSaver) => header.name,
+    );
 
     this.monitorData = data.map((attributes: (string | number | boolean)[]) => {
       return attributes.reduce(
