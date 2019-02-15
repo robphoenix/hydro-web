@@ -48,15 +48,11 @@
 
   .mat-row {
     padding: 5px;
-
-    .menu-cell {
-      justify-content: center;
-    }
   }
 }
 
-.monitor {
-  width: $largest;
+.full-width {
+  width: 100%;
 }
 
 .menu-icon {
@@ -75,15 +71,15 @@
   }
 }
 
+.menu,
 .actions,
-.menu {
-  flex: 0 0 15%;
-  justify-content: center;
+.categories {
+  flex: 0 0 20%;
 }
 
-.categories,
+.actions,
+.menu,
 .categories {
-  flex: 0 0 30%;
   justify-content: center;
 }
 

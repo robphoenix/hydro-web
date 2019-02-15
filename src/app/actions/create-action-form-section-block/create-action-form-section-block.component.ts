@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-action-form-section-block',
   templateUrl: './create-action-form-section-block.component.html',
   styleUrls: ['./create-action-form-section-block.component.scss'],
 })
-export class CreateActionFormSectionBlockComponent implements OnInit {
+export class CreateActionFormSectionBlockComponent {
+  // temporary
   blockItems: string[] = [
     'IP Address',
     'IP Range',
@@ -14,19 +16,10 @@ export class CreateActionFormSectionBlockComponent implements OnInit {
     'UQID',
     'STK',
   ];
-  selected: string;
 
-  durationLength: number;
-  durationType: string;
-  delayLength: number;
-  delayType: string;
-  permanently = false;
+  @Input()
+  parent: FormGroup;
 
-  blockPermanently() {
-    this.permanently = true;
-  }
-
-  constructor() {}
-
-  ngOnInit() {}
+  @Input()
+  validationMessages: { [key: string]: { [key: string]: string } };
 }

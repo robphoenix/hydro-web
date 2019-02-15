@@ -44,7 +44,7 @@ export class CreateMonitorFormComponent implements OnInit {
   @Output()
   submitForm = new EventEmitter<IMonitorSubmit>();
 
-  formGroup: FormGroup;
+  createMonitorForm: FormGroup;
 
   readonly defaultPriority = MonitorPriority.Mid;
 
@@ -115,7 +115,7 @@ export class CreateMonitorFormComponent implements OnInit {
     // set the default access groups
     this.selectedGroups = this.authService.userGroups || [];
 
-    this.formGroup = this.fb.group({
+    this.createMonitorForm = this.fb.group({
       actions: [[]],
       cacheWindow: [0],
       categories: [this.selectedCategories],
@@ -141,7 +141,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   ngOnInit() {
     if (this.monitor) {
-      this.formGroup.patchValue({
+      this.createMonitorForm.patchValue({
         cacheWindow: this.monitor.cacheWindow || 0,
         description: this.monitor.description,
         id: this.monitor.id,
@@ -153,17 +153,19 @@ export class CreateMonitorFormComponent implements OnInit {
       });
 
       if (this.editForm) {
-        this.formGroup.get('name').disable();
+        this.createMonitorForm.get('name').disable();
       }
       this.selectedCategories = this.monitor.categories;
-      this.formGroup.get('categories').setValue(this.selectedCategories);
+      this.createMonitorForm
+        .get('categories')
+        .setValue(this.selectedCategories);
       this.selectedGroups = this.monitor.groups;
-      this.formGroup.get('groups').setValue(this.selectedGroups);
+      this.createMonitorForm.get('groups').setValue(this.selectedGroups);
     }
 
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
-    this.filteredCategories = this.formGroup
+    this.filteredCategories = this.createMonitorForm
       .get('categoriesInput')
       .valueChanges.pipe(
         startWith(null),
@@ -176,27 +178,29 @@ export class CreateMonitorFormComponent implements OnInit {
         ),
       );
 
-    this.filteredGroups = this.formGroup.get('groupsInput').valueChanges.pipe(
-      startWith(null),
-      map((term: string | IGroup) =>
-        this.filterService.filterGroups(
-          term,
-          this.availableGroups,
-          this.selectedGroups,
+    this.filteredGroups = this.createMonitorForm
+      .get('groupsInput')
+      .valueChanges.pipe(
+        startWith(null),
+        map((term: string | IGroup) =>
+          this.filterService.filterGroups(
+            term,
+            this.availableGroups,
+            this.selectedGroups,
+          ),
         ),
-      ),
-    );
+      );
   }
 
   get canViewMonitor(): boolean {
     return (
-      this.formGroup.valid &&
-      this.formGroup.get('status').value === MonitorStatus.Online
+      this.createMonitorForm.valid &&
+      this.createMonitorForm.get('status').value === MonitorStatus.Online
     );
   }
 
   private markControl(name: string): void {
-    const control = this.formGroup.get(name);
+    const control = this.createMonitorForm.get(name);
     control.valueChanges.pipe(debounceTime(800)).subscribe(() => {
       control.markAsDirty();
       control.markAsTouched();
@@ -214,7 +218,7 @@ export class CreateMonitorFormComponent implements OnInit {
       query,
       status,
       type,
-    } = this.formGroup.value;
+    } = this.createMonitorForm.value;
 
     const monitor = {
       cacheWindow,
@@ -235,7 +239,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   reset() {
-    this.formGroup.reset();
+    this.createMonitorForm.reset();
   }
 
   private getAvailableCategories(): void {
@@ -251,7 +255,7 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedCategories = this.selectedCategories.filter(
       (selected: ICategory) => selected.id !== category.id,
     );
-    const ctrl = this.formGroup.get('categoriesInput');
+    const ctrl = this.createMonitorForm.get('categoriesInput');
     if (ctrl.disabled) {
       ctrl.enable();
       this.placeholders.categories = this.placeholderCategories;
@@ -263,7 +267,7 @@ export class CreateMonitorFormComponent implements OnInit {
       this.selectedCategories.push(event.option.value);
     }
 
-    const ctrl = this.formGroup.get('categoriesInput');
+    const ctrl = this.createMonitorForm.get('categoriesInput');
     if (this.selectedCategories.length >= this.maxSelectedCategories) {
       ctrl.disable();
       this.placeholders.categories = '';
@@ -312,7 +316,7 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.selectedGroups.filter(
       (selected: IGroup) => selected.id !== group.id,
     );
-    const groups = this.formGroup.get('groups');
+    const groups = this.createMonitorForm.get('groups');
     groups.setValue(this.selectedGroups);
     // mark as touched in case the user removes the default groups,
     // otherwise the validation error message won't show.
@@ -321,12 +325,12 @@ export class CreateMonitorFormComponent implements OnInit {
 
   selectedGroup(event: MatAutocompleteSelectedEvent): void {
     this.selectedGroups.push(event.option.value);
-    this.formGroup.get('groups').setValue(this.selectedGroups);
-    this.formGroup.get('groupsInput').setValue(null);
+    this.createMonitorForm.get('groups').setValue(this.selectedGroups);
+    this.createMonitorForm.get('groupsInput').setValue(null);
   }
 
   updateCacheWindow(duration: number) {
-    this.formGroup.get('cacheWindow').setValue(duration);
+    this.createMonitorForm.get('cacheWindow').setValue(duration);
   }
 
   cancel() {

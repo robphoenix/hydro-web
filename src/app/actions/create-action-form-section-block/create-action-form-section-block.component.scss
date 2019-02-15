@@ -18,3 +18,17 @@
 .permanently {
   margin: 20px 0;
 }
+
+.unit {
+  text-transform: capitalize;
+}
+
+.block-values {
+  display: flex;
+  align-items: baseline;
+  margin-top: 20px;
+}
+
+.block-values-input {
+  margin-right: 10px;
+}

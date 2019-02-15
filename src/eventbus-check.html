@@ -1,17 +1,170 @@
 <script src="http://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.4/vertx-eventbus.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hydro Eventbus check</title>
+    <style>
+      :root {
+        --main-color: hotpink;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+        background-image: linear-gradient(lemonchiffon, white);
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .title {
+        font-size: 2.5em;
+        color: var(--main-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border: 7px solid var(--main-color);
+        padding: 10px 20px;
+      }
+      .inner-wrapper {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+      }
+      .monitor-name {
+        display: flex;
+        justify-content: space-between;
+      }
+      .label {
+        color: var(--main-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .name {
+        border: 5px solid var(--main-color);
+        padding: 15px;
+        margin: 0;
+        flex: 2;
+        margin: 0 10px 0 0;
+        font-size: 20px;
+        font-family: Consolas, monaco, monospace;
+      }
+      .check {
+        flex: 1;
+        border: 5px solid var(--main-color);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: white;
+        background: var(--main-color);
+        font-size: 1.3em;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .check:hover {
+        background: white;
+        color: var(--main-color);
+      }
+      .address {
+        color: var(--main-color);
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .message-count {
+        color: var(--main-color);
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .result {
+        font-family: Consolas, monaco, monospace;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Hydro Eventbus Check</h1>
+      <section class="inner-wrapper">
+        <label for="monitor" class="label">
+          Which monitor do you want to check?
+        </label>
+        <section class="monitor-name">
+          <input
+            type="text"
+            name="monitor"
+            class="name"
+            placeholder="Monitor Name"
+            required
+          />
+          <button class="check" onclick="onCheck()">check</button>
+        </section>
 
+        <p class="address"></p>
+        <p class="message-count"></p>
+
+        <pre class="result"></pre>
+      </section>
+    </div>
+  </body>
+</html>
 <script>
-  const eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
+  let monitorName;
+  const onCheck = () => {
+    monitorName = document.querySelector('.name').value.trim();
+    checkMonitor(monitorName);
+  };
 
-  eb.onopen = () => {
-    // set a handler to receive a message
-    const address = 'result.pub.output.testingSprint2';
-    console.log({ address });
+  const checkMonitor = (name) => {
+    const eb = new EventBus('http://mn2formlt0002d0:6081/eventbus');
+    const address = `result.pub.output.${name}`;
 
-    eb.registerHandler(address, (error, message) => {
-      message && console.log({ message });
-      error && console.log({ error });
-    });
+    eb.onopen = () => {
+      document.querySelector(
+        '.address',
+      ).innerHTML = `Connection opened with ${address}`;
+
+      let e = '';
+      let m = '';
+      let count = 0;
+
+      eb.registerHandler(address, (error, message) => {
+        e = '';
+        m = '';
+        if (error) {
+          e = error;
+          document.querySelector('.result').innerHTML = error;
+        }
+        if (message) {
+          m = message;
+
+          displayResult(message);
+          document.querySelector(
+            '.message-count',
+          ).innerHTML = `${count} messages received`;
+          count++;
+        }
+      });
+
+      let seconds = 0;
+
+      setInterval(() => {
+        if (!m && !e) {
+          document.querySelector(
+            '.result',
+          ).innerHTML = `Sorry, No Data Available. Connection open for ${seconds}s`;
+          seconds++;
+        }
+      }, 1000);
+    };
+  };
+
+  const displayResult = (result) => {
+    const formatted = JSON.stringify(result, null, 2);
+    document.querySelector('.result').innerHTML = formatted;
   };
 </script>
