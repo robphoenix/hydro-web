@@ -30,7 +30,7 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.paramMap.subscribe((params) => {
       const id = +params.get('id');
-      this.monitorsService.getMonitor(id).subscribe(
+      this.monitorsService.getMonitorById(id).subscribe(
         (monitor: IMonitor) => {
           this.monitor = monitor;
         },

@@ -35,14 +35,11 @@
           #group="matButtonToggleGroup"
           formControlName="durationUnit"
         >
-          <mat-button-toggle value="minutes">
-            <span class="unit">minutes</span>
-          </mat-button-toggle>
-          <mat-button-toggle value="hours">
-            <span class="unit">hours</span>
-          </mat-button-toggle>
-          <mat-button-toggle value="days">
-            <span class="unit">days</span>
+          <mat-button-toggle
+            *ngFor="let unit of units['duration']"
+            value="{{unit}}"
+          >
+            <span class="unit">{{ unit }}</span>
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
@@ -60,14 +57,11 @@
           #group="matButtonToggleGroup"
           formControlName="delayUnit"
         >
-          <mat-button-toggle value="seconds">
-            <span class="unit">seconds</span>
-          </mat-button-toggle>
-          <mat-button-toggle value="minutes">
-            <span class="unit">minutes</span>
-          </mat-button-toggle>
-          <mat-button-toggle value="hours">
-            <span class="unit">hours</span>
+          <mat-button-toggle
+            *ngFor="let unit of units['delay']"
+            value="{{unit}}"
+          >
+            <span class="unit">{{ unit }}</span>
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
