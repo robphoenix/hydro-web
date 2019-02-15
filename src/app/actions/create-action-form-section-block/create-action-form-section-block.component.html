@@ -4,7 +4,6 @@
       <mat-label>Block Item*</mat-label>
       <mat-select
         placeholder="Item to block on"
-        (selectionChange)="onNameChange()"
         formControlName="item"
         ngDefaultControl
       >
@@ -18,11 +17,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-slide-toggle
-      class="permanently"
-      formControlName="permanently"
-      (change)="onNameChange()"
-    >
+    <mat-slide-toggle class="permanently" formControlName="permanently">
       Block Permanently
     </mat-slide-toggle>
 
