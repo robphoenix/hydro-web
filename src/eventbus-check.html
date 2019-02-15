@@ -74,6 +74,12 @@
         font-size: 1.3em;
         font-weight: 600;
       }
+      .message-count {
+        color: var(--main-color);
+        margin: 20px auto;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
       .result {
         font-family: Consolas, monaco, monospace;
         margin: 0 auto;
@@ -99,6 +105,7 @@
         </section>
 
         <p class="address"></p>
+        <p class="message-count"></p>
 
         <pre class="result"></pre>
       </section>
@@ -123,17 +130,23 @@
 
       let e = '';
       let m = '';
+      let count = 0;
 
       eb.registerHandler(address, (error, message) => {
         e = '';
         m = '';
         if (error) {
           e = error;
-          displayResult(error);
+          document.querySelector('.result').innerHTML = error;
         }
         if (message) {
           m = message;
+
           displayResult(message);
+          document.querySelector(
+            '.message-count',
+          ).innerHTML = `${count} messages received`;
+          count++;
         }
       });
 
@@ -141,10 +154,9 @@
 
       setInterval(() => {
         if (!m && !e) {
-          console.log('no dice');
-          displayResult(
-            `Sorry, No Data Available. Connection open for ${seconds}s`,
-          );
+          document.querySelector(
+            '.result',
+          ).innerHTML = `Sorry, No Data Available. Connection open for ${seconds}s`;
           seconds++;
         }
       }, 1000);
@@ -152,19 +164,7 @@
   };
 
   const displayResult = (result) => {
-    console.log({ result });
-    let parsed = '';
-    try {
-      parsed = JSON.parse(result);
-    } catch {
-      document.querySelector('.result').innerHTML = result;
-      return;
-    }
-    document.querySelector('.result').innerHTML = JSON.stringify(
-      parsed,
-      null,
-      2,
-    );
-    console.log({ result });
+    const formatted = JSON.stringify(result, null, 2);
+    document.querySelector('.result').innerHTML = formatted;
   };
 </script>
