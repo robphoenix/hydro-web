@@ -35,7 +35,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
   private eventBusAddress = 'result.pub.output';
   private eb: EventBus.EventBus;
-  private headers: { [key: string]: any } = {};
+  private eventbusHeaders: { [key: string]: any } = {};
 
   monitor: IMonitor;
   editLink: string;
@@ -74,17 +74,6 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.eb.close();
-  }
-
-  pause() {
-    this.paused = true;
-    this.eb.close();
-  }
-
-  unpause() {
-    this.eb = new EventBus(this.eventBusUrl);
-    this.subscribe();
-    this.paused = false;
   }
 
   togglePause() {
@@ -128,11 +117,12 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
     this.eb.onopen = () => {
       this.eb.registerHandler(
         address,
-        this.headers,
+        this.eventbusHeaders,
         (error, message: IMonitorData) => {
           if (error) {
-            console.error(error);
+            console.error({ error });
           }
+
           const { body } = message;
           const { h: headers, d: data } = body;
 
