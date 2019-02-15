@@ -86,7 +86,7 @@ export class MonitorsService {
    * @returns {Observable<IMonitor>}
    * @memberof MonitorsService
    */
-  public getMonitor(id: number): Observable<IMonitor> {
+  public getMonitorById(id: number): Observable<IMonitor> {
     return this.http
       .get<IMonitor>(`${this.monitorsUrl}/${id}`, { headers })
       .pipe(

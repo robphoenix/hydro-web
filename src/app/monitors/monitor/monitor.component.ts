@@ -16,11 +16,7 @@ import {
   MatDialog,
   MatSort,
 } from '@angular/material';
-import {
-  IMonitorDataAttributes,
-  IMonitorData,
-  IMonitorDataMessage,
-} from '../monitor-data';
+import { IMonitorData, IMonitorDataAttributes } from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 
 /**
@@ -45,7 +41,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   editLink: string;
   dataSource: MatTableDataSource<IMonitorDataAttributes>;
   displayedColumns: string[];
-  attributes: IMonitorDataAttributes[] = [];
+  monitorData: IMonitorDataAttributes[] = [];
   paused = false;
 
   @ViewChild(MatPaginator)
@@ -64,7 +60,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.attributes);
+    this.dataSource = new MatTableDataSource(this.monitorData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getMonitor();
@@ -72,7 +68,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     if (this.dataSource) {
-      this.dataSource.data = this.attributes;
+      this.dataSource.data = this.monitorData;
     }
   }
 
@@ -114,7 +110,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
       this.editLink = `/monitors/${id}/edit`;
-      this.monitorService.getMonitor(id).subscribe((monitor) => {
+      this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
         const name = monitor.name;
         console.log({ name });
@@ -124,26 +120,40 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   subscribe() {
+    this.eb.enableReconnect(true);
     const address = `${this.eventBusAddress}.${this.monitor.name}`;
+    this.eb.onerror = () => console.log('erorrrr');
+    this.eb.onclose = () => console.log('closed');
 
     this.eb.onopen = () => {
       this.eb.registerHandler(
         address,
         this.headers,
-        (error, data: IMonitorData) => {
+        (error, message: IMonitorData) => {
           if (error) {
             console.error(error);
           }
+          const { body } = message;
+          const { h: headers, d: data } = body;
 
-          const messages: IMonitorDataMessage[] = data.body.messages;
+          this.displayedColumns = headers.map((header) => {
+            const { n: name } = header;
+            return name;
+          });
 
-          const columns = Object.keys(messages[0].attributes);
-          this.displayedColumns = columns;
-
-          this.attributes = messages.map(
-            (message: IMonitorDataMessage) => message.attributes,
+          this.monitorData = data.map(
+            (attributes: (string | number | boolean)[]) => {
+              return attributes.reduce(
+                (prev: {}, curr: string | number | boolean, i: number) => {
+                  prev[this.displayedColumns[i]] = curr;
+                  return prev;
+                },
+                {},
+              );
+            },
           );
-          this.dataSource.data = this.attributes;
+
+          this.dataSource.data = this.monitorData;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
