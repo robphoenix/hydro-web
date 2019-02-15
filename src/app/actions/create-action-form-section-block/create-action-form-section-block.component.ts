@@ -18,6 +18,9 @@ export class CreateActionFormSectionBlockComponent {
   ];
 
   @Input()
+  units: { [key: string]: string[] };
+
+  @Input()
   parent: FormGroup;
 
   @Input()
