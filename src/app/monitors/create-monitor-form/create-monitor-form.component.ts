@@ -19,24 +19,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
 import { Router } from '@angular/router';
 import { IMonitorSubmit } from '../monitor-submit';
-
-const thirtySeconds = 30;
-const oneMinute = 60;
-const twoMinutes = 2 * oneMinute;
-const fiveMinutes = 5 * oneMinute;
-const tenMinutes = 10 * oneMinute;
-const fifteenMinutes = 15 * oneMinute;
-const thirtyMinutes = 30 * oneMinute;
-const oneHour = 60 * oneMinute;
-const twoHours = 2 * oneHour;
-const fourHours = 4 * oneHour;
-const sixHours = 6 * oneHour;
-const twleveHours = 12 * oneHour;
-const eighteenHours = 18 * oneHour;
-const oneDay = 24 * oneHour;
-const twoDays = 2 * oneDay;
-const fourDays = 4 * oneDay;
-const oneWeek = 7 * oneDay;
+import { CacheWindowService } from '../cache-window.service';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -117,31 +100,11 @@ export class CreateMonitorFormComponent implements OnInit {
     groups: `Please select monitor access groups`,
   };
 
-  private cacheWindowDurations: number[] = [
-    0,
-    thirtySeconds,
-    oneMinute,
-    twoMinutes,
-    fiveMinutes,
-    tenMinutes,
-    fifteenMinutes,
-    thirtyMinutes,
-    oneHour,
-    twoHours,
-    fourHours,
-    sixHours,
-    twleveHours,
-    eighteenHours,
-    oneDay,
-    twoDays,
-    fourDays,
-    oneWeek,
-  ];
-
   constructor(
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
     private filterService: FilterService,
+    private cacheWindowService: CacheWindowService,
     public authService: AuthService,
     private router: Router,
   ) {
@@ -156,7 +119,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
     this.createMonitorForm = this.fb.group({
       actions: [[]],
-      cacheWindow: [this.cacheWindowDurations[0]],
+      cacheWindow: [this.cacheWindowService.durationValues[0]],
       categories: [this.selectedCategories],
       categoriesInput: [''],
       description: ['', Validators.required],
@@ -181,7 +144,7 @@ export class CreateMonitorFormComponent implements OnInit {
   ngOnInit() {
     if (this.monitor) {
       this.createMonitorForm.patchValue({
-        cacheWindow: this.cacheWindowDurations.indexOf(
+        cacheWindow: this.cacheWindowService.durationValues.indexOf(
           this.monitor.cacheWindow,
         ),
         description: this.monitor.description,
@@ -261,7 +224,9 @@ export class CreateMonitorFormComponent implements OnInit {
       type,
     } = this.createMonitorForm.value;
 
-    const cacheWindow: number = this.cacheWindowDurations[cacheWindowValue];
+    const cacheWindow: number = this.cacheWindowService.durationValues[
+      cacheWindowValue
+    ];
 
     const monitor = {
       cacheWindow,

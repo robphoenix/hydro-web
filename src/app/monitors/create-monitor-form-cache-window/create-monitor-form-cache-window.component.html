@@ -13,9 +13,8 @@
   <mat-slider
     class="slider"
     formControlName="cacheWindow"
-    [max]="max"
-    [min]="min"
-    [value]="value"
+    [max]="this.cacheWindowService.max"
+    [min]="this.cacheWindowService.min"
     (input)="onInputChange($event)"
   ></mat-slider>
 </div>
