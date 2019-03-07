@@ -1,21 +1,12 @@
-```
-.%%..%%..%%..%%..%%%%%...%%%%%....%%%%...........%%...%%..%%%%%%..%%%%%..
-.%%..%%...%%%%...%%..%%..%%..%%..%%..%%..........%%...%%..%%......%%..%%.
-.%%%%%%....%%....%%..%%..%%%%%...%%..%%..%%%%%%..%%.%.%%..%%%%....%%%%%..
-.%%..%%....%%....%%..%%..%%..%%..%%..%%..........%%%%%%%..%%......%%..%%.
-.%%..%%....%%....%%%%%...%%..%%...%%%%............%%.%%...%%%%%%..%%%%%..
-.........................................................................
-```
+![hydro logo](/src/assets/img/hydroelectric.png)
 
-<!-- TOC depthFrom:2 -->
+#  Hydro Web
 
-- [Install](#install)
-- [Local Development](#local-development)
-- [Dev server](#dev-server)
-- [CI](#ci)
-- [Hydro API](#hydro-api)
-
-<!-- /TOC -->
+- [Hydro Web](#hydro-web)
+  - [Install](#install)
+  - [Local Development](#local-development)
+  - [Dev server](#dev-server)
+  - [CI](#ci)
 
 ## Install
 
@@ -25,9 +16,9 @@ project, so you _shouldn't_ need to have them already installed globally.
 
 ## Local Development
 
-- Run `npm run start` to start up the app, and then navigate to
-  [http://localhost:4200/](http://localhost:4200/). The app will automatically
-  reload if you change any of the source files.
+Run `npm start` to start up the app, and then navigate to
+[http://localhost:4200/](http://localhost:4200/). The app will automatically
+reload if you change any of the source files.
 
 ## Dev server
 
@@ -43,7 +34,3 @@ Jenkins job will run formatting & linting checks. It will also build and
 deploy the Angular app, as well as the small Go server that will serve the
 app. It can be triggered by Merge Requests, pushes to open Merge Requests,
 and manually for any available branch.
-
-## Hydro API
-
-For further information about the Hydro API, please see the [API documentation](https://for-git-prod.lb.local/forensic_monitoring/hydro/tree/master/hydro-console-api)
