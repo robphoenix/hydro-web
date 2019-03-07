@@ -30,8 +30,8 @@
 
 .online-name {
   color: $darker-grey;
-  text-transform: uppercase;
-  letter-spacing: $tracked;
+  letter-spacing: 0.05em;
+  font-size: 1.1em;
   margin: 10px 0;
   line-height: 1.5;
   -webkit-transition: $transition-in-out;
