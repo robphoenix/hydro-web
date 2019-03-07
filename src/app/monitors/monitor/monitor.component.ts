@@ -5,7 +5,6 @@ import {
   OnChanges,
   OnDestroy,
 } from '@angular/core';
-import { Location } from '@angular/common';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
@@ -33,7 +32,7 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
 })
 export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
-  private eventBusAddress = 'result.pub.output';
+  private outputAddress = 'result.pub.output';
   private eb: EventBus.EventBus;
   private eventbusHeaders: { [key: string]: any } = {};
 
@@ -83,7 +82,7 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   public togglePause() {
     if (this.paused) {
       this.eb = new EventBus(this.eventBusUrl);
-      this.subscribeToEventbus();
+      this.registerOutputHandler();
     } else {
       this.eb.close();
     }
@@ -114,7 +113,8 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
         this.monitor = monitor;
         const name = monitor.name;
         console.log({ name });
-        this.subscribeToEventbus();
+
+        this.registerOutputHandler();
       });
     });
   }
@@ -125,13 +125,27 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
    * @private
    * @memberof MonitorComponent
    */
-  private subscribeToEventbus() {
+  private registerOutputHandler() {
     this.eb.enableReconnect(true);
-    const address = `${this.eventBusAddress}.${this.monitor.name}`;
+    const address = `${this.outputAddress}.${this.monitor.name}`;
     this.eb.onerror = () => console.log('erorrrr');
     this.eb.onclose = () => console.log('closed');
 
     this.eb.onopen = () => {
+      this.eb.send(
+        'result.pub.cached',
+        this.monitor.name,
+        this.eventbusHeaders,
+        (error, reply) => {
+          if (reply) {
+            this.displayMessageData(reply);
+          }
+          if (error) {
+            console.log({ error });
+          }
+        },
+      );
+
       this.eb.registerHandler(
         address,
         this.eventbusHeaders,
