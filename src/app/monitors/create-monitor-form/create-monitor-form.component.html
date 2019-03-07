@@ -57,7 +57,7 @@
     <section class="section">
       <app-create-monitor-form-cache-window
         class="cache-window"
-        (durationChange)="updateCacheWindow($event)"
+        [parent]="createMonitorForm"
       ></app-create-monitor-form-cache-window>
     </section>
 
