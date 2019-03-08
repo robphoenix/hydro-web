@@ -5,8 +5,9 @@
 }
 
 .title {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
+  letter-spacing: 0.05em;
+  font-size: 1.5em;
+  margin: 100px 0 0 0;
 }
 
 .info {
@@ -38,4 +39,12 @@
 
 .mat-cell {
   padding: 5px 10px;
+}
+
+.table {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
 }

@@ -19,6 +19,7 @@ import { AuthService } from 'src/app/user/auth.service';
 import { FilterService } from '../filter.service';
 import { Router } from '@angular/router';
 import { IMonitorSubmit } from '../monitor-submit';
+import { CacheWindowService } from '../cache-window.service';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -103,6 +104,7 @@ export class CreateMonitorFormComponent implements OnInit {
     private fb: FormBuilder,
     private monitorsService: MonitorsService,
     private filterService: FilterService,
+    private cacheWindowService: CacheWindowService,
     public authService: AuthService,
     private router: Router,
   ) {
@@ -117,7 +119,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
     this.createMonitorForm = this.fb.group({
       actions: [[]],
-      cacheWindow: [0],
+      cacheWindow: [this.cacheWindowService.durationValues[0]],
       categories: [this.selectedCategories],
       categoriesInput: [''],
       description: ['', Validators.required],
@@ -142,7 +144,9 @@ export class CreateMonitorFormComponent implements OnInit {
   ngOnInit() {
     if (this.monitor) {
       this.createMonitorForm.patchValue({
-        cacheWindow: this.monitor.cacheWindow || 0,
+        cacheWindow: this.cacheWindowService.durationValues.indexOf(
+          this.monitor.cacheWindow,
+        ),
         description: this.monitor.description,
         id: this.monitor.id,
         name: this.monitorName || this.monitor.name,
@@ -209,7 +213,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public submit(view: boolean = false) {
     const {
-      cacheWindow,
+      cacheWindow: cacheWindowValue,
       categories,
       description,
       groups,
@@ -219,6 +223,10 @@ export class CreateMonitorFormComponent implements OnInit {
       status,
       type,
     } = this.createMonitorForm.value;
+
+    const cacheWindow: number = this.cacheWindowService.durationValues[
+      cacheWindowValue
+    ];
 
     const monitor = {
       cacheWindow,

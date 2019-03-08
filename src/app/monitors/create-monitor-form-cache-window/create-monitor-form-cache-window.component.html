@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [formGroup]="parent">
   <div class="label">
     <mat-label>Cache Window </mat-label>
     <mat-icon
@@ -12,9 +12,9 @@
   <span class="duration-name">{{ durationName }} </span>
   <mat-slider
     class="slider"
-    [max]="max"
-    [min]="min"
+    formControlName="cacheWindow"
+    [max]="this.cacheWindowService.max"
+    [min]="this.cacheWindowService.min"
     (input)="onInputChange($event)"
-    (valueChange)="durationChange.emit(duration)"
   ></mat-slider>
 </div>
