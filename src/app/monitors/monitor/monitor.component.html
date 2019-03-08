@@ -26,7 +26,13 @@
     </div>
   </header>
 
-  <table mat-table matSort [dataSource]="dataSource" class="table">
+  <table
+    mat-table
+    matSort
+    [dataSource]="dataSource"
+    class="table"
+    *ngIf="dataSource && dataSource.data.length; else: noData"
+  >
     <ng-container
       *ngFor="let column of displayedColumns"
       matColumnDef="{{column}}"
@@ -39,10 +45,15 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
+  <!--
+    if we use ngif here to only show the paginator when there's data, it
+    screws the table up, I don't know why, so CSS to the rescue
+  -->
   <mat-paginator
     class="paginator"
     #paginator
-    [length]="monitorData.length"
+    [ngClass]="{ hidden: dataSource.data.length === 0 }"
+    [length]="dataSource.data.length"
     [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25]"
     showFirstLastButtons

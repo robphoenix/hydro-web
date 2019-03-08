@@ -57,8 +57,6 @@ export class AuthService {
   // The key the JWT token is stored under in local storage
   readonly accessTokenName = 'access_token';
 
-  private currentUser: IUser = {} as IUser;
-
   // Interval durations, these are in milliseconds
   //
   // The refresh interval should be less than the expiry duration of the JWT

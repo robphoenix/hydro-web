@@ -2,7 +2,7 @@
   *ngIf="online"
   class="link"
   href="/monitors/{{id}}"
-  routerLink="/monitors/{{id}}"
+  [routerLink]="['/monitors/', id, { name: name }]"
 >
   <div class="title">
     <h4 class="online-name">{{ name }}</h4>

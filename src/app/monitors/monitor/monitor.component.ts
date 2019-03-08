@@ -1,22 +1,18 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnChanges,
-  OnDestroy,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute } from '@angular/router';
-import * as EventBus from 'vertx3-eventbus-client';
 import {
   MatTableDataSource,
   MatPaginator,
   MatDialog,
   MatSort,
 } from '@angular/material';
-import { IMonitorData, IMonitorDataAttributes } from '../monitor-data';
+import { IMonitorDataAttributes, IMonitorDisplayData } from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
+import { EventbusService } from '../eventbus.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 /**
  * Describes a single monitor.
@@ -30,11 +26,9 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss'],
 })
-export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
-  private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
-  private outputAddress = 'result.pub.output';
-  private eb: EventBus.EventBus;
-  private eventbusHeaders: { [key: string]: any } = {};
+export class MonitorComponent implements OnInit, OnDestroy {
+  private name: string;
+  private unsubscribe: Subject<void> = new Subject();
 
   public monitor: IMonitor;
   public editLink: string;
@@ -52,40 +46,65 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private monitorService: MonitorsService,
+    private eventbusService: EventbusService,
     public dialog: MatDialog,
   ) {
-    this.eb = new EventBus(this.eventBusUrl);
+    // if we get this from the url params we don't have to wait for the server
+    // to send back the monitor info, though to be honest I'm not sure this
+    // gives us much gain in time to display data.
+    this.name = this.route.snapshot.paramMap.get('name');
   }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.monitorData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.getCachedData();
     this.getMonitor();
   }
 
-  ngOnChanges(): void {
-    if (this.dataSource) {
-      this.dataSource.data = this.monitorData;
-    }
-  }
-
   ngOnDestroy(): void {
-    this.eb.close();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.eventbusService.closeConnections();
   }
 
   /**
-   * Toggles the eventbus connection on and off
+   * Gets the live data from the eventbus and displays it in the table
+   *
+   * @memberof MonitorComponent
+   */
+  getLiveData() {
+    this.eventbusService
+      .getLiveData(this.name)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((message: IMonitorDisplayData) => {
+        this.displayMessageData(message);
+      });
+  }
+
+  /**
+   * Gets the cached data from the eventbus and displays it in the table
+   *
+   * @memberof MonitorComponent
+   */
+  getCachedData() {
+    this.eventbusService
+      .getCachedData(this.name)
+      .pipe(first()) // this is only going to return once
+      .subscribe((message: IMonitorDisplayData) => {
+        this.displayMessageData(message);
+        this.getLiveData();
+      });
+  }
+
+  /**
+   * Toggles the eventbus connections on and off
    *
    * @memberof MonitorComponent
    */
   public togglePause() {
-    if (this.paused) {
-      this.eb = new EventBus(this.eventBusUrl);
-      this.registerOutputHandler();
-    } else {
-      this.eb.close();
-    }
+    this.paused ? this.getLiveData() : this.eventbusService.closeConnections();
     this.paused = !this.paused;
   }
 
@@ -111,52 +130,8 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
       this.editLink = `/monitors/${id}/edit`;
       this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
-        const name = monitor.name;
-        console.log({ name });
-
-        this.registerOutputHandler();
       });
     });
-  }
-
-  /**
-   * Subscribe to the eventbus messages for the current monitor
-   *
-   * @private
-   * @memberof MonitorComponent
-   */
-  private registerOutputHandler() {
-    this.eb.enableReconnect(true);
-    const address = `${this.outputAddress}.${this.monitor.name}`;
-    this.eb.onerror = () => console.log('erorrrr');
-    this.eb.onclose = () => console.log('closed');
-
-    this.eb.onopen = () => {
-      this.eb.send(
-        'result.pub.cached',
-        this.monitor.name,
-        this.eventbusHeaders,
-        (error, reply) => {
-          if (reply) {
-            this.displayMessageData(reply);
-          }
-          if (error) {
-            console.log({ error });
-          }
-        },
-      );
-
-      this.eb.registerHandler(
-        address,
-        this.eventbusHeaders,
-        (error, message: IMonitorData) => {
-          if (error) {
-            console.error({ error });
-          }
-          this.displayMessageData(message);
-        },
-      );
-    };
   }
 
   /**
@@ -165,26 +140,10 @@ export class MonitorComponent implements OnInit, OnChanges, OnDestroy {
    * @param {IMonitorData} message
    * @memberof MonitorComponent
    */
-  displayMessageData(message: IMonitorData) {
-    const { body } = message;
-    const { h: headers, d: data } = body;
-
-    this.displayedColumns = headers.map((header) => {
-      const { n: name } = header;
-      return name;
-    });
-
-    this.monitorData = data.map((attributes: (string | number | boolean)[]) => {
-      return attributes.reduce(
-        (prev: {}, curr: string | number | boolean, i: number) => {
-          prev[this.displayedColumns[i]] = curr;
-          return prev;
-        },
-        {},
-      );
-    });
-
-    this.dataSource.data = this.monitorData;
+  displayMessageData(message: IMonitorDisplayData) {
+    const { headers, data } = message;
+    this.displayedColumns = headers;
+    this.dataSource.data = data;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
