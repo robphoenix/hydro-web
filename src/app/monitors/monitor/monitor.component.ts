@@ -141,6 +141,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
    * @memberof MonitorComponent
    */
   displayMessageData(message: IMonitorDisplayData) {
+    if (!message) {
+      return;
+    }
     const { headers, data } = message;
     this.displayedColumns = headers;
     this.dataSource.data = data;

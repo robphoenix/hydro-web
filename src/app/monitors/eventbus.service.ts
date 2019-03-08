@@ -95,6 +95,11 @@ export class EventbusService {
 
   private getDisplayData(message: IMonitorData): IMonitorDisplayData {
     const { body } = message;
+
+    if (typeof body === 'string') {
+      return;
+    }
+
     const { h, d } = body;
 
     const headers: string[] = h.map((header: IMonitorDataHeader) => header.n);
