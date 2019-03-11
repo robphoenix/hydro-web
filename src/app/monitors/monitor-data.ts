@@ -14,6 +14,7 @@ export interface IMonitorDataBody {
 export interface IMonitorDataHeader {
   n: string; // name
   t?: string; // type
+  f?: string; // format (mostly for time/data types)
 }
 
 export interface IMonitorDataAttributes {

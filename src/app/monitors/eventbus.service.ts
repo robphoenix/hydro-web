@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as EventBus from 'vertx3-eventbus-client';
-import { Observable, of, Subscriber } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import {
   IMonitorData,
   IMonitorDisplayData,
   IMonitorDataHeader,
   IMonitorDataAttributes,
 } from './monitor-data';
+import { format as dateFnsFormat } from 'date-fns/esm';
 
 @Injectable({
   providedIn: 'root',
@@ -100,15 +101,39 @@ export class EventbusService {
       return;
     }
 
+    const columns: { [name: string]: { type: string; format: string } } = {};
     const { h, d } = body;
 
-    const headers: string[] = h.map((header: IMonitorDataHeader) => header.n);
+    console.log({ columns });
+
+    const headers: string[] = h.map((header: IMonitorDataHeader) => {
+      const { t: type, f: format } = header;
+      if (type) {
+        columns[header.n] = { type, format };
+        // console.log({ format });
+      }
+      return header.n;
+    });
 
     const data: IMonitorDataAttributes[] = d.map(
       (attributes: (string | number | boolean)[]) => {
         return attributes.reduce(
           (prev: {}, curr: string | number | boolean, i: number) => {
-            prev[headers[i]] = curr;
+            const column = headers[i];
+            if (columns[column]) {
+              const type = columns[column].type;
+              if (type === 'dateTime') {
+                const ms: number = curr as number;
+                const formatted = dateFnsFormat(
+                  new Date(ms),
+                  // columns[column].format,
+                  'HH:mm dd/MM/yyyy',
+                );
+                curr = formatted;
+                // console.log({ formatted });
+              }
+            }
+            prev[column] = curr;
             return prev;
           },
           {},
