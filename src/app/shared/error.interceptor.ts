@@ -29,26 +29,32 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          // auto logout if 401 response returned from api
+          // auto logout if failed authentication response returned from api
           this.authService.logout();
         }
 
-        let msg: string;
+        let msg: IErrorMessage;
 
         if (error.error.length) {
           // The backend returned an unsuccessful response code.
           // Until otherwise necessary, we're only going to deal
           // with the first error message sent back from the server
-          const [{ cause }] = error.error as IErrorMessage[];
-          msg = cause;
+          msg = error.error[0] as IErrorMessage;
         } else if (!error.status) {
-          msg = 'Unknown error. Please check your network connection.';
+          // we don't know what's happened, maybe the internet broke?
+          msg = {
+            errorCode: 'UNKNOWN_ERROR',
+            message: 'Unknown error. Please check your network connection.',
+            cause: 'Unknown error. Please check your network connection.',
+          } as IErrorMessage;
         } else {
-          // A client-side or network error occurred. Handle it accordingly.
-          msg = error.message;
+          // A client-side or network error occurred
+          msg = {
+            errorCode: `${error.status}`,
+            message: error.message,
+            cause: error.statusText,
+          } as IErrorMessage;
         }
-
-        // return an observable with a user-facing error message
         return throwError(msg);
       }),
     );

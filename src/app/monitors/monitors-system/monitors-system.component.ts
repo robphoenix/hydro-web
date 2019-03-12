@@ -3,6 +3,13 @@ import { IMonitor, MonitorStatus } from '../monitor';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
 import { UserService } from 'src/app/user/user.service';
+import {
+  IErrorMessage,
+  errorNoAvailableMonitors,
+} from 'src/app/shared/error-message';
+import { MatDialog } from '@angular/material';
+import { Location } from '@angular/common';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-monitors-system',
@@ -22,6 +29,8 @@ export class MonitorsSystemComponent implements OnInit {
   constructor(
     private monitorsService: MonitorsService,
     private userService: UserService,
+    public dialog: MatDialog,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -30,9 +39,8 @@ export class MonitorsSystemComponent implements OnInit {
   }
 
   private getMonitors(): void {
-    this.monitorsService
-      .getSystemMonitors()
-      .subscribe((monitors: IMonitor[]) => {
+    this.monitorsService.getSystemMonitors().subscribe(
+      (monitors: IMonitor[]) => {
         this.systemMonitors = monitors.filter(
           (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
         );
@@ -44,7 +52,23 @@ export class MonitorsSystemComponent implements OnInit {
         this.allCurrentActions = this.monitorsService.allCurrentActions(
           this.systemMonitors,
         );
-      });
+      },
+      (error: IErrorMessage) => {
+        const { errorCode } = error;
+        if (errorCode === errorNoAvailableMonitors) {
+          const title = 'Error fetching system monitors';
+          const err =
+            'There are no system monitors currently available to view';
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+
+          dialogRef.afterClosed().subscribe(() => {
+            this.location.back();
+          });
+        }
+      },
+    );
   }
 
   refresh() {

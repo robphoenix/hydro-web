@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
+import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
   selector: 'app-login',
@@ -60,9 +61,11 @@ export class LoginComponent implements OnInit {
         () => {
           this.router.navigateByUrl(this.userService.lastMonitorsUrl || '/');
         },
-        (err: string) => {
+        (error: IErrorMessage) => {
+          console.log({ error });
           this.attemptingLogIn = false;
-          this.loginErrorMessage = err;
+          const { message } = error;
+          this.loginErrorMessage = message;
         },
       );
   }
