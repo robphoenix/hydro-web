@@ -6,6 +6,8 @@ import {
   IMonitorDisplayData,
   IMonitorDataHeader,
   IMonitorDataAttributes,
+  IHeadersMetadata,
+  MonitorDataAttribute,
 } from './monitor-data';
 import { format as dateFnsFormat } from 'date-fns/esm';
 
@@ -18,6 +20,7 @@ export class EventbusService {
   private cachedAddress = 'result.pub.cached';
   private ebs: { name: string; eb: EventBus.EventBus }[] = [];
   private eventbusHeaders: { [key: string]: any } = {};
+  private dateTimeColumnType = 'dateTime';
 
   constructor() {}
 
@@ -97,50 +100,62 @@ export class EventbusService {
   private getDisplayData(message: IMonitorData): IMonitorDisplayData {
     const { body } = message;
 
+    // If there is no data a string saying so is returned. This is going to
+    // change to be an empty data structure instead.
     if (typeof body === 'string') {
       return;
     }
 
-    const columns: { [name: string]: { type: string; format: string } } = {};
     const { h, d } = body;
 
-    console.log({ columns });
+    const headersMetadata: IHeadersMetadata = {};
 
     const headers: string[] = h.map((header: IMonitorDataHeader) => {
-      const { t: type, f: format } = header;
+      const { n: name, t: type, f: format } = header;
       if (type) {
-        columns[header.n] = { type, format };
-        // console.log({ format });
+        headersMetadata[header.n] = { type, format };
       }
-      return header.n;
+      return name;
     });
 
     const data: IMonitorDataAttributes[] = d.map(
-      (attributes: (string | number | boolean)[]) => {
+      (attributes: MonitorDataAttribute[]) => {
         return attributes.reduce(
-          (prev: {}, curr: string | number | boolean, i: number) => {
-            const column = headers[i];
-            if (columns[column]) {
-              const type = columns[column].type;
-              if (type === 'dateTime') {
-                const ms: number = curr as number;
-                const formatted = dateFnsFormat(
-                  new Date(ms),
-                  // columns[column].format,
-                  'HH:mm dd/MM/yyyy',
-                );
-                curr = formatted;
-                // console.log({ formatted });
-              }
-            }
-            prev[column] = curr;
-            return prev;
+          (columns: {}, column: MonitorDataAttribute, i: number) => {
+            const header: string = headers[i];
+            columns[header] = this.formatColumnData(
+              column,
+              header,
+              headersMetadata,
+            );
+            return columns;
           },
           {},
         );
       },
     );
 
-    return { headers, data } as IMonitorDisplayData;
+    return { headers, headersMetadata, data } as IMonitorDisplayData;
+  }
+
+  private formatColumnData(
+    column: MonitorDataAttribute,
+    header: string,
+    headersMetadata: IHeadersMetadata,
+  ): MonitorDataAttribute {
+    const type: string = headersMetadata[header]
+      ? headersMetadata[header].type
+      : '';
+    if (type !== this.dateTimeColumnType) {
+      return column;
+    }
+    const ms: number = column as number;
+    const formatted = dateFnsFormat(
+      new Date(ms),
+      // TODO: #4
+      // columns[column].format,
+      'HH:mm dd/MM/yyyy',
+    );
+    return formatted;
   }
 }
