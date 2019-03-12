@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import * as EventBus from 'vertx3-eventbus-client';
-import { Observable, of, Subscriber } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import {
   IMonitorData,
   IMonitorDisplayData,
   IMonitorDataHeader,
   IMonitorDataAttributes,
+  IHeadersMetadata,
+  MonitorDataAttribute,
 } from './monitor-data';
+import { format as dateFnsFormat } from 'date-fns/esm';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +20,7 @@ export class EventbusService {
   private cachedAddress = 'result.pub.cached';
   private ebs: { name: string; eb: EventBus.EventBus }[] = [];
   private eventbusHeaders: { [key: string]: any } = {};
+  private dateTimeColumnType = 'dateTime';
 
   constructor() {}
 
@@ -96,26 +100,62 @@ export class EventbusService {
   private getDisplayData(message: IMonitorData): IMonitorDisplayData {
     const { body } = message;
 
+    // If there is no data a string saying so is returned. This is going to
+    // change to be an empty data structure instead.
     if (typeof body === 'string') {
       return;
     }
 
     const { h, d } = body;
 
-    const headers: string[] = h.map((header: IMonitorDataHeader) => header.n);
+    const headersMetadata: IHeadersMetadata = {};
+
+    const headers: string[] = h.map((header: IMonitorDataHeader) => {
+      const { n: name, t: type, f: format } = header;
+      if (type) {
+        headersMetadata[header.n] = { type, format };
+      }
+      return name;
+    });
 
     const data: IMonitorDataAttributes[] = d.map(
-      (attributes: (string | number | boolean)[]) => {
+      (attributes: MonitorDataAttribute[]) => {
         return attributes.reduce(
-          (prev: {}, curr: string | number | boolean, i: number) => {
-            prev[headers[i]] = curr;
-            return prev;
+          (columns: {}, column: MonitorDataAttribute, i: number) => {
+            const header: string = headers[i];
+            columns[header] = this.formatColumnData(
+              column,
+              header,
+              headersMetadata,
+            );
+            return columns;
           },
           {},
         );
       },
     );
 
-    return { headers, data } as IMonitorDisplayData;
+    return { headers, headersMetadata, data } as IMonitorDisplayData;
+  }
+
+  private formatColumnData(
+    column: MonitorDataAttribute,
+    header: string,
+    headersMetadata: IHeadersMetadata,
+  ): MonitorDataAttribute {
+    const type: string = headersMetadata[header]
+      ? headersMetadata[header].type
+      : '';
+    if (type !== this.dateTimeColumnType) {
+      return column;
+    }
+    const ms: number = column as number;
+    const formatted = dateFnsFormat(
+      new Date(ms),
+      // TODO: #4
+      // columns[column].format,
+      'HH:mm dd/MM/yyyy',
+    );
+    return formatted;
   }
 }
