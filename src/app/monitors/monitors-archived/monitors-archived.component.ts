@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { UserService } from 'src/app/user/user.service';
+import {
+  IErrorMessage,
+  errorNoAvailableMonitors,
+} from 'src/app/shared/error-message';
+import { MatDialog } from '@angular/material';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-monitors-archived',
@@ -18,6 +25,8 @@ export class MonitorsArchivedComponent implements OnInit {
   constructor(
     private monitorsService: MonitorsService,
     private userService: UserService,
+    public dialog: MatDialog,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -26,9 +35,8 @@ export class MonitorsArchivedComponent implements OnInit {
   }
 
   private getMonitors(): void {
-    this.monitorsService
-      .getArchivedMonitors()
-      .subscribe((monitors: IMonitor[]) => {
+    this.monitorsService.getArchivedMonitors().subscribe(
+      (monitors: IMonitor[]) => {
         this.archivedMonitors = monitors;
 
         this.allCurrentCategories = this.monitorsService.allCurrentCategories(
@@ -38,7 +46,23 @@ export class MonitorsArchivedComponent implements OnInit {
         this.allCurrentActions = this.monitorsService.allCurrentActions(
           this.archivedMonitors,
         );
-      });
+      },
+      (error: IErrorMessage) => {
+        const { errorCode } = error;
+        if (errorCode === errorNoAvailableMonitors) {
+          const title = 'Error fetching archived monitors';
+          const err =
+            'There are no archived monitors currently available to view';
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: { title, err },
+          });
+
+          dialogRef.afterClosed().subscribe(() => {
+            this.location.back();
+          });
+        }
+      },
+    );
   }
 
   refresh() {

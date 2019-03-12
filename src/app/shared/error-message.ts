@@ -9,3 +9,5 @@ export interface IErrorMessage {
   message: string;
   cause: string;
 }
+
+export const errorNoAvailableMonitors = 'NO_AVAILABLE_MONITORS';
