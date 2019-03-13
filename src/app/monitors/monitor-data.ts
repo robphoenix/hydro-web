@@ -34,3 +34,8 @@ export interface IMonitorDisplayData {
   headersMetadata: IHeadersMetadata; // any relevant type/format info
   data: IMonitorDataAttributes[];
 }
+
+export enum MonitorDataAttributeType {
+  Ip = 'ip',
+  DateTime = 'dateTime',
+}

@@ -9,7 +9,6 @@ import {
   IHeadersMetadata,
   MonitorDataAttribute,
 } from './monitor-data';
-import { format as dateFnsFormat } from 'date-fns/esm';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +19,6 @@ export class EventbusService {
   private cachedAddress = 'result.pub.cached';
   private ebs: { name: string; eb: EventBus.EventBus }[] = [];
   private eventbusHeaders: { [key: string]: any } = {};
-  private dateTimeColumnType = 'dateTime';
 
   constructor() {}
 
@@ -108,26 +106,22 @@ export class EventbusService {
 
     const { h, d } = body;
 
-    const headersMetadata: IHeadersMetadata = {};
+    const headersMetadata: IHeadersMetadata = h.reduce(
+      (metadata: {}, header: IMonitorDataHeader) => {
+        const { n: name, t: type, f: format } = header;
+        metadata[name] = { type, format };
+        return metadata;
+      },
+      {},
+    );
 
-    const headers: string[] = h.map((header: IMonitorDataHeader) => {
-      const { n: name, t: type, f: format } = header;
-      if (type) {
-        headersMetadata[header.n] = { type, format };
-      }
-      return name;
-    });
+    const headers: string[] = h.map((header: IMonitorDataHeader) => header.n);
 
     const data: IMonitorDataAttributes[] = d.map(
       (attributes: MonitorDataAttribute[]) => {
         return attributes.reduce(
           (columns: {}, column: MonitorDataAttribute, i: number) => {
-            const header: string = headers[i];
-            columns[header] = this.formatColumnData(
-              column,
-              header,
-              headersMetadata,
-            );
+            columns[headers[i]] = column;
             return columns;
           },
           {},
@@ -136,26 +130,5 @@ export class EventbusService {
     );
 
     return { headers, headersMetadata, data } as IMonitorDisplayData;
-  }
-
-  private formatColumnData(
-    column: MonitorDataAttribute,
-    header: string,
-    headersMetadata: IHeadersMetadata,
-  ): MonitorDataAttribute {
-    const type: string = headersMetadata[header]
-      ? headersMetadata[header].type
-      : '';
-    if (type !== this.dateTimeColumnType) {
-      return column;
-    }
-    const ms: number = column as number;
-    const formatted = dateFnsFormat(
-      new Date(ms),
-      // TODO: #4
-      // columns[column].format,
-      'HH:mm dd/MM/yyyy',
-    );
-    return formatted;
   }
 }
