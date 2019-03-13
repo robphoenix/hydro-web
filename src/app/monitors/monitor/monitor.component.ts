@@ -7,8 +7,15 @@ import {
   MatPaginator,
   MatDialog,
   MatSort,
+  Sort,
 } from '@angular/material';
-import { IMonitorDataAttributes, IMonitorDisplayData } from '../monitor-data';
+import {
+  IMonitorDataAttributes,
+  IMonitorDisplayData,
+  IHeadersMetadata,
+  MonitorDataAttribute,
+  MonitorDataAttributeType,
+} from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { EventbusService } from '../eventbus.service';
 import { first, takeUntil } from 'rxjs/operators';
@@ -27,6 +34,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./monitor.component.scss'],
 })
 export class MonitorComponent implements OnInit, OnDestroy {
+  MonitorDataAttributeType: typeof MonitorDataAttributeType = MonitorDataAttributeType;
   private name: string;
   private unsubscribe: Subject<void> = new Subject();
 
@@ -34,6 +42,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public editLink: string;
   public dataSource: MatTableDataSource<IMonitorDataAttributes>;
   public displayedColumns: string[];
+  public headersMetadata: IHeadersMetadata;
   public monitorData: IMonitorDataAttributes[] = [];
   public paused = false;
 
@@ -144,7 +153,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
     if (!message) {
       return;
     }
-    const { headers, data } = message;
+    const { headers, headersMetadata, data } = message;
+
+    this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;
     this.dataSource.paginator = this.paginator;
@@ -161,5 +172,53 @@ export class MonitorComponent implements OnInit, OnDestroy {
       data: { monitor: this.monitor },
       width: '1000px',
     });
+  }
+
+  public sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    const data = this.dataSource.data.slice();
+
+    this.dataSource.data = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      const type: string = this.headersMetadata[sort.active]
+        ? this.headersMetadata[sort.active].type
+        : '';
+
+      switch (type) {
+        case MonitorDataAttributeType.Ip:
+          const ipA: string = a[sort.active] as string;
+          const ipB: string = b[sort.active] as string;
+          return this.compare(
+            this.sortableIpAddress(ipA),
+            this.sortableIpAddress(ipB),
+            isAsc,
+          );
+        case MonitorDataAttributeType.DateTime:
+          const dateA: Date = new Date(a[sort.active] as number);
+          const dateB: Date = new Date(a[sort.active] as number);
+          return this.compare(dateA, dateB, isAsc);
+        case '':
+          return this.compare(a[sort.active], b[sort.active], isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  private sortableIpAddress(ip: string): string {
+    return ip
+      .split('.')
+      .map((octet: string) => octet.padStart(3, '0'))
+      .join('');
+  }
+
+  private compare(
+    a: MonitorDataAttribute | Date,
+    b: MonitorDataAttribute | Date,
+    isAsc: boolean,
+  ) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
