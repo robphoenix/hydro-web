@@ -20,6 +20,7 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
 import { EventbusService } from '../eventbus.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { IErrorMessage } from 'src/app/shared/error-message';
 
 /**
  * Describes a single monitor.
@@ -45,6 +46,8 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public headersMetadata: IHeadersMetadata;
   public monitorData: IMonitorDataAttributes[] = [];
   public paused = false;
+  public cachedDataMessage = '';
+  public liveDataMessage = '';
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -85,16 +88,24 @@ export class MonitorComponent implements OnInit, OnDestroy {
    * @memberof MonitorComponent
    */
   getLiveData() {
+    this.liveDataMessage = 'Currently waiting for live data';
     this.eventbusService
       .getLiveData(this.name)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe((message: IMonitorDisplayData) => {
-        const { data } = message;
-        console.log('live data...');
-        console.log({ data });
+      .subscribe(
+        (message: IMonitorDisplayData) => {
+          const { data } = message;
+          console.log('live data...');
+          console.log({ data });
 
-        this.displayMessageData(message);
-      });
+          this.displayMessageData(message);
+        },
+        (error: IErrorMessage) => {
+          const { message } = error;
+          this.liveDataMessage = `error requesting live data: ${message}`;
+          console.log({ error });
+        },
+      );
   }
 
   /**
@@ -103,6 +114,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
    * @memberof MonitorComponent
    */
   getCachedData() {
+    this.cachedDataMessage = 'Requesting cached data';
     this.eventbusService
       .getCachedData(this.name)
       .pipe(first()) // this is only going to return once
@@ -112,10 +124,17 @@ export class MonitorComponent implements OnInit, OnDestroy {
           console.log('cached data...');
 
           console.log({ data });
+          if (!data.length) {
+            this.cachedDataMessage = 'There is no cached data available';
+          }
 
           this.displayMessageData(message);
         },
-        (error) => console.log({ error }),
+        (error: IErrorMessage) => {
+          const { message } = error;
+          this.cachedDataMessage = `error requesting cached data: ${message}`;
+          console.log({ error });
+        },
       );
   }
 
