@@ -222,7 +222,7 @@ export class CreateMonitorFormComponent implements OnInit {
       query,
       status,
       type,
-    } = this.createMonitorForm.value;
+    } = this.createMonitorForm.getRawValue();
 
     const cacheWindow: number = this.cacheWindowService.durationValues[
       cacheWindowValue

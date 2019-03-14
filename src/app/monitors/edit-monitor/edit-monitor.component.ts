@@ -47,8 +47,14 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
     const { monitor, view } = event;
     this.monitorsService.patchMonitor(monitor.id, monitor).subscribe(
       () => {
-        const redirectUrl = view ? `/monitors/${monitor.id}` : `/monitors`;
-        this.router.navigate([redirectUrl]);
+        view
+          ? this.router.navigate([
+              '/monitors/',
+              monitor.id,
+              { name: monitor.name },
+            ])
+          : this.router.navigateByUrl('/monitors');
+
         this.snackBar.open(`Monitor ${this.monitor.name} edited`, '', {
           duration: 2000,
         });
