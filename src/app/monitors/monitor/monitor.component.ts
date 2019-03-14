@@ -70,6 +70,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
     this.getCachedData();
     this.getMonitor();
+    this.getLiveData();
   }
 
   ngOnDestroy(): void {
@@ -88,6 +89,10 @@ export class MonitorComponent implements OnInit, OnDestroy {
       .getLiveData(this.name)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((message: IMonitorDisplayData) => {
+        const { data } = message;
+        console.log('live data...');
+        console.log({ data });
+
         this.displayMessageData(message);
       });
   }
@@ -101,10 +106,17 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.eventbusService
       .getCachedData(this.name)
       .pipe(first()) // this is only going to return once
-      .subscribe((message: IMonitorDisplayData) => {
-        this.displayMessageData(message);
-        this.getLiveData();
-      });
+      .subscribe(
+        (message: IMonitorDisplayData) => {
+          const { data } = message;
+          console.log('cached data...');
+
+          console.log({ data });
+
+          this.displayMessageData(message);
+        },
+        (error) => console.log({ error }),
+      );
   }
 
   /**

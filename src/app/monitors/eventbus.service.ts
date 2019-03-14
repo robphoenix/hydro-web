@@ -71,6 +71,7 @@ export class EventbusService {
     return (error: Error, message: IMonitorData) => {
       if (error) {
         console.error({ error });
+        observer.complete();
       }
       if (message) {
         const data: IMonitorDisplayData = this.getDisplayData(message);
