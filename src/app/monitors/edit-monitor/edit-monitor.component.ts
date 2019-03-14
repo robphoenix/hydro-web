@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { IMonitorSubmit } from '../monitor-submit';
+import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
   selector: 'app-edit-monitor',
@@ -59,10 +60,11 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
           duration: 2000,
         });
       },
-      (err: string) => {
+      (err: IErrorMessage) => {
         const title = 'error editing monitor';
+        const { message } = err;
         this.dialog.open(ErrorDialogComponent, {
-          data: { title, err },
+          data: { title, message },
         });
       },
     );

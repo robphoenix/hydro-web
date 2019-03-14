@@ -24,6 +24,7 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { UserService } from 'src/app/user/user.service';
+import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
   selector: 'app-overview-table',
@@ -179,10 +180,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
             duration: 2000,
           });
         },
-        (err) => {
+        (err: IErrorMessage) => {
+          const { message } = err;
           const title = 'archive monitor error';
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
         },
       );
@@ -210,12 +212,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
             duration: 2000,
           });
         },
-        (err) => {
-          console.log({ err });
-
+        (err: IErrorMessage) => {
+          const { message } = err;
           const title = 'unarchive monitor error';
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
         },
       );
@@ -242,10 +243,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
             duration: 2000,
           });
         },
-        (err) => {
+        (err: IErrorMessage) => {
+          const { message } = err;
           const title = 'archive monitor error';
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
         },
       );
@@ -272,10 +274,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
             duration: 2000,
           });
         },
-        (err) => {
+        (err: IErrorMessage) => {
           const title = 'archive monitor error';
+          const { message } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
         },
       );

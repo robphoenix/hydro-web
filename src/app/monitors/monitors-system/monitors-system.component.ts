@@ -57,10 +57,10 @@ export class MonitorsSystemComponent implements OnInit {
         const { errorCode } = error;
         if (errorCode === errorNoAvailableMonitors) {
           const title = 'Error fetching system monitors';
-          const err =
+          const message =
             'There are no system monitors currently available to view';
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
 
           dialogRef.afterClosed().subscribe(() => {
