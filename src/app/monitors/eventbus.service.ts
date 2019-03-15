@@ -8,6 +8,7 @@ import {
   IMonitorDataAttributes,
   IHeadersMetadata,
   MonitorDataAttribute,
+  IMonitorDataBody,
 } from './monitor-data';
 
 @Injectable({
@@ -71,6 +72,7 @@ export class EventbusService {
     return (error: Error, message: IMonitorData) => {
       if (error) {
         console.error({ error });
+        observer.error(error);
       }
       if (message) {
         const data: IMonitorDisplayData = this.getDisplayData(message);
@@ -100,8 +102,8 @@ export class EventbusService {
 
     // If there is no data a string saying so is returned. This is going to
     // change to be an empty data structure instead.
-    if (typeof body === 'string') {
-      return;
+    if (!body) {
+      return { data: [] } as IMonitorDisplayData;
     }
 
     const { h, d } = body;

@@ -7,6 +7,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
 import { IMonitorSubmit } from '../monitor-submit';
+import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
   selector: 'app-duplicate-monitor',
@@ -60,10 +61,11 @@ export class DuplicateMonitorComponent implements OnInit, OnDestroy {
           duration: 2000,
         });
       },
-      (err: string) => {
+      (err: IErrorMessage) => {
         const title = 'error adding monitor';
+        const { message } = err;
         this.dialog.open(ErrorDialogComponent, {
-          data: { title, err },
+          data: { title, message },
         });
       },
     );

@@ -5,7 +5,11 @@
       <p class="description">{{ monitor.description }}</p>
 
       <div class="buttons">
-        <app-primary-button (click)="togglePause()" [icon]="pauseIcon">
+        <app-primary-button
+          (click)="togglePause()"
+          [icon]="pauseIcon"
+          [disabled]="!dataSource.length"
+        >
           {{ paused ? 'run' : 'pause' }}
         </app-primary-button>
         <app-accent-button
@@ -68,5 +72,16 @@
 </div>
 
 <ng-template #noData>
-  <app-loading-spinner [title]="'monitor data'"></app-loading-spinner>
+  <section class="messages">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Messages</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ cachedDataMessage }}</p>
+        <p>{{ liveDataMessage }}</p>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
+  </section>
 </ng-template>

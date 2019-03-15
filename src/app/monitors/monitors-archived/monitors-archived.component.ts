@@ -51,10 +51,10 @@ export class MonitorsArchivedComponent implements OnInit {
         const { errorCode } = error;
         if (errorCode === errorNoAvailableMonitors) {
           const title = 'Error fetching archived monitors';
-          const err =
+          const message =
             'There are no archived monitors currently available to view';
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
 
           dialogRef.afterClosed().subscribe(() => {

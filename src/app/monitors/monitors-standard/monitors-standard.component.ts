@@ -57,10 +57,10 @@ export class MonitorsStandardComponent implements OnInit {
         const { errorCode } = error;
         if (errorCode === errorNoAvailableMonitors) {
           const title = 'Error fetching standard monitors';
-          const err =
+          const message =
             'There are no standard monitors currently available to view';
           const dialogRef = this.dialog.open(ErrorDialogComponent, {
-            data: { title, err },
+            data: { title, message },
           });
 
           dialogRef.afterClosed().subscribe(() => {
