@@ -39,6 +39,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   canToggleStatus = true;
 
   @Input()
+  useLastStatus = true;
+
+  @Input()
   monitorType: MonitorStatus | MonitorType;
 
   dataSource: MatTableDataSource<IMonitor>;
@@ -97,8 +100,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.monitorsStatus =
-      this.userService.lastMonitorsStatus || this.initialStatus;
+    this.monitorsStatus = this.useLastStatus
+      ? this.userService.lastMonitorsStatus || this.initialStatus
+      : this.initialStatus;
   }
 
   ngOnChanges(): void {
