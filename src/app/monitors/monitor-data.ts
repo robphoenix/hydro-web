@@ -1,7 +1,7 @@
 export interface IMonitorData {
   type: string;
   address: string;
-  body: IMonitorDataBody;
+  body: IMonitorDataBody | MonitorStatusChange;
 }
 
 export interface IMonitorDataBody {
@@ -38,4 +38,12 @@ export interface IMonitorDisplayData {
 export enum MonitorDataAttributeType {
   Ip = 'ip',
   DateTime = 'dateTime',
+}
+
+export enum MonitorStatusChange {
+  Removed = 'removed', // this monitor was just removed from the monitor cache, which means it got archived;
+  Online = 'online', // this monitor just got its status changed to online;
+  Offline = 'offline', // this monitor just got its status changed to online;
+  EplUpdated = 'eplUpdated', // the EPL query for this monitor was updated;
+  CacheWindowChanged = 'cacheWindowChanged', // the cache window for this monitor was updated.
 }

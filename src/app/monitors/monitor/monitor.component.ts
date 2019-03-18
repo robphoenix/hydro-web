@@ -15,6 +15,7 @@ import {
   IHeadersMetadata,
   MonitorDataAttribute,
   MonitorDataAttributeType,
+  MonitorStatusChange,
 } from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { EventbusService } from '../eventbus.service';
@@ -76,12 +77,27 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.getCachedData();
     this.getMonitor();
     this.getLiveData();
+    this.dealwithMessages();
   }
 
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.eventbusService.closeConnections();
+  }
+
+  dealwithMessages() {
+    this.eventbusService
+      .getStatus(this.name)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (message: MonitorStatusChange) => {
+          console.log({ message });
+        },
+        (error: IErrorMessage) => {
+          console.log({ error });
+        },
+      );
   }
 
   /**
