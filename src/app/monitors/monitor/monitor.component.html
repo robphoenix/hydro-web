@@ -2,13 +2,16 @@
   <header class="header">
     <h2 class="title">{{ monitor.name }}</h2>
     <div class="info">
-      <p class="description">{{ monitor.description }}</p>
+      <section class="descriptive">
+        <p class="description">{{ monitor.description }}</p>
+        <p *ngIf="dataType">You are currently viewing {{ dataType }} data</p>
+      </section>
 
       <div class="buttons">
         <app-primary-button
           (click)="togglePause()"
           [icon]="pauseIcon"
-          [disabled]="!dataSource.length"
+          [disabled]="!(liveData && liveData.length)"
         >
           {{ paused ? 'run' : 'pause' }}
         </app-primary-button>

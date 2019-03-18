@@ -8,7 +8,6 @@ import {
   IMonitorDataAttributes,
   IHeadersMetadata,
   MonitorDataAttribute,
-  IMonitorDataBody,
 } from './monitor-data';
 
 @Injectable({

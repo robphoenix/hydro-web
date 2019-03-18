@@ -21,6 +21,7 @@ import { EventbusService } from '../eventbus.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import * as EventBus from 'vertx3-eventbus-client';
 
 /**
  * Describes a single monitor.
@@ -44,10 +45,11 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public dataSource: MatTableDataSource<IMonitorDataAttributes>;
   public displayedColumns: string[];
   public headersMetadata: IHeadersMetadata;
-  public monitorData: IMonitorDataAttributes[] = [];
   public paused = false;
   public cachedDataMessage = '';
   public liveDataMessage = '';
+  public liveData: IMonitorDataAttributes[] = [];
+  public dataType = '';
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -68,7 +70,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.monitorData);
+    this.dataSource = new MatTableDataSource([]);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getCachedData();
@@ -95,10 +97,11 @@ export class MonitorComponent implements OnInit, OnDestroy {
       .subscribe(
         (message: IMonitorDisplayData) => {
           const { data } = message;
+          this.liveData = data;
           console.log('live data...');
           console.log({ data });
 
-          this.displayMessageData(message);
+          this.displayMessageData(message, 'live');
         },
         (error: IErrorMessage) => {
           const { message } = error;
@@ -128,7 +131,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
             this.cachedDataMessage = 'There is no cached data available';
           }
 
-          this.displayMessageData(message);
+          this.displayMessageData(message, 'cached');
         },
         (error: IErrorMessage) => {
           const { message } = error;
@@ -180,12 +183,18 @@ export class MonitorComponent implements OnInit, OnDestroy {
    * @param {IMonitorData} message
    * @memberof MonitorComponent
    */
-  displayMessageData(message: IMonitorDisplayData) {
+  displayMessageData(message: IMonitorDisplayData, dataType: string) {
     if (!message) {
       return;
     }
+
     const { headers, headersMetadata, data } = message;
 
+    if (!data.length) {
+      return;
+    }
+
+    this.dataType = dataType;
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;
