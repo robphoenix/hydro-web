@@ -18,6 +18,7 @@ export class EventbusService {
   private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
   private outputAddress = 'result.pub.output';
   private cachedAddress = 'result.pub.cached';
+  private statusAddress = 'monitor.status';
   private ebs: { name: string; eb: EventBus.EventBus }[] = [];
   private eventbusHeaders: { [key: string]: any } = {};
 
@@ -32,7 +33,7 @@ export class EventbusService {
           this.cachedAddress,
           name,
           this.eventbusHeaders,
-          this.handleEventBusReply(observer),
+          this.handleEventBusDataReply(observer),
         );
       };
 
@@ -54,7 +55,7 @@ export class EventbusService {
         eb.registerHandler(
           address,
           this.eventbusHeaders,
-          this.handleEventBusReply(observer),
+          this.handleEventBusDataReply(observer),
         );
       };
 
@@ -66,7 +67,29 @@ export class EventbusService {
     return observable;
   }
 
-  private handleEventBusReply(
+  getChangeEvents(name: string) {
+    const observable = new Observable((observer: Subscriber<{}>) => {
+      const eb = this.newEventBus('monitor status');
+      const address = `${this.statusAddress}.${name}`;
+
+      eb.onopen = () => {
+        console.log('monitor status connection open');
+        eb.registerHandler(
+          address,
+          this.eventbusHeaders,
+          this.handleEventBusStatusReply(observer),
+        );
+      };
+
+      return () => {
+        eb.close();
+      };
+    });
+
+    return observable;
+  }
+
+  private handleEventBusDataReply(
     observer: Subscriber<{}>,
   ): (error: Error, message: IMonitorData) => any {
     return (error: Error, message: IMonitorData) => {
@@ -77,6 +100,21 @@ export class EventbusService {
       if (message) {
         const data: IMonitorDisplayData = this.getDisplayData(message);
         observer.next(data);
+      }
+    };
+  }
+
+  private handleEventBusStatusReply(
+    observer: Subscriber<{}>,
+  ): (error: Error, message: IMonitorData) => any {
+    return (error: Error, message: IMonitorData) => {
+      if (error) {
+        console.error({ error });
+        observer.error(error);
+      }
+      if (message) {
+        const { body } = message;
+        observer.next(body);
       }
     };
   }
@@ -106,7 +144,7 @@ export class EventbusService {
       return { data: [] } as IMonitorDisplayData;
     }
 
-    const { h, d } = body;
+    const { h, d } = body as IMonitorDataBody;
 
     const headersMetadata: IHeadersMetadata = h.reduce(
       (metadata: {}, header: IMonitorDataHeader) => {

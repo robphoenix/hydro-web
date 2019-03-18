@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatTableDataSource,
   MatPaginator,
@@ -15,12 +15,15 @@ import {
   IHeadersMetadata,
   MonitorDataAttribute,
   MonitorDataAttributeType,
+  MonitorChangeEvent,
 } from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { EventbusService } from '../eventbus.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import * as EventBus from 'vertx3-eventbus-client';
+import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
 
 /**
  * Describes a single monitor.
@@ -44,10 +47,11 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public dataSource: MatTableDataSource<IMonitorDataAttributes>;
   public displayedColumns: string[];
   public headersMetadata: IHeadersMetadata;
-  public monitorData: IMonitorDataAttributes[] = [];
   public paused = false;
   public cachedDataMessage = '';
   public liveDataMessage = '';
+  public liveData: IMonitorDataAttributes[] = [];
+  public dataType = '';
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -57,6 +61,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,
@@ -68,18 +73,57 @@ export class MonitorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.monitorData);
+    this.dataSource = new MatTableDataSource([]);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getCachedData();
     this.getMonitor();
     this.getLiveData();
+    this.getChangeEvents();
   }
 
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.eventbusService.closeConnections();
+  }
+
+  private changeEventMessage(changeEvent: MonitorChangeEvent): string {
+    switch (changeEvent) {
+      case MonitorChangeEvent.CacheWindowChanged:
+        return 'The monitor cache window has been changed by another user.';
+      case MonitorChangeEvent.EplUpdated:
+        return 'The monitor EPL Query has been changed by another user.';
+      case MonitorChangeEvent.Offline:
+        return 'The monitor status has been changed to offline by another user.';
+      case MonitorChangeEvent.Online:
+        return 'The monitor status has been changed to offline by another user.';
+      case MonitorChangeEvent.Removed:
+        return 'The monitor has been archived by another user.';
+    }
+  }
+
+  getChangeEvents() {
+    this.eventbusService
+      .getChangeEvents(this.name)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        (message: MonitorChangeEvent) => {
+          const dialogRef = this.dialog.open(ChangeEventDialogComponent, {
+            data: { message: this.changeEventMessage(message) },
+          });
+          dialogRef.afterClosed().subscribe(() => {
+            if (message === MonitorChangeEvent.Removed) {
+              this.router.navigateByUrl('/monitors');
+            } else {
+              window.location.reload();
+            }
+          });
+        },
+        (error: IErrorMessage) => {
+          console.log({ error });
+        },
+      );
   }
 
   /**
@@ -95,10 +139,11 @@ export class MonitorComponent implements OnInit, OnDestroy {
       .subscribe(
         (message: IMonitorDisplayData) => {
           const { data } = message;
+          this.liveData = data;
           console.log('live data...');
           console.log({ data });
 
-          this.displayMessageData(message);
+          this.displayMessageData(message, 'live');
         },
         (error: IErrorMessage) => {
           const { message } = error;
@@ -128,7 +173,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
             this.cachedDataMessage = 'There is no cached data available';
           }
 
-          this.displayMessageData(message);
+          this.displayMessageData(message, 'cached');
         },
         (error: IErrorMessage) => {
           const { message } = error;
@@ -180,12 +225,18 @@ export class MonitorComponent implements OnInit, OnDestroy {
    * @param {IMonitorData} message
    * @memberof MonitorComponent
    */
-  displayMessageData(message: IMonitorDisplayData) {
+  displayMessageData(message: IMonitorDisplayData, dataType: string) {
     if (!message) {
       return;
     }
+
     const { headers, headersMetadata, data } = message;
 
+    if (!data.length) {
+      return;
+    }
+
+    this.dataType = dataType;
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;

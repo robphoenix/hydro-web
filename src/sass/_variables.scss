@@ -18,8 +18,8 @@ $yellow: #ffdc00;
 $green: #2ecc40;
 $aqua: #39cccc;
 // material theme
-$primary: mat-palette($mat-indigo);
-$accent: mat-palette($mat-pink, A200, A100, A400);
+$primary: mat-palette($mat-blue, 800);
+$accent: mat-palette($mat-pink, 500);
 $warn: mat-palette($mat-red);
 
 // box-shadow
