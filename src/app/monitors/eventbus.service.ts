@@ -8,6 +8,7 @@ import {
   IMonitorDataAttributes,
   IHeadersMetadata,
   MonitorDataAttribute,
+  IMonitorDataBody,
 } from './monitor-data';
 
 @Injectable({
@@ -66,7 +67,7 @@ export class EventbusService {
     return observable;
   }
 
-  getStatus(name: string) {
+  getChangeEvents(name: string) {
     const observable = new Observable((observer: Subscriber<{}>) => {
       const eb = this.newEventBus('monitor status');
       const address = `${this.statusAddress}.${name}`;
@@ -143,7 +144,7 @@ export class EventbusService {
       return { data: [] } as IMonitorDisplayData;
     }
 
-    const { h, d } = body;
+    const { h, d } = body as IMonitorDataBody;
 
     const headersMetadata: IHeadersMetadata = h.reduce(
       (metadata: {}, header: IMonitorDataHeader) => {

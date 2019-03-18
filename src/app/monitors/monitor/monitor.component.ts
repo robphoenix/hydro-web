@@ -79,7 +79,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.getCachedData();
     this.getMonitor();
     this.getLiveData();
-    this.dealwithMessages();
+    this.getChangeEvents();
   }
 
   ngOnDestroy(): void {
@@ -103,9 +103,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
     }
   }
 
-  dealwithMessages() {
+  getChangeEvents() {
     this.eventbusService
-      .getStatus(this.name)
+      .getChangeEvents(this.name)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         (message: MonitorChangeEvent) => {
