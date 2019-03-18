@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IMonitor } from '../monitor';
 import { MonitorsService } from '../monitors.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatTableDataSource,
   MatPaginator,
@@ -15,7 +15,7 @@ import {
   IHeadersMetadata,
   MonitorDataAttribute,
   MonitorDataAttributeType,
-  MonitorStatusChange,
+  MonitorChangeEvent,
 } from '../monitor-data';
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { EventbusService } from '../eventbus.service';
@@ -23,6 +23,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import * as EventBus from 'vertx3-eventbus-client';
+import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
 
 /**
  * Describes a single monitor.
@@ -60,6 +61,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,
@@ -86,13 +88,37 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.eventbusService.closeConnections();
   }
 
+  private changeEventMessage(changeEvent: MonitorChangeEvent): string {
+    switch (changeEvent) {
+      case MonitorChangeEvent.CacheWindowChanged:
+        return 'The monitor cache window has been changed by another user.';
+      case MonitorChangeEvent.EplUpdated:
+        return 'The monitor EPL Query has been changed by another user.';
+      case MonitorChangeEvent.Offline:
+        return 'The monitor status has been changed to offline by another user.';
+      case MonitorChangeEvent.Online:
+        return 'The monitor status has been changed to offline by another user.';
+      case MonitorChangeEvent.Removed:
+        return 'The monitor has been archived by another user.';
+    }
+  }
+
   dealwithMessages() {
     this.eventbusService
       .getStatus(this.name)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (message: MonitorStatusChange) => {
-          console.log({ message });
+        (message: MonitorChangeEvent) => {
+          const dialogRef = this.dialog.open(ChangeEventDialogComponent, {
+            data: { message: this.changeEventMessage(message) },
+          });
+          dialogRef.afterClosed().subscribe(() => {
+            if (message === MonitorChangeEvent.Removed) {
+              this.router.navigateByUrl('/monitors');
+            } else {
+              window.location.reload();
+            }
+          });
         },
         (error: IErrorMessage) => {
           console.log({ error });

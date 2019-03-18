@@ -138,7 +138,6 @@ export class AuthService {
    * @memberof AuthService
    */
   initSubscriptions() {
-    const token = localStorage.getItem(this.accessTokenName);
     // Only start subscriptions if logged in
     if (!this.isLoggedIn) {
       return;

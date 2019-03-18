@@ -1,7 +1,7 @@
 export interface IMonitorData {
   type: string;
   address: string;
-  body: IMonitorDataBody | MonitorStatusChange;
+  body: IMonitorDataBody | MonitorChangeEvent;
 }
 
 export interface IMonitorDataBody {
@@ -40,7 +40,7 @@ export enum MonitorDataAttributeType {
   DateTime = 'dateTime',
 }
 
-export enum MonitorStatusChange {
+export enum MonitorChangeEvent {
   Removed = 'removed', // this monitor was just removed from the monitor cache, which means it got archived;
   Online = 'online', // this monitor just got its status changed to online;
   Offline = 'offline', // this monitor just got its status changed to online;

@@ -32,6 +32,7 @@ import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priori
 import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cache-window/create-monitor-form-cache-window.component';
 import { CreateMonitorFormNameComponent } from './create-monitor-form-name/create-monitor-form-name.component';
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
+import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 
 @NgModule({
   imports: [
@@ -80,10 +81,12 @@ import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/creat
     CreateMonitorFormCacheWindowComponent,
     CreateMonitorFormNameComponent,
     CreateMonitorFormTypeComponent,
+    ChangeEventDialogComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
     MonitorStatusChangeDialogComponent,
+    ChangeEventDialogComponent,
   ],
 })
 export class MonitorsModule {}
