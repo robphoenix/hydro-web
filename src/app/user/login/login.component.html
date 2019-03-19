@@ -1,70 +1,72 @@
-<div class="container">
+<div class="outer-container">
   <div class="inner-container">
-    <h1 class="mat-h1">Login</h1>
-    <p class="mat-body-string">Please enter your bet365 credentials</p>
+    <div class="header">
+      <h1 class="mat-h1">Login</h1>
+      <p class="mat-body-string">Please enter your bet365 credentials</p>
 
-    <div class="error-message" *ngIf="loginErrorMessage">
-      <mat-error> {{ loginErrorMessage }} </mat-error>
+      <div class="error-message" *ngIf="loginErrorMessage">
+        <mat-error> {{ loginErrorMessage }} </mat-error>
+      </div>
     </div>
+
+    <form
+      [formGroup]="loginForm"
+      class="form"
+      (keyup.enter)="attemptingLogIn = true; login()"
+    >
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label> Username </mat-label>
+        <input
+          matInput
+          autofocus
+          placeholder="Please enter your username"
+          type="text"
+          formControlName="username"
+          (click)="loginErrorMessage = ''"
+        />
+        <mat-error *ngIf="usernameControl.hasError('required')">
+          {{ validationMessages['username'].required }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label> Password </mat-label>
+        <input
+          matInput
+          placeholder="Please enter your password"
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          (click)="loginErrorMessage = ''"
+        />
+        <mat-icon
+          class="visibility"
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+        >
+          {{ hidePassword ? 'visibility' : 'visibility_off' }}
+        </mat-icon>
+        <mat-error *ngIf="passwordControl.hasError('required')">
+          {{ validationMessages['password'].required }}
+        </mat-error>
+        <mat-error *ngIf="passwordControl.hasError('minlength')">
+          {{ validationMessages['password'].minlength }}
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <mat-progress-bar
+      class="progress-bar"
+      mode="indeterminate"
+      *ngIf="attemptingLogIn"
+    ></mat-progress-bar>
+
+    <app-accent-button
+      class="login-button"
+      *ngIf="!attemptingLogIn"
+      (click)="login()"
+      [disabled]="!loginForm.valid"
+    >
+      Log In
+    </app-accent-button>
   </div>
-
-  <form
-    [formGroup]="loginForm"
-    class="form"
-    (keyup.enter)="attemptingLogIn = true; login()"
-  >
-    <mat-form-field appearance="outline" class="form-field">
-      <mat-label> Username </mat-label>
-      <input
-        matInput
-        autofocus
-        placeholder="Please enter your username"
-        type="text"
-        formControlName="username"
-        (click)="loginErrorMessage = ''"
-      />
-      <mat-error *ngIf="usernameControl.hasError('required')">
-        {{ validationMessages['username'].required }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="form-field">
-      <mat-label> Password </mat-label>
-      <input
-        matInput
-        placeholder="Please enter your password"
-        [type]="hidePassword ? 'password' : 'text'"
-        formControlName="password"
-        (click)="loginErrorMessage = ''"
-      />
-      <mat-icon
-        class="visibility"
-        matSuffix
-        (click)="hidePassword = !hidePassword"
-      >
-        {{ hidePassword ? 'visibility' : 'visibility_off' }}
-      </mat-icon>
-      <mat-error *ngIf="passwordControl.hasError('required')">
-        {{ validationMessages['password'].required }}
-      </mat-error>
-      <mat-error *ngIf="passwordControl.hasError('minlength')">
-        {{ validationMessages['password'].minlength }}
-      </mat-error>
-    </mat-form-field>
-  </form>
-
-  <mat-progress-bar
-    class="progress-bar"
-    mode="indeterminate"
-    *ngIf="attemptingLogIn"
-  ></mat-progress-bar>
-
-  <app-accent-button
-    class="login-button"
-    *ngIf="!attemptingLogIn"
-    (click)="login()"
-    [disabled]="!loginForm.valid"
-  >
-    Log In
-  </app-accent-button>
 </div>
