@@ -38,10 +38,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   canToggleStatus = true;
 
-  // TODO: remove
-  @Input()
-  useLastStatus = true;
-
   @Input()
   monitorType: MonitorStatus | MonitorType;
 
@@ -68,10 +64,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
-
-  // TODO: remove
-  @Input()
-  initialStatus = 'all';
 
   @Input()
   disableStatusToggle: boolean;

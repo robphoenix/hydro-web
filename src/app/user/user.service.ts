@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class UserService {
   private lastMonitorsStatusName = 'lastMonitorsStatus';
   private lastMonitorsTypeName = 'lastMonitorsType';
-  private lastMonitorsPageUrl = 'lastMonitorsUrl';
 
   public set lastMonitorsStatus(status: string) {
     localStorage.setItem(this.lastMonitorsStatusName, status);
@@ -22,13 +21,5 @@ export class UserService {
 
   public get lastMonitorsType() {
     return localStorage.getItem(this.lastMonitorsTypeName);
-  }
-
-  public set lastMonitorsUrl(url: string) {
-    localStorage.setItem(this.lastMonitorsPageUrl, url);
-  }
-
-  public get lastMonitorsUrl() {
-    return localStorage.getItem(this.lastMonitorsPageUrl);
   }
 }

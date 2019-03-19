@@ -3,7 +3,6 @@ import { MonitorComponent } from './monitor.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HydroMaterialModule } from '../../material/material.module';
-import { MonitorTableComponent } from '../monitor-table/monitor-table.component';
 
 xdescribe('MonitorComponent', () => {
   let component: MonitorComponent;
@@ -16,7 +15,7 @@ xdescribe('MonitorComponent', () => {
         HttpClientTestingModule,
         HydroMaterialModule,
       ],
-      declarations: [MonitorComponent, MonitorTableComponent],
+      declarations: [MonitorComponent],
     }).compileComponents();
   }));
 
