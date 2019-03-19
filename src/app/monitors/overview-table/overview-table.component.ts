@@ -137,11 +137,18 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   }
 
   public hasActions(group?: string): boolean {
+    const anyCurrentActions: boolean =
+      Object.entries(this.allCurrentActions).length > 0;
+    if (!anyCurrentActions) {
+      return false;
+    }
+
     if (!group) {
       return Object.values(this.allCurrentActions).every(
         (curr: string[]) => !!curr.length,
       );
     }
+
     const actions = this.allCurrentActions[group];
     return actions && actions.length > 0;
   }
