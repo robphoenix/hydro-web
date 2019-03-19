@@ -11,7 +11,7 @@ export class IconComponent {
 
   icons: { [type: string]: string } = {
     add: 'add',
-    actions: 'report_problem',
+    actions: 'play_circle_filled',
     categories: 'category',
     monitor: 'flash_on',
     standard: 'flash_on',
