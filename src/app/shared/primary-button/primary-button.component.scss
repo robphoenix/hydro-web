@@ -1,12 +1,10 @@
 @import 'main';
 
 .button {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
   display: flex;
   align-items: center;
 }
 
 .icon {
-  margin-right: 5px;
+  margin-right: $spacing-xs;
 }
