@@ -38,6 +38,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   canToggleStatus = true;
 
+  // TODO: remove
   @Input()
   useLastStatus = true;
 
@@ -68,6 +69,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
 
+  // TODO: remove
   @Input()
   initialStatus = 'all';
 
@@ -103,14 +105,17 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.monitorsStatus = this.useLastStatus
-      ? this.userService.lastMonitorsStatus || this.initialStatus
-      : this.initialStatus;
+    this.monitorsStatus = this.disableStatusToggle
+      ? 'all'
+      : this.userService.lastMonitorsStatus || 'all';
   }
 
   ngOnChanges(): void {
     if (this.dataSource) {
       this.dataSource.data = this.monitors;
+      this.monitorsStatus = this.disableStatusToggle
+        ? 'all'
+        : this.userService.lastMonitorsStatus || 'all';
     }
   }
 
@@ -121,6 +126,13 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   set monitorsStatus(status: string) {
     this.filterValues.status = status;
     this.filterMonitors();
+    if (!this.disableStatusToggle) {
+      this.userService.lastMonitorsStatus = status;
+    }
+  }
+
+  public toggleStatus(status: string) {
+    this.monitorsStatus = status;
   }
 
   public filterMonitors(): void {
@@ -168,11 +180,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.selects.forEach((select: MultipleSelectComponent) =>
       select.clearSelectedOptions(),
     );
-  }
-
-  public toggleStatus(value: string) {
-    this.monitorsStatus = value;
-    this.userService.lastMonitorsStatus = this.monitorsStatus;
   }
 
   public archiveMonitor(id: number) {
