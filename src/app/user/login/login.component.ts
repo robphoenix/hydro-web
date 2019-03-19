@@ -59,10 +59,9 @@ export class LoginComponent implements OnInit {
       .login(this.usernameControl.value, this.passwordControl.value)
       .subscribe(
         () => {
-          this.router.navigateByUrl(this.userService.lastMonitorsUrl || '/');
+          this.router.navigateByUrl('/');
         },
         (error: IErrorMessage) => {
-          console.log({ error });
           this.attemptingLogIn = false;
           const { message } = error;
           this.loginErrorMessage = message;
