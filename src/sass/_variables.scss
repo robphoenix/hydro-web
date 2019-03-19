@@ -10,6 +10,7 @@ $mid-grey: #c1c1c1;
 $grey: #888888;
 $dark-grey: #666666;
 $darker-grey: #333333;
+$near-black: #111111;
 $black: #000000;
 $red: #f44336;
 $washed-red: #feecea;
@@ -17,10 +18,22 @@ $orange: #ff851b;
 $yellow: #ffdc00;
 $green: #2ecc40;
 $aqua: #39cccc;
+
 // material theme
 $primary: mat-palette($mat-blue, 800);
 $accent: mat-palette($mat-pink, 500);
 $warn: mat-palette($mat-red);
+
+// Spacing
+// To be used with margins & padding
+$spacing-none: 0;
+$spacing-xs: 0.25rem;
+$spacing-s: 0.5rem;
+$spacing-m: 1rem;
+$spacing-l: 2rem;
+$spacing-xl: 4rem;
+$spacing-2xl: 8rem;
+$spacing-3xl: 16rem;
 
 // box-shadow
 $box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14),
