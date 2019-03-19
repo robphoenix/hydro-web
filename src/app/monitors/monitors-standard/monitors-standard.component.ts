@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IMonitor, MonitorStatus } from '../monitor';
-import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { MonitorsService } from '../monitors.service';
 import { UserService } from 'src/app/user/user.service';
 import {
@@ -23,9 +22,6 @@ export class MonitorsStandardComponent implements OnInit {
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
 
-  @ViewChild(OverviewTableComponent)
-  overviewTable: OverviewTableComponent;
-
   constructor(
     private monitorsService: MonitorsService,
     private userService: UserService,
@@ -41,6 +37,8 @@ export class MonitorsStandardComponent implements OnInit {
   private getMonitors(): void {
     this.monitorsService.getStandardMonitors().subscribe(
       (monitors: IMonitor[]) => {
+        console.log({ monitors });
+
         this.standardMonitors = monitors.filter(
           (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
         );

@@ -1,0 +1,19 @@
+<h1 class="mat-h1">Monitors Overview</h1>
+<button (click)="refresh()">refresh</button>
+<button (click)="getStandardMonitors()">standard</button>
+<button (click)="getArchivedMonitors()">archived</button>
+<button (click)="getSystemMonitors()">system</button>
+
+<app-overview-table
+  *ngIf="currentMonitors.length; else: noMonitors"
+  [monitors]="currentMonitors"
+  [allCurrentActions]="allCurrentActions"
+  [allCurrentCategories]="allCurrentCategories"
+  [initialStatus]="initialStatus"
+  [useLastStatus]="useLastStatus"
+  [disableStatusToggle]="disableStatusToggle"
+  (refresh)="refresh()"
+></app-overview-table>
+<ng-template #noMonitors>
+  <app-loading-spinner [title]="'monitors'"></app-loading-spinner>
+</ng-template>
