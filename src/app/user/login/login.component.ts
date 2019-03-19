@@ -15,9 +15,6 @@ export class LoginComponent implements OnInit {
   usernameControl: FormControl;
   passwordControl: FormControl;
 
-  title = 'login';
-  buttonText = 'log in';
-  subtitle = 'Please enter your bet365 credentials';
   hidePassword = true;
   minPasswordLength = 8;
   attemptingLogIn = false;
@@ -54,6 +51,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if (!this.loginForm.valid) {
+      return;
+    }
     this.attemptingLogIn = true;
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)

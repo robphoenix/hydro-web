@@ -1,4 +1,7 @@
+@import 'main';
+
 .content {
-  margin-top: 64px;
-  background: #fafafa;
+  margin-top: $spacing-xl;
+  display: flex;
+  justify-content: center;
 }

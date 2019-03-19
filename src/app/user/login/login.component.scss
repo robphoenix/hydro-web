@@ -1,41 +1,40 @@
 @import 'main';
 
-.login {
+.container {
   width: 400px;
-  margin: 100px auto;
+  margin-top: $spacing-l;
+}
 
-  .title {
-    text-transform: uppercase;
-    letter-spacing: $tracked;
+.inner-container {
+  padding: $spacing-s 0;
+}
+
+.error-message {
+  background-color: $washed-red;
+  border: 1px solid $red;
+  border-radius: 2px;
+  margin-bottom: $spacing-m;
+  padding: $spacing-m;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  .visibility {
+    cursor: pointer;
   }
 
-  .subtitle {
-    color: $grey;
+  .form-field {
+    margin-bottom: $spacing-s;
   }
+}
 
-  .error-message {
-    margin-bottom: 20px;
-    border: 1px solid $red;
-    padding: 10px;
-    border-radius: 2px;
-    background-color: $washed-red;
-  }
+.login-button {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .form {
-    display: flex;
-    flex-direction: column;
-
-    .visibility {
-      cursor: pointer;
-    }
-  }
-
-  .button {
-    display: flex;
-    justify-content: flex-end;
-
-    .spinner {
-      margin-right: 30px;
-    }
-  }
+.progress-bar {
+  padding: $spacing-s;
 }
