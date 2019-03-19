@@ -71,6 +71,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   initialStatus = 'all';
 
+  @Input()
+  disableStatusToggle: boolean;
+
   @Output()
   refresh = new EventEmitter();
 

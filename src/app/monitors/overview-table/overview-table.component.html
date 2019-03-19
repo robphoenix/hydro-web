@@ -5,6 +5,7 @@
     [value]="monitorsStatus"
     #statusGroup="matButtonToggleGroup"
     (change)="toggleStatus($event.value)"
+    [disabled]="disableStatusToggle"
   >
     <mat-button-toggle value="online"> Online </mat-button-toggle>
     <mat-button-toggle value="offline"> Offline </mat-button-toggle>
