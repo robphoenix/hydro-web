@@ -84,3 +84,22 @@
 .paginator {
   border-top: 1px solid $light-grey;
 }
+
+.online {
+  margin-left: 5px;
+  color: $green;
+}
+
+.offline {
+  margin-left: 5px;
+  color: $red;
+}
+
+.all-monitors {
+  margin-left: 5px;
+  color: $yellow;
+}
+
+.primary {
+  color: $primary;
+}

@@ -7,13 +7,13 @@
   &:focus,
   &:active {
     .name {
-      color: mat-color($accent);
+      color: $accent;
     }
   }
 
   &:visited {
     .name {
-      color: mat-color($primary);
+      color: $primary;
     }
   }
 }
@@ -45,8 +45,8 @@
 
 .offline-name {
   color: $grey;
-  text-transform: uppercase;
-  letter-spacing: $tracked;
+  letter-spacing: 0.05em;
+  font-size: 1.1em;
   margin: 10px 0;
   line-height: 1.5;
   cursor: not-allowed;

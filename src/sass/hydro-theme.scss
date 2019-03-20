@@ -13,7 +13,7 @@ $hydro-app-primary: mat-palette($mat-blue, 800);
 $hydro-app-accent: mat-palette($mat-pink, 500);
 
 // The warn palette is optional (defaults to red).
-$hydro-app-warn: mat-palette($mat-red);
+$hydro-app-warn: mat-palette($mat-red, A700);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $hydro-app-theme: mat-light-theme(

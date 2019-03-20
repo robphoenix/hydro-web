@@ -1,4 +1,5 @@
 @import '@angular/material/theming';
+@import 'hydro-theme';
 @include mat-core();
 
 // colours
@@ -12,17 +13,17 @@ $dark-grey: #666666;
 $darker-grey: #333333;
 $near-black: #111111;
 $black: #000000;
-$red: #f44336;
+$red: mat-color($hydro-app-warn);
 $washed-red: #feecea;
-$orange: #ff851b;
-$yellow: #ffdc00;
-$green: #2ecc40;
+$orange: #ffdc00;
+$yellow: mat-color(mat-palette($mat-amber, 500));
+$green: mat-color(mat-palette($mat-green, 500));
 $aqua: #39cccc;
 
 // material theme
-$primary: mat-palette($mat-blue, 800);
-$accent: mat-palette($mat-pink, 500);
-$warn: mat-palette($mat-red);
+$primary: mat-color($hydro-app-primary);
+$accent: mat-color($hydro-app-accent);
+$warn: mat-color($hydro-app-warn);
 
 // Spacing
 // To be used with margins & padding

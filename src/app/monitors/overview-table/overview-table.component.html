@@ -1,5 +1,22 @@
 <div class="toolbar">
   <mat-button-toggle-group
+    [value]="'standard'"
+    #typeGroup="matButtonToggleGroup"
+  >
+    <mat-button-toggle value="standard">
+      <mat-icon class="primary icon">flash_on</mat-icon>
+      <span class="primary"> Standard </span>
+    </mat-button-toggle>
+    <mat-button-toggle value="archived">
+      <mat-icon class="primary icon">archive</mat-icon>
+      <span class="primary"> Archived </span>
+    </mat-button-toggle>
+    <mat-button-toggle value="system">
+      <mat-icon class="primary icon">tune</mat-icon>
+      <span class="primary"> System </span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-button-toggle-group
     class="status-toggle"
     *ngIf="canToggleStatus"
     [value]="this.monitorsStatus"
@@ -7,9 +24,17 @@
     (change)="toggleStatus($event.value)"
     [disabled]="disableStatusToggle"
   >
-    <mat-button-toggle value="online"> Online </mat-button-toggle>
-    <mat-button-toggle value="offline"> Offline </mat-button-toggle>
-    <mat-button-toggle value="all"> All Monitors </mat-button-toggle>
+    <mat-button-toggle value="online">
+      <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="offline">
+      <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="all">
+      <mat-icon class="all-monitors" matTooltip="All Monitors"
+        >flash_on</mat-icon
+      >
+    </mat-button-toggle>
   </mat-button-toggle-group>
 
   <app-search-input
@@ -20,6 +45,7 @@
   ></app-search-input>
 
   <app-primary-button
+    *ngIf="hasActions() || allCurrentCategories.length"
     [disabled]="hasFilters()"
     [icon]="'clear_all'"
     (click)="clearAllFilters()"
