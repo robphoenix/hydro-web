@@ -4,24 +4,24 @@
   href="/monitors/{{id}}"
   [routerLink]="['/monitors/', id, { name: name }]"
 >
-  <div class="title">
-    <h4 class="online-name">
+  <div class="title name">
+    <p class="online-name mat-subheading-2">
       {{ name }}
       <mat-icon [inline]="true" class="online" matTooltip="online">
         flash_on
       </mat-icon>
-    </h4>
+    </p>
   </div>
-  <p class="description">{{ description }}</p>
+  <p class="description mat-subheading-1">{{ description }}</p>
 </a>
 <span *ngIf="!online">
   <div class="title">
-    <h4 class="offline-name">
+    <p class="offline-name mat-subheading-2">
       {{ name }}
       <mat-icon [inline]="true" class="offline" matTooltip="offline">
         flash_off
       </mat-icon>
-    </h4>
+    </p>
   </div>
-  <p class="description">{{ description }}</p>
+  <p class="description mat-subheading-1">{{ description }}</p>
 </span>
