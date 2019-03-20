@@ -1,27 +1,15 @@
 <div class="container">
   <h1 class="mat-h1">Monitors Overview</h1>
-  <div class="buttons">
-    <button mat-button color="primary" (click)="getStandardMonitors()">
-      <mat-icon class="icon">flash_on</mat-icon>
-      <span> Standard </span>
-    </button>
-    <button mat-button color="primary" (click)="getArchivedMonitors()">
-      <mat-icon class="icon">archive</mat-icon>
-      <span> Archived </span>
-    </button>
-    <button mat-button color="primary" (click)="getSystemMonitors()">
-      <mat-icon class="icon">tune</mat-icon>
-      <span> System </span>
-    </button>
-  </div>
 
   <app-overview-table
     *ngIf="currentMonitors.length; else: noMonitors"
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"
     [allCurrentCategories]="allCurrentCategories"
-    [disableStatusToggle]="disableStatusToggle"
+    [canToggleStatus]="canToggleStatus"
+    [monitorsType]="lastMonitorsType"
     (refresh)="refresh()"
+    (changeMonitorsType)="changeMonitorsType($event)"
   ></app-overview-table>
   <ng-template #noMonitors>
     <app-loading-spinner [title]="'monitors'"></app-loading-spinner>

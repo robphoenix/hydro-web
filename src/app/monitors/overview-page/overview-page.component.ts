@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IMonitor, MonitorStatus } from '../monitor';
+import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { MatDialog } from '@angular/material';
 import {
@@ -23,9 +23,8 @@ export class OverviewPageComponent implements OnInit {
   systemMonitors: IMonitor[] = [];
   allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
-  useLastStatus = true;
-  initialStatus = 'online';
-  disableStatusToggle = false;
+  canToggleStatus = true;
+  lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
 
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
@@ -37,19 +36,23 @@ export class OverviewPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const lastViewed: string = this.userService.lastMonitorsType;
+    if (lastViewed) {
+      this.lastMonitorsType =
+        (lastViewed as MonitorType) || (lastViewed as MonitorStatus);
+    }
     this.getMonitors();
   }
 
   private getMonitors() {
-    const lastViewed = this.userService.lastMonitorsType;
-    switch (lastViewed) {
-      case 'standard':
+    switch (this.lastMonitorsType) {
+      case MonitorType.Standard:
         this.getStandardMonitors();
         break;
-      case 'archived':
+      case MonitorStatus.Archived:
         this.getArchivedMonitors();
         break;
-      case 'system':
+      case MonitorType.System:
         this.getSystemMonitors();
         break;
       default:
@@ -66,7 +69,8 @@ export class OverviewPageComponent implements OnInit {
         this.standardMonitors = monitors.filter(
           (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
         );
-        this.disableStatusToggle = false;
+        this.canToggleStatus = true;
+        this.lastMonitorsType = MonitorType.Standard;
         this.updateCurrentMonitors(this.standardMonitors);
         this.userService.lastMonitorsType = 'standard';
       },
@@ -83,7 +87,8 @@ export class OverviewPageComponent implements OnInit {
     this.monitorsService.getArchivedMonitors().subscribe(
       (monitors: IMonitor[]) => {
         this.archivedMonitors = monitors;
-        this.disableStatusToggle = true;
+        this.canToggleStatus = false;
+        this.lastMonitorsType = MonitorStatus.Archived;
         this.updateCurrentMonitors(this.archivedMonitors);
         this.userService.lastMonitorsType = 'archived';
       },
@@ -102,7 +107,8 @@ export class OverviewPageComponent implements OnInit {
         this.systemMonitors = monitors.filter(
           (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
         );
-        this.disableStatusToggle = false;
+        this.canToggleStatus = true;
+        this.lastMonitorsType = MonitorType.System;
         this.updateCurrentMonitors(this.systemMonitors);
         this.userService.lastMonitorsType = 'system';
       },
@@ -113,6 +119,9 @@ export class OverviewPageComponent implements OnInit {
   }
 
   private updateCurrentMonitors(monitors: IMonitor[]) {
+    if (this.overviewTable) {
+      this.overviewTable.updateMonitorsStatus();
+    }
     this.currentMonitors = monitors;
 
     this.allCurrentCategories = this.monitorsService.allCurrentCategories(
@@ -133,6 +142,7 @@ export class OverviewPageComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(() => {
+        this.overviewTable.monitorsType = this.lastMonitorsType;
         this.getMonitors();
       });
     }
@@ -140,5 +150,21 @@ export class OverviewPageComponent implements OnInit {
 
   refresh() {
     this.getMonitors();
+  }
+
+  public changeMonitorsType(monitorsType: string) {
+    switch (monitorsType) {
+      case MonitorType.Standard:
+        this.getStandardMonitors();
+        break;
+      case MonitorStatus.Archived:
+        this.getArchivedMonitors();
+        break;
+      case MonitorType.System:
+        this.getSystemMonitors();
+        break;
+      default:
+        this.getStandardMonitors();
+    }
   }
 }

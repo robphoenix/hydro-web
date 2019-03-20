@@ -1,7 +1,8 @@
 <div class="toolbar">
   <mat-button-toggle-group
-    [value]="'standard'"
+    [(value)]="monitorsType"
     #typeGroup="matButtonToggleGroup"
+    (change)="changeMonitorsType.emit($event.value)"
   >
     <mat-button-toggle value="standard">
       <mat-icon class="primary icon">flash_on</mat-icon>
@@ -18,11 +19,10 @@
   </mat-button-toggle-group>
   <mat-button-toggle-group
     class="status-toggle"
-    *ngIf="canToggleStatus"
-    [value]="this.monitorsStatus"
+    [value]="monitorsStatus"
     #statusGroup="matButtonToggleGroup"
     (change)="toggleStatus($event.value)"
-    [disabled]="disableStatusToggle"
+    [disabled]="!canToggleStatus"
   >
     <mat-button-toggle value="online">
       <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>

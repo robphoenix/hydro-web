@@ -36,10 +36,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   monitors: IMonitor[];
 
   @Input()
-  canToggleStatus = true;
+  canToggleStatus: boolean;
 
   @Input()
-  monitorType: MonitorStatus | MonitorType;
+  monitorsType: MonitorStatus | MonitorType;
 
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
@@ -65,11 +65,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
 
-  @Input()
-  disableStatusToggle: boolean;
-
   @Output()
   refresh = new EventEmitter();
+
+  @Output()
+  changeMonitorsType = new EventEmitter<string>();
 
   filterValues = {
     searchTerm: '',
@@ -97,34 +97,44 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.monitorsStatus = this.disableStatusToggle
-      ? 'all'
-      : this.userService.lastMonitorsStatus || 'all';
+    this.updateMonitorsStatus();
   }
 
   ngOnChanges(): void {
     if (this.dataSource) {
       this.dataSource.data = this.monitors;
-      this.monitorsStatus = this.disableStatusToggle
-        ? 'all'
-        : this.userService.lastMonitorsStatus || 'all';
+      this.updateMonitorsStatus();
     }
   }
 
-  get monitorsStatus(): string {
+  private get isCurrentlyArchivedMonitors() {
+    return this.monitorsType === MonitorStatus.Archived;
+  }
+
+  public updateMonitorsStatus() {
+    this.monitorsStatus = this.isCurrentlyArchivedMonitors
+      ? 'all'
+      : this.userService.lastMonitorsStatus || 'all';
+  }
+
+  public get monitorsStatus(): string {
     return this.filterValues.status;
   }
 
-  set monitorsStatus(status: string) {
+  public set monitorsStatus(status: string) {
     this.filterValues.status = status;
     this.filterMonitors();
-    if (!this.disableStatusToggle) {
+    if (!this.isCurrentlyArchivedMonitors) {
       this.userService.lastMonitorsStatus = status;
     }
   }
 
   public toggleStatus(status: string) {
-    this.monitorsStatus = status;
+    this.filterValues.status = status;
+    this.filterMonitors();
+    if (!this.isCurrentlyArchivedMonitors) {
+      this.userService.lastMonitorsStatus = status;
+    }
   }
 
   public filterMonitors(): void {
