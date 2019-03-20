@@ -3,23 +3,18 @@
 .toolbar {
   display: flex;
   align-items: center;
-  margin: 0 auto;
+  margin: $spacing-l 0;
 
   .status-toggle {
-    margin: 0 10px 0 0;
+    margin-left: $spacing-l;
   }
 
   .search {
     flex: 0 0 25%;
-    margin: 0 20px 0 auto;
+    margin: 0 $spacing-l 0 auto;
   }
 }
 
-.new-monitor-button {
-  margin: 0 10px 0 20px;
-}
-
-.title,
 .table {
   max-height: 700px;
   overflow: auto;
@@ -36,37 +31,24 @@
 }
 
 .overview-table {
-  margin: 10px auto 40px auto;
   border: 1px solid $light-grey;
   box-shadow: $box-shadow;
 
   .mat-header-row {
-    padding: 10px 0;
+    padding: $spacing-xs 0;
   }
 
   .mat-row {
-    padding: 5px;
+    padding: $spacing-s;
   }
-}
-
-.full-width {
-  width: 100%;
 }
 
 .menu-icon {
   color: $green;
 }
 
-.actions {
-  .title {
-    margin: 0 10px 0 5px;
-  }
-}
-
-.categories {
-  .title {
-    margin: 0 10px 0 5px;
-  }
+.header-name {
+  margin: 0 0 0 $spacing-s;
 }
 
 .menu,
@@ -86,20 +68,29 @@
 }
 
 .online {
-  margin-left: 5px;
   color: $green;
 }
 
 .offline {
-  margin-left: 5px;
   color: $red;
 }
 
 .all-monitors {
-  margin-left: 5px;
   color: $yellow;
+}
+
+.online,
+.offline,
+.all-monitors {
+  margin-left: $spacing-xs;
 }
 
 .primary {
   color: $primary;
+}
+
+.button-toggle {
+  &:disabled {
+    cursor: not-allowed;
+  }
 }

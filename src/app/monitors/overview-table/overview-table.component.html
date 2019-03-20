@@ -1,7 +1,6 @@
 <div class="toolbar">
   <mat-button-toggle-group
     [(value)]="monitorsType"
-    #typeGroup="matButtonToggleGroup"
     (change)="changeMonitorsType.emit($event.value)"
   >
     <mat-button-toggle value="standard">
@@ -17,14 +16,14 @@
       <span class="primary"> System </span>
     </mat-button-toggle>
   </mat-button-toggle-group>
+
   <mat-button-toggle-group
     class="status-toggle"
     [value]="monitorsStatus"
-    #statusGroup="matButtonToggleGroup"
     (change)="toggleStatus($event.value)"
     [disabled]="!canToggleStatus"
   >
-    <mat-button-toggle value="online">
+    <mat-button-toggle value="online" class="button-toggle">
       <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
     </mat-button-toggle>
     <mat-button-toggle value="offline">
@@ -53,13 +52,14 @@
     clear filters
   </app-primary-button>
 
-  <app-accent-link-button
+  <app-accent-button
+    mat-flat-button
     class="new-monitor-button"
-    [routerLink]="'/monitors/add'"
+    routerLink="'/monitors/add'"
     [icon]="'add'"
   >
-    new monitor
-  </app-accent-link-button>
+    New Monitor
+  </app-accent-button>
 </div>
 
 <div class="overview-table">
@@ -74,11 +74,10 @@
       <ng-container matColumnDef="monitor">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           <app-icon [type]="'monitor'"></app-icon>
-          <h3 class="title">Monitor</h3>
+          <p class="mat-h2 header-name">Monitor</p>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor">
           <app-cell-monitor
-            class="full-width"
             [name]="monitor.name"
             [description]="monitor.description"
             [id]="monitor.id"
@@ -90,7 +89,7 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef class="actions">
           <app-icon [type]="'actions'"></app-icon>
-          <h3 class="title">Actions</h3>
+          <p class="mat-h2 header-name">Actions</p>
           <button
             mat-icon-button
             *ngIf="hasActions()"
@@ -184,7 +183,7 @@
       <ng-container matColumnDef="categories">
         <mat-header-cell *matHeaderCellDef class="categories">
           <app-icon [type]="'categories'"></app-icon>
-          <h3 class="title">Categories</h3>
+          <p class="mat-h2 header-name">Categories</p>
           <button
             *ngIf="allCurrentCategories.length"
             mat-icon-button
@@ -213,11 +212,10 @@
       <ng-container matColumnDef="menu">
         <mat-header-cell *matHeaderCellDef class="menu">
           <mat-icon class="menu-icon">more_vert</mat-icon>
-          <h3 class="title">Menu</h3>
+          <p class="mat-h2 header-name">Menu</p>
         </mat-header-cell>
         <mat-cell *matCellDef="let monitor" class="menu">
           <app-cell-menu
-            class="full-width"
             [status]="monitor.status"
             [id]="monitor.id"
             (archiveMonitor)="archiveMonitor($event)"
