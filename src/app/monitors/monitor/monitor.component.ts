@@ -61,7 +61,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,

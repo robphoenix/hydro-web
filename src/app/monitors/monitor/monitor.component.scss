@@ -1,18 +1,18 @@
 @import 'main';
 
-.header {
-  margin: 80px 0 20px 0;
+.container {
+  margin: $spacing-xl;
+  padding: $spacing-l;
 }
 
-.title {
-  letter-spacing: 0.05em;
-  font-size: 1.5em;
-  margin: 100px 0 0 0;
+.heading {
+  margin-bottom: $spacing-l;
 }
 
-.info {
+.inner-wrapper {
   display: flex;
   align-items: center;
+  margin-bottom: $spacing-l;
 
   .description {
     color: $grey;
@@ -24,25 +24,33 @@
   display: flex;
 
   .button {
-    margin-left: 10px;
+    margin-left: $spacing-m;
   }
 }
 
-.content {
-  width: 90%;
-  margin: 0 auto;
+.table-outer-wrapper {
+  border: 1px solid $light-grey;
+  box-shadow: $box-shadow;
 }
 
-.mat-header-cell {
-  padding: 5px 10px;
+.table-inner-wrapper {
+  max-height: 700px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background: $off-white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $mid-grey;
+  }
 }
 
+.mat-header-cell,
 .mat-cell {
-  padding: 5px 10px;
-}
-
-.table {
-  width: 100%;
+  padding: $spacing-s;
 }
 
 .hidden {
@@ -52,15 +60,15 @@
 .messages {
   display: flex;
   flex-direction: column;
-  margin: 100px auto;
+  margin: $spacing-2xl auto;
   width: 300px;
 }
 
-.descriptive {
+.details {
   display: flex;
   flex-direction: column;
 
-  p {
-    margin: 5px 0;
+  .description {
+    margin-bottom: $spacing-s;
   }
 }

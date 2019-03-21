@@ -15,7 +15,7 @@
   }
 }
 
-.table {
+.table-inner-wrapper {
   max-height: 700px;
   overflow: auto;
 
@@ -30,16 +30,12 @@
   }
 }
 
-.overview-table {
+.table-outer-wrapper {
   border: 1px solid $light-grey;
   box-shadow: $box-shadow;
 
   .mat-header-row {
     padding: $spacing-xs 0;
-  }
-
-  .mat-row {
-    // padding: $spacing-m;
   }
 }
 
