@@ -11,16 +11,12 @@
   display: flex;
   align-items: center;
   margin-left: $spacing-l;
-}
-
-.logo-image {
   filter: invert(100%);
-  margin-right: 10px;
 }
 
-.name {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.hydro {
+  font-size: $fs-2xl;
+  font-weight: $fw-3;
 }
 
 .nav {

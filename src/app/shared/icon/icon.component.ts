@@ -14,6 +14,7 @@ export class IconComponent {
     actions: 'play_circle_filled',
     categories: 'category',
     monitor: 'flash_on',
+    monitors: 'flash_on',
     standard: 'flash_on',
     archived: 'archive',
     system: 'tune',

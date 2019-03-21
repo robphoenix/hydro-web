@@ -7,8 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class PrimaryNavbarButtonComponent {
   @Input()
-  buttonText: string;
-
-  @Input()
   menu: boolean;
 }

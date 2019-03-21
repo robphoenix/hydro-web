@@ -1,8 +1,6 @@
-<app-primary-navbar-button
-  [matMenuTriggerFor]="monitors"
-  [buttonText]="buttonText"
-  [menu]="menu"
-></app-primary-navbar-button>
+<app-primary-navbar-button [matMenuTriggerFor]="monitors" [menu]="true">
+  <span class="name">Monitors</span>
+</app-primary-navbar-button>
 
 <mat-menu #monitors="matMenu" [overlapTrigger]="false">
   <a
