@@ -94,3 +94,8 @@
     cursor: not-allowed;
   }
 }
+
+.button-text {
+  font-size: $fs-m;
+  padding: $spacing-xs $spacing-s;
+}

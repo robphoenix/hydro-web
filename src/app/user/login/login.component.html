@@ -60,25 +60,13 @@
       *ngIf="attemptingLogIn"
     ></mat-progress-bar>
     <div class="login-button">
-      <button
-        mat-raised-button
-        *ngIf="!attemptingLogIn"
-        (click)="login()"
-        [disabled]="!loginForm.valid"
-        color="accent"
-      >
-        <p class="button-text">Log In</p>
-      </button>
-    </div>
-    <!--
       <app-accent-button
-        class="login-button"
         *ngIf="!attemptingLogIn"
         (click)="login()"
         [disabled]="!loginForm.valid"
       >
         Log In
       </app-accent-button>
-    -->
+    </div>
   </div>
 </div>

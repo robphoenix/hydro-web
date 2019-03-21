@@ -43,12 +43,6 @@
 .login-button {
   display: flex;
   justify-content: flex-end;
-
-  .button-text {
-    margin: 0;
-    font-size: $fs-m;
-    padding: $spacing-xs $spacing-s;
-  }
 }
 
 .progress-bar {
