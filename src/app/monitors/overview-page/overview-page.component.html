@@ -9,7 +9,7 @@
     [canToggleStatus]="canToggleStatus"
     [monitorsType]="lastMonitorsType"
     (refresh)="refresh()"
-    (changeMonitorsType)="changeMonitorsType($event)"
+    (changeMonitorsType)="updateMonitorsData($event)"
   ></app-overview-table>
   <ng-template #noMonitors>
     <app-loading-spinner [title]="'monitors'"></app-loading-spinner>

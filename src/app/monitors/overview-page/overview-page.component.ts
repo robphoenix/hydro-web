@@ -45,19 +45,8 @@ export class OverviewPageComponent implements OnInit {
   }
 
   private getMonitors() {
-    switch (this.lastMonitorsType) {
-      case MonitorType.Standard:
-        this.getStandardMonitors();
-        break;
-      case MonitorStatus.Archived:
-        this.getArchivedMonitors();
-        break;
-      case MonitorType.System:
-        this.getSystemMonitors();
-        break;
-      default:
-        this.getStandardMonitors();
-    }
+    const monitorsType: string = this.lastMonitorsType as string;
+    this.updateMonitorsData(monitorsType);
   }
 
   getStandardMonitors(): void {
@@ -152,7 +141,7 @@ export class OverviewPageComponent implements OnInit {
     this.getMonitors();
   }
 
-  public changeMonitorsType(monitorsType: string) {
+  public updateMonitorsData(monitorsType: string) {
     switch (monitorsType) {
       case MonitorType.Standard:
         this.getStandardMonitors();
