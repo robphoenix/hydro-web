@@ -12,6 +12,7 @@ import { PrimaryButtonComponent } from './primary-button/primary-button.componen
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { WarnButtonComponent } from './warn-button/warn-button.component';
 import { HeadingComponent } from './heading/heading.component';
+import { TableHeadingComponent } from './table-heading/table-heading.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { HeadingComponent } from './heading/heading.component';
     AccentSubmitButtonComponent,
     WarnButtonComponent,
     HeadingComponent,
+    TableHeadingComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -42,6 +44,7 @@ import { HeadingComponent } from './heading/heading.component';
     PrimaryButtonComponent,
     WarnButtonComponent,
     HeadingComponent,
+    TableHeadingComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

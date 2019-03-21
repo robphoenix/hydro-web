@@ -17,5 +17,6 @@ export class IconComponent {
     standard: 'flash_on',
     archived: 'archive',
     system: 'tune',
+    menu: 'more_vert',
   };
 }
