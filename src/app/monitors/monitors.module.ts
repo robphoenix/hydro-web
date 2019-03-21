@@ -13,7 +13,6 @@ import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
 import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
-import { OverviewNavComponent } from './overview-nav/overview-nav.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
 import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
@@ -57,7 +56,6 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
     CellMenuComponent,
     CellCategoriesComponent,
     CreateMonitorFormComponent,
-    OverviewNavComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
     CreateMonitorFormCategoriesComponent,
