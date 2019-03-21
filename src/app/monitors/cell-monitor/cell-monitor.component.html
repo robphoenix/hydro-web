@@ -1,27 +1,23 @@
-<a
-  *ngIf="online"
-  class="link"
-  href="/monitors/{{id}}"
-  [routerLink]="['/monitors/', id, { name: name }]"
+<button
+  mat-button
+  [disabled]="!online"
+  (click)="router.navigate(['/monitors/', id, { name: name }])"
+  class="button"
 >
-  <div class="title name">
-    <p class="online-name mat-subheading-2">
+  <div class="container">
+    <h1
+      [ngClass]="{ 'online-name': online, 'offline-name': !online }"
+      class="name"
+    >
       {{ name }}
-      <mat-icon [inline]="true" class="online" matTooltip="online">
-        flash_on
+      <mat-icon
+        [inline]="true"
+        [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
+        matTooltip="{{online ? 'Online' : 'Offline'}}"
+      >
+        {{ online ? 'flash_on' : 'flash_off' }}
       </mat-icon>
-    </p>
+    </h1>
+    <h2 class="description">{{ description }}</h2>
   </div>
-  <p class="description mat-subheading-1">{{ description }}</p>
-</a>
-<span *ngIf="!online">
-  <div class="title">
-    <p class="offline-name mat-subheading-2">
-      {{ name }}
-      <mat-icon [inline]="true" class="offline" matTooltip="offline">
-        flash_off
-      </mat-icon>
-    </p>
-  </div>
-  <p class="description mat-subheading-1">{{ description }}</p>
-</span>
+</button>

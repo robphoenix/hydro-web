@@ -25,6 +25,7 @@ import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dia
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-table',
@@ -89,6 +90,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     private userService: UserService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {

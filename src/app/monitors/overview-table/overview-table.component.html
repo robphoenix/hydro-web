@@ -54,7 +54,7 @@
 
   <app-accent-button
     mat-flat-button
-    routerLink="'/monitors/add'"
+    (click)="router.navigateByUrl('/monitors/add')"
     [icon]="'add'"
   >
     New Monitor
@@ -82,6 +82,7 @@
             [description]="monitor.description"
             [id]="monitor.id"
             [status]="monitor.status"
+            class="monitor-cell"
           ></app-cell-monitor>
         </mat-cell>
       </ng-container>
