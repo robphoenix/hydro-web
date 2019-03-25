@@ -1,23 +1,25 @@
 <button
   mat-button
   [disabled]="!online"
+  [disableRipple]="true"
   (click)="router.navigate(['/monitors/', id, { name: name }])"
   class="button"
 >
-  <div class="container">
-    <h1
-      [ngClass]="{ 'online-name': online, 'offline-name': !online }"
-      class="name"
+  <div class="outer-container">
+    <mat-icon
+      [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
+      matTooltip="{{online ? 'Online' : 'Offline'}}"
     >
-      {{ name }}
-      <mat-icon
-        [inline]="true"
-        [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
-        matTooltip="{{online ? 'Online' : 'Offline'}}"
+      {{ online ? 'flash_on' : 'flash_off' }}
+    </mat-icon>
+    <div class="inner-container">
+      <h1
+        [ngClass]="{ 'online-name': online, 'offline-name': !online }"
+        class="name"
       >
-        {{ online ? 'flash_on' : 'flash_off' }}
-      </mat-icon>
-    </h1>
-    <h2 class="description">{{ description }}</h2>
+        {{ name }}
+      </h1>
+      <h2 class="description">{{ description }}</h2>
+    </div>
   </div>
 </button>

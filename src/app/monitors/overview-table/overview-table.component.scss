@@ -31,12 +31,20 @@
 }
 
 .table-outer-wrapper {
-  border: 1px solid $light-grey;
   box-shadow: $box-shadow;
 
   .mat-header-row {
     padding: $spacing-xs 0;
+    border-top: 2px $primary solid;
   }
+
+  .mat-row {
+    border-bottom: none;
+  }
+}
+
+.mat-monitor-cell {
+  padding: 0;
 }
 
 .menu-icon {
