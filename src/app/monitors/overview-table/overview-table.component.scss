@@ -34,6 +34,13 @@
   }
 }
 
+.mat-header-row {
+  padding: $spacing-xs 0;
+}
+.mat-row {
+  border-bottom: none;
+}
+
 .mat-monitor-cell {
   padding: 0;
 }

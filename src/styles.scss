@@ -20,11 +20,6 @@ body {
   padding: 0;
 }
 
-// Global Table Styles
-.mat-header-row {
-  padding: $spacing-xs 0;
+.mat-table {
   border-top: 2px $primary solid;
-}
-.mat-row {
-  border-bottom: none;
 }

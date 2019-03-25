@@ -6,6 +6,10 @@
     <div class="details">
       <p class="description">{{ monitor.description }}</p>
       <p *ngIf="dataType">You are currently viewing {{ dataType }} data</p>
+      <p *ngIf="timeLiveDataReceived">
+        Live data last received at
+        {{ timeLiveDataReceived | date: 'HH:mm:ss dd/MM/yyyy' }}
+      </p>
     </div>
 
     <div class="buttons">
