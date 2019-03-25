@@ -15,6 +15,10 @@
   }
 }
 
+.table-outer-wrapper {
+  box-shadow: $box-shadow;
+}
+
 .table-inner-wrapper {
   max-height: 700px;
   overflow: auto;
@@ -27,19 +31,6 @@
 
   &::-webkit-scrollbar-thumb {
     background: $mid-grey;
-  }
-}
-
-.table-outer-wrapper {
-  box-shadow: $box-shadow;
-
-  .mat-header-row {
-    padding: $spacing-xs 0;
-    border-top: 2px $primary solid;
-  }
-
-  .mat-row {
-    border-bottom: none;
   }
 }
 

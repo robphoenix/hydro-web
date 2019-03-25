@@ -1,247 +1,249 @@
-<div class="toolbar">
-  <mat-button-toggle-group
-    [(value)]="monitorsType"
-    (change)="changeMonitorsType.emit($event.value)"
-  >
-    <mat-button-toggle value="standard">
-      <mat-icon class="primary icon">flash_on</mat-icon>
-      <span class="primary"> Standard </span>
-    </mat-button-toggle>
-    <mat-button-toggle value="archived">
-      <mat-icon class="primary icon">archive</mat-icon>
-      <span class="primary"> Archived </span>
-    </mat-button-toggle>
-    <mat-button-toggle value="system">
-      <mat-icon class="primary icon">tune</mat-icon>
-      <span class="primary"> System </span>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-
-  <mat-button-toggle-group
-    class="status-toggle"
-    [value]="monitorsStatus"
-    (change)="toggleStatus($event.value)"
-    [disabled]="!canToggleStatus"
-  >
-    <mat-button-toggle value="online" class="button-toggle">
-      <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="offline">
-      <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle value="all">
-      <mat-icon class="all-monitors" matTooltip="All Monitors"
-        >flash_on</mat-icon
-      >
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-
-  <app-search-input
-    class="search"
-    [(searchTerm)]="filterValues.searchTerm"
-    [placeHolder]="'Search Monitors'"
-    (searchTermChange)="filterMonitors()"
-  ></app-search-input>
-
-  <app-primary-button
-    *ngIf="hasActions() || allCurrentCategories.length"
-    [disabled]="hasFilters()"
-    [icon]="'clear_all'"
-    (click)="clearAllFilters()"
-  >
-    clear filters
-  </app-primary-button>
-
-  <app-accent-button
-    mat-flat-button
-    (click)="router.navigateByUrl('/monitors/add')"
-    [icon]="'add'"
-  >
-    New Monitor
-  </app-accent-button>
-</div>
-
-<div class="table-outer-wrapper">
-  <div class="table-inner-wrapper">
-    <mat-table
-      [dataSource]="dataSource"
-      matSort
-      matSortActive="name"
-      matSortDirection="asc"
-      matSortDisableClear
+<div class="container" *ngIf="dataSource.data && dataSource.data.length">
+  <div class="toolbar">
+    <mat-button-toggle-group
+      [(value)]="monitorsType"
+      (change)="changeMonitorsType.emit($event.value)"
     >
-      <ng-container matColumnDef="monitor">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          <app-table-heading [iconType]="'monitor'">
-            Monitor
-          </app-table-heading>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let monitor" class="mat-monitor-cell">
-          <app-cell-monitor
-            [name]="monitor.name"
-            [description]="monitor.description"
-            [id]="monitor.id"
-            [status]="monitor.status"
-            class="monitor-cell"
-          ></app-cell-monitor>
-        </mat-cell>
-      </ng-container>
+      <mat-button-toggle value="standard">
+        <mat-icon class="primary icon">flash_on</mat-icon>
+        <span class="primary"> Standard </span>
+      </mat-button-toggle>
+      <mat-button-toggle value="archived">
+        <mat-icon class="primary icon">archive</mat-icon>
+        <span class="primary"> Archived </span>
+      </mat-button-toggle>
+      <mat-button-toggle value="system">
+        <mat-icon class="primary icon">tune</mat-icon>
+        <span class="primary"> System </span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef class="actions">
-          <app-table-heading [iconType]="'actions'">
-            Actions
-          </app-table-heading>
-          <button
-            mat-icon-button
-            *ngIf="hasActions()"
-            [matMenuTriggerFor]="actionsMenu"
-          >
-            <mat-icon>filter_list</mat-icon>
-          </button>
-          <mat-menu #actionsMenu="matMenu">
-            <button
-              mat-menu-item
-              *ngIf="hasActions('block')"
-              [matMenuTriggerFor]="block"
-            >
-              <mat-icon>block</mat-icon>
-              <span>Block</span>
-            </button>
-            <mat-menu #block="matMenu">
-              <app-multiple-select
-                [formControl]="blockControl"
-                [placeHolder]="'Filter Block Actions'"
-                [options]="allCurrentActions['block']"
-                [(selectedOptions)]="filterValues.selectedActions.block"
-                (selectedOptionsChange)="filterMonitors()"
-                ngDefaultControl
-              ></app-multiple-select>
-            </mat-menu>
+    <mat-button-toggle-group
+      class="status-toggle"
+      [value]="monitorsStatus"
+      (change)="toggleStatus($event.value)"
+      [disabled]="!canToggleStatus"
+    >
+      <mat-button-toggle value="online" class="button-toggle">
+        <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="offline">
+        <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="all">
+        <mat-icon class="all-monitors" matTooltip="All Monitors"
+          >flash_on</mat-icon
+        >
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-            <button
-              mat-menu-item
-              *ngIf="hasActions('email')"
-              [matMenuTriggerFor]="email"
-            >
-              <mat-icon>email</mat-icon>
-              <span>Email</span>
-            </button>
-            <mat-menu #email="matMenu">
-              <app-multiple-select
-                [formControl]="emailControl"
-                [placeHolder]="'Filter Email Actions'"
-                [options]="allCurrentActions['email']"
-                [(selectedOptions)]="filterValues.selectedActions.email"
-                (selectedOptionsChange)="filterMonitors()"
-                ngDefaultControl
-              ></app-multiple-select>
-            </mat-menu>
+    <app-search-input
+      class="search"
+      [(searchTerm)]="filterValues.searchTerm"
+      [placeHolder]="'Search Monitors'"
+      (searchTermChange)="filterMonitors()"
+    ></app-search-input>
 
-            <button
-              mat-menu-item
-              *ngIf="hasActions('store')"
-              [matMenuTriggerFor]="store"
-            >
-              <mat-icon>check</mat-icon>
-              <span>Store</span>
-            </button>
-            <mat-menu #store="matMenu">
-              <app-multiple-select
-                [formControl]="storeControl"
-                [placeHolder]="'Filter Store Actions'"
-                [options]="allCurrentActions['store']"
-                [(selectedOptions)]="filterValues.selectedActions.store"
-                (selectedOptionsChange)="filterMonitors()"
-                ngDefaultControl
-              ></app-multiple-select>
-            </mat-menu>
+    <app-primary-button
+      *ngIf="hasActions() || allCurrentCategories.length"
+      [disabled]="hasFilters()"
+      [icon]="'clear_all'"
+      (click)="clearAllFilters()"
+    >
+      clear filters
+    </app-primary-button>
 
-            <button
-              mat-menu-item
-              *ngIf="hasActions('other')"
-              [matMenuTriggerFor]="other"
-            >
-              <mat-icon>subject</mat-icon>
-              <span>Other</span>
-            </button>
-            <mat-menu #other="matMenu">
-              <app-multiple-select
-                [formControl]="otherControl"
-                [placeHolder]="'Filter Other Actions'"
-                [options]="allCurrentActions['other']"
-                [(selectedOptions)]="filterValues.selectedActions.other"
-                (selectedOptionsChange)="filterMonitors()"
-                ngDefaultControl
-              ></app-multiple-select>
-            </mat-menu>
-          </mat-menu>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let monitor" class="actions">
-          <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="categories">
-        <mat-header-cell *matHeaderCellDef class="categories">
-          <app-table-heading [iconType]="'categories'">
-            Categories
-          </app-table-heading>
-          <button
-            *ngIf="allCurrentCategories.length"
-            mat-icon-button
-            [matMenuTriggerFor]="categoriesMenu"
-          >
-            <mat-icon>filter_list</mat-icon>
-          </button>
-          <mat-menu #categoriesMenu="matMenu">
-            <app-multiple-select
-              [formControl]="categoriesControl"
-              [placeHolder]="'Filter Categories'"
-              [options]="allCurrentCategories"
-              [(selectedOptions)]="filterValues.selectedCategories"
-              (selectedOptionsChange)="filterMonitors()"
-              ngDefaultControl
-            ></app-multiple-select>
-          </mat-menu>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let monitor" class="categories">
-          <app-cell-categories
-            [categories]="monitor.categories"
-          ></app-cell-categories>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="menu">
-        <mat-header-cell *matHeaderCellDef class="menu">
-          <app-table-heading [iconType]="'menu'">Menu</app-table-heading>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let monitor" class="menu">
-          <app-cell-menu
-            [status]="monitor.status"
-            [id]="monitor.id"
-            (archiveMonitor)="archiveMonitor($event)"
-            (unArchiveMonitor)="unArchiveMonitor($event)"
-            (enableMonitor)="enableMonitor($event)"
-            (disableMonitor)="disableMonitor($event)"
-            (viewEplQuery)="viewEplQuery($event)"
-          ></app-cell-menu>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row
-        *matHeaderRowDef="displayedColumns; sticky: true"
-      ></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
+    <app-accent-button
+      mat-flat-button
+      (click)="router.navigateByUrl('/monitors/add')"
+      [icon]="'add'"
+    >
+      New Monitor
+    </app-accent-button>
   </div>
 
-  <mat-paginator
-    class="paginator"
-    #paginator
-    [length]="monitors.length"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25]"
-    showFirstLastButtons
-  ></mat-paginator>
+  <div class="table-outer-wrapper">
+    <div class="table-inner-wrapper">
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        matSortActive="name"
+        matSortDirection="asc"
+        matSortDisableClear
+      >
+        <ng-container matColumnDef="monitor">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            <app-table-heading [iconType]="'monitor'">
+              Monitor
+            </app-table-heading>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let monitor" class="mat-monitor-cell">
+            <app-cell-monitor
+              [name]="monitor.name"
+              [description]="monitor.description"
+              [id]="monitor.id"
+              [status]="monitor.status"
+              class="monitor-cell"
+            ></app-cell-monitor>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef class="actions">
+            <app-table-heading [iconType]="'actions'">
+              Actions
+            </app-table-heading>
+            <button
+              mat-icon-button
+              *ngIf="hasActions()"
+              [matMenuTriggerFor]="actionsMenu"
+            >
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <mat-menu #actionsMenu="matMenu">
+              <button
+                mat-menu-item
+                *ngIf="hasActions('block')"
+                [matMenuTriggerFor]="block"
+              >
+                <mat-icon>block</mat-icon>
+                <span>Block</span>
+              </button>
+              <mat-menu #block="matMenu">
+                <app-multiple-select
+                  [formControl]="blockControl"
+                  [placeHolder]="'Filter Block Actions'"
+                  [options]="allCurrentActions['block']"
+                  [(selectedOptions)]="filterValues.selectedActions.block"
+                  (selectedOptionsChange)="filterMonitors()"
+                  ngDefaultControl
+                ></app-multiple-select>
+              </mat-menu>
+
+              <button
+                mat-menu-item
+                *ngIf="hasActions('email')"
+                [matMenuTriggerFor]="email"
+              >
+                <mat-icon>email</mat-icon>
+                <span>Email</span>
+              </button>
+              <mat-menu #email="matMenu">
+                <app-multiple-select
+                  [formControl]="emailControl"
+                  [placeHolder]="'Filter Email Actions'"
+                  [options]="allCurrentActions['email']"
+                  [(selectedOptions)]="filterValues.selectedActions.email"
+                  (selectedOptionsChange)="filterMonitors()"
+                  ngDefaultControl
+                ></app-multiple-select>
+              </mat-menu>
+
+              <button
+                mat-menu-item
+                *ngIf="hasActions('store')"
+                [matMenuTriggerFor]="store"
+              >
+                <mat-icon>check</mat-icon>
+                <span>Store</span>
+              </button>
+              <mat-menu #store="matMenu">
+                <app-multiple-select
+                  [formControl]="storeControl"
+                  [placeHolder]="'Filter Store Actions'"
+                  [options]="allCurrentActions['store']"
+                  [(selectedOptions)]="filterValues.selectedActions.store"
+                  (selectedOptionsChange)="filterMonitors()"
+                  ngDefaultControl
+                ></app-multiple-select>
+              </mat-menu>
+
+              <button
+                mat-menu-item
+                *ngIf="hasActions('other')"
+                [matMenuTriggerFor]="other"
+              >
+                <mat-icon>subject</mat-icon>
+                <span>Other</span>
+              </button>
+              <mat-menu #other="matMenu">
+                <app-multiple-select
+                  [formControl]="otherControl"
+                  [placeHolder]="'Filter Other Actions'"
+                  [options]="allCurrentActions['other']"
+                  [(selectedOptions)]="filterValues.selectedActions.other"
+                  (selectedOptionsChange)="filterMonitors()"
+                  ngDefaultControl
+                ></app-multiple-select>
+              </mat-menu>
+            </mat-menu>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let monitor" class="actions">
+            <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="categories">
+          <mat-header-cell *matHeaderCellDef class="categories">
+            <app-table-heading [iconType]="'categories'">
+              Categories
+            </app-table-heading>
+            <button
+              *ngIf="allCurrentCategories.length"
+              mat-icon-button
+              [matMenuTriggerFor]="categoriesMenu"
+            >
+              <mat-icon>filter_list</mat-icon>
+            </button>
+            <mat-menu #categoriesMenu="matMenu">
+              <app-multiple-select
+                [formControl]="categoriesControl"
+                [placeHolder]="'Filter Categories'"
+                [options]="allCurrentCategories"
+                [(selectedOptions)]="filterValues.selectedCategories"
+                (selectedOptionsChange)="filterMonitors()"
+                ngDefaultControl
+              ></app-multiple-select>
+            </mat-menu>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let monitor" class="categories">
+            <app-cell-categories
+              [categories]="monitor.categories"
+            ></app-cell-categories>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="menu">
+          <mat-header-cell *matHeaderCellDef class="menu">
+            <app-table-heading [iconType]="'menu'">Menu</app-table-heading>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let monitor" class="menu">
+            <app-cell-menu
+              [status]="monitor.status"
+              [id]="monitor.id"
+              (archiveMonitor)="archiveMonitor($event)"
+              (unArchiveMonitor)="unArchiveMonitor($event)"
+              (enableMonitor)="enableMonitor($event)"
+              (disableMonitor)="disableMonitor($event)"
+              (viewEplQuery)="viewEplQuery($event)"
+            ></app-cell-menu>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+
+    <mat-paginator
+      class="paginator"
+      #paginator
+      [length]="monitors.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
 </div>

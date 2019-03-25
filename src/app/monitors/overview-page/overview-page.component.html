@@ -2,7 +2,6 @@
   <div class="heading"><app-heading>Monitors Overview</app-heading></div>
 
   <app-overview-table
-    *ngIf="currentMonitors.length; else: noMonitors"
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"
     [allCurrentCategories]="allCurrentCategories"
@@ -11,7 +10,4 @@
     (refresh)="refresh()"
     (changeMonitorsType)="updateMonitorsData($event)"
   ></app-overview-table>
-  <ng-template #noMonitors>
-    <app-loading-spinner [title]="'monitors'"></app-loading-spinner>
-  </ng-template>
 </div>
