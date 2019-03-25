@@ -14,8 +14,6 @@ import { IErrorMessage } from 'src/app/shared/error-message';
   styleUrls: ['./edit-monitor.component.scss'],
 })
 export class EditMonitorComponent implements OnInit, OnDestroy {
-  title = 'edit monitor';
-  buttonText = 'save monitor';
   monitor: IMonitor;
   sub: Subscription;
   editForm = true;

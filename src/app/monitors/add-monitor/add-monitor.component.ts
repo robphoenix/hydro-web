@@ -14,8 +14,6 @@ import { IErrorMessage } from 'src/app/shared/error-message';
   styleUrls: ['./add-monitor.component.scss'],
 })
 export class AddMonitorComponent {
-  title = 'add monitor';
-
   @ViewChild(CreateMonitorFormComponent)
   form: CreateMonitorFormComponent;
 

@@ -1,7 +1,6 @@
 <app-create-monitor-form
   *ngIf="monitor"
-  [title]="title"
-  [buttonText]="buttonText"
+  [heading]="'Edit'"
   [monitor]="monitor"
   [editForm]="editForm"
   (submitForm)="saveMonitor($event)"

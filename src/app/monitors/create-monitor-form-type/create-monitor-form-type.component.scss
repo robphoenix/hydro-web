@@ -4,14 +4,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-bottom: 10px;
 }
 
 .label {
-  margin-bottom: 20px;
-  color: $dark-grey;
+  margin-bottom: $spacing-m;
 }
 
 .standard {
-  margin-right: 10px;
+  margin-right: $spacing-m;
 }

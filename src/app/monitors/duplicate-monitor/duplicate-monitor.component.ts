@@ -15,7 +15,6 @@ import { IErrorMessage } from 'src/app/shared/error-message';
   styleUrls: ['./duplicate-monitor.component.scss'],
 })
 export class DuplicateMonitorComponent implements OnInit, OnDestroy {
-  title = 'duplicate monitor';
   buttonText = 'save monitor';
   monitor: IMonitor;
   monitorName: string;
