@@ -1,77 +1,90 @@
-<div class="content" *ngIf="monitor">
-  <header class="header">
-    <h2 class="title">{{ monitor.name }}</h2>
-    <div class="info">
-      <section class="descriptive">
-        <p class="description">{{ monitor.description }}</p>
-        <p *ngIf="dataType">You are currently viewing {{ dataType }} data</p>
-      </section>
-
-      <div class="buttons">
-        <app-primary-button
-          (click)="togglePause()"
-          [icon]="pauseIcon"
-          [disabled]="!(liveData && liveData.length)"
-        >
-          {{ paused ? 'run' : 'pause' }}
-        </app-primary-button>
-        <app-accent-button
-          (click)="showEpl()"
-          class="button"
-          [icon]="'image_search'"
-        >
-          show epl query
-        </app-accent-button>
-        <app-accent-link-button
-          [routerLink]="editLink"
-          [icon]="'edit'"
-          class="button"
-        >
-          edit monitor
-        </app-accent-link-button>
-      </div>
+<div class="container" *ngIf="monitor">
+  <div class="heading">
+    <app-heading>{{ monitor.name }}</app-heading>
+  </div>
+  <div class="inner-wrapper">
+    <div class="details">
+      <p class="description">{{ monitor.description }}</p>
+      <p *ngIf="dataType">You are currently viewing {{ dataType }} data</p>
+      <p *ngIf="timeLiveDataReceived">
+        Live data last received at
+        {{ timeLiveDataReceived | date: 'HH:mm:ss dd/MM/yyyy' }}
+      </p>
     </div>
-  </header>
 
-  <table
-    mat-table
-    matSort
-    [dataSource]="dataSource"
-    (matSortChange)="sortData($event)"
-    class="table"
-    *ngIf="dataSource && dataSource.data.length; else: noData"
+    <div class="buttons">
+      <app-primary-button
+        (click)="togglePause()"
+        [icon]="pauseIcon"
+        [disabled]="!(liveData && liveData.length)"
+      >
+        {{ paused ? 'Run' : 'Pause' }}
+      </app-primary-button>
+      <app-accent-button
+        (click)="showEpl()"
+        class="button"
+        [icon]="'image_search'"
+      >
+        Show Epl Query
+      </app-accent-button>
+      <app-accent-button
+        (click)="router.navigateByUrl(editLink)"
+        [icon]="'edit'"
+        class="button"
+      >
+        Edit Monitor
+      </app-accent-button>
+    </div>
+  </div>
+
+  <div
+    class="table-outer-wrapper"
+    [ngClass]="{ 'table-outer-wrapper': dataSource && dataSource.data.length }"
   >
-    <ng-container
-      *ngFor="let column of displayedColumns"
-      matColumnDef="{{column}}"
-    >
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-      <td mat-cell *matCellDef="let element">
-        {{
-          headersMetadata[column].type === MonitorDataAttributeType.DateTime
-            ? (element[column] | date: 'HH:mm dd/MM/yyyy')
-            : element[column] || '-'
-        }}
-      </td>
-    </ng-container>
+    <div class="table-inner-wrapper">
+      <table
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        (matSortChange)="sortData($event)"
+        *ngIf="dataSource && dataSource.data.length; else: noData"
+        class="table"
+      >
+        <ng-container
+          *ngFor="let column of displayedColumns"
+          matColumnDef="{{column}}"
+        >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ column }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{
+              headersMetadata[column].type === MonitorDataAttributeType.DateTime
+                ? (element[column] | date: 'HH:mm dd/MM/yyyy')
+                : element[column] || '-'
+            }}
+          </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
 
-  <!--
-    if we use ngif here to only show the paginator when there's data, it
-    screws the table up, I don't know why, so CSS to the rescue
-  -->
-  <mat-paginator
-    class="paginator"
-    #paginator
-    [ngClass]="{ hidden: dataSource.data.length === 0 }"
-    [length]="dataSource.data.length"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25]"
-    showFirstLastButtons
-  ></mat-paginator>
+    <!--
+      if we use ngif here to only show the paginator when there's data, it
+      screws the table up, I don't know why, so CSS to the rescue
+    -->
+    <mat-paginator
+      class="paginator"
+      #paginator
+      [ngClass]="{ hidden: dataSource.data.length === 0 }"
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
 </div>
 
 <ng-template #noData>

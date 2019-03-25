@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MonitorsSystemComponent } from './monitors-system.component';
+import { OverviewPageComponent } from './overview-page.component';
 
-describe('MonitorsSystemComponent', () => {
-  let component: MonitorsSystemComponent;
-  let fixture: ComponentFixture<MonitorsSystemComponent>;
+describe('OverviewPageComponent', () => {
+  let component: OverviewPageComponent;
+  let fixture: ComponentFixture<OverviewPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MonitorsSystemComponent],
+      declarations: [OverviewPageComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MonitorsSystemComponent);
+    fixture = TestBed.createComponent(OverviewPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

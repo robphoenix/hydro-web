@@ -1,7 +1,7 @@
-<button mat-button [matMenuTriggerFor]="user">
+<app-primary-navbar-button [matMenuTriggerFor]="user" [menu]="true">
   <mat-icon>account_circle</mat-icon>
-  <mat-icon>arrow_drop_down</mat-icon>
-</button>
+</app-primary-navbar-button>
+
 <mat-menu #user="matMenu" class="nav-menu" [overlapTrigger]="false">
   <a mat-menu-item (click)="logout.emit()">
     <mat-icon>exit_to_app</mat-icon>

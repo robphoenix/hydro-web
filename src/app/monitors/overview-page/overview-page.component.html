@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="heading"><app-heading>Monitors Overview</app-heading></div>
+
+  <app-overview-table
+    [monitors]="currentMonitors"
+    [allCurrentActions]="allCurrentActions"
+    [allCurrentCategories]="allCurrentCategories"
+    [canToggleStatus]="canToggleStatus"
+    [monitorsType]="lastMonitorsType"
+    (refresh)="refresh()"
+    (changeMonitorsType)="updateMonitorsData($event)"
+  ></app-overview-table>
+</div>

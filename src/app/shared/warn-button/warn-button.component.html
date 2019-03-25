@@ -6,5 +6,11 @@
   type="button"
 >
   <mat-icon *ngIf="icon" class="icon">{{ icon }}</mat-icon>
-  <ng-content></ng-content>
+  <span class="content">
+    <ng-content></ng-content>
+    <!--
+      Including an icon makes the spacing inside the button look uneven so we'll use this to balance it out
+    -->
+    <span *ngIf="icon">&nbsp;</span>
+  </span>
 </button>

@@ -11,6 +11,8 @@ import { AccentLinkButtonComponent } from './accent-link-button/accent-link-butt
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { WarnButtonComponent } from './warn-button/warn-button.component';
+import { HeadingComponent } from './heading/heading.component';
+import { TableHeadingComponent } from './table-heading/table-heading.component';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { WarnButtonComponent } from './warn-button/warn-button.component';
     PrimaryButtonComponent,
     AccentSubmitButtonComponent,
     WarnButtonComponent,
+    HeadingComponent,
+    TableHeadingComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -39,6 +43,8 @@ import { WarnButtonComponent } from './warn-button/warn-button.component';
     AccentSubmitButtonComponent,
     PrimaryButtonComponent,
     WarnButtonComponent,
+    HeadingComponent,
+    TableHeadingComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

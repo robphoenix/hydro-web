@@ -1,65 +1,31 @@
 @import 'main';
 
-.divider {
-  border: 1px solid $grey;
+.container {
+  margin: $spacing-xl auto;
+  padding: $spacing-l;
+  width: 800px;
+}
+
+.heading {
+  margin-bottom: $spacing-xl;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: $half;
-  margin: 80px auto;
 }
 
-.title {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-}
-
-.section {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  width: $largest;
-}
-
-.status-priority-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  width: $largest;
-}
-
-.status,
-.type {
-  flex: 0 0 1;
-}
-.priority {
-  flex: 0 0 2;
-}
-
-.cache-window {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.cache-window,
-.priority,
-.name,
-.description,
-.query,
-.categories,
-.groups {
-  width: $largest;
+.form-field {
+  margin-bottom: $spacing-l;
 }
 
 .buttons {
   display: flex;
   justify-content: flex-end;
-  padding-top: 20px;
+  margin-top: $spacing-l;
 
   .view,
   .cancel {
-    margin-left: 20px;
+    margin-left: $spacing-m;
   }
 }

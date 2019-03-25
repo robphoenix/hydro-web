@@ -52,6 +52,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public liveDataMessage = '';
   public liveData: IMonitorDataAttributes[] = [];
   public dataType = '';
+  public timeLiveDataReceived: Date;
 
   @ViewChild(MatPaginator)
   private paginator: MatPaginator;
@@ -61,7 +62,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,
@@ -138,6 +139,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         (message: IMonitorDisplayData) => {
+          this.timeLiveDataReceived = new Date();
           const { data } = message;
           this.liveData = data;
           console.log('live data...');

@@ -6,23 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-monitors-menu.component.scss'],
 })
 export class NavbarMonitorsMenuComponent {
-  buttonText = 'monitors';
-  menu = true;
-  menuItems: { [key: string]: string }[] = [
+  menuItems: { name: string; url: string; icon: string }[] = [
     {
-      name: 'Standard Monitors',
-      url: 'standard',
-      icon: 'standard',
-    },
-    {
-      name: 'Archived Monitors',
-      url: 'archived',
-      icon: 'archived',
-    },
-    {
-      name: 'System Monitors',
-      url: 'system',
-      icon: 'system',
+      name: 'Monitors Overview',
+      url: '',
+      icon: 'monitors',
     },
     {
       name: 'Add New Monitor',

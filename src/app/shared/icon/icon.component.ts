@@ -11,11 +11,13 @@ export class IconComponent {
 
   icons: { [type: string]: string } = {
     add: 'add',
-    actions: 'report_problem',
+    actions: 'play_circle_filled',
     categories: 'category',
     monitor: 'flash_on',
+    monitors: 'flash_on',
     standard: 'flash_on',
     archived: 'archive',
     system: 'tune',
+    menu: 'more_vert',
   };
 }

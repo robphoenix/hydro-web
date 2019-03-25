@@ -1,60 +1,52 @@
 @import 'main';
 
-.link {
-  text-decoration: none;
-
-  &:hover,
-  &:focus,
-  &:active {
-    .name {
-      color: mat-color($accent);
-    }
-  }
-
-  &:visited {
-    .name {
-      color: mat-color($primary);
-    }
-  }
+.button {
+  width: 100%;
+  height: 100%;
+  padding: $spacing-m $spacing-m;
+  margin: $spacing-xs 0;
 }
 
-.title {
+.outer-container {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
-.online {
-  margin-left: 5px;
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: $spacing-s;
+}
+
+.name {
+  font-size: $fs-m;
+  font-weight: $fw-5;
+  line-height: $lh-title;
+  margin-bottom: $spacing-xs;
+}
+
+.online-icon {
   color: $green;
 }
 
 .online-name {
   color: $darker-grey;
-  letter-spacing: 0.05em;
-  font-size: 1.1em;
-  margin: 10px 0;
-  line-height: 1.5;
-  -webkit-transition: $transition-in-out;
-  transition: $transition-in-out;
 }
 
-.offline {
-  margin-left: 5px;
+.offline-icon {
   color: $red;
 }
 
 .offline-name {
   color: $grey;
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-  margin: 10px 0;
-  line-height: 1.5;
   cursor: not-allowed;
 }
 
 .description {
   color: $grey;
-  margin: 0;
-  line-height: 1.3;
-  padding-bottom: 10px;
+  font-size: $fs-s;
+  font-weight: 400;
+  line-height: $lh-copy;
 }

@@ -25,6 +25,7 @@ import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dia
 import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.component';
 import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-table',
@@ -36,13 +37,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   monitors: IMonitor[];
 
   @Input()
-  canToggleStatus = true;
+  canToggleStatus: boolean;
 
   @Input()
-  useLastStatus = true;
-
-  @Input()
-  monitorType: MonitorStatus | MonitorType;
+  monitorsType: MonitorStatus | MonitorType;
 
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
@@ -68,11 +66,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   allCurrentCategories: string[];
   categoriesControl = new FormControl();
 
-  @Input()
-  initialStatus = 'all';
-
   @Output()
   refresh = new EventEmitter();
+
+  @Output()
+  changeMonitorsType = new EventEmitter<string>();
 
   filterValues = {
     searchTerm: '',
@@ -92,6 +90,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     private userService: UserService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -100,24 +99,44 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
-    this.monitorsStatus = this.useLastStatus
-      ? this.userService.lastMonitorsStatus || this.initialStatus
-      : this.initialStatus;
+    this.updateMonitorsStatus();
   }
 
   ngOnChanges(): void {
     if (this.dataSource) {
       this.dataSource.data = this.monitors;
+      this.updateMonitorsStatus();
     }
   }
 
-  get monitorsStatus(): string {
+  private get isCurrentlyArchivedMonitors() {
+    return this.monitorsType === MonitorStatus.Archived;
+  }
+
+  public updateMonitorsStatus() {
+    this.monitorsStatus = this.isCurrentlyArchivedMonitors
+      ? 'all'
+      : this.userService.lastMonitorsStatus || 'all';
+  }
+
+  public get monitorsStatus(): string {
     return this.filterValues.status;
   }
 
-  set monitorsStatus(status: string) {
+  public set monitorsStatus(status: string) {
     this.filterValues.status = status;
     this.filterMonitors();
+    if (!this.isCurrentlyArchivedMonitors) {
+      this.userService.lastMonitorsStatus = status;
+    }
+  }
+
+  public toggleStatus(status: string) {
+    this.filterValues.status = status;
+    this.filterMonitors();
+    if (!this.isCurrentlyArchivedMonitors) {
+      this.userService.lastMonitorsStatus = status;
+    }
   }
 
   public filterMonitors(): void {
@@ -137,11 +156,18 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   }
 
   public hasActions(group?: string): boolean {
+    const anyCurrentActions: boolean =
+      Object.entries(this.allCurrentActions).length > 0;
+    if (!anyCurrentActions) {
+      return false;
+    }
+
     if (!group) {
       return Object.values(this.allCurrentActions).every(
         (curr: string[]) => !!curr.length,
       );
     }
+
     const actions = this.allCurrentActions[group];
     return actions && actions.length > 0;
   }
@@ -158,11 +184,6 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.selects.forEach((select: MultipleSelectComponent) =>
       select.clearSelectedOptions(),
     );
-  }
-
-  public toggleStatus(value: string) {
-    this.monitorsStatus = value;
-    this.userService.lastMonitorsStatus = this.monitorsStatus;
   }
 
   public archiveMonitor(id: number) {

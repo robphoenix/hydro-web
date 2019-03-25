@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MonitorsArchivedComponent } from './monitors-archived.component';
+import { HeadingComponent } from './heading.component';
 
-describe('MonitorsArchivedComponent', () => {
-  let component: MonitorsArchivedComponent;
-  let fixture: ComponentFixture<MonitorsArchivedComponent>;
+describe('HeadingComponent', () => {
+  let component: HeadingComponent;
+  let fixture: ComponentFixture<HeadingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MonitorsArchivedComponent],
+      declarations: [HeadingComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MonitorsArchivedComponent);
+    fixture = TestBed.createComponent(HeadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

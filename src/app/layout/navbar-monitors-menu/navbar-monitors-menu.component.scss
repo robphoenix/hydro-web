@@ -1,7 +1,6 @@
 @import 'main';
 
-.button {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-  font-size: 16px;
+.name {
+  font-size: $fs-l;
+  font-weight: $fw-3;
 }

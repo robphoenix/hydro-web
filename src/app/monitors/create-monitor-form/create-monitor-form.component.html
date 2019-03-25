@@ -1,69 +1,62 @@
-<div class="form">
-  <h2 class="title">{{ title }}</h2>
-  <form [formGroup]="createMonitorForm" (ngSubmit)="submit()">
-    <section class="section">
+<div class="container">
+  <div class="heading">
+    <app-heading>{{ heading }} Monitor</app-heading>
+  </div>
+
+  <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
+    <div class="form-field">
       <app-create-monitor-form-name
-        class="name"
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['name']"
         [placeholder]="placeholders.name"
         [editForm]="editForm"
         ngDefaultControl
-      ></app-create-monitor-form-name>
-    </section>
+      >
+      </app-create-monitor-form-name>
+    </div>
 
-    <section class="section">
+    <div class="form-field">
       <app-create-monitor-form-description
-        class="description"
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['description']"
         [placeholder]="placeholders.description"
         ngDefaultControl
-      ></app-create-monitor-form-description>
-    </section>
-
-    <div class="status-priority-wrapper">
-      <section class="section">
-        <app-create-monitor-form-status
-          class="status"
-          [parent]="createMonitorForm"
-        ></app-create-monitor-form-status>
-      </section>
-
-      <section class="section">
-        <app-create-monitor-form-type
-          class="type"
-          [parent]="createMonitorForm"
-        ></app-create-monitor-form-type>
-      </section>
-
-      <section class="section">
-        <app-create-monitor-form-priority
-          class="priority"
-          [parent]="createMonitorForm"
-        ></app-create-monitor-form-priority>
-      </section>
+      >
+      </app-create-monitor-form-description>
     </div>
 
-    <section class="section">
+    <div class="form-field">
+      <app-create-monitor-form-status [parent]="createMonitorForm">
+      </app-create-monitor-form-status>
+    </div>
+
+    <div class="form-field">
+      <app-create-monitor-form-type [parent]="createMonitorForm">
+      </app-create-monitor-form-type>
+    </div>
+
+    <div class="form-field">
+      <app-create-monitor-form-priority
+        [parent]="createMonitorForm"
+      ></app-create-monitor-form-priority>
+    </div>
+
+    <div class="form-field">
       <app-create-monitor-form-query
-        class="query"
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['query']"
         [placeholder]="placeholders.query"
       ></app-create-monitor-form-query>
-    </section>
+    </div>
 
-    <section class="section">
+    <div class="form-field">
       <app-create-monitor-form-cache-window
-        class="cache-window"
         [parent]="createMonitorForm"
       ></app-create-monitor-form-cache-window>
-    </section>
+    </div>
 
-    <section class="section">
+    <div class="form-field">
       <app-create-monitor-form-categories
-        class="categories"
         [parent]="createMonitorForm"
         [loading]="loadingCategories"
         [selectedCategories]="selectedCategories"
@@ -74,12 +67,12 @@
         [placeholder]="placeholders.categories"
         (removeCategory)="removeCategory($event)"
         (selectedCategory)="selectedCategory($event)"
-      ></app-create-monitor-form-categories>
-    </section>
+      >
+      </app-create-monitor-form-categories>
+    </div>
 
-    <section class="section">
+    <div class="form-field">
       <app-create-monitor-form-groups
-        class="groups"
         [parent]="createMonitorForm"
         [loading]="loadingGroups"
         [selectedGroups]="selectedGroups"
@@ -89,23 +82,24 @@
         [validationMessages]="validationMessages['groups']"
         (removeGroup)="removeGroup($event)"
         (selectedGroup)="selectedGroup($event)"
-      ></app-create-monitor-form-groups>
-    </section>
+      >
+      </app-create-monitor-form-groups>
+    </div>
 
-    <section class="buttons">
+    <div class="buttons">
       <app-accent-submit-button [disabled]="!createMonitorForm.valid">
-        {{ buttonText }}
+        Save Monitor
       </app-accent-submit-button>
       <app-accent-button
         class="view"
         (click)="submit(true)"
         [disabled]="!canViewMonitor"
       >
-        {{ buttonText }} and view
+        Save Monitor and View
       </app-accent-button>
       <app-warn-button class="cancel" (click)="cancel()">
-        cancel
+        Cancel
       </app-warn-button>
-    </section>
+    </div>
   </form>
 </div>

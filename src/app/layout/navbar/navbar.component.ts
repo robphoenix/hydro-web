@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/user/auth.service';
 export class NavbarComponent {
   name = '../assets/img/hydro-uppercase.png';
   logo = '../assets/img/hydroelectric.png';
+  background = 'primary';
 
   constructor(public authService: AuthService) {}
 }

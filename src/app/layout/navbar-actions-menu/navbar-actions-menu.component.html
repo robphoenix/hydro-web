@@ -1,8 +1,6 @@
-<app-primary-navbar-button
-  [matMenuTriggerFor]="actions"
-  [buttonText]="buttonText"
-  [menu]="menu"
-></app-primary-navbar-button>
+<app-primary-navbar-button [matMenuTriggerFor]="actions" [menu]="true">
+  Actions
+</app-primary-navbar-button>
 
 <mat-menu #actions="matMenu" [overlapTrigger]="false">
   <a

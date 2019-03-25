@@ -28,10 +28,7 @@ import { CacheWindowService } from '../cache-window.service';
 })
 export class CreateMonitorFormComponent implements OnInit {
   @Input()
-  title: string;
-
-  @Input()
-  buttonText: string;
+  heading: string;
 
   @Input()
   monitor: IMonitor;

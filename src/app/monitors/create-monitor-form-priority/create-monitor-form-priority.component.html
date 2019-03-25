@@ -1,16 +1,20 @@
 <div class="wrapper" [formGroup]="parent">
   <mat-label class="label">Priority*</mat-label>
-  <div class="slider-wrapper">
-    <mat-slider
-      formControlName="priority"
-      class="slider"
-      [max]="max"
-      [min]="min"
-      [step]="step"
-      [thumbLabel]="thumbLabel"
-      [tickInterval]="tickInterval"
-      (input)="onInputChange($event)"
-    ></mat-slider>
-    <span class="priority">{{ priority }} priority</span>
-  </div>
+  <mat-button-toggle-group formControlName="priority">
+    <mat-button-toggle value="MonitorPriority.Lowest">
+      <p>Lowest</p>
+    </mat-button-toggle>
+    <mat-button-toggle value="MonitorPriority.Low">
+      <p>Low</p>
+    </mat-button-toggle>
+    <mat-button-toggle value="MonitorPriority.Mid" [checked]="true">
+      <p>Mid</p>
+    </mat-button-toggle>
+    <mat-button-toggle value="MonitorPriority.High">
+      <p>High</p>
+    </mat-button-toggle>
+    <mat-button-toggle value="MonitorPriority.Highest">
+      <p>Highest</p>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 </div>

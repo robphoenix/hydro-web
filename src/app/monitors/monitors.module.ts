@@ -13,10 +13,6 @@ import { CellMenuComponent } from './cell-menu/cell-menu.component';
 import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
 import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
-import { MonitorsStandardComponent } from './monitors-standard/monitors-standard.component';
-import { MonitorsSystemComponent } from './monitors-system/monitors-system.component';
-import { MonitorsArchivedComponent } from './monitors-archived/monitors-archived.component';
-import { OverviewNavComponent } from './overview-nav/overview-nav.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
 import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
@@ -33,16 +29,14 @@ import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cac
 import { CreateMonitorFormNameComponent } from './create-monitor-form-name/create-monitor-form-name.component';
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
+import { OverviewPageComponent } from './overview-page/overview-page.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', redirectTo: 'standard', pathMatch: 'full' },
-      { path: 'standard', component: MonitorsStandardComponent },
-      { path: 'archived', component: MonitorsArchivedComponent },
-      { path: 'system', component: MonitorsSystemComponent },
+      { path: '', component: OverviewPageComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },
@@ -62,10 +56,6 @@ import { ChangeEventDialogComponent } from './change-event-dialog/change-event-d
     CellMenuComponent,
     CellCategoriesComponent,
     CreateMonitorFormComponent,
-    MonitorsStandardComponent,
-    MonitorsSystemComponent,
-    MonitorsArchivedComponent,
-    OverviewNavComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
     CreateMonitorFormCategoriesComponent,
@@ -82,6 +72,7 @@ import { ChangeEventDialogComponent } from './change-event-dialog/change-event-d
     CreateMonitorFormNameComponent,
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
+    OverviewPageComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

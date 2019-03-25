@@ -10,18 +10,16 @@
 .logo {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: $spacing-l;
+  filter: invert(100%);
 }
 
-.logo-image {
-  filter: invert(100%);
-  margin-right: 10px;
-}
-.name {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.hydro {
+  font-size: $fs-2xl;
+  font-weight: $fw-3;
 }
 
 .nav {
   margin-left: auto;
+  margin-right: $spacing-l;
 }

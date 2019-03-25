@@ -3,25 +3,23 @@
 .toolbar {
   display: flex;
   align-items: center;
-  width: $larger;
-  margin: 0 auto;
+  margin-bottom: $spacing-l;
 
   .status-toggle {
-    margin: 0 10px 0 0;
+    margin-left: $spacing-l;
   }
 
   .search {
     flex: 0 0 25%;
-    margin: 0 20px 0 auto;
+    margin: 0 $spacing-l 0 auto;
   }
 }
 
-.new-monitor-button {
-  margin: 0 10px 0 20px;
+.table-outer-wrapper {
+  box-shadow: $box-shadow;
 }
 
-.title,
-.table {
+.table-inner-wrapper {
   max-height: 700px;
   overflow: auto;
 
@@ -36,39 +34,30 @@
   }
 }
 
-.overview-table {
-  width: $larger;
-  margin: 10px auto 40px auto;
-  border: 1px solid $light-grey;
-  box-shadow: $box-shadow;
-
-  .mat-header-row {
-    padding: 10px 0;
-  }
-
-  .mat-row {
-    padding: 5px;
-  }
+.mat-header-row {
+  padding: $spacing-xs 0;
+}
+.mat-row {
+  border-bottom: none;
 }
 
-.full-width {
-  width: 100%;
+.mat-monitor-cell {
+  padding: 0;
 }
 
 .menu-icon {
   color: $green;
 }
 
-.actions {
-  .title {
-    margin: 0 10px 0 5px;
-  }
+.header-name {
+  font-size: $fs-m;
+  font-weight: $fw-5;
+  margin-left: $spacing-s;
 }
 
-.categories {
-  .title {
-    margin: 0 10px 0 5px;
-  }
+.monitor-cell {
+  width: 100%;
+  height: 100%;
 }
 
 .menu,
@@ -85,4 +74,37 @@
 
 .paginator {
   border-top: 1px solid $light-grey;
+}
+
+.online {
+  color: $green;
+}
+
+.offline {
+  color: $red;
+}
+
+.all-monitors {
+  color: $yellow;
+}
+
+.online,
+.offline,
+.all-monitors {
+  margin-left: $spacing-xs;
+}
+
+.primary {
+  color: $primary;
+}
+
+.button-toggle {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.button-text {
+  font-size: $fs-m;
+  padding: $spacing-xs $spacing-s;
 }

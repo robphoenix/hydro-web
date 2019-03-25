@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MonitorStatus } from '../monitor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cell-monitor',
@@ -18,6 +19,8 @@ export class CellMonitorComponent implements OnInit {
 
   online: boolean;
   offline: boolean;
+
+  constructor(public router: Router) {}
 
   ngOnInit(): void {
     this.online = this.status === MonitorStatus.Online;
