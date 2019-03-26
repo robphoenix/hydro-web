@@ -62,7 +62,7 @@
           <td mat-cell *matCellDef="let element">
             {{
               headersMetadata[column].type === MonitorDataAttributeType.DateTime
-                ? (element[column] | date: 'HH:mm dd/MM/yyyy')
+                ? (element[column] | date: headersMetadata[column].format)
                 : element[column] || '-'
             }}
           </td>
