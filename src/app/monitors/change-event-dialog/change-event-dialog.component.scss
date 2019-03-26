@@ -4,10 +4,16 @@
   text-transform: capitalize;
 }
 
+.content {
+  margin-bottom: $spacing-l;
+}
+
 .error {
   color: $warn;
 }
 
-.button {
-  margin-left: auto;
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $spacing-none;
 }

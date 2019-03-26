@@ -1,16 +1,7 @@
 <h1 mat-dialog-title class="title">Monitor Change Event</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="content">
   <p>{{ data.message }}</p>
 </div>
-
-<div mat-dialog-actions>
-  <button
-    class="button"
-    mat-raised-button
-    [mat-dialog-close]=""
-    color="accent"
-    cdkFocusInitial
-  >
-    ok
-  </button>
+<div mat-dialog-actions class="buttons">
+  <app-dialog-close-button>Close</app-dialog-close-button>
 </div>
