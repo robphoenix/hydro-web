@@ -41,18 +41,20 @@
     class="table-outer-wrapper"
     [ngClass]="{ 'table-outer-wrapper': dataSource && dataSource.data.length }"
   >
-    <div class="table-inner-wrapper">
+    <div
+      class="table-inner-wrapper"
+      *ngIf="dataSource && dataSource.data.length; else noData"
+    >
       <table
         mat-table
         matSort
         [dataSource]="dataSource"
         (matSortChange)="sortData($event)"
-        *ngIf="dataSource && dataSource.data.length; else: noData"
         class="table"
       >
         <ng-container
           *ngFor="let column of displayedColumns"
-          matColumnDef="{{column}}"
+          matColumnDef="{{ column }}"
         >
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column }}
