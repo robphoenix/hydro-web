@@ -7,7 +7,9 @@
 - [Hydro Web](#hydro-web)
   - [Install](#install)
   - [Local Development](#local-development)
+  - [Design & CSS](#design--css)
   - [Dev server](#dev-server)
+    - [Server scripts](#server-scripts)
   - [CI](#ci)
 
 ## Install
@@ -22,12 +24,21 @@ Run `npm start` to start up the app, and then navigate to
 [http://localhost:4200/](http://localhost:4200/). The app will automatically
 reload if you change any of the source files.
 
+## Design & CSS
+
+In the Sass files you will find predefined colours, typography settings, and padding & margin spacings. These should help with the overall rhythm and design of the site.
+
 ## Dev server
 
 A dev instance of Hydro is available on
 [mn2splmfe001sd0](http://mn2splmfe001sd0:4200). The Angular app here is
 served up by the small Go server in `/server`. Due to the limitations with
 this deep links will not work on the DEV server.
+
+### Server scripts
+
+- **server/deploy.sh** will build and deploy the Go web server to the DEV instance.
+- **server/run.sh** will run the Go web server in the background, this is to be used on any remote servers that are expected to serve the application.
 
 ## CI
 
