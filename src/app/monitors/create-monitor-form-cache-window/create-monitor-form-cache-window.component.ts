@@ -17,7 +17,7 @@ export class CreateMonitorFormCacheWindowComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   readonly tooltip = `This feature allows you to accumulate live events over the given period, with each new event being added to the cache. This means that when an esper event occurs the previous event data isn't simply deleted, but can still be viewed; however, it will be dropped from the cache once it reaches the cache limit value, as shown on the left.
 
-Be careful how you use this feature as it could break your browser or cause the server to crash...`;
+Be careful how you use this feature as it could break your browser or cause the server to crash!`;
 
   constructor(public cacheWindowService: CacheWindowService) {}
 

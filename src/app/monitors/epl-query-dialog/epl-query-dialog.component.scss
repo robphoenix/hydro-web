@@ -1,9 +1,9 @@
 @import 'main';
 
 .query {
-  padding: 20px 40px;
+  margin-bottom: $spacing-l;
   font-family: monospace;
-  font-size: 16px;
+  font-size: $fs-l;
 }
 
 .buttons {
