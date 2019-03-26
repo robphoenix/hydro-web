@@ -1,6 +1,8 @@
 ![hydro logo](/src/assets/img/hydroelectric.png)
 
-#  Hydro Web
+[![Build Status](https://mn2forbld0001d0/view/All%20jobs/job/hydro-web-pipeline/job/master/badge/icon?style=flat-square)](https://mn2forbld0001d0/view/All%20jobs/job/hydro-web-pipeline/job/master/)
+
+# Hydro Web
 
 - [Hydro Web](#hydro-web)
   - [Install](#install)
