@@ -3,20 +3,15 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: $half;
+  width: 50%;
   margin: 80px auto;
-}
-
-.title {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
 }
 
 .description {
   margin: 20px 0;
-  width: $largest;
+  width: 100%;
 
   .mat-form-field {
-    width: $largest;
+    width: 100%;
   }
 }

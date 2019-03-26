@@ -12,7 +12,7 @@
 
   <nav class="nav" *ngIf="authService.isLoggedIn">
     <app-navbar-monitors-menu></app-navbar-monitors-menu>
-    <!-- <app-navbar-actions-menu></app-navbar-actions-menu> -->
+    <app-navbar-actions-menu></app-navbar-actions-menu>
     <app-navbar-user-menu
       [name]="authService.userDisplayName"
       (logout)="authService.logout()"

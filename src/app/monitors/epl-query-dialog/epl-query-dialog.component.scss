@@ -1,18 +1,13 @@
 @import 'main';
 
-.title {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
-}
-
 .query {
-  padding: 20px 40px;
+  margin-bottom: $spacing-l;
   font-family: monospace;
-  font-size: 16px;
+  font-size: $fs-l;
 }
 
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 5px;
+  margin-bottom: $spacing-none;
 }

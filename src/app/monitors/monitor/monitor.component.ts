@@ -22,7 +22,6 @@ import { EventbusService } from '../eventbus.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
-import * as EventBus from 'vertx3-eventbus-client';
 import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
 
 /**
@@ -239,6 +238,8 @@ export class MonitorComponent implements OnInit, OnDestroy {
     }
 
     this.dataType = dataType;
+    console.log({ headersMetadata });
+
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;
@@ -283,10 +284,8 @@ export class MonitorComponent implements OnInit, OnDestroy {
           const dateA: Date = new Date(a[sort.active] as number);
           const dateB: Date = new Date(a[sort.active] as number);
           return this.compare(dateA, dateB, isAsc);
-        case '':
-          return this.compare(a[sort.active], b[sort.active], isAsc);
         default:
-          return 0;
+          return this.compare(a[sort.active], b[sort.active], isAsc);
       }
     });
   }

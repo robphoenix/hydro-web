@@ -3,13 +3,13 @@
 @import 'main';
 
 .query {
-  width: $largest;
+  width: 100%;
 }
 
 .textarea {
-  width: $largest;
+  width: 100%;
   font-family: monospace;
-  font-size: 16px;
+  font-size: $fs-m;
   height: auto;
   overflow: auto;
 

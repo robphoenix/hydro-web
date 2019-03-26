@@ -1,12 +1,14 @@
 <app-primary-navbar-button [matMenuTriggerFor]="actions" [menu]="true">
-  Actions
+  <span class="name">
+    Actions
+  </span>
 </app-primary-navbar-button>
 
 <mat-menu #actions="matMenu" [overlapTrigger]="false">
   <a
     mat-menu-item
     *ngFor="let item of menuItems"
-    routerLink="/actions/{{item.url}}"
+    routerLink="/actions/{{ item.url }}"
   >
     <app-icon [type]="item.icon"></app-icon>
     <span>{{ item.name }}</span>

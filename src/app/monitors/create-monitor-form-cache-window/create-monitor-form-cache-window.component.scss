@@ -4,34 +4,33 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-bottom: 10px;
 }
 
 .label {
-  margin-bottom: 20px;
+  margin-bottom: $spacing-m;
   color: $dark-grey;
   display: flex;
   align-items: center;
 
   .icon {
     color: $grey;
-    margin-left: 10px;
+    margin-left: $spacing-s;
     cursor: help;
   }
 }
 
 ::ng-deep .tooltip {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: $fs-s;
+  line-height: $lh-copy;
   white-space: pre-line;
 }
 
 .slider {
-  width: $largest;
+  width: 100%;
 }
 
 .duration-name {
   color: $darker-grey;
-  font-weight: 500;
+  font-weight: $fw-5;
   text-transform: capitalize;
 }

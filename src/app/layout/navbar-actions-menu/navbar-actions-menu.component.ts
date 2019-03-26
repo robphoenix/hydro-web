@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-actions-menu.component.scss'],
 })
 export class NavbarActionsMenuComponent {
-  menuItems: { [key: string]: string }[] = [
+  menuItems: { name: string; url: string; icon: string }[] = [
     {
       name: 'All Actions',
       url: '',

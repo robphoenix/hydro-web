@@ -1,11 +1,15 @@
 @import 'main';
 
-.title {
-  text-transform: uppercase;
-  letter-spacing: $tracked;
+.content {
+  margin-bottom: $spacing-l;
 }
 
 .buttons {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: $spacing-none;
+}
+
+.action-button {
+  margin-left: $spacing-m;
 }

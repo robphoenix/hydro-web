@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccentLinkButtonComponent } from './accent-link-button.component';
+import { DialogCloseButtonComponent } from './dialog-close-button.component';
 
-describe('AccentLinkButtonComponent', () => {
-  let component: AccentLinkButtonComponent;
-  let fixture: ComponentFixture<AccentLinkButtonComponent>;
+describe('DialogCloseButtonComponent', () => {
+  let component: DialogCloseButtonComponent;
+  let fixture: ComponentFixture<DialogCloseButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AccentLinkButtonComponent],
+      declarations: [DialogCloseButtonComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccentLinkButtonComponent);
+    fixture = TestBed.createComponent(DialogCloseButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

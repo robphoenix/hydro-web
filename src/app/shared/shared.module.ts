@@ -7,12 +7,12 @@ import { MultipleSelectComponent } from './multiple-select/multiple-select.compo
 import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AccentButtonComponent } from './accent-button/accent-button.component';
-import { AccentLinkButtonComponent } from './accent-link-button/accent-link-button.component';
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { WarnButtonComponent } from './warn-button/warn-button.component';
 import { HeadingComponent } from './heading/heading.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
+import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
 
 @NgModule({
   imports: [
@@ -27,24 +27,24 @@ import { TableHeadingComponent } from './table-heading/table-heading.component';
     IconComponent,
     ErrorDialogComponent,
     AccentButtonComponent,
-    AccentLinkButtonComponent,
     PrimaryButtonComponent,
     AccentSubmitButtonComponent,
     WarnButtonComponent,
     HeadingComponent,
     TableHeadingComponent,
+    DialogCloseButtonComponent,
   ],
   exports: [
     SearchInputComponent,
     MultipleSelectComponent,
     IconComponent,
     AccentButtonComponent,
-    AccentLinkButtonComponent,
     AccentSubmitButtonComponent,
     PrimaryButtonComponent,
     WarnButtonComponent,
     HeadingComponent,
     TableHeadingComponent,
+    DialogCloseButtonComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })
