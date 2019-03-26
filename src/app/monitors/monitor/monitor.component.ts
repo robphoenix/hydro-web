@@ -283,10 +283,8 @@ export class MonitorComponent implements OnInit, OnDestroy {
           const dateA: Date = new Date(a[sort.active] as number);
           const dateB: Date = new Date(a[sort.active] as number);
           return this.compare(dateA, dateB, isAsc);
-        case '':
-          return this.compare(a[sort.active], b[sort.active], isAsc);
         default:
-          return 0;
+          return this.compare(a[sort.active], b[sort.active], isAsc);
       }
     });
   }
