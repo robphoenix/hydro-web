@@ -7,7 +7,6 @@ import { MultipleSelectComponent } from './multiple-select/multiple-select.compo
 import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AccentButtonComponent } from './accent-button/accent-button.component';
-import { AccentLinkButtonComponent } from './accent-link-button/accent-link-button.component';
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { WarnButtonComponent } from './warn-button/warn-button.component';
@@ -27,7 +26,6 @@ import { TableHeadingComponent } from './table-heading/table-heading.component';
     IconComponent,
     ErrorDialogComponent,
     AccentButtonComponent,
-    AccentLinkButtonComponent,
     PrimaryButtonComponent,
     AccentSubmitButtonComponent,
     WarnButtonComponent,
@@ -39,7 +37,6 @@ import { TableHeadingComponent } from './table-heading/table-heading.component';
     MultipleSelectComponent,
     IconComponent,
     AccentButtonComponent,
-    AccentLinkButtonComponent,
     AccentSubmitButtonComponent,
     PrimaryButtonComponent,
     WarnButtonComponent,
