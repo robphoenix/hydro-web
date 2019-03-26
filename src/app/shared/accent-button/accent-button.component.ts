@@ -10,5 +10,8 @@ export class AccentButtonComponent {
   disabled: boolean;
 
   @Input()
+  dialogClose: boolean;
+
+  @Input()
   icon: string;
 }

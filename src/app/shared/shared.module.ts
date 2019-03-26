@@ -12,7 +12,6 @@ import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submi
 import { WarnButtonComponent } from './warn-button/warn-button.component';
 import { HeadingComponent } from './heading/heading.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
-import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
 
 @NgModule({
   imports: [
@@ -32,7 +31,6 @@ import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-b
     WarnButtonComponent,
     HeadingComponent,
     TableHeadingComponent,
-    DialogCloseButtonComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -44,7 +42,6 @@ import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-b
     WarnButtonComponent,
     HeadingComponent,
     TableHeadingComponent,
-    DialogCloseButtonComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

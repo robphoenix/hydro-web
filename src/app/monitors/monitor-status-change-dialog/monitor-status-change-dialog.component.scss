@@ -1,6 +1,14 @@
 @import 'main';
 
+.content {
+  margin-bottom: $spacing-l;
+}
+
 .buttons {
   display: flex;
   justify-content: flex-end;
+}
+
+.action-button {
+  margin-left: $spacing-m;
 }

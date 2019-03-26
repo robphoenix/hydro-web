@@ -250,7 +250,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public enableMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const action = `enable`;
+    const action = `Enable`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
     });
@@ -281,7 +281,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public disableMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const action = `disable`;
+    const action = `Disable`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
     });
