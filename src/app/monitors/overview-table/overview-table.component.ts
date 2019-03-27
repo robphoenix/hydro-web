@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./overview-table.component.scss'],
 })
 export class OverviewTableComponent implements OnInit, OnChanges {
-  private afterFirstLoad = false;
+  public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
 
   @Input()
   monitors: IMonitor[];
