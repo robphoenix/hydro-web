@@ -2,13 +2,13 @@
   mat-button
   [disabled]="!online"
   [disableRipple]="true"
-  (click)="router.navigate(['/monitors/', id, { name: name }])"
+  (click)="viewMonitor()"
   class="button"
 >
   <div class="outer-container">
     <mat-icon
       [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
-      matTooltip="{{online ? 'Online' : 'Offline'}}"
+      matTooltip="{{ online ? 'Online' : 'Offline' }}"
     >
       {{ online ? 'flash_on' : 'flash_off' }}
     </mat-icon>

@@ -65,21 +65,13 @@ export class MonitorComponent implements OnInit, OnDestroy {
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,
-  ) {
-    // if we get this from the url params we don't have to wait for the server
-    // to send back the monitor info, though to be honest I'm not sure this
-    // gives us much gain in time to display data.
-    this.name = this.route.snapshot.paramMap.get('name');
-  }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource([]);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.getCachedData();
     this.getMonitor();
-    this.getLiveData();
-    this.getChangeEvents();
   }
 
   ngOnDestroy(): void {
@@ -105,7 +97,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   getChangeEvents() {
     this.eventbusService
-      .getChangeEvents(this.name)
+      .getChangeEvents(this.monitor.name)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         (message: MonitorChangeEvent) => {
@@ -134,7 +126,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
   getLiveData() {
     this.liveDataMessage = 'Currently waiting for live data';
     this.eventbusService
-      .getLiveData(this.name)
+      .getLiveData(this.monitor.name)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         (message: IMonitorDisplayData) => {
@@ -162,7 +154,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
   getCachedData() {
     this.cachedDataMessage = 'Requesting cached data';
     this.eventbusService
-      .getCachedData(this.name)
+      .getCachedData(this.monitor.name)
       .pipe(first()) // this is only going to return once
       .subscribe(
         (message: IMonitorDisplayData) => {
@@ -216,6 +208,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
       this.editLink = `/monitors/${id}/edit`;
       this.monitorService.getMonitorById(id).subscribe((monitor) => {
         this.monitor = monitor;
+        this.getCachedData();
+        this.getLiveData();
+        this.getChangeEvents();
       });
     });
   }
@@ -238,7 +233,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
     }
 
     this.dataType = dataType;
-    console.log({ headersMetadata });
 
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
