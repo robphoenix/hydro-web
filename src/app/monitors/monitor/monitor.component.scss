@@ -60,6 +60,10 @@
   padding: $spacing-s;
 }
 
+.mat-row:nth-child(odd) {
+  background-color: $grey-1;
+}
+
 .hidden {
   display: none;
 }
