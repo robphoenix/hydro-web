@@ -38,8 +38,13 @@
 .mat-header-row {
   padding: $spacing-xs 0;
 }
+
 .mat-row {
   border-bottom: none;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: $near-white;
 }
 
 .mat-monitor-cell {
