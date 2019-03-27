@@ -1,23 +1,44 @@
 @import 'main';
 
-.button {
+.link {
+  text-decoration: none;
   width: 100%;
   height: 100%;
-  padding: $spacing-m $spacing-m;
   margin: $spacing-xs 0;
+
+  .online-name {
+    text-decoration: underline;
+    text-decoration-color: $accent;
+  }
+
+  &:hover {
+    .outer-container {
+      background-color: $near-white;
+    }
+    .online-name {
+      color: $accent;
+    }
+  }
+}
+
+.offline-link {
+  cursor: not-allowed;
 }
 
 .outer-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  padding: $spacing-m $spacing-l;
 }
 
 .inner-container {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-left: $spacing-s;
+  margin-left: $spacing-m;
 }
 
 .name {
@@ -41,7 +62,6 @@
 
 .offline-name {
   color: $grey;
-  cursor: not-allowed;
 }
 
 .description {

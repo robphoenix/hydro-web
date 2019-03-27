@@ -22,12 +22,14 @@ export class CellMonitorComponent implements OnInit {
 
   online: boolean;
   offline: boolean;
+  linkTo: string;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.online = this.status === MonitorStatus.Online;
     this.offline = this.status === MonitorStatus.Offline;
+    this.linkTo = this.online ? `/monitors/${this.id}` : null;
   }
 
   public viewMonitor() {
