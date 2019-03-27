@@ -1,9 +1,8 @@
-<button
-  mat-button
-  [disabled]="!online"
-  [disableRipple]="true"
-  (click)="viewMonitor()"
-  class="button"
+<a
+  routerLink="{{ linkTo }}"
+  [attr.href]="linkTo"
+  [ngClass]="{ 'online-link': online, 'offline-link': offline }"
+  class="link"
 >
   <div class="outer-container">
     <mat-icon
@@ -22,4 +21,4 @@
       <h2 class="description">{{ description }}</h2>
     </div>
   </div>
-</button>
+</a>
