@@ -11,4 +11,7 @@ export class DialogCloseButtonComponent {
 
   @Input()
   icon: string;
+
+  @Input()
+  dialogClose: any;
 }
