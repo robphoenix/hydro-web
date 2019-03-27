@@ -13,6 +13,7 @@ import { WarnButtonComponent } from './warn-button/warn-button.component';
 import { HeadingComponent } from './heading/heading.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
 import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-b
     HeadingComponent,
     TableHeadingComponent,
     DialogCloseButtonComponent,
+    ErrorMessageComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -45,6 +47,7 @@ import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-b
     HeadingComponent,
     TableHeadingComponent,
     DialogCloseButtonComponent,
+    ErrorMessageComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })
