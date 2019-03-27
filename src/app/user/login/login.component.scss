@@ -20,9 +20,9 @@
 }
 
 .error-message {
-  background-color: $washed-red;
-  border: 1px solid $red;
-  border-radius: 5px;
+  background-color: $accent-warn-lighter;
+  border: 1px solid $accent-warn;
+  border-radius: 3px;
   margin-bottom: $spacing-m;
   padding: $spacing-m;
 }

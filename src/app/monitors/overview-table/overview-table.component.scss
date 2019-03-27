@@ -27,11 +27,11 @@
   &::-webkit-scrollbar {
     height: 4px;
     width: 4px;
-    background: $off-white;
+    background: $grey-2;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $mid-grey;
+    background: $grey-4;
   }
 }
 
@@ -44,7 +44,7 @@
 }
 
 .mat-row:nth-child(odd) {
-  background-color: $near-white;
+  background-color: $grey-1;
 }
 
 .mat-monitor-cell {
@@ -52,7 +52,7 @@
 }
 
 .menu-icon {
-  color: $green;
+  color: $accent-green;
 }
 
 .header-name {
@@ -79,19 +79,19 @@
 }
 
 .paginator {
-  border-top: 1px solid $light-grey;
+  border-top: 1px solid $grey-2;
 }
 
 .online {
-  color: $green;
+  color: $accent-green;
 }
 
 .offline {
-  color: $red;
+  color: $accent-red;
 }
 
 .all-monitors {
-  color: $yellow;
+  color: $accent-yellow;
 }
 
 .online,

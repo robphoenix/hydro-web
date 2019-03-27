@@ -8,12 +8,11 @@
 
 .label {
   margin-bottom: $spacing-m;
-  color: $dark-grey;
   display: flex;
   align-items: center;
 
   .icon {
-    color: $grey;
+    color: $grey-4;
     margin-left: $spacing-s;
     cursor: help;
   }
@@ -30,7 +29,6 @@
 }
 
 .duration-name {
-  color: $darker-grey;
   font-weight: $fw-5;
   text-transform: capitalize;
 }

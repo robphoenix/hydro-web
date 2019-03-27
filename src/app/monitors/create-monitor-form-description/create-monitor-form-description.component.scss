@@ -12,10 +12,10 @@
   &::-webkit-scrollbar {
     height: 4px;
     width: 4px;
-    background: $light-grey;
+    background: $grey-2;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $mid-grey;
+    background: $grey-4;
   }
 }

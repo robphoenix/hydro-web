@@ -5,6 +5,7 @@
   width: 100%;
   height: 100%;
   margin: $spacing-xs 0;
+  color: $grey-9;
 
   .online-name {
     text-decoration: underline;
@@ -13,7 +14,7 @@
 
   &:hover {
     .outer-container {
-      background-color: $off-white;
+      background-color: $primary-lighter;
     }
     .online-name {
       color: $accent;
@@ -49,23 +50,19 @@
 }
 
 .online-icon {
-  color: $green;
-}
-
-.online-name {
-  color: $darker-grey;
+  color: $accent-green;
 }
 
 .offline-icon {
-  color: $red;
+  color: $accent-red;
 }
 
 .offline-name {
-  color: $grey;
+  color: $grey-5;
 }
 
 .description {
-  color: $grey;
+  color: $grey-6;
   font-size: $fs-s;
   font-weight: 400;
   line-height: $lh-copy;
