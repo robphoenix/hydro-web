@@ -8,8 +8,7 @@
       <p *ngIf="dataType">
         You are currently viewing {{ dataType }} data
         <span *ngIf="timeLiveDataReceived">
-          received at
-          {{ timeLiveDataReceived | date: 'HH:mm:ss dd/MM/yyyy' }}
+          received at {{ timeLiveDataReceived | date: 'HH:mm:ss dd/MM/yyyy' }}
         </span>
       </p>
     </div>
@@ -58,7 +57,12 @@
           *ngFor="let column of displayedColumns"
           matColumnDef="{{ column }}"
         >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="header-name"
+          >
             {{ column }}
           </th>
           <td mat-cell *matCellDef="let element">
@@ -71,7 +75,11 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          class="new-data"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
       </table>
     </div>
 
