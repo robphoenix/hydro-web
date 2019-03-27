@@ -7,11 +7,6 @@
   margin: $spacing-xs 0;
   color: $grey-9;
 
-  .online-name {
-    text-decoration: underline;
-    text-decoration-color: $accent;
-  }
-
   &:hover {
     .outer-container {
       background-color: $primary-lighter;
@@ -33,6 +28,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: $spacing-m $spacing-l;
+  transition: background-color 0.5s ease;
 }
 
 .inner-container {
