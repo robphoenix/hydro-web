@@ -1,24 +1,35 @@
 @import 'theming';
 
+// Neutral
+$grey-1: mat-color(mat-palette($mat-gray, 50));
+$grey-2: mat-color(mat-palette($mat-blue-gray, 50));
+$grey-3: mat-color(mat-palette($mat-blue-gray, 100));
+$grey-4: mat-color(mat-palette($mat-blue-gray, 200));
+$grey-5: mat-color(mat-palette($mat-blue-gray, 400));
+$grey-6: mat-color(mat-palette($mat-blue-gray, 500));
+$grey-7: mat-color(mat-palette($mat-blue-gray, 600));
+$grey-8: mat-color(mat-palette($mat-blue-gray, 700));
+$grey-9: mat-color(mat-palette($mat-blue-gray, 900));
+
 $white: #ffffff;
-$near-white: #fafafa;
-$off-white: #f1f1f1;
-$light-grey: #e0e0e0;
-$mid-grey: #c1c1c1;
-$grey: #888888;
-$dark-grey: #666666;
-$darker-grey: #333333;
-$near-black: #111111;
-$black: #000000;
+$black: $grey-9;
 
-$red: mat-color($hydro-app-warn);
-$washed-red: #feecea;
-$orange: #ffdc00;
-$yellow: mat-color(mat-palette($mat-amber, 500));
-$green: mat-color(mat-palette($mat-green, 500));
-$aqua: #39cccc;
+// Primary
+$primary: mat-color($hydro-app-primary, default);
+$primary-lighter: mat-color($hydro-app-primary, lighter);
+$primary-darker: mat-color($hydro-app-primary, darker);
 
-// material theme
-$primary: mat-color($hydro-app-primary);
-$accent: mat-color($hydro-app-accent);
-$warn: mat-color($hydro-app-warn);
+// Accents
+$accent: mat-color($hydro-app-accent, default);
+$accent-lighter: mat-color($hydro-app-accent, lighter);
+$accent-darker: mat-color($hydro-app-accent, darker);
+
+$accent-warn: mat-color($hydro-app-warn, default);
+$accent-warn-lighter: mat-color($hydro-app-warn, lighter);
+$accent-warn-darker: mat-color($hydro-app-warn, darker);
+
+$accent-red: mat-color(mat-palette($mat-red, 500));
+$accent-orange: mat-color(mat-palette($mat-orange, 500));
+$accent-yellow: mat-color(mat-palette($mat-amber, 500));
+$accent-green: mat-color(mat-palette($mat-green, 500));
+$accent-cyan: mat-color(mat-palette($mat-cyan, 500));

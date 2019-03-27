@@ -2,19 +2,19 @@
 
 .categories {
   list-style-type: none;
-  color: $darker-grey;
+  color: $grey-7;
   line-height: 1.3;
   display: flex;
 
   .category {
     margin: 2px;
     padding: 2px 4px;
-    background: $light-grey;
-    border: 1px solid $light-grey;
+    background: $grey-1;
+    border: 1px solid $grey-1;
     border-radius: 3px;
   }
 }
 
 .no-categories {
-  color: $grey;
+  color: $grey-5;
 }
