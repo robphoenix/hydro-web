@@ -138,6 +138,8 @@ export class OverviewPageComponent implements OnInit {
   }
 
   refresh() {
+    console.log('refresh');
+
     this.getMonitors();
   }
 
