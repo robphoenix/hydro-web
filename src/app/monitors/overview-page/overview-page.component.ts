@@ -7,7 +7,6 @@ import {
   errorNoAvailableMonitors,
 } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-import { Location } from '@angular/common';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { UserService } from 'src/app/user/user.service';
 

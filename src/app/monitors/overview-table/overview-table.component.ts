@@ -33,6 +33,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./overview-table.component.scss'],
 })
 export class OverviewTableComponent implements OnInit, OnChanges {
+  public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
+
   @Input()
   monitors: IMonitor[];
 
@@ -100,6 +102,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
+    this.afterFirstLoad = true;
   }
 
   ngOnChanges(): void {

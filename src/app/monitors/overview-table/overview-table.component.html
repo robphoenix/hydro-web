@@ -37,6 +37,14 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
 
+    <app-primary-button
+      [icon]="'cached'"
+      class="refresh"
+      (click)="refresh.emit()"
+    >
+      Refresh
+    </app-primary-button>
+
     <app-search-input
       class="search"
       [(searchTerm)]="filterValues.searchTerm"
@@ -233,7 +241,10 @@
         <mat-header-row
           *matHeaderRowDef="displayedColumns; sticky: true"
         ></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <mat-row
+          [ngClass]="{ 'new-monitors': afterFirstLoad }"
+          *matRowDef="let row; columns: displayedColumns"
+        ></mat-row>
       </mat-table>
     </div>
 

@@ -9,6 +9,13 @@
   margin-bottom: $spacing-l;
 }
 
+.header-name {
+  font-size: $fs-s;
+  font-weight: $fw-4;
+  margin-left: $spacing-s;
+  color: $grey-5;
+}
+
 .inner-wrapper {
   display: flex;
   align-items: center;
@@ -71,5 +78,21 @@
 
   .description {
     margin-bottom: $spacing-s;
+  }
+}
+
+.new-data {
+  animation: new-data 0.5s ease-out;
+}
+
+@keyframes new-data {
+  0% {
+    background-color: none;
+  }
+  50% {
+    background-color: $primary-lighter;
+  }
+  100% {
+    background-color: none;
   }
 }
