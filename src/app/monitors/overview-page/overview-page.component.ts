@@ -9,6 +9,7 @@ import {
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { UserService } from 'src/app/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-page',
@@ -24,6 +25,7 @@ export class OverviewPageComponent implements OnInit {
   allCurrentCategories: string[];
   canToggleStatus = true;
   lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
+  totalNumberOfMonitors: number;
 
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
@@ -32,6 +34,7 @@ export class OverviewPageComponent implements OnInit {
     private monitorsService: MonitorsService,
     private userService: UserService,
     public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +43,26 @@ export class OverviewPageComponent implements OnInit {
       this.lastMonitorsType =
         (lastViewed as MonitorType) || (lastViewed as MonitorStatus);
     }
-    this.getMonitors();
+    this.monitorsService.getMonitors().subscribe(
+      () => {
+        this.getMonitors();
+      },
+      (error: IErrorMessage) => {
+        const { errorCode } = error;
+        let { message } = error;
+        const title = `Error fetching monitors`;
+        if (errorCode === errorNoAvailableMonitors) {
+          message = `There are no monitors currently available to view. Please add a monitor.`;
+        }
+        const dialogRef = this.dialog.open(ErrorDialogComponent, {
+          data: { title, message },
+        });
+
+        dialogRef.afterClosed().subscribe(() => {
+          this.router.navigateByUrl(`/monitors/add`);
+        });
+      },
+    );
   }
 
   private getMonitors() {
