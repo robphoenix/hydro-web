@@ -74,7 +74,10 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
         <tr
           class="new-data"
           mat-row
@@ -82,20 +85,6 @@
         ></tr>
       </table>
     </div>
-
-    <!--
-      if we use ngif here to only show the paginator when there's data, it
-      screws the table up, I don't know why, so CSS to the rescue
-    -->
-    <mat-paginator
-      class="paginator"
-      #paginator
-      [ngClass]="{ hidden: dataSource.data.length === 0 }"
-      [length]="dataSource.data.length"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25]"
-      showFirstLastButtons
-    ></mat-paginator>
   </div>
 </div>
 
