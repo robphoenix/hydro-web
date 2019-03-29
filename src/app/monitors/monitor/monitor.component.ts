@@ -37,7 +37,6 @@ import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-
 })
 export class MonitorComponent implements OnInit, OnDestroy {
   MonitorDataAttributeType: typeof MonitorDataAttributeType = MonitorDataAttributeType;
-  private name: string;
   private unsubscribe: Subject<void> = new Subject();
 
   public monitor: IMonitor;
@@ -89,6 +88,12 @@ export class MonitorComponent implements OnInit, OnDestroy {
         return 'The monitor has been archived by another user.';
     }
   }
+
+  // public displayCellContents(element, column) {
+  //   return this.headersMetadata[column].type === MonitorDataAttributeType.DateTime
+  //     ? (element[column] | date: headersMetadata[column].format)
+  //               : element[column] || '-'
+  // }
 
   getChangeEvents() {
     this.eventbusService

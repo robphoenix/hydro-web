@@ -46,11 +46,19 @@
 
 .mat-header-cell,
 .mat-cell {
-  padding: $spacing-s;
-  display: table-cell; /* CHANGED */
+  padding: $spacing-m;
+  display: table-cell;
   white-space: nowrap;
-  overflow: hidden; /* make text overflow */
-  text-overflow: ellipsis; /* truncate tex with ... */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+
+  &:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+    overflow-wrap: break-word;
+  }
 }
 
 .mat-row:nth-child(odd) {
