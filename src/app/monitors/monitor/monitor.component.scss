@@ -37,18 +37,7 @@
 
 .table-inner-wrapper {
   border-top: 2px $primary solid;
-  max-height: 700px;
   overflow: auto;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background: $grey-2;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $grey-4;
-  }
 }
 
 .table {
@@ -58,6 +47,10 @@
 .mat-header-cell,
 .mat-cell {
   padding: $spacing-s;
+  display: table-cell; /* CHANGED */
+  white-space: nowrap;
+  overflow: hidden; /* make text overflow */
+  text-overflow: ellipsis; /* truncate tex with ... */
 }
 
 .mat-row:nth-child(odd) {

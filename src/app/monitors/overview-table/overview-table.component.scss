@@ -26,16 +26,6 @@
   border-top: 2px $primary solid;
   max-height: 700px;
   overflow: auto;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background: $grey-2;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $grey-4;
-  }
 }
 
 .mat-header-row {
