@@ -1,11 +1,13 @@
 <div class="block">
   <form [formGroup]="parent" class="block">
-    <mat-form-field
-      appearance="outline"
-      *ngFor="let parameter of parent.get('blockParameters').value"
-    >
-      <mat-label>Block Parameter*</mat-label>
-      <mat-select placeholder="Parameter to block on" ngDefaultControl>
+    <mat-form-field appearance="outline">
+      <mat-label>Block Parameters*</mat-label>
+      <mat-select
+        formControlName="blockParameters"
+        placeholder="Parameter to block on"
+        ngDefaultControl
+        multiple
+      >
         <mat-option *ngFor="let item of blockItems" [value]="item">
           {{ item }}
         </mat-option>
@@ -15,8 +17,6 @@
         {{ validationMessages['blockParameters']['required'] }}
       </mat-error>
     </mat-form-field>
-
-    <button (click)="addParameter()">Add Parameter</button>
 
     <mat-slide-toggle class="permanently" formControlName="permanently">
       Block Permanently
