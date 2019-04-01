@@ -25,4 +25,8 @@ export class CreateActionFormSectionBlockComponent {
 
   @Input()
   validationMessages: { [key: string]: { [key: string]: string } };
+
+  addParameter() {
+    this.parent.get('blockParameters').value.push('');
+  }
 }

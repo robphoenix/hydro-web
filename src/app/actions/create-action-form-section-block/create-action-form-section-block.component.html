@@ -1,21 +1,22 @@
 <div class="block">
   <form [formGroup]="parent" class="block">
-    <mat-form-field appearance="outline">
-      <mat-label>Block Item*</mat-label>
-      <mat-select
-        placeholder="Item to block on"
-        formControlName="item"
-        ngDefaultControl
-      >
+    <mat-form-field
+      appearance="outline"
+      *ngFor="let parameter of parent.get('blockParameters').value"
+    >
+      <mat-label>Block Parameter*</mat-label>
+      <mat-select placeholder="Parameter to block on" ngDefaultControl>
         <mat-option *ngFor="let item of blockItems" [value]="item">
           {{ item }}
         </mat-option>
       </mat-select>
       <mat-hint align="end"> *Required </mat-hint>
-      <mat-error *ngIf="parent.get('item').hasError('required')">
-        {{ validationMessages['item']['required'] }}
+      <mat-error *ngIf="parent.get('blockParameters').hasError('required')">
+        {{ validationMessages['blockParameters']['required'] }}
       </mat-error>
     </mat-form-field>
+
+    <button (click)="addParameter()">Add Parameter</button>
 
     <mat-slide-toggle class="permanently" formControlName="permanently">
       Block Permanently
@@ -28,16 +29,16 @@
           <input
             matInput
             placeholder="Block Duration"
-            formControlName="durationValue"
+            formControlName="blockTime"
           />
         </mat-form-field>
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
-          formControlName="durationUnit"
+          formControlName="blockTimeUnit"
         >
           <mat-button-toggle
             *ngFor="let unit of units['duration']"
-            value="{{unit}}"
+            value="{{ unit }}"
           >
             <span class="unit">{{ unit }}</span>
           </mat-button-toggle>
@@ -50,16 +51,16 @@
           <input
             matInput
             placeholder="Block Delay"
-            formControlName="delayValue"
+            formControlName="blockDelay"
           />
         </mat-form-field>
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
-          formControlName="delayUnit"
+          formControlName="blockDelayUnit"
         >
           <mat-button-toggle
             *ngFor="let unit of units['delay']"
-            value="{{unit}}"
+            value="{{ unit }}"
           >
             <span class="unit">{{ unit }}</span>
           </mat-button-toggle>

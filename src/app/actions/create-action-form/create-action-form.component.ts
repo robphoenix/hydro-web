@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActionGroup } from 'src/app/monitors/monitor';
 
 @Component({
   selector: 'app-create-action-form',
@@ -14,8 +15,8 @@ export class CreateActionFormComponent implements OnInit {
     description: {
       required: `You must enter an action description`,
     },
-    item: {
-      required: `You must choose an item to block on`,
+    blockParameter: {
+      required: `You must choose parameters to block on`,
     },
   };
   unitsInSeconds: { [key: string]: number } = {
@@ -34,16 +35,16 @@ export class CreateActionFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.blockDataForm = this.fb.group({
-      item: ['', Validators.required],
+      blockParameters: [[''], Validators.required],
       permanently: [false],
-      durationValue: [''],
-      durationUnit: [''],
-      delayValue: [''],
-      delayUnit: [''],
+      blockTime: [''],
+      blockTimeUnit: [''],
+      blockDelay: [''],
+      blockDelayUnit: [''],
     });
     this.createActionForm = this.fb.group({
       description: ['', Validators.required],
-      type: ['block', Validators.required],
+      type: [ActionGroup.Block, Validators.required],
       blockData: this.blockDataForm,
     });
   }
@@ -60,42 +61,44 @@ export class CreateActionFormComponent implements OnInit {
   blockName(): string {
     const form = this.blockDataForm;
     const permanently = form.get('permanently').value;
-    const itemToBlockOn = form.get('item').value.trim();
-    const durationValue = form.get('durationValue').value.trim();
-    const durationUnit = form.get('durationUnit').value.trim();
-    const delayValue = form.get('delayValue').value.trim();
-    const delayUnit = form.get('delayUnit').value.trim();
+    const blockParameter = form
+      .get('blockParameters')
+      .value.map((param: string) => param.trim());
+    const blockTime = form.get('blockTime').value.trim();
+    const blockTimeUnit = form.get('blockTimeUnit').value.trim();
+    const blockDelay = form.get('blockDelay').value.trim();
+    const blockDelayUnit = form.get('blockDelayUnit').value.trim();
 
     const duration =
-      !permanently && durationValue && durationUnit
-        ? `for ${durationValue} ${durationUnit}`
+      !permanently && blockTime && blockTimeUnit
+        ? `for ${blockTime} ${blockTimeUnit}`
         : '';
 
     const delay =
-      !permanently && delayValue && delayUnit
-        ? `with up to ${delayValue} ${delayUnit} random delay`
+      !permanently && blockDelay && blockDelayUnit
+        ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
         : '';
 
-    return `Block ${itemToBlockOn} ${duration} ${delay} ${
+    return `Block ${blockParameter} ${duration} ${delay} ${
       permanently ? 'permanently' : ''
     }`;
   }
 
   onSubmit() {
-    const durationUnit = this.blockDataForm.get('durationUnit').value;
-    const durationValue = this.blockDataForm.get('durationValue').value;
+    const blockTimeUnit = this.blockDataForm.get('blockTimeUnit').value;
+    const blockTime = this.blockDataForm.get('blockTime').value;
 
-    if (durationValue && durationUnit) {
-      const numberOfSeconds = this.unitsInSeconds[durationUnit];
-      // const duration = durationValue * numberOfSeconds;
+    if (blockTime && blockTimeUnit) {
+      const numberOfSeconds = this.unitsInSeconds[blockTimeUnit];
+      // const duration = blockTime * numberOfSeconds;
     }
 
-    const delayUnit = this.blockDataForm.get('delayUnit').value;
-    const delayValue = this.blockDataForm.get('delayValue').value;
+    const blockDelayUnit = this.blockDataForm.get('blockDelayUnit').value;
+    const blockDelay = this.blockDataForm.get('blockDelay').value;
 
-    if (delayValue && delayUnit) {
-      const numberOfSeconds = this.unitsInSeconds[delayUnit];
-      // const delay = delayValue * numberOfSeconds;
+    if (blockDelay && blockDelayUnit) {
+      const numberOfSeconds = this.unitsInSeconds[blockDelayUnit];
+      // const delay = blockDelay * numberOfSeconds;
     }
   }
 }
