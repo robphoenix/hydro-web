@@ -12,14 +12,4 @@
   font-size: $fs-m;
   height: auto;
   overflow: auto;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background: $grey-2;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $grey-4;
-  }
 }

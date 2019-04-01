@@ -24,7 +24,6 @@ export class CreateActionFormComponent implements OnInit {
     hours: 60 * 60,
     days: 60 * 60 * 24,
   };
-
   blockActionUnits: { [key: string]: string[] } = {
     duration: ['minutes', 'hours', 'days'],
     delay: ['seconds', 'minutes', 'hours'],

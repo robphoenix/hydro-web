@@ -4,7 +4,6 @@ import { MonitorsService } from '../monitors.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatTableDataSource,
-  MatPaginator,
   MatDialog,
   MatSort,
   Sort,
@@ -38,7 +37,6 @@ import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-
 })
 export class MonitorComponent implements OnInit, OnDestroy {
   MonitorDataAttributeType: typeof MonitorDataAttributeType = MonitorDataAttributeType;
-  private name: string;
   private unsubscribe: Subject<void> = new Subject();
 
   public monitor: IMonitor;
@@ -53,9 +51,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public dataType = '';
   public timeLiveDataReceived: Date;
 
-  @ViewChild(MatPaginator)
-  private paginator: MatPaginator;
-
   @ViewChild(MatSort)
   private sort: MatSort;
 
@@ -69,7 +64,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource([]);
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getMonitor();
   }
@@ -237,7 +231,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 

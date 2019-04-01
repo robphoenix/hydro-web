@@ -37,18 +37,7 @@
 
 .table-inner-wrapper {
   border-top: 2px $primary solid;
-  max-height: 700px;
   overflow: auto;
-
-  &::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-    background: $grey-2;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $grey-4;
-  }
 }
 
 .table {
@@ -57,7 +46,19 @@
 
 .mat-header-cell,
 .mat-cell {
-  padding: $spacing-s;
+  padding: $spacing-m;
+  display: table-cell;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+
+  &:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+    overflow-wrap: break-word;
+  }
 }
 
 .mat-row:nth-child(odd) {
