@@ -89,12 +89,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
     }
   }
 
-  // public displayCellContents(element, column) {
-  //   return this.headersMetadata[column].type === MonitorDataAttributeType.DateTime
-  //     ? (element[column] | date: headersMetadata[column].format)
-  //               : element[column] || '-'
-  // }
-
   getChangeEvents() {
     this.eventbusService
       .getChangeEvents(this.monitor.name)
