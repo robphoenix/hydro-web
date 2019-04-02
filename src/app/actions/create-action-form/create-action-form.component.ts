@@ -1,5 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActionGroup } from 'src/app/monitors/monitor';
+import {
+  IActionsMetadataBlock,
+  IActionsMetadataEmail,
+  ActionsBlockType,
+  IActions,
+} from '../actions';
 
 @Component({
   selector: 'app-create-action-form',
@@ -7,23 +14,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./create-action-form.component.scss'],
 })
 export class CreateActionFormComponent implements OnInit {
-  name: string;
   createActionForm: FormGroup;
   blockDataForm: FormGroup;
   validationMessages: { [key: string]: { [key: string]: string } } = {
     description: {
       required: `You must enter an action description`,
     },
-    item: {
-      required: `You must choose an item to block on`,
+    blockParameter: {
+      required: `You must choose parameters to block on`,
     },
   };
-  unitsInSeconds: { [key: string]: number } = {
-    seconds: 1,
-    minutes: 60,
-    hours: 60 * 60,
-    days: 60 * 60 * 24,
-  };
+
   blockActionUnits: { [key: string]: string[] } = {
     duration: ['minutes', 'hours', 'days'],
     delay: ['seconds', 'minutes', 'hours'],
@@ -34,68 +35,117 @@ export class CreateActionFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.blockDataForm = this.fb.group({
-      item: ['', Validators.required],
+      blockParameters: [[''], Validators.required],
       permanently: [false],
-      durationValue: [''],
-      durationUnit: [''],
-      delayValue: [''],
-      delayUnit: [''],
+      blockTime: [''],
+      blockTimeUnit: [''],
+      blockDelay: [''],
+      blockDelayUnit: [''],
     });
     this.createActionForm = this.fb.group({
+      name: '',
       description: ['', Validators.required],
-      type: ['block', Validators.required],
+      group: [ActionGroup.Block, Validators.required],
       blockData: this.blockDataForm,
     });
   }
 
   ngOnInit() {
-    this.name = this.blockName();
-    this.createActionForm.valueChanges.subscribe((form) => {
-      if (form.type === 'block') {
-        this.name = this.blockName();
-      }
+    this.blockDataForm.valueChanges.subscribe(() => {
+      const name = this.blockName();
+      this.createActionForm.patchValue({ name });
     });
   }
 
   blockName(): string {
     const form = this.blockDataForm;
     const permanently = form.get('permanently').value;
-    const itemToBlockOn = form.get('item').value.trim();
-    const durationValue = form.get('durationValue').value.trim();
-    const durationUnit = form.get('durationUnit').value.trim();
-    const delayValue = form.get('delayValue').value.trim();
-    const delayUnit = form.get('delayUnit').value.trim();
+    const blockParameters = form
+      .get('blockParameters')
+      .value.map((param: string) => param.trim())
+      .join(', ');
+    const blockTime = form.get('blockTime').value.trim();
+    const blockTimeUnit = form.get('blockTimeUnit').value.trim();
+    const blockDelay = form.get('blockDelay').value.trim();
+    const blockDelayUnit = form.get('blockDelayUnit').value.trim();
 
     const duration =
-      !permanently && durationValue && durationUnit
-        ? `for ${durationValue} ${durationUnit}`
+      !permanently && blockTime && blockTimeUnit
+        ? `for ${blockTime} ${blockTimeUnit}`
         : '';
 
     const delay =
-      !permanently && delayValue && delayUnit
-        ? `with up to ${delayValue} ${delayUnit} random delay`
+      !permanently && blockDelay && blockDelayUnit
+        ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
         : '';
 
-    return `Block ${itemToBlockOn} ${duration} ${delay} ${
-      permanently ? 'permanently' : ''
+    const time = `${duration} ${delay}`;
+
+    const name = `Block ${blockParameters} ${
+      permanently ? 'permanently' : time
     }`;
+
+    return name.trim();
   }
 
   onSubmit() {
-    const durationUnit = this.blockDataForm.get('durationUnit').value;
-    const durationValue = this.blockDataForm.get('durationValue').value;
+    const { group, name, description } = this.createActionForm.getRawValue();
+    let metadata: IActionsMetadataBlock | IActionsMetadataEmail;
+    switch (group) {
+      case ActionGroup.Block:
+        const {
+          permanently,
+          blockTime,
+          blockTimeUnit,
+          blockDelay,
+          blockDelayUnit,
+          blockParameters,
+        } = this.blockDataForm.getRawValue();
+        if (permanently) {
+          metadata = {
+            type: ActionsBlockType.SimpleBlock,
+            blockTime: -1,
+            blockParameters,
+          } as IActionsMetadataBlock;
+        } else {
+          metadata = {
+            type: ActionsBlockType.SimpleBlock,
+            blockTime,
+            blockTimeUnit,
+            blockDelay,
+            blockDelayUnit,
+            blockParameters,
+          };
+        }
+        break;
 
-    if (durationValue && durationUnit) {
-      const numberOfSeconds = this.unitsInSeconds[durationUnit];
-      // const duration = durationValue * numberOfSeconds;
+      default:
+        break;
     }
 
-    const delayUnit = this.blockDataForm.get('delayUnit').value;
-    const delayValue = this.blockDataForm.get('delayValue').value;
+    const data = {
+      name,
+      group,
+      description,
+      metadata,
+    } as IActions;
 
-    if (delayValue && delayUnit) {
-      const numberOfSeconds = this.unitsInSeconds[delayUnit];
-      // const delay = delayValue * numberOfSeconds;
-    }
+    console.log({ data });
+
+    // const blockTimeUnit = this.blockDataForm.get('blockTimeUnit').value;
+    // const blockTime = this.blockDataForm.get('blockTime').value;
+
+    // if (blockTime && blockTimeUnit) {
+    //   const numberOfSeconds = this.unitsInSeconds[blockTimeUnit];
+    //   // const duration = blockTime * numberOfSeconds;
+    // }
+
+    // const blockDelayUnit = this.blockDataForm.get('blockDelayUnit').value;
+    // const blockDelay = this.blockDataForm.get('blockDelay').value;
+
+    // if (blockDelay && blockDelayUnit) {
+    //   const numberOfSeconds = this.unitsInSeconds[blockDelayUnit];
+    //   // const delay = blockDelay * numberOfSeconds;
+    // }
   }
 }
