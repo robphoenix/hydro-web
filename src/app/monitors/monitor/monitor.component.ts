@@ -22,6 +22,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
+import { SortService } from '../sort.service';
 
 /**
  * Describes a single monitor.
@@ -60,6 +61,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     private monitorService: MonitorsService,
     private eventbusService: EventbusService,
     public dialog: MatDialog,
+    private sortService: SortService,
   ) {}
 
   ngOnInit() {
@@ -243,45 +245,11 @@ export class MonitorComponent implements OnInit, OnDestroy {
     if (!sort.active || sort.direction === '') {
       return;
     }
-    const data = this.dataSource.data.slice();
-    const isAsc = sort.direction === 'asc';
-    const type: string = this.headersMetadata[sort.active]
-      ? this.headersMetadata[sort.active].type
-      : '';
-
-    const sorted = data.sort((a, b) => {
-      switch (type) {
-        case MonitorDataAttributeType.Ip:
-          const ipA: string = a[sort.active] as string;
-          const ipB: string = b[sort.active] as string;
-          return this.compare(
-            this.sortableIpAddress(ipA),
-            this.sortableIpAddress(ipB),
-            isAsc,
-          );
-        case MonitorDataAttributeType.DateTime:
-          const dateA: Date = new Date(a[sort.active] as number);
-          const dateB: Date = new Date(a[sort.active] as number);
-          return this.compare(dateA, dateB, isAsc);
-        default:
-          return this.compare(a[sort.active], b[sort.active], isAsc);
-      }
-    });
+    const sorted = this.sortService.sortData(
+      this.dataSource.data.slice(),
+      sort,
+      this.headersMetadata,
+    );
     this.dataSource = new MatTableDataSource(sorted);
-  }
-
-  private sortableIpAddress(ip: string): string {
-    return ip
-      .split('.')
-      .map((octet: string) => octet.padStart(3, '0'))
-      .join('');
-  }
-
-  private compare(
-    a: MonitorDataAttribute | Date,
-    b: MonitorDataAttribute | Date,
-    isAsc: boolean,
-  ) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
