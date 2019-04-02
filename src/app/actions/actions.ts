@@ -29,12 +29,12 @@ export interface IActionsMetadataEmail {
   emailAlertFields: string;
 }
 
-SIP('IP Address'),
-  IP_RANGE('IP Range'),
-  STK('Session token'),
-  RSTK('Response Session Token'),
-  UQID('UQ ID'),
-  UNAME('User Name'),
-  userAgent('User Agent'),
-  xForwardedFor('X-Forwarded-For'),
-  NONE('None');
+// SIP('IP Address'),
+//   IP_RANGE('IP Range'),
+//   STK('Session token'),
+//   RSTK('Response Session Token'),
+//   UQID('UQ ID'),
+//   UNAME('User Name'),
+//   userAgent('User Agent'),
+//   xForwardedFor('X-Forwarded-For'),
+//   NONE('None');

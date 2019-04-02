@@ -127,9 +127,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
           this.timeLiveDataReceived = new Date();
           const { data } = message;
           this.liveData = data;
-          console.log('live data...');
-          console.log({ data });
-
           this.displayMessageData(message, 'live');
         },
         (error: IErrorMessage) => {
@@ -153,9 +150,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
       .subscribe(
         (message: IMonitorDisplayData) => {
           const { data } = message;
-          console.log('cached data...');
-
-          console.log({ data });
           if (!data.length) {
             this.cachedDataMessage = 'There is no cached data available';
           }
@@ -227,7 +221,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
     }
 
     this.dataType = dataType;
-
     this.headersMetadata = headersMetadata;
     this.displayedColumns = headers;
     this.dataSource.data = data;
@@ -251,13 +244,12 @@ export class MonitorComponent implements OnInit, OnDestroy {
       return;
     }
     const data = this.dataSource.data.slice();
+    const isAsc = sort.direction === 'asc';
+    const type: string = this.headersMetadata[sort.active]
+      ? this.headersMetadata[sort.active].type
+      : '';
 
-    this.dataSource.data = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      const type: string = this.headersMetadata[sort.active]
-        ? this.headersMetadata[sort.active].type
-        : '';
-
+    const sorted = data.sort((a, b) => {
       switch (type) {
         case MonitorDataAttributeType.Ip:
           const ipA: string = a[sort.active] as string;
@@ -275,6 +267,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
           return this.compare(a[sort.active], b[sort.active], isAsc);
       }
     });
+    this.dataSource = new MatTableDataSource(sorted);
   }
 
   private sortableIpAddress(ip: string): string {
