@@ -7,6 +7,7 @@ import {
   ActionsBlockType,
   IActions,
 } from '../actions';
+import { ActionsService } from '../actions.service';
 
 @Component({
   selector: 'app-create-action-form',
@@ -26,25 +27,26 @@ export class CreateActionFormComponent implements OnInit {
   };
 
   blockActionUnits: { [key: string]: string[] } = {
-    duration: ['minutes', 'hours', 'days'],
-    delay: ['seconds', 'minutes', 'hours'],
+    duration: [`minutes`, `hours`, `days`],
+    delay: [`seconds`, `minutes`, `hours`],
   };
 
   @Input()
   title: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private actionsService: ActionsService) {
     this.blockDataForm = this.fb.group({
-      blockParameters: [[''], Validators.required],
+      blockParameters: [[``], Validators.required],
       permanently: [false],
-      blockTime: [''],
-      blockTimeUnit: [''],
-      blockDelay: [''],
-      blockDelayUnit: [''],
+
+      blockTime: [``],
+      blockTimeUnit: [``],
+      blockDelay: [``],
+      blockDelayUnit: [``],
     });
     this.createActionForm = this.fb.group({
-      name: '',
-      description: ['', Validators.required],
+      name: ``,
+      description: [``, Validators.required],
       group: [ActionGroup.Block, Validators.required],
       blockData: this.blockDataForm,
     });
@@ -59,30 +61,30 @@ export class CreateActionFormComponent implements OnInit {
 
   blockName(): string {
     const form = this.blockDataForm;
-    const permanently = form.get('permanently').value;
+    const permanently = form.get(`permanently`).value;
     const blockParameters = form
-      .get('blockParameters')
+      .get(`blockParameters`)
       .value.map((param: string) => param.trim())
-      .join(', ');
-    const blockTime = form.get('blockTime').value.trim();
-    const blockTimeUnit = form.get('blockTimeUnit').value.trim();
-    const blockDelay = form.get('blockDelay').value.trim();
-    const blockDelayUnit = form.get('blockDelayUnit').value.trim();
+      .join(`, `);
+    const blockTime = form.get(`blockTime`).value.trim();
+    const blockTimeUnit = form.get(`blockTimeUnit`).value.trim();
+    const blockDelay = form.get(`blockDelay`).value.trim();
+    const blockDelayUnit = form.get(`blockDelayUnit`).value.trim();
 
     const duration =
       !permanently && blockTime && blockTimeUnit
         ? `for ${blockTime} ${blockTimeUnit}`
-        : '';
+        : ``;
 
     const delay =
       !permanently && blockDelay && blockDelayUnit
         ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
-        : '';
+        : ``;
 
     const time = `${duration} ${delay}`;
 
     const name = `Block ${blockParameters} ${
-      permanently ? 'permanently' : time
+      permanently ? `permanently` : time
     }`;
 
     return name.trim();
@@ -132,20 +134,13 @@ export class CreateActionFormComponent implements OnInit {
 
     console.log({ data });
 
-    // const blockTimeUnit = this.blockDataForm.get('blockTimeUnit').value;
-    // const blockTime = this.blockDataForm.get('blockTime').value;
-
-    // if (blockTime && blockTimeUnit) {
-    //   const numberOfSeconds = this.unitsInSeconds[blockTimeUnit];
-    //   // const duration = blockTime * numberOfSeconds;
-    // }
-
-    // const blockDelayUnit = this.blockDataForm.get('blockDelayUnit').value;
-    // const blockDelay = this.blockDataForm.get('blockDelay').value;
-
-    // if (blockDelay && blockDelayUnit) {
-    //   const numberOfSeconds = this.unitsInSeconds[blockDelayUnit];
-    //   // const delay = blockDelay * numberOfSeconds;
-    // }
+    this.actionsService.addAction(data).subscribe(
+      (res) => {
+        console.log({ res });
+      },
+      (err) => {
+        console.error({ err });
+      },
+    );
   }
 }
