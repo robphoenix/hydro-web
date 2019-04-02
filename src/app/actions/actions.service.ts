@@ -15,6 +15,10 @@ export class ActionsService {
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;
 
+  public getActions(): Observable<IActions[]> {
+    return this.http.get<IActions[]>(this.actionsUrl, { headers });
+  }
+
   public addAction(body: IActions): Observable<IActions> {
     return this.http
       .post<IActions>(this.actionsUrl, body, { headers })

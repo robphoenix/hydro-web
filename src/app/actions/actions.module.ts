@@ -15,6 +15,7 @@ import {
   QuillConfigInterface,
   QUILL_CONFIG,
 } from 'ngx-quill-wrapper';
+import { OverviewPageComponent } from './overview-page/overview-page.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -43,7 +44,10 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild([{ path: 'add', component: AddActionComponent }]),
+    RouterModule.forChild([
+      { path: '', component: OverviewPageComponent },
+      { path: 'add', component: AddActionComponent },
+    ]),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -62,6 +66,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionFormSectionBlockComponent,
     CreateActionFormSectionEmailComponent,
     CreateActionFormSectionOtherComponent,
+    OverviewPageComponent,
   ],
 })
 export class ActionsModule {}
