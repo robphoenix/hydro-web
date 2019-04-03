@@ -236,6 +236,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public submit(view: boolean = false) {
     const {
+      actions,
       cacheWindow: cacheWindowValue,
       categories,
       description,
@@ -252,6 +253,7 @@ export class CreateMonitorFormComponent implements OnInit {
     ];
 
     const monitor = {
+      actions,
       cacheWindow,
       categories,
       description,
