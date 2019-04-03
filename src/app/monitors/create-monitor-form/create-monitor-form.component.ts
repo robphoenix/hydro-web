@@ -20,6 +20,8 @@ import { FilterService } from '../filter.service';
 import { Router } from '@angular/router';
 import { IMonitorSubmit } from '../monitor-submit';
 import { CacheWindowService } from '../cache-window.service';
+import { ActionsService } from 'src/app/actions/actions.service';
+import { IActions } from 'src/app/actions/actions';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -60,7 +62,11 @@ export class CreateMonitorFormComponent implements OnInit {
   maxSelectedCategories = 4;
   placeholderCategories = 'Please select monitor categories';
 
-  availableActions: { [group: string]: IAction[] } = {};
+  // availableActions: { [group: string]: IActions[] } = {};
+  availableActions: IActions[] = [];
+  selectedActions: IActions[] = [];
+  filteredActions: Observable<IActions[]>;
+  loadingActions = false;
 
   availableGroups: IGroup[] = [];
   selectedGroups: IGroup[] = [];
@@ -87,6 +93,9 @@ export class CreateMonitorFormComponent implements OnInit {
     groups: {
       required: `You must grant access to at least one group`,
     },
+    actions: {
+      required: `I'm not sure to be honest`,
+    },
   };
 
   placeholders = {
@@ -95,6 +104,7 @@ export class CreateMonitorFormComponent implements OnInit {
     query: `Please enter a valid EPL Query`,
     categories: this.placeholderCategories,
     groups: `Please select monitor access groups`,
+    actions: `Please select monitor actions groups`,
   };
 
   constructor(
@@ -104,9 +114,11 @@ export class CreateMonitorFormComponent implements OnInit {
     private cacheWindowService: CacheWindowService,
     public authService: AuthService,
     private router: Router,
+    private actionsService: ActionsService,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
+    this.loadingActions = true;
     this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
@@ -115,7 +127,8 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedGroups = this.authService.userGroups || [];
 
     this.createMonitorForm = this.fb.group({
-      actions: [[]],
+      actions: [this.selectedActions],
+      actionsInput: [''],
       cacheWindow: [this.cacheWindowService.durationValues[0]],
       categories: [this.selectedCategories],
       categoriesInput: [''],
@@ -188,6 +201,19 @@ export class CreateMonitorFormComponent implements OnInit {
             term,
             this.availableGroups,
             this.selectedGroups,
+          ),
+        ),
+      );
+
+    this.filteredActions = this.createMonitorForm
+      .get('actionsInput')
+      .valueChanges.pipe(
+        startWith(null),
+        map((term: string | IActions) =>
+          this.filterService.filterActions(
+            term,
+            this.availableActions,
+            this.selectedActions,
           ),
         ),
       );
@@ -281,25 +307,46 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   getAvailableActions(): void {
-    this.monitorsService.getActions().subscribe((actions: IAction[]) => {
-      const groups: { [group: string]: IAction[] } = {};
+    this.actionsService.getActions().subscribe((actions: IActions[]) => {
+      // const groups: { [group: string]: IActions[] } = {};
 
-      actions.forEach((action: IAction) => {
-        if (groups[action.group] === undefined) {
-          groups[action.group] = [action];
-        } else {
-          groups[action.group].push(action);
-        }
-      });
+      // actions.forEach((action: IActions) => {
+      //   if (groups[action.group] === undefined) {
+      //     groups[action.group] = [action];
+      //   } else {
+      //     groups[action.group].push(action);
+      //   }
+      // });
 
-      Object.keys(groups).forEach((group: string) => {
-        groups[group] = groups[group].sort((a: IAction, b: IAction) =>
-          a.name.localeCompare(b.name),
-        );
-      });
+      // Object.keys(groups).forEach((group: string) => {
+      //   groups[group] = groups[group].sort((a: IActions, b: IActions) =>
+      //     a.name.localeCompare(b.name),
+      //   );
+      // });
+      // console.log({ groups });
 
-      this.availableActions = groups;
+      // this.availableActions = groups;
+
+      this.availableActions = actions;
+      this.loadingActions = false;
     });
+  }
+
+  removeAction(action: IActions): void {
+    this.selectedActions = this.selectedActions.filter(
+      (selected: IActions) => selected.id !== action.id,
+    );
+    const actions = this.createMonitorForm.get('actions');
+    actions.setValue(this.selectedActions);
+    // mark as touched in case the user removes the default groups,
+    // otherwise the validation error message won't show.
+    actions.markAsTouched();
+  }
+
+  selectedAction(event: MatAutocompleteSelectedEvent): void {
+    this.selectedActions.push(event.option.value);
+    this.createMonitorForm.get('actions').setValue(this.selectedActions);
+    this.createMonitorForm.get('actionsInput').setValue(null);
   }
 
   getAvailableGroups(): void {
