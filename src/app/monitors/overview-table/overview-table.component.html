@@ -44,13 +44,13 @@
       (searchTermChange)="filterMonitors()"
     ></app-search-input>
 
-    <app-primary-button
+    <!-- <app-primary-button
       [icon]="'cached'"
       class="refresh"
       (click)="refresh.emit()"
     >
       Refresh
-    </app-primary-button>
+    </app-primary-button> -->
 
     <app-primary-button
       class="clear-filters"
@@ -243,10 +243,7 @@
         <mat-header-row
           *matHeaderRowDef="displayedColumns; sticky: true"
         ></mat-header-row>
-        <mat-row
-          [ngClass]="{ 'new-monitors': afterFirstLoad }"
-          *matRowDef="let row; columns: displayedColumns"
-        ></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </mat-table>
     </div>
 
