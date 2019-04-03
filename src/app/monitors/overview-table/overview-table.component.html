@@ -79,6 +79,7 @@
         matSortActive="name"
         matSortDirection="asc"
         matSortDisableClear
+        (matSortChange)="sortData($event)"
       >
         <ng-container matColumnDef="monitor">
           <mat-header-cell *matHeaderCellDef mat-sort-header>

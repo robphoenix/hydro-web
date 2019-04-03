@@ -14,6 +14,7 @@ import {
   MatSort,
   MatSnackBar,
   MatDialog,
+  Sort,
 } from '@angular/material';
 import { IMonitor, MonitorType, MonitorStatus } from '../monitor';
 import { FormControl } from '@angular/forms';
@@ -26,6 +27,7 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
 import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
+import { SortService } from '../sort.service';
 
 @Component({
   selector: 'app-overview-table',
@@ -93,12 +95,12 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router: Router,
+    private sortService: SortService,
   ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.monitors);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
@@ -110,6 +112,17 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.dataSource.data = this.monitors;
       this.updateMonitorsStatus();
     }
+  }
+
+  public sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    const sorted = this.sortService.sortMonitors(
+      this.dataSource.data.slice(),
+      sort,
+    );
+    this.dataSource = new MatTableDataSource(sorted);
   }
 
   private get isCurrentlyArchivedMonitors() {

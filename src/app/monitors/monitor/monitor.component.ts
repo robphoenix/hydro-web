@@ -245,7 +245,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     if (!sort.active || sort.direction === '') {
       return;
     }
-    const sorted = this.sortService.sortData(
+    const sorted = this.sortService.sortMonitorData(
       this.dataSource.data.slice(),
       sort,
       this.headersMetadata,
