@@ -12,11 +12,11 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-overview-page',
-  templateUrl: './overview-page.component.html',
-  styleUrls: ['./overview-page.component.scss'],
+  selector: 'app-view-monitors',
+  templateUrl: './view-monitors.component.html',
+  styleUrls: ['./view-monitors.component.scss'],
 })
-export class OverviewPageComponent implements OnInit {
+export class ViewMonitorsComponent implements OnInit {
   currentMonitors: IMonitor[] = [];
   standardMonitors: IMonitor[] = [];
   archivedMonitors: IMonitor[] = [];

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionsService } from '../actions.service';
 import { IActions } from '../actions';
+import { ActionsService } from '../actions.service';
 
 @Component({
-  selector: 'app-overview-page',
-  templateUrl: './overview-page.component.html',
-  styleUrls: ['./overview-page.component.scss'],
+  selector: 'app-view-actions',
+  templateUrl: './view-actions.component.html',
+  styleUrls: ['./view-actions.component.scss'],
 })
-export class OverviewPageComponent implements OnInit {
+export class ViewActionsComponent implements OnInit {
   actions: IActions[];
 
   constructor(private actionsService: ActionsService) {}

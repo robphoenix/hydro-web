@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class NavbarMonitorsMenuComponent {
   menuItems: { name: string; url: string; icon: string }[] = [
     {
-      name: 'Monitors Overview',
+      name: 'View Monitors',
       url: '',
       icon: 'monitors',
     },

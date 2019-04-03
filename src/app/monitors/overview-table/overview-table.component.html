@@ -37,14 +37,6 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <app-primary-button
-      [icon]="'cached'"
-      class="refresh"
-      (click)="refresh.emit()"
-    >
-      Refresh
-    </app-primary-button>
-
     <app-search-input
       class="search"
       [(searchTerm)]="filterValues.searchTerm"
@@ -53,12 +45,21 @@
     ></app-search-input>
 
     <app-primary-button
+      [icon]="'cached'"
+      class="refresh"
+      (click)="refresh.emit()"
+    >
+      Refresh
+    </app-primary-button>
+
+    <app-primary-button
+      class="clear-filters"
       *ngIf="hasActions() || allCurrentCategories.length"
       [disabled]="hasFilters()"
       [icon]="'clear_all'"
       (click)="clearAllFilters()"
     >
-      clear filters
+      Clear Filters
     </app-primary-button>
 
     <app-accent-button

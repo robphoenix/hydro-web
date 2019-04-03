@@ -29,14 +29,14 @@ import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cac
 import { CreateMonitorFormNameComponent } from './create-monitor-form-name/create-monitor-form-name.component';
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
-import { OverviewPageComponent } from './overview-page/overview-page.component';
+import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: OverviewPageComponent },
+      { path: '', component: ViewMonitorsComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },
@@ -72,7 +72,7 @@ import { OverviewPageComponent } from './overview-page/overview-page.component';
     CreateMonitorFormNameComponent,
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
-    OverviewPageComponent,
+    ViewMonitorsComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
