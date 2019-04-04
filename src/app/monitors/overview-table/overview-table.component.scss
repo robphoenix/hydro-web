@@ -21,7 +21,6 @@
 
 .clear-filters {
   margin: 0 $spacing-l;
-  // margin-right: $spacing-l;
 }
 
 .table-outer-wrapper {
@@ -66,10 +65,14 @@
   height: 100%;
 }
 
-.menu,
+.menu {
+  justify-content: center;
+  flex: 0 0 10%;
+}
+
 .actions,
 .categories {
-  flex: 0 0 20%;
+  flex: 0 0 30%;
   justify-content: center;
 }
 

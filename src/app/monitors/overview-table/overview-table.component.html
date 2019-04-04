@@ -224,9 +224,7 @@
         </ng-container>
 
         <ng-container matColumnDef="menu">
-          <mat-header-cell *matHeaderCellDef class="menu">
-            <app-table-heading [iconType]="'menu'">Menu</app-table-heading>
-          </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef class="menu"> </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="menu">
             <app-cell-menu
               [status]="monitor.status"

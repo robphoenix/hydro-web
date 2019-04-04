@@ -204,7 +204,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public archiveMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const action = `archive`;
+    const action = `Archive`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
     });
