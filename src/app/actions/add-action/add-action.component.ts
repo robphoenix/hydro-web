@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-action.component.scss'],
 })
 export class AddActionComponent {
-  title = `add action`;
+  title = `Add Action`;
 }

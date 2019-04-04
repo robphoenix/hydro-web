@@ -1,15 +1,27 @@
 @import 'main';
 
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin: 80px auto;
+.container {
+  margin: $spacing-xl auto;
+  padding: $spacing-l;
+  width: 800px;
+}
+
+.heading,
+.action-name {
+  margin-bottom: $spacing-l;
+}
+
+.label {
+  font-weight: $fw-5;
+}
+
+.no-name {
+  color: $grey-5;
 }
 
 .description {
-  margin: 20px 0;
   width: 100%;
+  margin-bottom: $spacing-m;
 
   .mat-form-field {
     width: 100%;

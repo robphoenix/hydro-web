@@ -1,7 +1,17 @@
-<div class="form">
-  <h2 class="title">{{ title }}</h2>
+<div class="container">
+  <div class="heading">
+    <app-heading>{{ title }}</app-heading>
+  </div>
 
-  <h4>Action Name: {{ createActionForm.get('name').value }}</h4>
+  <div class="action-name">
+    <p class="name">
+      <span class="label">Action Name: </span>
+      <span class="no-name" *ngIf="createActionForm.get('name').value === ''">
+        This will be defined by the chosen action
+      </span>
+      {{ createActionForm.get('name').value }}
+    </p>
+  </div>
 
   <form [formGroup]="createActionForm" (ngSubmit)="submit()">
     <section class="description">
