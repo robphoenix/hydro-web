@@ -1,6 +1,11 @@
 <h1 mat-dialog-title class="title">{{ data.title }}</h1>
 <div mat-dialog-content class="content">
-  <p class="error">{{ data.message }}</p>
+  <p class="message">
+    {{ data.message }}
+  </p>
+  <p class="cause">
+    {{ data.cause }}
+  </p>
 </div>
 <div mat-dialog-actions class="buttons">
   <app-dialog-close-button>
