@@ -50,12 +50,15 @@ export class ViewMonitorsComponent implements OnInit {
       (error: IErrorMessage) => {
         const { errorCode } = error;
         let { message } = error;
+        const { cause } = error;
         const title = `Error fetching monitors`;
         if (errorCode === errorNoAvailableMonitors) {
           message = `There are no monitors currently available to view. Please add a monitor.`;
         }
+
         const dialogRef = this.dialog.open(ErrorDialogComponent, {
-          data: { title, message },
+          data: { title, message, cause },
+          maxWidth: `800px`,
         });
 
         dialogRef.afterClosed().subscribe(() => {

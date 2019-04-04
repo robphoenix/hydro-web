@@ -199,9 +199,10 @@ export class CreateActionFormComponent implements OnInit {
       },
       (err: IErrorMessage) => {
         const title = `error adding action`;
-        const { message } = err;
+        const { message, cause } = err;
         this.dialog.open(ErrorDialogComponent, {
-          data: { title, message },
+          data: { title, message, cause },
+          maxWidth: `800px`,
         });
       },
     );
