@@ -42,8 +42,6 @@ interface IFilterValues {
   styleUrls: ['./overview-table.component.scss'],
 })
 export class OverviewTableComponent implements OnInit, OnChanges {
-  // public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
-
   @Input()
   monitors: IMonitor[];
 
@@ -56,11 +54,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
 
-  @ViewChild(MatPaginator)
-  private paginator: MatPaginator;
+  // @ViewChild(MatPaginator)
+  // private paginator: MatPaginator;
 
-  @ViewChild(MatSort)
-  private sort: MatSort;
+  // @ViewChild(MatSort)
+  // private sort: MatSort;
 
   @ViewChildren(MultipleSelectComponent)
   private selects: MultipleSelectComponent[];
@@ -107,11 +105,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.monitors);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
-    // this.afterFirstLoad = true;
   }
 
   ngOnChanges(): void {
@@ -129,8 +126,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.dataSource.data.slice(),
       sort,
     );
-    this.dataSource = new MatTableDataSource(sorted);
-    // this.filterMonitors();
+    this.dataSource.data = sorted;
   }
 
   private get isCurrentlyArchivedMonitors() {
@@ -230,10 +226,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'archive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -262,10 +259,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'unarchive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -293,10 +291,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'archive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -325,9 +324,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
         },
         (err: IErrorMessage) => {
           const title = 'archive monitor error';
-          const { message } = err;
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );

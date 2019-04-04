@@ -76,9 +76,6 @@
       <mat-table
         [dataSource]="dataSource"
         matSort
-        matSortActive="name"
-        matSortDirection="asc"
-        matSortDisableClear
         (matSortChange)="sortData($event)"
       >
         <ng-container matColumnDef="monitor">
@@ -124,7 +121,7 @@
                   [formControl]="blockControl"
                   [placeHolder]="'Filter Block Actions'"
                   [options]="allCurrentActions['block']"
-                  [(selectedOptions)]="filterValues.selectedActions.block"
+                  [(selectedOptions)]="filterValues.selectedActions['block']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
@@ -143,7 +140,7 @@
                   [formControl]="emailControl"
                   [placeHolder]="'Filter Email Actions'"
                   [options]="allCurrentActions['email']"
-                  [(selectedOptions)]="filterValues.selectedActions.email"
+                  [(selectedOptions)]="filterValues.selectedActions['email']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
@@ -162,7 +159,7 @@
                   [formControl]="storeControl"
                   [placeHolder]="'Filter Store Actions'"
                   [options]="allCurrentActions['store']"
-                  [(selectedOptions)]="filterValues.selectedActions.store"
+                  [(selectedOptions)]="filterValues.selectedActions['store']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
@@ -181,7 +178,7 @@
                   [formControl]="otherControl"
                   [placeHolder]="'Filter Other Actions'"
                   [options]="allCurrentActions['other']"
-                  [(selectedOptions)]="filterValues.selectedActions.other"
+                  [(selectedOptions)]="filterValues.selectedActions['other']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
