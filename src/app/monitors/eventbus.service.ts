@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as EventBus from 'vertx3-eventbus-client';
+import EventBus from 'vertx3-eventbus-client';
 import { Observable, Subscriber } from 'rxjs';
 import {
   IMonitorData,
@@ -147,7 +147,10 @@ export class EventbusService {
     const { h, d } = body as IMonitorDataBody;
 
     const headersMetadata: IHeadersMetadata = h.reduce(
-      (metadata: {}, header: IMonitorDataHeader) => {
+      (
+        metadata: { [name: string]: { type: string; format: string } },
+        header: IMonitorDataHeader,
+      ) => {
         const { n: name, t: type, f: format } = header;
         metadata[name] = { type, format };
         return metadata;
@@ -160,7 +163,11 @@ export class EventbusService {
     const data: IMonitorDataAttributes[] = d.map(
       (attributes: MonitorDataAttribute[]) => {
         return attributes.reduce(
-          (columns: {}, column: MonitorDataAttribute, i: number) => {
+          (
+            columns: { [header: string]: MonitorDataAttribute },
+            column: MonitorDataAttribute,
+            i: number,
+          ) => {
             columns[headers[i]] = column;
             return columns;
           },

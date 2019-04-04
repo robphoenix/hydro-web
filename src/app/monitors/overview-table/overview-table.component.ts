@@ -29,13 +29,20 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
 import { SortService } from '../sort.service';
 
+interface IFilterValues {
+  searchTerm: string;
+  selectedActions: { [action: string]: string[] };
+  selectedCategories: string[];
+  status: string;
+}
+
 @Component({
   selector: 'app-overview-table',
   templateUrl: './overview-table.component.html',
   styleUrls: ['./overview-table.component.scss'],
 })
 export class OverviewTableComponent implements OnInit, OnChanges {
-  public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
+  // public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
 
   @Input()
   monitors: IMonitor[];
@@ -76,7 +83,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Output()
   changeMonitorsType = new EventEmitter<string>();
 
-  filterValues = {
+  public filterValues: IFilterValues = {
     searchTerm: '',
     selectedActions: {
       block: [],
@@ -104,7 +111,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
-    this.afterFirstLoad = true;
+    // this.afterFirstLoad = true;
   }
 
   ngOnChanges(): void {
@@ -123,6 +130,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       sort,
     );
     this.dataSource = new MatTableDataSource(sorted);
+    // this.filterMonitors();
   }
 
   private get isCurrentlyArchivedMonitors() {
