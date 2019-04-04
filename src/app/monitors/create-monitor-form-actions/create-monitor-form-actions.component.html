@@ -4,7 +4,6 @@
 <mat-form-field *ngIf="loading" class="actions" appearance="outline">
   <mat-label>Actions</mat-label>
   <input placeholder="Loading actions..." matInput />
-  <mat-hint align="start">{{ hint }}</mat-hint>
 </mat-form-field>
 
 <!-- this is the real form element -->
@@ -14,7 +13,7 @@
   [formGroup]="parent"
   appearance="outline"
 >
-  <mat-label>actions</mat-label>
+  <mat-label>Actions</mat-label>
   <mat-chip-list #chipList formControlName="actions">
     <mat-chip
       *ngFor="let action of selectedActions"

@@ -3,7 +3,7 @@
 
   <h4>Action Name: {{ createActionForm.get('name').value }}</h4>
 
-  <form [formGroup]="createActionForm">
+  <form [formGroup]="createActionForm" (ngSubmit)="submit()">
     <section class="description">
       <mat-form-field appearance="outline">
         <mat-label>Description*</mat-label>
@@ -60,6 +60,10 @@
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section>
 
-    <button type="submit" (click)="onSubmit()">submit</button>
+    <div class="buttons">
+      <app-accent-submit-button [disabled]="!createActionForm.valid">
+        Save Action
+      </app-accent-submit-button>
+    </div>
   </form>
 </div>

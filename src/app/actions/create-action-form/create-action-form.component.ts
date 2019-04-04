@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { ActionGroup } from 'src/app/monitors/monitor';
 import {
   IActionsMetadataBlock,
@@ -24,6 +29,9 @@ export class CreateActionFormComponent implements OnInit {
     blockParameter: {
       required: `You must choose parameters to block on`,
     },
+    blockTime: {
+      required: `You must specify a block time or block permanently`,
+    },
   };
 
   blockActionUnits: { [key: string]: string[] } = {
@@ -38,9 +46,8 @@ export class CreateActionFormComponent implements OnInit {
     this.blockDataForm = this.fb.group({
       blockParameters: [[``], Validators.required],
       permanently: [false],
-
-      blockTime: [``],
-      blockTimeUnit: [``],
+      blockTime: [``, Validators.required],
+      blockTimeUnit: [``, Validators.required],
       blockDelay: [``],
       blockDelayUnit: [``],
     });
@@ -57,6 +64,48 @@ export class CreateActionFormComponent implements OnInit {
       const name = this.blockName();
       this.createActionForm.patchValue({ name });
     });
+
+    const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
+    const blockTimeUnit: AbstractControl = this.blockDataForm.get(
+      `blockTimeUnit`,
+    );
+    const blockDelay: AbstractControl = this.blockDataForm.get(`blockDelay`);
+    const blockDelayUnit: AbstractControl = this.blockDataForm.get(
+      `blockDelayUnit`,
+    );
+
+    // We want to remove any validation from the time unit inputs if the user is blocking permanently
+    this.blockDataForm
+      .get('permanently')
+      .valueChanges.subscribe((blockPermanentlyValue: boolean) => {
+        if (blockPermanentlyValue) {
+          blockTime.clearValidators();
+          blockTimeUnit.clearValidators();
+          blockTime.setValue(``);
+          blockTimeUnit.setValue(``);
+          blockTime.disable();
+          blockDelay.disable();
+        } else {
+          blockTime.setValidators(Validators.required);
+          blockTimeUnit.setValidators(Validators.required);
+          blockTime.enable();
+          blockDelay.enable();
+          blockTime.markAsUntouched();
+          blockTimeUnit.markAsUntouched();
+        }
+      });
+
+    // We don't want to submit a block action that has a delay time but no delay unit
+    this.blockDataForm
+      .get(`blockDelay`)
+      .valueChanges.subscribe((blockDelayValue: string) => {
+        if (blockDelayValue !== ``) {
+          blockDelayUnit.setValidators(Validators.required);
+          blockDelayUnit.setErrors({ required: true });
+        } else {
+          blockDelayUnit.clearValidators();
+        }
+      });
   }
 
   blockName(): string {
@@ -90,7 +139,7 @@ export class CreateActionFormComponent implements OnInit {
     return name.trim();
   }
 
-  onSubmit() {
+  submit() {
     const { group, name, description } = this.createActionForm.getRawValue();
     let metadata: IActionsMetadataBlock | IActionsMetadataEmail;
     switch (group) {
@@ -119,10 +168,6 @@ export class CreateActionFormComponent implements OnInit {
             blockParameters,
           };
         }
-        break;
-
-      default:
-        break;
     }
 
     const data = {
