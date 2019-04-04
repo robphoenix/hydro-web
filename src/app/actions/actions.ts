@@ -29,12 +29,13 @@ export interface IActionsMetadataEmail {
   emailAlertFields: string;
 }
 
-// SIP('IP Address'),
-//   IP_RANGE('IP Range'),
-//   STK('Session token'),
-//   RSTK('Response Session Token'),
-//   UQID('UQ ID'),
-//   UNAME('User Name'),
-//   userAgent('User Agent'),
-//   xForwardedFor('X-Forwarded-For'),
-//   NONE('None');
+export enum BlockParameters {
+  Sip = 'IP Address',
+  IpRange = 'IP Range',
+  Stk = 'Session token',
+  Rstk = 'Response Session Token',
+  Uqid = 'UQ ID',
+  Uname = 'User Name',
+  UserAgent = 'User Agent',
+  XForwardedFor = 'X-Forwarded-For',
+}

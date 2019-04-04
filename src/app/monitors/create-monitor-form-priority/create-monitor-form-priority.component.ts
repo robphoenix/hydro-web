@@ -8,7 +8,7 @@ import { MonitorPriority } from '../monitor';
   styleUrls: ['./create-monitor-form-priority.component.scss'],
 })
 export class CreateMonitorFormPriorityComponent {
-  public MonitorPriority: typeof MonitorPriority = MonitorPriority;
+  public monitorPriority: typeof MonitorPriority = MonitorPriority;
 
   @Input()
   parent: FormGroup;

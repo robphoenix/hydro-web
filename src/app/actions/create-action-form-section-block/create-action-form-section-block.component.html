@@ -8,8 +8,11 @@
         ngDefaultControl
         multiple
       >
-        <mat-option *ngFor="let item of blockItems" [value]="item">
-          {{ item }}
+        <mat-option
+          *ngFor="let parameter of availableParameters"
+          [value]="parameter"
+        >
+          {{ parameter }}
         </mat-option>
       </mat-select>
       <mat-hint align="end"> *Required </mat-hint>

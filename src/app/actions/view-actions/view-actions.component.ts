@@ -14,7 +14,6 @@ export class ViewActionsComponent implements OnInit {
 
   getActions() {
     this.actionsService.getActions().subscribe((actions) => {
-      console.log({ actions });
       this.actions = actions;
     });
   }

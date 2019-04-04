@@ -13,6 +13,10 @@ import {
   IActions,
 } from '../actions';
 import { ActionsService } from '../actions.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { IErrorMessage } from 'src/app/shared/error-message';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-action-form',
@@ -42,7 +46,13 @@ export class CreateActionFormComponent implements OnInit {
   @Input()
   title: string;
 
-  constructor(private fb: FormBuilder, private actionsService: ActionsService) {
+  constructor(
+    private fb: FormBuilder,
+    private actionsService: ActionsService,
+    public dialog: MatDialog,
+    private router: Router,
+    public snackBar: MatSnackBar,
+  ) {
     this.blockDataForm = this.fb.group({
       blockParameters: [[``], Validators.required],
       permanently: [false],
@@ -110,22 +120,22 @@ export class CreateActionFormComponent implements OnInit {
 
   blockName(): string {
     const form = this.blockDataForm;
-    const permanently = form.get(`permanently`).value;
-    const blockParameters = form
-      .get(`blockParameters`)
-      .value.map((param: string) => param.trim())
-      .join(`, `);
-    const blockTime = form.get(`blockTime`).value.trim();
-    const blockTimeUnit = form.get(`blockTimeUnit`).value.trim();
-    const blockDelay = form.get(`blockDelay`).value.trim();
-    const blockDelayUnit = form.get(`blockDelayUnit`).value.trim();
+    const permanently: boolean = form.get(`permanently`).value;
+    const blockParametersValue: string[] = form.get(`blockParameters`).value;
+    const blockParameters = blockParametersValue
+      ? blockParametersValue.map((param: string) => param.trim()).join(`, `)
+      : ``;
+    const blockTime: string = form.get(`blockTime`).value.trim();
+    const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
+    const blockDelay: string = form.get(`blockDelay`).value.trim();
+    const blockDelayUnit: string = form.get(`blockDelayUnit`).value.trim();
 
-    const duration =
+    const duration: string =
       !permanently && blockTime && blockTimeUnit
         ? `for ${blockTime} ${blockTimeUnit}`
         : ``;
 
-    const delay =
+    const delay: string =
       !permanently && blockDelay && blockDelayUnit
         ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
         : ``;
@@ -180,11 +190,19 @@ export class CreateActionFormComponent implements OnInit {
     console.log({ data });
 
     this.actionsService.addAction(data).subscribe(
-      (res) => {
-        console.log({ res });
+      (res: IActions) => {
+        this.createActionForm.reset();
+        this.router.navigateByUrl(`/actions`);
+        this.snackBar.open(`Action ${name} created`, '', {
+          duration: 2000,
+        });
       },
-      (err) => {
-        console.error({ err });
+      (err: IErrorMessage) => {
+        const title = `error adding action`;
+        const { message } = err;
+        this.dialog.open(ErrorDialogComponent, {
+          data: { title, message },
+        });
       },
     );
   }
