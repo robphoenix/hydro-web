@@ -14,9 +14,13 @@ import { IMonitor } from './monitor';
 export class SortService {
   public sortMonitors(data: IMonitor[], sort: Sort): IMonitor[] {
     const isAsc = sort.direction === 'asc';
-    return data.sort((a: IMonitor, b: IMonitor) =>
-      this.compare(a.name, b.name, isAsc),
-    );
+    return data.sort((a: IMonitor, b: IMonitor) => {
+      return this.compare(
+        a.name.toLowerCase().replace(/\s/g, ''),
+        b.name.toLowerCase().replace(/\s/g, ''),
+        isAsc,
+      );
+    });
   }
 
   public sortMonitorData(
