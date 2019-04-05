@@ -17,3 +17,19 @@ body {
   margin: $spacing-none;
   padding: $spacing-none;
 }
+
+.mat-tooltip.epl-query-tooltip {
+  font-family: monospace;
+  color: $grey-8;
+  background-color: $grey-1;
+  border: 1px solid $grey-3;
+  font-size: $fs-l;
+  box-shadow: $box-shadow;
+  line-height: $lh-copy;
+  white-space: pre-wrap;
+  padding: $spacing-m;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 600px;
+}

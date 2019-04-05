@@ -7,13 +7,6 @@
 
 <mat-menu #menu="matMenu">
   <div class="menu">
-    <button mat-menu-item (click)="viewEplQuery.emit(id)">
-      <mat-icon class="icon">visibility</mat-icon>
-      <span>
-        View EPL Query
-      </span>
-    </button>
-
     <a *ngIf="!isArchived" mat-menu-item routerLink="/monitors/{{ id }}/edit">
       <mat-icon class="icon">edit</mat-icon>
       <span>

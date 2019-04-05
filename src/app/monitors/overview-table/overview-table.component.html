@@ -86,11 +86,9 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="mat-monitor-cell">
             <app-cell-monitor
-              [name]="monitor.name"
-              [description]="monitor.description"
-              [id]="monitor.id"
-              [status]="monitor.status"
+              [monitor]="monitor"
               class="monitor-cell"
+              (viewEplQuery)="viewEplQuery($event)"
             ></app-cell-monitor>
           </mat-cell>
         </ng-container>
@@ -230,7 +228,6 @@
               (unArchiveMonitor)="unArchiveMonitor($event)"
               (enableMonitor)="enableMonitor($event)"
               (disableMonitor)="disableMonitor($event)"
-              (viewEplQuery)="viewEplQuery($event)"
             ></app-cell-menu>
           </mat-cell>
         </ng-container>
