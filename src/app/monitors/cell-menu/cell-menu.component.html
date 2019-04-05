@@ -1,63 +1,60 @@
-<div class="menu">
-  <button
-    mat-icon-button
-    matTooltip="View EPL Query"
-    [matTooltipShowDelay]="showDelay"
-    (click)="viewEplQuery.emit(id)"
-  >
-    <mat-icon class="icon">visibility</mat-icon>
-  </button>
-  <a
-    *ngIf="!isArchived"
-    mat-icon-button
-    matTooltip="Edit"
-    [matTooltipShowDelay]="showDelay"
-    routerLink="/monitors/{{id}}/edit"
-  >
-    <mat-icon class="icon">edit</mat-icon>
-  </a>
-  <a
-    mat-icon-button
-    matTooltip="Duplicate"
-    [matTooltipShowDelay]="showDelay"
-    routerLink="/monitors/{{id}}/duplicate"
-  >
-    <mat-icon class="icon">file_copy</mat-icon>
-  </a>
-  <button
-    *ngIf="!isArchived && isOnline"
-    mat-icon-button
-    matTooltip="Disable"
-    [matTooltipShowDelay]="showDelay"
-    (click)="disableMonitor.emit(id)"
-  >
-    <mat-icon class="icon">flash_off</mat-icon>
-  </button>
-  <button
-    *ngIf="!isArchived && isOffline"
-    mat-icon-button
-    matTooltip="Enable"
-    [matTooltipShowDelay]="showDelay"
-    (click)="enableMonitor.emit(id)"
-  >
-    <mat-icon class="icon">flash_on</mat-icon>
-  </button>
-  <button
-    *ngIf="!isArchived"
-    mat-icon-button
-    matTooltip="Archive"
-    [matTooltipShowDelay]="showDelay"
-    (click)="archiveMonitor.emit(id)"
-  >
-    <mat-icon class="icon">archive</mat-icon>
-  </button>
-  <button
-    *ngIf="isArchived"
-    mat-icon-button
-    matTooltip="Unarchive"
-    [matTooltipShowDelay]="showDelay"
-    (click)="unArchiveMonitor.emit(id)"
-  >
-    <mat-icon class="icon">unarchive</mat-icon>
-  </button>
-</div>
+<button mat-button [matMenuTriggerFor]="menu" color="primary">
+  <mat-icon>more_vert</mat-icon>
+  <span>
+    Options
+  </span>
+</button>
+
+<mat-menu #menu="matMenu">
+  <div class="menu">
+    <a *ngIf="!isArchived" mat-menu-item routerLink="/monitors/{{ id }}/edit">
+      <mat-icon class="icon">edit</mat-icon>
+      <span>
+        Edit Monitor
+      </span>
+    </a>
+
+    <a mat-menu-item routerLink="/monitors/{{ id }}/duplicate">
+      <mat-icon class="icon">file_copy</mat-icon>
+      <span>
+        Duplicate Monitor
+      </span>
+    </a>
+    <button
+      *ngIf="!isArchived && isOnline"
+      mat-menu-item
+      (click)="disableMonitor.emit(id)"
+    >
+      <mat-icon class="icon">flash_off</mat-icon>
+      <span>
+        Disable Monitor
+      </span>
+    </button>
+    <button
+      *ngIf="!isArchived && isOffline"
+      mat-menu-item
+      (click)="enableMonitor.emit(id)"
+    >
+      <mat-icon class="icon">flash_on</mat-icon>
+      <span>
+        Enable Monitor
+      </span>
+    </button>
+    <button *ngIf="!isArchived" mat-menu-item (click)="archiveMonitor.emit(id)">
+      <mat-icon class="icon">archive</mat-icon>
+      <span>
+        Archive Monitor
+      </span>
+    </button>
+    <button
+      *ngIf="isArchived"
+      mat-menu-item
+      (click)="unArchiveMonitor.emit(id)"
+    >
+      <mat-icon class="icon">unarchive</mat-icon>
+      <span>
+        Unarchive Monitor
+      </span>
+    </button>
+  </div>
+</mat-menu>

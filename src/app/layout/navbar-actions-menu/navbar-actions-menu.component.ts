@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class NavbarActionsMenuComponent {
   menuItems: { name: string; url: string; icon: string }[] = [
     {
-      name: 'All Actions',
+      name: 'View Actions',
       url: '',
       icon: 'actions',
     },

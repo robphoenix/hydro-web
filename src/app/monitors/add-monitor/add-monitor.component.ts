@@ -37,10 +37,13 @@ export class AddMonitorComponent {
         });
       },
       (err: IErrorMessage) => {
+        console.log({ err });
+
         const title = 'error adding monitor';
-        const { message } = err;
+        const { message, cause } = err;
         this.dialog.open(ErrorDialogComponent, {
-          data: { title, message },
+          data: { title, message, cause },
+          maxWidth: `800px`,
         });
       },
     );

@@ -6,12 +6,20 @@ import {
   IHeadersMetadata,
 } from './monitor-data';
 import { Sort } from '@angular/material';
+import { IMonitor } from './monitor';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SortService {
-  public sortData(
+  public sortMonitors(data: IMonitor[], sort: Sort): IMonitor[] {
+    const isAsc = sort.direction === 'asc';
+    return data.sort((a: IMonitor, b: IMonitor) =>
+      this.compare(a.name, b.name, isAsc),
+    );
+  }
+
+  public sortMonitorData(
     data: IMonitorDataAttributes[],
     sort: Sort,
     headersMetadata: IHeadersMetadata,
@@ -50,12 +58,10 @@ export class SortService {
   }
 
   private compare(
-    a: MonitorDataAttribute | Date,
-    b: MonitorDataAttribute | Date,
+    a: MonitorDataAttribute | Date | string,
+    b: MonitorDataAttribute | Date | string,
     isAsc: boolean,
   ) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
-
-  constructor() {}
 }

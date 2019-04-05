@@ -14,6 +14,7 @@ import {
   MatSort,
   MatSnackBar,
   MatDialog,
+  Sort,
 } from '@angular/material';
 import { IMonitor, MonitorType, MonitorStatus } from '../monitor';
 import { FormControl } from '@angular/forms';
@@ -26,6 +27,14 @@ import { EplQueryDialogComponent } from '../epl-query-dialog/epl-query-dialog.co
 import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
+import { SortService } from '../sort.service';
+
+interface IFilterValues {
+  searchTerm: string;
+  selectedActions: { [action: string]: string[] };
+  selectedCategories: string[];
+  status: string;
+}
 
 @Component({
   selector: 'app-overview-table',
@@ -33,8 +42,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./overview-table.component.scss'],
 })
 export class OverviewTableComponent implements OnInit, OnChanges {
-  public afterFirstLoad = false; // applying the refresh animation on first load looks janky af
-
   @Input()
   monitors: IMonitor[];
 
@@ -47,11 +54,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<IMonitor>;
   displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
 
-  @ViewChild(MatPaginator)
-  private paginator: MatPaginator;
+  // @ViewChild(MatPaginator)
+  // private paginator: MatPaginator;
 
-  @ViewChild(MatSort)
-  private sort: MatSort;
+  // @ViewChild(MatSort)
+  // private sort: MatSort;
 
   @ViewChildren(MultipleSelectComponent)
   private selects: MultipleSelectComponent[];
@@ -74,7 +81,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Output()
   changeMonitorsType = new EventEmitter<string>();
 
-  filterValues = {
+  public filterValues: IFilterValues = {
     searchTerm: '',
     selectedActions: {
       block: [],
@@ -93,16 +100,15 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     public router: Router,
+    private sortService: SortService,
   ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.monitors);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sortingDataAccessor = (monitor) => monitor.name;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
-    this.afterFirstLoad = true;
   }
 
   ngOnChanges(): void {
@@ -110,6 +116,17 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       this.dataSource.data = this.monitors;
       this.updateMonitorsStatus();
     }
+  }
+
+  public sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
+    const sorted = this.sortService.sortMonitors(
+      this.dataSource.data.slice(),
+      sort,
+    );
+    this.dataSource.data = sorted;
   }
 
   private get isCurrentlyArchivedMonitors() {
@@ -191,7 +208,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   public archiveMonitor(id: number) {
     const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
-    const action = `archive`;
+    const action = `Archive`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
     });
@@ -209,10 +226,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'archive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -241,10 +259,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'unarchive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -272,10 +291,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
           });
         },
         (err: IErrorMessage) => {
-          const { message } = err;
           const title = 'archive monitor error';
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );
@@ -304,9 +324,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
         },
         (err: IErrorMessage) => {
           const title = 'archive monitor error';
-          const { message } = err;
+          const { message, cause } = err;
           this.dialog.open(ErrorDialogComponent, {
-            data: { title, message },
+            data: { title, message, cause },
+            maxWidth: `800px`,
           });
         },
       );

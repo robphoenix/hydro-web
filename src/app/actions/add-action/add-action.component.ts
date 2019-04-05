@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-add-action',
   templateUrl: './add-action.component.html',
   styleUrls: ['./add-action.component.scss'],
 })
-export class AddActionComponent implements OnInit {
-  title = 'add action';
-  constructor() {}
-
-  ngOnInit() {}
+export class AddActionComponent {
+  title = `Add Action`;
 }

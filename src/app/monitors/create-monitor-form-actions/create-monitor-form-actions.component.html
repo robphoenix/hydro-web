@@ -1,20 +1,47 @@
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let group of monitorsService.actionsGroups">
-    <mat-expansion-panel-header>
-      <mat-panel-title class="title">
-        <mat-icon class="icon">{{
-          monitorsService.actionsIcons[group]
-        }}</mat-icon>
-        {{ group }} actions
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-selection-list (selectionChange)="selectionChange()">
-      <mat-list-option
-        *ngFor="let action of availableActions[group]"
-        [value]="action"
-      >
-        {{ action.name }}
-      </mat-list-option>
-    </mat-selection-list>
-  </mat-expansion-panel>
-</mat-accordion>
+<!--
+  this is a dummy input that is displayed until the categories are fetched
+-->
+<mat-form-field *ngIf="loading" class="actions" appearance="outline">
+  <mat-label>Actions</mat-label>
+  <input placeholder="Loading actions..." matInput />
+</mat-form-field>
+
+<!-- this is the real form element -->
+<mat-form-field
+  class="actions"
+  *ngIf="!loading"
+  [formGroup]="parent"
+  appearance="outline"
+>
+  <mat-label>Actions</mat-label>
+  <mat-chip-list #chipList formControlName="actions">
+    <mat-chip
+      *ngFor="let action of selectedActions"
+      [selectable]="autocompleteOptions['selectable']"
+      [removable]="autocompleteOptions['removable']"
+      (removed)="remove(action)"
+    >
+      {{ action.name }}
+      <mat-icon matChipRemove *ngIf="autocompleteOptions['removable']">
+        cancel
+      </mat-icon>
+    </mat-chip>
+
+    <input
+      placeholder="{{ placeholder }}"
+      #actionsInput
+      matInput
+      formControlName="actionsInput"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="
+        autocompleteOptions['separatorKeysCodes']
+      "
+    />
+  </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let action of availableActions" [value]="action">
+      {{ action.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

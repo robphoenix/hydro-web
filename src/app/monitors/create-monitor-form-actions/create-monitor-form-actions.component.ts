@@ -1,44 +1,73 @@
 import {
   Component,
   Input,
-  ViewChildren,
-  QueryList,
   Output,
   EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnChanges,
 } from '@angular/core';
-import { IAction } from '../monitor';
-import { MatSelectionList, MatListOption } from '@angular/material';
-import { MonitorsService } from '../monitors.service';
+import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocomplete,
+} from '@angular/material';
+import { IActions } from 'src/app/actions/actions';
 
 @Component({
   selector: 'app-create-monitor-form-actions',
   templateUrl: './create-monitor-form-actions.component.html',
   styleUrls: ['./create-monitor-form-actions.component.scss'],
 })
-export class CreateMonitorFormActionsComponent {
+export class CreateMonitorFormActionsComponent implements OnChanges {
   @Input()
-  availableActions: { [group: string]: IAction[] };
+  parent: FormGroup;
 
-  @ViewChildren(MatSelectionList)
-  selectionLists: QueryList<MatSelectionList>;
+  @Input()
+  loading: boolean;
+
+  @Input()
+  selectedActions: IActions[];
+
+  @Input()
+  autocompleteOptions: { [key: string]: any };
+
+  @Input()
+  filteredActions: Observable<IActions[]>;
+
+  @Input()
+  validationMessages: { [key: string]: string };
+
+  @Input()
+  placeholder: string;
 
   @Output()
-  selectedActions = new EventEmitter<IAction[]>();
+  removeActions = new EventEmitter<IActions>();
 
-  constructor(public monitorsService: MonitorsService) {}
+  @Output()
+  selectedAction = new EventEmitter<MatAutocompleteSelectedEvent>();
 
-  selectionChange() {
-    const selected: IAction[] = this.selectionLists.reduce(
-      (prev: IAction[], curr: MatSelectionList) => {
-        return [
-          ...prev,
-          ...curr.selectedOptions.selected.map(
-            (option: MatListOption) => option.value,
-          ),
-        ];
-      },
-      [],
-    );
-    this.selectedActions.emit(selected);
+  availableActions: IActions[];
+
+  @ViewChild('actionsInput')
+  actionsInput: ElementRef;
+
+  @ViewChild('auto')
+  matAutocomplete: MatAutocomplete;
+
+  remove(actions: IActions) {
+    this.removeActions.emit(actions);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent) {
+    this.selectedAction.emit(event);
+    this.actionsInput.nativeElement.value = '';
+  }
+
+  ngOnChanges() {
+    this.filteredActions.subscribe((filtered) => {
+      this.availableActions = filtered;
+    });
   }
 }

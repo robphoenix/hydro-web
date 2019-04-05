@@ -8,8 +8,13 @@
   margin-bottom: $spacing-l;
 }
 
-.error {
+.message {
   color: $accent-warn;
+  margin-bottom: $spacing-m;
+}
+
+.cause {
+  color: $grey-6;
 }
 
 .buttons {

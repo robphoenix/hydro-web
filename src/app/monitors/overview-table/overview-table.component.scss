@@ -5,16 +5,21 @@
   align-items: center;
   margin-bottom: $spacing-l;
 }
+
 .status-toggle {
   margin-left: $spacing-l;
 }
 
-.refresh {
+.search {
+  flex: 0 0 25%;
   margin-left: auto;
 }
 
-.search {
-  flex: 0 0 25%;
+.refresh {
+  margin: 0 $spacing-l;
+}
+
+.clear-filters {
   margin: 0 $spacing-l;
 }
 
@@ -60,15 +65,14 @@
   height: 100%;
 }
 
-.menu,
-.actions,
-.categories {
-  flex: 0 0 20%;
+.menu {
+  justify-content: center;
+  flex: 0 0 10%;
 }
 
 .actions,
-.menu,
 .categories {
+  flex: 0 0 25%;
   justify-content: center;
 }
 
@@ -117,9 +121,11 @@
   0% {
     background-color: none;
   }
+
   50% {
     background-color: $primary-lighter;
   }
+
   100% {
     background-color: none;
   }

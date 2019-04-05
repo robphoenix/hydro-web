@@ -1,19 +1,19 @@
 <div class="wrapper" [formGroup]="parent">
   <mat-label class="label">Priority*</mat-label>
   <mat-button-toggle-group formControlName="priority">
-    <mat-button-toggle value="MonitorPriority.Lowest">
+    <mat-button-toggle value="monitorPriority.Lowest">
       <p>Lowest</p>
     </mat-button-toggle>
-    <mat-button-toggle value="MonitorPriority.Low">
+    <mat-button-toggle value="monitorPriority.Low">
       <p>Low</p>
     </mat-button-toggle>
-    <mat-button-toggle value="MonitorPriority.Mid" [checked]="true">
+    <mat-button-toggle value="monitorPriority.Mid" [checked]="true">
       <p>Mid</p>
     </mat-button-toggle>
-    <mat-button-toggle value="MonitorPriority.High">
+    <mat-button-toggle value="monitorPriority.High">
       <p>High</p>
     </mat-button-toggle>
-    <mat-button-toggle value="MonitorPriority.Highest">
+    <mat-button-toggle value="monitorPriority.Highest">
       <p>Highest</p>
     </mat-button-toggle>
   </mat-button-toggle-group>

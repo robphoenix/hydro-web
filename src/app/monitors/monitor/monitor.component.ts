@@ -37,7 +37,7 @@ import { SortService } from '../sort.service';
   styleUrls: ['./monitor.component.scss'],
 })
 export class MonitorComponent implements OnInit, OnDestroy {
-  MonitorDataAttributeType: typeof MonitorDataAttributeType = MonitorDataAttributeType;
+  public monitorDataAttributeType: typeof MonitorDataAttributeType = MonitorDataAttributeType;
   private unsubscribe: Subject<void> = new Subject();
 
   public monitor: IMonitor;
@@ -245,7 +245,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     if (!sort.active || sort.direction === '') {
       return;
     }
-    const sorted = this.sortService.sortData(
+    const sorted = this.sortService.sortMonitorData(
       this.dataSource.data.slice(),
       sort,
       this.headersMetadata,

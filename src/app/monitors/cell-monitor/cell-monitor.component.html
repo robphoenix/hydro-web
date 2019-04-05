@@ -1,24 +1,38 @@
-<a
-  routerLink="{{ linkTo }}"
-  [attr.href]="linkTo"
-  [ngClass]="{ 'online-link': online, 'offline-link': offline }"
-  class="link"
->
-  <div class="outer-container">
-    <mat-icon
-      [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
-      matTooltip="{{ online ? 'Online' : 'Offline' }}"
-    >
-      {{ online ? 'flash_on' : 'flash_off' }}
-    </mat-icon>
-    <div class="inner-container">
-      <h1
-        [ngClass]="{ 'online-name': online, 'offline-name': !online }"
-        class="name"
+<div class="container">
+  <a
+    routerLink="{{ linkTo }}"
+    [attr.href]="linkTo"
+    [ngClass]="{ 'online-link': online, 'offline-link': offline }"
+    class="link"
+  >
+    <div class="outer-container">
+      <mat-icon
+        [ngClass]="{ 'online-icon': online, 'offline-icon': !online }"
+        matTooltip="{{ online ? 'Online' : 'Offline' }}"
       >
-        {{ name }}
-      </h1>
-      <h2 class="description">{{ description }}</h2>
+        {{ online ? 'flash_on' : 'flash_off' }}
+      </mat-icon>
+      <div class="inner-container">
+        <h1
+          [ngClass]="{ 'online-name': online, 'offline-name': !online }"
+          class="name"
+        >
+          {{ monitor.name }}
+        </h1>
+        <p class="description">{{ monitor.description }}</p>
+      </div>
     </div>
+  </a>
+
+  <div
+    matTooltip="{{ monitor.query }}"
+    [matTooltipPosition]="'right'"
+    [matTooltipClass]="'epl-query-tooltip'"
+    class="epl-query"
+  >
+    <mat-icon class="icon">visibility</mat-icon>
+    <span>
+      View EPL Query
+    </span>
   </div>
-</a>
+</div>

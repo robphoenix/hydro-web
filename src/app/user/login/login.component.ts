@@ -32,11 +32,7 @@ export class LoginComponent implements OnInit {
     },
   };
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private userService: UserService,
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.usernameControl = new FormControl('', [Validators.required]);

@@ -86,6 +86,21 @@
       </app-create-monitor-form-groups>
     </div>
 
+    <div class="form-field">
+      <app-create-monitor-form-actions
+        [parent]="createMonitorForm"
+        [loading]="loadingActions"
+        [selectedActions]="selectedActions"
+        [autocompleteOptions]="autocompleteOptions"
+        [filteredActions]="filteredActions"
+        [placeholder]="placeholders.actions"
+        [validationMessages]="validationMessages['actions']"
+        (removeAction)="removeAction($event)"
+        (selectedAction)="selectedAction($event)"
+      >
+      </app-create-monitor-form-actions>
+    </div>
+
     <div class="buttons">
       <app-accent-submit-button [disabled]="!createMonitorForm.valid">
         Save Monitor

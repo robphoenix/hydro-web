@@ -19,9 +19,6 @@ export class CellMenuComponent {
   archiveMonitor = new EventEmitter<number>();
 
   @Output()
-  viewEplQuery = new EventEmitter<number>();
-
-  @Output()
   unArchiveMonitor = new EventEmitter<number>();
 
   @Output()

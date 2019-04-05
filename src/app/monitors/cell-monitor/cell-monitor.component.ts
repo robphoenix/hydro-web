@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MonitorStatus } from '../monitor';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MonitorStatus, IMonitor } from '../monitor';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,16 +9,10 @@ import { Router } from '@angular/router';
 })
 export class CellMonitorComponent implements OnInit {
   @Input()
-  id: number;
+  monitor: IMonitor;
 
-  @Input()
-  name: string;
-
-  @Input()
-  description: string;
-
-  @Input()
-  status: MonitorStatus;
+  @Output()
+  viewEplQuery = new EventEmitter<number>();
 
   online: boolean;
   offline: boolean;
@@ -27,12 +21,12 @@ export class CellMonitorComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.online = this.status === MonitorStatus.Online;
-    this.offline = this.status === MonitorStatus.Offline;
-    this.linkTo = this.online ? `/monitors/${this.id}` : null;
+    this.online = this.monitor.status === MonitorStatus.Online;
+    this.offline = this.monitor.status === MonitorStatus.Offline;
+    this.linkTo = this.online ? `/monitors/${this.monitor.id}` : null;
   }
 
   public viewMonitor() {
-    this.router.navigateByUrl(`/monitors/${this.id}`);
+    this.router.navigateByUrl(`/monitors/${this.monitor.id}`);
   }
 }

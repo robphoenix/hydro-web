@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { ActionGroup } from 'src/app/monitors/monitor';
 import {
   IActionsMetadataBlock,
@@ -7,6 +12,11 @@ import {
   ActionsBlockType,
   IActions,
 } from '../actions';
+import { ActionsService } from '../actions.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { IErrorMessage } from 'src/app/shared/error-message';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-action-form',
@@ -23,28 +33,37 @@ export class CreateActionFormComponent implements OnInit {
     blockParameter: {
       required: `You must choose parameters to block on`,
     },
+    blockTime: {
+      required: `You must specify a block time or block permanently`,
+    },
   };
 
   blockActionUnits: { [key: string]: string[] } = {
-    duration: ['minutes', 'hours', 'days'],
-    delay: ['seconds', 'minutes', 'hours'],
+    duration: [`minutes`, `hours`, `days`],
+    delay: [`seconds`, `minutes`, `hours`],
   };
 
   @Input()
   title: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private actionsService: ActionsService,
+    public dialog: MatDialog,
+    private router: Router,
+    public snackBar: MatSnackBar,
+  ) {
     this.blockDataForm = this.fb.group({
-      blockParameters: [[''], Validators.required],
+      blockParameters: [[``], Validators.required],
       permanently: [false],
-      blockTime: [''],
-      blockTimeUnit: [''],
-      blockDelay: [''],
-      blockDelayUnit: [''],
+      blockTime: [``, Validators.required],
+      blockTimeUnit: [``, Validators.required],
+      blockDelay: [``],
+      blockDelayUnit: [``],
     });
     this.createActionForm = this.fb.group({
-      name: '',
-      description: ['', Validators.required],
+      name: ``,
+      description: [``, Validators.required],
       group: [ActionGroup.Block, Validators.required],
       blockData: this.blockDataForm,
     });
@@ -55,40 +74,82 @@ export class CreateActionFormComponent implements OnInit {
       const name = this.blockName();
       this.createActionForm.patchValue({ name });
     });
+
+    const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
+    const blockTimeUnit: AbstractControl = this.blockDataForm.get(
+      `blockTimeUnit`,
+    );
+    const blockDelay: AbstractControl = this.blockDataForm.get(`blockDelay`);
+    const blockDelayUnit: AbstractControl = this.blockDataForm.get(
+      `blockDelayUnit`,
+    );
+
+    // We want to remove any validation from the time unit inputs if the user is blocking permanently
+    this.blockDataForm
+      .get('permanently')
+      .valueChanges.subscribe((blockPermanentlyValue: boolean) => {
+        if (blockPermanentlyValue) {
+          blockTime.clearValidators();
+          blockTimeUnit.clearValidators();
+          blockTime.setValue(``);
+          blockTimeUnit.setValue(``);
+          blockTime.disable();
+          blockDelay.disable();
+        } else {
+          blockTime.setValidators(Validators.required);
+          blockTimeUnit.setValidators(Validators.required);
+          blockTime.enable();
+          blockDelay.enable();
+          blockTime.markAsUntouched();
+          blockTimeUnit.markAsUntouched();
+        }
+      });
+
+    // We don't want to submit a block action that has a delay time but no delay unit
+    this.blockDataForm
+      .get(`blockDelay`)
+      .valueChanges.subscribe((blockDelayValue: string) => {
+        if (blockDelayValue !== ``) {
+          blockDelayUnit.setValidators(Validators.required);
+          blockDelayUnit.setErrors({ required: true });
+        } else {
+          blockDelayUnit.clearValidators();
+        }
+      });
   }
 
   blockName(): string {
     const form = this.blockDataForm;
-    const permanently = form.get('permanently').value;
-    const blockParameters = form
-      .get('blockParameters')
-      .value.map((param: string) => param.trim())
-      .join(', ');
-    const blockTime = form.get('blockTime').value.trim();
-    const blockTimeUnit = form.get('blockTimeUnit').value.trim();
-    const blockDelay = form.get('blockDelay').value.trim();
-    const blockDelayUnit = form.get('blockDelayUnit').value.trim();
+    const permanently: boolean = form.get(`permanently`).value;
+    const blockParametersValue: string[] = form.get(`blockParameters`).value;
+    const blockParameters = blockParametersValue
+      ? blockParametersValue.map((param: string) => param.trim()).join(`, `)
+      : ``;
+    const blockTime: string = form.get(`blockTime`).value.trim();
+    const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
+    const blockDelay: string = form.get(`blockDelay`).value.trim();
+    const blockDelayUnit: string = form.get(`blockDelayUnit`).value.trim();
 
-    const duration =
+    const duration: string =
       !permanently && blockTime && blockTimeUnit
         ? `for ${blockTime} ${blockTimeUnit}`
-        : '';
+        : ``;
 
-    const delay =
+    const delay: string =
       !permanently && blockDelay && blockDelayUnit
         ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
-        : '';
+        : ``;
 
     const time = `${duration} ${delay}`;
 
     const name = `Block ${blockParameters} ${
-      permanently ? 'permanently' : time
+      permanently ? `permanently` : time
     }`;
 
     return name.trim();
   }
 
-  onSubmit() {
+  submit() {
     const { group, name, description } = this.createActionForm.getRawValue();
     let metadata: IActionsMetadataBlock | IActionsMetadataEmail;
     switch (group) {
@@ -117,10 +178,6 @@ export class CreateActionFormComponent implements OnInit {
             blockParameters,
           };
         }
-        break;
-
-      default:
-        break;
     }
 
     const data = {
@@ -132,20 +189,22 @@ export class CreateActionFormComponent implements OnInit {
 
     console.log({ data });
 
-    // const blockTimeUnit = this.blockDataForm.get('blockTimeUnit').value;
-    // const blockTime = this.blockDataForm.get('blockTime').value;
-
-    // if (blockTime && blockTimeUnit) {
-    //   const numberOfSeconds = this.unitsInSeconds[blockTimeUnit];
-    //   // const duration = blockTime * numberOfSeconds;
-    // }
-
-    // const blockDelayUnit = this.blockDataForm.get('blockDelayUnit').value;
-    // const blockDelay = this.blockDataForm.get('blockDelay').value;
-
-    // if (blockDelay && blockDelayUnit) {
-    //   const numberOfSeconds = this.unitsInSeconds[blockDelayUnit];
-    //   // const delay = blockDelay * numberOfSeconds;
-    // }
+    this.actionsService.addAction(data).subscribe(
+      (res: IActions) => {
+        this.createActionForm.reset();
+        this.router.navigateByUrl(`/actions`);
+        this.snackBar.open(`Action ${name} created`, '', {
+          duration: 2000,
+        });
+      },
+      (err: IErrorMessage) => {
+        const title = `error adding action`;
+        const { message, cause } = err;
+        this.dialog.open(ErrorDialogComponent, {
+          data: { title, message, cause },
+          maxWidth: `800px`,
+        });
+      },
+    );
   }
 }
