@@ -3,59 +3,9 @@
     <app-heading>Actions</app-heading>
   </div>
   <div
-    class="table-inner-wrapper"
+    class="bt bw1 b--primary"
     *ngIf="dataSource && dataSource.data && dataSource.data.length"
   >
-    <!-- <div class="toolbar">
-    <mat-button-toggle-group [(value)]="monitorsType"
-      (change)="changeMonitorsType.emit($event.value)">
-      <mat-button-toggle value="standard">
-        <mat-icon class="primary icon">flash_on</mat-icon>
-        <span class="primary"> Standard </span>
-      </mat-button-toggle>
-      <mat-button-toggle value="archived">
-        <mat-icon class="primary icon">archive</mat-icon>
-        <span class="primary"> Archived </span>
-      </mat-button-toggle>
-      <mat-button-toggle value="system">
-        <mat-icon class="primary icon">tune</mat-icon>
-        <span class="primary"> System </span>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-
-    <mat-button-toggle-group class="status-toggle" [value]="monitorsStatus"
-      (change)="toggleStatus($event.value)" [disabled]="!canToggleStatus">
-      <mat-button-toggle value="online" class="button-toggle">
-        <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="offline">
-        <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="all">
-        <mat-icon class="all-monitors" matTooltip="All Monitors">flash_on
-        </mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-
-    <app-search-input class="search" [(searchTerm)]="filterValues.searchTerm"
-      [placeHolder]="'Search Monitors'" (searchTermChange)="filterMonitors()">
-    </app-search-input>
-
-
-
-    <app-primary-button class="clear-filters"
-      *ngIf="hasActions() || allCurrentCategories.length"
-      [disabled]="hasFilters()" [icon]="'clear_all'"
-      (click)="clearAllFilters()">
-      Clear Filters
-    </app-primary-button>
-
-    <app-accent-button class="add-monitor" mat-flat-button
-      (click)="router.navigateByUrl('/monitors/add')" [icon]="'add'">
-      New Monitor
-    </app-accent-button>
-  </div> -->
-
     <mat-table
       [dataSource]="dataSource"
       matSort
