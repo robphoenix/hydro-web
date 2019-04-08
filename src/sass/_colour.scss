@@ -33,3 +33,177 @@ $accent-orange: mat-color(mat-palette($mat-orange, 500));
 $accent-yellow: mat-color(mat-palette($mat-amber, 500));
 $accent-green: mat-color(mat-palette($mat-green, 500));
 $accent-cyan: mat-color(mat-palette($mat-cyan, 500));
+
+// Text Colours
+
+.primary {
+  color: $primary;
+}
+
+.primary-lighter {
+  color: $primary-lighter;
+}
+
+.primary-darker {
+  color: $primary-darker;
+}
+
+.accent {
+  color: $accent;
+}
+
+.accent-lighter {
+  color: $accent-lighter;
+}
+
+.accent-darker {
+  color: $accent-darker;
+}
+
+.accent-warn {
+  color: $accent;
+}
+
+.accent-warn-lighter {
+  color: $accent-lighter;
+}
+
+.accent-warn-darker {
+  color: $accent-darker;
+}
+
+.accent-redarker {
+  color: $accent-red;
+}
+
+.accent-orange {
+  color: $accent-orange;
+}
+
+.accent-yellow {
+  color: $accent-yellow;
+}
+
+.accent-green {
+  color: $accent-green;
+}
+
+.accent-cyan {
+  color: $accent-cyan;
+}
+
+// Background Colours
+
+.bg-primary {
+  background-color: $primary;
+}
+
+.bg-primary-lighter {
+  background-color: $primary-lighter;
+}
+
+.bg-primary-darker {
+  background-color: $primary-darker;
+}
+
+.bg-accent {
+  background-color: $accent;
+}
+
+.bg-accent-lighter {
+  background-color: $accent-lighter;
+}
+
+.bg-accent-darker {
+  background-color: $accent-darker;
+}
+
+.bg-accent-warn {
+  background-color: $accent;
+}
+
+.bg-accent-warn-lighter {
+  background-color: $accent-lighter;
+}
+
+.bg-accent-warn-d {
+  background-color: $accent-darker;
+}
+
+.bg-accent-red {
+  background-color: $accent-red;
+}
+
+.bg-accent-orange {
+  background-color: $accent-orange;
+}
+
+.bg-accent-yellow {
+  background-color: $accent-yellow;
+}
+
+.bg-accent-green {
+  background-color: $accent-green;
+}
+
+.bg-accent-cyan {
+  background-color: $accent-cyan;
+}
+
+// Border Colours
+
+.b--primary {
+  border-color: $primary;
+}
+
+.b--primary-lighter {
+  border-color: $primary-lighter;
+}
+
+.b--primary-darker {
+  border-color: $primary-darker;
+}
+
+.b--accent {
+  border-color: $accent;
+}
+
+.b--accent-lighter {
+  border-color: $accent-lighter;
+}
+
+.b--accent-darker {
+  border-color: $accent-darker;
+}
+
+.b--accent-warn {
+  border-color: $accent;
+}
+
+.b--accent-warn-lighter {
+  border-color: $accent-lighter;
+}
+
+.b--accent-warn-d {
+  border-color: $accent-darker;
+}
+
+.b--accent-red {
+  border-color: $accent-red;
+}
+
+.b--accent-orange {
+  border-color: $accent-orange;
+}
+
+.b--accent-yellow {
+  border-color: $accent-yellow;
+}
+
+.b--accent-green {
+  border-color: $accent-green;
+}
+
+.b--accent-cyan {
+  border-color: $accent-cyan;
+}
