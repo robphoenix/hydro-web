@@ -36,7 +36,8 @@ import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ViewMonitorsComponent },
+      { path: '', redirectTo: 'view', pathMatch: 'full' },
+      { path: 'view', component: ViewMonitorsComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },

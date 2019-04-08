@@ -1,3 +1,108 @@
-<pre class="actions">
-  {{ actions | json }}
-</pre>
+<div class="ma5 pa4">
+  <div class="mb4">
+    <app-heading>Actions</app-heading>
+  </div>
+  <div
+    class="table-inner-wrapper"
+    *ngIf="dataSource && dataSource.data && dataSource.data.length"
+  >
+    <!-- <div class="toolbar">
+    <mat-button-toggle-group [(value)]="monitorsType"
+      (change)="changeMonitorsType.emit($event.value)">
+      <mat-button-toggle value="standard">
+        <mat-icon class="primary icon">flash_on</mat-icon>
+        <span class="primary"> Standard </span>
+      </mat-button-toggle>
+      <mat-button-toggle value="archived">
+        <mat-icon class="primary icon">archive</mat-icon>
+        <span class="primary"> Archived </span>
+      </mat-button-toggle>
+      <mat-button-toggle value="system">
+        <mat-icon class="primary icon">tune</mat-icon>
+        <span class="primary"> System </span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group class="status-toggle" [value]="monitorsStatus"
+      (change)="toggleStatus($event.value)" [disabled]="!canToggleStatus">
+      <mat-button-toggle value="online" class="button-toggle">
+        <mat-icon class="online" matTooltip="Online">flash_on</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="offline">
+        <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="all">
+        <mat-icon class="all-monitors" matTooltip="All Monitors">flash_on
+        </mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <app-search-input class="search" [(searchTerm)]="filterValues.searchTerm"
+      [placeHolder]="'Search Monitors'" (searchTermChange)="filterMonitors()">
+    </app-search-input>
+
+
+
+    <app-primary-button class="clear-filters"
+      *ngIf="hasActions() || allCurrentCategories.length"
+      [disabled]="hasFilters()" [icon]="'clear_all'"
+      (click)="clearAllFilters()">
+      Clear Filters
+    </app-primary-button>
+
+    <app-accent-button class="add-monitor" mat-flat-button
+      (click)="router.navigateByUrl('/monitors/add')" [icon]="'add'">
+      New Monitor
+    </app-accent-button>
+  </div> -->
+
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      [matSortActive]="'name'"
+      [matSortDirection]="'asc'"
+      matSortDisableClear
+      (matSortChange)="sortData($event)"
+    >
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Action Name
+        </mat-header-cell>
+        <mat-cell *matCellDef="let action">
+          {{ action.name }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="group">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Group
+        </mat-header-cell>
+        <mat-cell *matCellDef="let action">
+          {{ action.group }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="metadata">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Metadata
+        </mat-header-cell>
+        <mat-cell *matCellDef="let action">
+          {{ action.metadata }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator
+    class="paginator"
+    #paginator
+    [length]="actions.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

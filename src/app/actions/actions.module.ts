@@ -45,7 +45,8 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ViewActionsComponent },
+      { path: '', redirectTo: 'view', pathMatch: 'full' },
+      { path: 'view', component: ViewActionsComponent },
       { path: 'add', component: AddActionComponent },
     ]),
     FormsModule,
