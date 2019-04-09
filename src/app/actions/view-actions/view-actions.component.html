@@ -2,57 +2,18 @@
   <div class="mb4">
     <app-heading>Actions</app-heading>
   </div>
-  <div
-    class="bt bw1 b--primary"
-    *ngIf="dataSource && dataSource.data && dataSource.data.length"
-  >
-    <mat-table
-      [dataSource]="dataSource"
-      matSort
-      [matSortActive]="'name'"
-      [matSortDirection]="'asc'"
-      matSortDisableClear
-      (matSortChange)="sortData($event)"
-    >
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Action Name
-        </mat-header-cell>
-        <mat-cell *matCellDef="let action">
-          {{ action.name }}
-        </mat-cell>
-      </ng-container>
 
-      <ng-container matColumnDef="group">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Group
-        </mat-header-cell>
-        <mat-cell *matCellDef="let action">
-          {{ action.group }}
-        </mat-cell>
-      </ng-container>
+  <app-search-input
+    [(searchTerm)]="searchTerm"
+    [placeHolder]="'Search Actions'"
+    (searchTermChange)="filterActions()"
+  ></app-search-input>
 
-      <ng-container matColumnDef="metadata">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Metadata
-        </mat-header-cell>
-        <mat-cell *matCellDef="let action">
-          {{ action.metadata }}
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
+  <div class="bg-white bt bw1 b--primary">
+    <mat-list>
+      <mat-list-item *ngFor="let action of filteredActions">
+        {{ action.name }}
+      </mat-list-item>
+    </mat-list>
   </div>
-
-  <mat-paginator
-    class="paginator"
-    #paginator
-    [length]="actions.length"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25]"
-    showFirstLastButtons
-  >
-  </mat-paginator>
 </div>
