@@ -9,11 +9,18 @@
     (searchTermChange)="filterActions()"
   ></app-search-input>
 
-  <div class="bg-white bt bw1 b--primary">
-    <mat-list>
-      <mat-list-item *ngFor="let action of filteredActions">
-        {{ action.name }}
-      </mat-list-item>
-    </mat-list>
-  </div>
+  <mat-list>
+    <cdk-virtual-scroll-viewport itemSize="72" class="bt bw1 b--primary h8">
+      <ng-container *cdkVirtualFor="let action of filteredActions">
+        <mat-list-item class="bg-white">
+          <h1 matLine class="f5 fw5 lh-title">
+            {{ action.name }}
+          </h1>
+          <p matLine class="f6 fw4 lh-copy silver">
+            {{ action.description }}
+          </p>
+        </mat-list-item>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </mat-list>
 </div>
