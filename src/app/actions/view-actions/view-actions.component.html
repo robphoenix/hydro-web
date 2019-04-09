@@ -2,23 +2,62 @@
   <div class="mb4">
     <app-heading>Actions</app-heading>
   </div>
+  <div class="flex items-center w-75">
+    <mat-button-toggle-group
+      [value]="group"
+      (change)="filterActions($event.value)"
+    >
+      <mat-button-toggle value="block">
+        <mat-icon [ngClass]="icons['block'].colour" matTooltip="Block">
+          {{ icons['block'].icon }}
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="email">
+        <mat-icon [ngClass]="icons['email'].colour" matTooltip="Email">
+          {{ icons['email'].icon }}
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="store">
+        <mat-icon [ngClass]="icons['store'].colour" matTooltip="Store">
+          {{ icons['store'].icon }}
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="all">
+        <mat-icon [ngClass]="icons['actions'].colour" matTooltip="All Actions">
+          {{ icons['actions'].icon }}
+        </mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-  <app-search-input
-    [(searchTerm)]="searchTerm"
-    [placeHolder]="'Search Actions'"
-    (searchTermChange)="filterActions()"
-  ></app-search-input>
+    <app-search-input
+      [(searchTerm)]="searchTerm"
+      [placeHolder]="'Search Actions'"
+      (searchTermChange)="filterActions()"
+      class="w-60 ml4"
+    ></app-search-input>
+  </div>
 
   <mat-list>
     <cdk-virtual-scroll-viewport itemSize="72" class="bt bw1 b--primary h8">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="bg-white">
-          <h1 matLine class="f5 fw5 lh-title">
-            {{ action.name }}
-          </h1>
-          <p matLine class="f6 fw4 lh-copy silver">
-            {{ action.description }}
-          </p>
+        <mat-list-item class="flex bg-white">
+          <app-icon
+            [type]="action.group"
+            class="mh4"
+            [ngClass]="{
+              red: action.group === 'block',
+              green: action.group === 'email',
+              blue: action.group === 'store'
+            }"
+          ></app-icon>
+          <div>
+            <h1 matLine class="f5 fw5 lh-title">
+              {{ action.name }}
+            </h1>
+            <p matLine class="f6 fw4 lh-copy silver">
+              {{ action.description }}
+            </p>
+          </div>
         </mat-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>
