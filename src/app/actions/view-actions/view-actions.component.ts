@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IActions } from '../actions';
+import { IAction } from '../actions';
 import { ActionsService } from '../actions.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { ActionsService } from '../actions.service';
   styleUrls: ['./view-actions.component.scss'],
 })
 export class ViewActionsComponent implements OnInit {
-  public actions: IActions[] = [];
-  public filteredActions: IActions[] = [];
+  public actions: IAction[] = [];
+  public filteredActions: IAction[] = [];
   public searchTerm: string;
   public group = 'all';
   public icons: { [type: string]: { icon: string; colour: string } } = {
@@ -30,8 +30,8 @@ export class ViewActionsComponent implements OnInit {
   }
 
   getActions() {
-    this.actionsService.getActions().subscribe((actions: IActions[]) => {
-      this.actions = actions.sort((a: IActions, b: IActions) => {
+    this.actionsService.getActions().subscribe((actions: IAction[]) => {
+      this.actions = actions.sort((a: IAction, b: IAction) => {
         return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1;
       });
       this.filteredActions = this.actions;
@@ -42,7 +42,7 @@ export class ViewActionsComponent implements OnInit {
     this.group = group || this.group;
     console.log(this.searchTerm);
     console.log(this.group);
-    this.filteredActions = this.actions.filter((action: IActions) => {
+    this.filteredActions = this.actions.filter((action: IAction) => {
       const searchTerm: string = this.searchTerm || '';
 
       const regex: RegExp = new RegExp(searchTerm.trim().toLowerCase(), 'gi');

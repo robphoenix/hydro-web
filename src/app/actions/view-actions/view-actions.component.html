@@ -41,17 +41,15 @@
     <cdk-virtual-scroll-viewport itemSize="72" class="bt bw1 b--primary h8">
       <ng-container *cdkVirtualFor="let action of filteredActions">
         <mat-list-item class="flex bg-white">
-          <app-icon
-            [type]="action.group"
-            class="mh4"
-            [ngClass]="{
-              red: action.group === 'block',
-              green: action.group === 'email',
-              blue: action.group === 'store'
-            }"
-          ></app-icon>
+          <mat-icon
+            [ngClass]="icons[action.group].colour"
+            matTooltip="All Actions"
+            class="mr4 ml2"
+          >
+            {{ icons[action.group].icon }}
+          </mat-icon>
           <div>
-            <h1 matLine class="f5 fw5 lh-title">
+            <h1 matLine class="f5 fw5 lh-title pt3">
               {{ action.name }}
             </h1>
             <p matLine class="f6 fw4 lh-copy silver">
