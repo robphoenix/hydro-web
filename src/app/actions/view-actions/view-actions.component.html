@@ -2,7 +2,7 @@
   <div class="mb4">
     <app-heading>Actions</app-heading>
   </div>
-  <div class="flex items-center w-75">
+  <div class="flex items-center w-100 mb4">
     <mat-button-toggle-group
       [value]="group"
       (change)="filterActions($event.value)"
@@ -33,23 +33,32 @@
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Actions'"
       (searchTermChange)="filterActions()"
-      class="w-60 ml4"
+      class="w-40 ml-auto"
     ></app-search-input>
+
+    <app-accent-button
+      mat-flat-button
+      (click)="router.navigateByUrl('/actions/add')"
+      [icon]="'add'"
+      class="ml4"
+    >
+      New Action
+    </app-accent-button>
   </div>
 
-  <mat-list>
-    <cdk-virtual-scroll-viewport itemSize="72" class="bt bw1 b--primary h8">
+  <mat-list class="bg-white shadow-4 bt bw1 b--primary ">
+    <cdk-virtual-scroll-viewport itemSize="72" class="h7">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="flex bg-white">
+        <mat-list-item class="flex items-center mv2 mh4">
           <mat-icon
             [ngClass]="icons[action.group].colour"
             matTooltip="All Actions"
-            class="mr4 ml2"
+            class="mr4"
           >
             {{ icons[action.group].icon }}
           </mat-icon>
           <div>
-            <h1 matLine class="f5 fw5 lh-title pt3">
+            <h1 matLine class="f5 fw5 lh-title">
               {{ action.name }}
             </h1>
             <p matLine class="f6 fw4 lh-copy silver">

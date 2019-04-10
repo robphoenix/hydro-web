@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IAction } from '../actions';
 import { ActionsService } from '../actions.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-actions',
@@ -23,7 +24,7 @@ export class ViewActionsComponent implements OnInit {
     other: { icon: 'subject', colour: 'yellow' },
   };
 
-  constructor(private actionsService: ActionsService) {}
+  constructor(private actionsService: ActionsService, public router: Router) {}
 
   ngOnInit() {
     this.getActions();
