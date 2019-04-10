@@ -1,82 +1,80 @@
-<div class="block">
-  <form [formGroup]="parent" class="block">
-    <mat-form-field appearance="outline">
-      <mat-label>Block Parameters*</mat-label>
-      <mat-select
-        formControlName="blockParameters"
-        placeholder="Parameter to block on"
-        ngDefaultControl
-        multiple
+<form [formGroup]="parent" class="flex flex-column">
+  <mat-form-field appearance="outline" class="mb3">
+    <mat-label>Parameters*</mat-label>
+    <mat-select
+      formControlName="blockParameters"
+      placeholder="Parameter to block on"
+      ngDefaultControl
+      multiple
+    >
+      <mat-option
+        *ngFor="let parameter of availableParameters"
+        [value]="parameter"
       >
-        <mat-option
-          *ngFor="let parameter of availableParameters"
-          [value]="parameter"
-        >
-          {{ parameter }}
-        </mat-option>
-      </mat-select>
-      <mat-hint align="end"> *Required </mat-hint>
-      <mat-error *ngIf="parent.get('blockParameters').hasError('required')">
-        {{ validationMessages['blockParameters']['required'] }}
+        {{ parameter }}
+      </mat-option>
+    </mat-select>
+    <mat-hint align="end"> *Required </mat-hint>
+    <mat-error *ngIf="parent.get('blockParameters').hasError('required')">
+      {{ validationMessages['blockParameters']['required'] }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-slide-toggle class="mb4" formControlName="permanently">
+    Block Permanently
+  </mat-slide-toggle>
+
+  <div class="flex items-baseline mb3">
+    <mat-form-field appearance="outline" class="mr3">
+      <mat-label>Block Duration</mat-label>
+      <input
+        matInput
+        placeholder="Block Duration"
+        formControlName="blockTime"
+        [disabled]="parent.get('permanently').value"
+      />
+      <mat-hint *ngIf="!parent.get('permanently').value" align="end">
+        *Required
+      </mat-hint>
+      <mat-error *ngIf="parent.get('blockTime').hasError('required')">
+        {{ validationMessages['blockTime']['required'] }}
       </mat-error>
     </mat-form-field>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      formControlName="blockTimeUnit"
+      [disabled]="parent.get('permanently').value"
+    >
+      <mat-button-toggle
+        *ngFor="let unit of units['duration']"
+        value="{{ unit }}"
+      >
+        <span class="ttc">{{ unit }}</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
-    <mat-slide-toggle class="permanently" formControlName="permanently">
-      Block Permanently
-    </mat-slide-toggle>
-
-    <div class="block-values">
-      <mat-form-field appearance="outline" class="block-values-input">
-        <mat-label>Block Duration</mat-label>
-        <input
-          matInput
-          placeholder="Block Duration"
-          formControlName="blockTime"
-          [disabled]="parent.get('permanently').value"
-        />
-        <mat-hint *ngIf="!parent.get('permanently').value" align="end">
-          *Required
-        </mat-hint>
-        <mat-error *ngIf="parent.get('blockTime').hasError('required')">
-          {{ validationMessages['blockTime']['required'] }}
-        </mat-error>
-      </mat-form-field>
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        formControlName="blockTimeUnit"
+  <div class="flex items-baseline">
+    <mat-form-field appearance="outline" class="mr3">
+      <mat-label>Block Delay</mat-label>
+      <input
+        matInput
+        placeholder="Block Delay"
+        formControlName="blockDelay"
+        [disabled]="parent.get('permanently').value"
+      />
+    </mat-form-field>
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      formControlName="blockDelayUnit"
+    >
+      <mat-button-toggle
+        *ngFor="let unit of units['delay']"
+        value="{{ unit }}"
         [disabled]="parent.get('permanently').value"
       >
-        <mat-button-toggle
-          *ngFor="let unit of units['duration']"
-          value="{{ unit }}"
-        >
-          <span class="unit">{{ unit }}</span>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-
-    <div class="block-values">
-      <mat-form-field appearance="outline" class="block-values-input">
-        <mat-label>Block Delay</mat-label>
-        <input
-          matInput
-          placeholder="Block Delay"
-          formControlName="blockDelay"
-          [disabled]="parent.get('permanently').value"
-        />
-      </mat-form-field>
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        formControlName="blockDelayUnit"
-      >
-        <mat-button-toggle
-          *ngFor="let unit of units['delay']"
-          value="{{ unit }}"
-          [disabled]="parent.get('permanently').value"
-        >
-          <span class="unit">{{ unit }}</span>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </form>
-</div>
+        <span class="ttc">{{ unit }}</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</form>

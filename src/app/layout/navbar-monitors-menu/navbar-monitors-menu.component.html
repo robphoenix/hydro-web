@@ -1,12 +1,12 @@
 <app-primary-navbar-button [matMenuTriggerFor]="monitors" [menu]="true">
-  <span class="name">Monitors</span>
+  Monitors
 </app-primary-navbar-button>
 
 <mat-menu #monitors="matMenu" [overlapTrigger]="false">
   <a
     mat-menu-item
     *ngFor="let item of menuItems"
-    routerLink="/monitors/{{item.url}}"
+    routerLink="/monitors/{{ item.url }}"
   >
     <app-icon [type]="item.icon"></app-icon>
     <span>{{ item.name }}</span>

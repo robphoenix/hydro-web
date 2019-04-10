@@ -1,16 +1,22 @@
-<mat-toolbar color="primary" class="toolbar">
-  <img height="40" [src]="logo" alt="hydro logo" class="logo" />
-  <button
-    mat-flat-button
-    color="primary"
-    routerLink="/"
-    class="hydro"
-    [disableRipple]="true"
-  >
-    Hydro
+<mat-toolbar
+  color="primary"
+  class="fixed z-999 top-0
+shadow-4"
+>
+  <img
+    height="40"
+    [src]="logo"
+    alt="hydro logo"
+    class="flex items-center ml4"
+    [ngStyle]="{ filter: 'invert(100%)' }"
+  />
+  <button mat-flat-button color="primary" routerLink="/" [disableRipple]="true">
+    <span class="f2 fw3">
+      Hydro
+    </span>
   </button>
 
-  <nav class="nav" *ngIf="authService.isLoggedIn">
+  <nav class="ml-auto mr4" *ngIf="authService.isLoggedIn">
     <app-navbar-monitors-menu></app-navbar-monitors-menu>
     <app-navbar-actions-menu></app-navbar-actions-menu>
     <app-navbar-user-menu
