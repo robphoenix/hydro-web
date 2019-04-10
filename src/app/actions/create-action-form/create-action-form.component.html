@@ -1,12 +1,15 @@
-<div class="container">
-  <div class="heading">
+<div class="w9 ml-auto mr-auto mv4 pt4">
+  <div class="mb4">
     <app-heading>{{ title }}</app-heading>
   </div>
 
-  <div class="action-name">
-    <p class="name">
-      <span class="label">Action Name: </span>
-      <span class="no-name" *ngIf="createActionForm.get('name').value === ''">
+  <div class="mb4">
+    <p>
+      <span class="fw5">Action Name: </span>
+      <span
+        class="light-silver"
+        *ngIf="createActionForm.get('name').value === ''"
+      >
         This will be defined by the chosen action
       </span>
       {{ createActionForm.get('name').value }}
@@ -14,8 +17,8 @@
   </div>
 
   <form [formGroup]="createActionForm" (ngSubmit)="submit()">
-    <section class="description">
-      <mat-form-field appearance="outline">
+    <section class="description w-100 mb3">
+      <mat-form-field appearance="outline" class="w-100">
         <mat-label>Description*</mat-label>
         <textarea
           matInput
@@ -70,7 +73,7 @@
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section>
 
-    <div class="buttons">
+    <div class="flex justify-end mt4">
       <app-accent-submit-button [disabled]="!createActionForm.valid">
         Save Action
       </app-accent-submit-button>
