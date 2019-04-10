@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IMonitor, ICategory, IAction, IGroup } from './monitor';
-import { IActions } from '../actions/actions';
+import { IMonitor, ICategory, IGroup } from './monitor';
+import { IAction } from '../actions/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -101,18 +101,18 @@ export class FilterService {
   }
 
   public filterActions(
-    term: string | IActions,
-    available: IActions[],
-    selected: IActions[],
-  ): IActions[] {
+    term: string | IAction,
+    available: IAction[],
+    selected: IAction[],
+  ): IAction[] {
     const availableActions = available.filter(
-      (action: IActions) =>
-        !selected.map((s: IActions) => s.id).includes(action.id),
+      (action: IAction) =>
+        !selected.map((s: IAction) => s.id).includes(action.id),
     );
     if (!term || typeof term !== 'string') {
       return availableActions;
     }
-    return availableActions.filter((action: IActions) =>
+    return availableActions.filter((action: IAction) =>
       action.name.toLowerCase().includes(term.toLowerCase()),
     );
   }

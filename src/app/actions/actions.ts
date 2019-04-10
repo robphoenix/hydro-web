@@ -1,4 +1,4 @@
-export interface IActions {
+export interface IAction {
   id: number;
   name: string;
   group: ActionGroup;
@@ -15,7 +15,6 @@ export enum ActionGroup {
 }
 
 export interface IActionsMetadataBlock {
-  type: ActionsBlockType;
   blockTime: number;
   blockTimeUnit: ActionsBlockTimeUnit;
   blockDelay: number;
@@ -36,17 +35,11 @@ export enum ActionsBlockDelayUnit {
   Hours = 'hours',
 }
 
-export enum ActionsBlockType {
-  SimpleBlock = 'simpleBlock',
-}
-
 export interface IActionsMetadataEmail {
   type: string;
   emailText: string;
   emailSubject: string;
-  emailAdresses: string;
-  emailAlertFields: string;
-  parameters: ActionParameters[];
+  emailAddresses: string;
 }
 
 export enum ActionParameters {

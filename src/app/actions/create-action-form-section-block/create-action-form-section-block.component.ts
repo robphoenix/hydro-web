@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BlockParameters } from '../actions';
+import { ActionParameters } from '../actions';
 
 @Component({
   selector: 'app-create-action-form-section-block',
@@ -8,7 +8,7 @@ import { BlockParameters } from '../actions';
   styleUrls: ['./create-action-form-section-block.component.scss'],
 })
 export class CreateActionFormSectionBlockComponent implements OnInit {
-  public blockParameters: typeof BlockParameters = BlockParameters;
+  private parameters: typeof ActionParameters = ActionParameters;
   public availableParameters: string[] = [];
 
   @Input()
@@ -21,6 +21,6 @@ export class CreateActionFormSectionBlockComponent implements OnInit {
   validationMessages: { [key: string]: { [key: string]: string } };
 
   ngOnInit(): void {
-    this.availableParameters = Object.values(this.blockParameters);
+    this.availableParameters = Object.values(this.parameters);
   }
 }

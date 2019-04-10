@@ -5,12 +5,11 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { ActionGroup } from 'src/app/monitors/monitor';
 import {
   IActionsMetadataBlock,
   IActionsMetadataEmail,
-  ActionsBlockType,
-  IActions,
+  IAction,
+  ActionGroup,
 } from '../actions';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -164,19 +163,17 @@ export class CreateActionFormComponent implements OnInit {
         } = this.blockDataForm.getRawValue();
         if (permanently) {
           metadata = {
-            type: ActionsBlockType.SimpleBlock,
             blockTime: -1,
             blockParameters,
           } as IActionsMetadataBlock;
         } else {
           metadata = {
-            type: ActionsBlockType.SimpleBlock,
             blockTime,
             blockTimeUnit,
             blockDelay,
             blockDelayUnit,
             blockParameters,
-          };
+          } as IActionsMetadataBlock;
         }
     }
 
@@ -185,12 +182,12 @@ export class CreateActionFormComponent implements OnInit {
       group,
       description,
       metadata,
-    } as IActions;
+    } as IAction;
 
     console.log({ data });
 
     this.actionsService.addAction(data).subscribe(
-      (res: IActions) => {
+      (res: IAction) => {
         this.createActionForm.reset();
         this.router.navigateByUrl(`/actions`);
         this.snackBar.open(`Action ${name} created`, '', {

@@ -1,3 +1,5 @@
+import { IAction } from '../actions/actions';
+
 export interface IMonitor {
   id: number;
   name: string;
@@ -16,18 +18,18 @@ export interface IMonitor {
   actions: IAction[];
 }
 
-export interface IAction {
-  id: number;
-  name: string;
-  group: ActionGroup;
-}
+// export interface IAction {
+//   id: number;
+//   name: string;
+//   group: ActionGroup;
+// }
 
-export enum ActionGroup {
-  Block = 'block',
-  Email = 'email',
-  Other = 'other',
-  Store = 'store',
-}
+// export enum ActionGroup {
+//   Block = 'block',
+//   Email = 'email',
+//   Other = 'other',
+//   Store = 'store',
+// }
 
 export interface ICategory {
   id: number;

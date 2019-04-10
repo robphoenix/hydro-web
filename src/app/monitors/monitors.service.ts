@@ -1,7 +1,6 @@
 import {
   IMonitor,
   ICategory,
-  IAction,
   MonitorType,
   MonitorStatus,
   IGroup,
@@ -10,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { IAction } from '../actions/actions';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 

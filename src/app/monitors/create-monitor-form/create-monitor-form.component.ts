@@ -5,7 +5,6 @@ import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import {
   ICategory,
-  IAction,
   IGroup,
   IMonitor,
   LDAPGroup,
@@ -21,7 +20,7 @@ import { Router } from '@angular/router';
 import { IMonitorSubmit } from '../monitor-submit';
 import { CacheWindowService } from '../cache-window.service';
 import { ActionsService } from 'src/app/actions/actions.service';
-import { IActions } from 'src/app/actions/actions';
+import { IAction } from 'src/app/actions/actions';
 
 @Component({
   selector: 'app-create-monitor-form',
@@ -63,9 +62,9 @@ export class CreateMonitorFormComponent implements OnInit {
   placeholderCategories = 'Please select monitor categories';
 
   // availableActions: { [group: string]: IActions[] } = {};
-  availableActions: IActions[] = [];
-  selectedActions: IActions[] = [];
-  filteredActions: Observable<IActions[]>;
+  availableActions: IAction[] = [];
+  selectedActions: IAction[] = [];
+  filteredActions: Observable<IAction[]>;
   loadingActions = false;
 
   availableGroups: IGroup[] = [];
@@ -209,7 +208,7 @@ export class CreateMonitorFormComponent implements OnInit {
       .get('actionsInput')
       .valueChanges.pipe(
         startWith(null),
-        map((term: string | IActions) =>
+        map((term: string | IAction) =>
           this.filterService.filterActions(
             term,
             this.availableActions,
@@ -309,7 +308,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   getAvailableActions(): void {
-    this.actionsService.getActions().subscribe((actions: IActions[]) => {
+    this.actionsService.getActions().subscribe((actions: IAction[]) => {
       // const groups: { [group: string]: IActions[] } = {};
 
       // actions.forEach((action: IActions) => {
@@ -334,9 +333,9 @@ export class CreateMonitorFormComponent implements OnInit {
     });
   }
 
-  removeAction(action: IActions): void {
+  removeAction(action: IAction): void {
     this.selectedActions = this.selectedActions.filter(
-      (selected: IActions) => selected.id !== action.id,
+      (selected: IAction) => selected.id !== action.id,
     );
     const actions = this.createMonitorForm.get('actions');
     actions.setValue(this.selectedActions);
