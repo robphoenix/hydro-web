@@ -32,10 +32,16 @@ export class ErrorInterceptor implements HttpInterceptor {
           // auto logout if failed authentication response returned from api
           this.authService.logout();
         }
-
         let msg: IErrorMessage;
 
-        if (error.error.length) {
+        if (error.status === 404) {
+          const { message } = error;
+          msg = {
+            errorCode: `${error.status}`,
+            message: message,
+            cause: error.statusText,
+          } as IErrorMessage;
+        } else if (error.error.length) {
           // The backend returned an unsuccessful response code.
           // Until otherwise necessary, we're only going to deal
           // with the first error message sent back from the server
