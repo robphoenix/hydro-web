@@ -4,7 +4,7 @@ export interface IAction {
   group: ActionGroup;
   description: string;
   address: string;
-  metadata: IActionsMetadataBlock | IActionsMetadataEmail;
+  metadata: IActionMetadataBlock | IActionMetadataEmail;
   archived: boolean;
 }
 
@@ -14,28 +14,27 @@ export enum ActionGroup {
   Store = 'store',
 }
 
-export interface IActionsMetadataBlock {
+export interface IActionMetadataBlock {
   blockTime: number;
-  blockTimeUnit: ActionsBlockTimeUnit;
+  blockTimeUnit: ActionBlockTimeUnit;
   blockDelay: number;
-  blockDelayUnit: ActionsBlockDelayUnit;
-  blockParameters: string[];
+  blockDelayUnit: ActionBlockDelayUnit;
   parameters: ActionParameters[];
 }
 
-export enum ActionsBlockTimeUnit {
+export enum ActionBlockTimeUnit {
   Minutes = 'minutes',
   Hours = 'hours',
   Days = 'days',
 }
 
-export enum ActionsBlockDelayUnit {
+export enum ActionBlockDelayUnit {
   Seconds = 'seconds',
   Minutes = 'minutes',
   Hours = 'hours',
 }
 
-export interface IActionsMetadataEmail {
+export interface IActionMetadataEmail {
   type: string;
   emailText: string;
   emailSubject: string;

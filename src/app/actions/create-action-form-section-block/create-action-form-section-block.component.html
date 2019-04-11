@@ -2,7 +2,7 @@
   <mat-form-field appearance="outline" class="mb3">
     <mat-label>Parameters*</mat-label>
     <mat-select
-      formControlName="blockParameters"
+      formControlName="parameters"
       placeholder="Parameter to block on"
       ngDefaultControl
       multiple
@@ -15,8 +15,8 @@
       </mat-option>
     </mat-select>
     <mat-hint align="end"> *Required </mat-hint>
-    <mat-error *ngIf="parent.get('blockParameters').hasError('required')">
-      {{ validationMessages['blockParameters']['required'] }}
+    <mat-error *ngIf="parent.get('parameters').hasError('required')">
+      {{ validationMessages['parameters']['required'] }}
     </mat-error>
   </mat-form-field>
 

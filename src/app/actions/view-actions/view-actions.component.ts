@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IAction } from '../actions';
+import { IAction } from '../action';
 import { ActionsService } from '../actions.service';
 import { Router } from '@angular/router';
 

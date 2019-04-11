@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IMonitor, ICategory, IGroup } from './monitor';
-import { IAction } from '../actions/actions';
+import { IAction } from '../actions/action';
 
 @Injectable({
   providedIn: 'root',

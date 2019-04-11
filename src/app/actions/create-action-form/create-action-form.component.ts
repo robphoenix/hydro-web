@@ -6,11 +6,11 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import {
-  IActionsMetadataBlock,
-  IActionsMetadataEmail,
+  IActionMetadataBlock,
+  IActionMetadataEmail,
   IAction,
   ActionGroup,
-} from '../actions';
+} from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { IErrorMessage } from 'src/app/shared/error-message';
@@ -53,7 +53,7 @@ export class CreateActionFormComponent implements OnInit {
     public snackBar: MatSnackBar,
   ) {
     this.blockDataForm = this.fb.group({
-      blockParameters: [[``], Validators.required],
+      parameters: [[``], Validators.required],
       permanently: [false],
       blockTime: [``, Validators.required],
       blockTimeUnit: [``, Validators.required],
@@ -120,9 +120,9 @@ export class CreateActionFormComponent implements OnInit {
   blockName(): string {
     const form = this.blockDataForm;
     const permanently: boolean = form.get(`permanently`).value;
-    const blockParametersValue: string[] = form.get(`blockParameters`).value;
-    const blockParameters = blockParametersValue
-      ? blockParametersValue.map((param: string) => param.trim()).join(`, `)
+    const parametersValue: string[] = form.get(`parameters`).value;
+    const parameters = parametersValue
+      ? parametersValue.map((param: string) => param.trim()).join(`, `)
       : ``;
     const blockTime: string = form.get(`blockTime`).value.trim();
     const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
@@ -141,16 +141,14 @@ export class CreateActionFormComponent implements OnInit {
 
     const time = `${duration} ${delay}`;
 
-    const name = `Block ${blockParameters} ${
-      permanently ? `permanently` : time
-    }`;
+    const name = `Block ${parameters} ${permanently ? `permanently` : time}`;
 
     return name.trim();
   }
 
   submit() {
     const { group, name, description } = this.createActionForm.getRawValue();
-    let metadata: IActionsMetadataBlock | IActionsMetadataEmail;
+    let metadata: IActionMetadataBlock | IActionMetadataEmail;
     switch (group) {
       case ActionGroup.Block:
         const {
@@ -159,21 +157,21 @@ export class CreateActionFormComponent implements OnInit {
           blockTimeUnit,
           blockDelay,
           blockDelayUnit,
-          blockParameters,
+          parameters,
         } = this.blockDataForm.getRawValue();
         if (permanently) {
           metadata = {
             blockTime: -1,
-            blockParameters,
-          } as IActionsMetadataBlock;
+            parameters,
+          } as IActionMetadataBlock;
         } else {
           metadata = {
             blockTime,
             blockTimeUnit,
             blockDelay,
             blockDelayUnit,
-            blockParameters,
-          } as IActionsMetadataBlock;
+            parameters,
+          } as IActionMetadataBlock;
         }
     }
 
@@ -194,7 +192,9 @@ export class CreateActionFormComponent implements OnInit {
           duration: 2000,
         });
       },
-      (err: IErrorMessage) => {
+      (err) => {
+        console.log({ err });
+
         const title = `error adding action`;
         const { message, cause } = err;
         this.dialog.open(ErrorDialogComponent, {

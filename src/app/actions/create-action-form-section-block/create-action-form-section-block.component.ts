@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActionParameters } from '../actions';
+import { ActionParameters } from '../action';
 
 @Component({
   selector: 'app-create-action-form-section-block',

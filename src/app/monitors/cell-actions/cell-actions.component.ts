@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IAction } from 'src/app/actions/actions';
+import { IAction } from 'src/app/actions/action';
 
 @Component({
   selector: 'app-cell-actions',

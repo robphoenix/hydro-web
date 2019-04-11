@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 import { IMonitorSubmit } from '../monitor-submit';
 import { CacheWindowService } from '../cache-window.service';
 import { ActionsService } from 'src/app/actions/actions.service';
-import { IAction } from 'src/app/actions/actions';
+import { IAction } from 'src/app/actions/action';
 
 @Component({
   selector: 'app-create-monitor-form',
