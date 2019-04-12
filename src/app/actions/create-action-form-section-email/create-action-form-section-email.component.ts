@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-create-action-form-section-email',
@@ -7,20 +7,34 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })
 export class CreateActionFormSectionEmailComponent implements OnInit {
-  emails: string[] = ['Forensic Monitoring', 'FRM', 'OTS'];
-  selectedEmails: string[];
-  templates: string[] = ['Template 1', 'Template 2', 'Template 3'];
-  selectedTemplate: string;
-  emailTypes: string[] = ['Rate', 'Batch', 'Alert'];
-  selectedEmailType: string;
-  fields: string[] = ['sip', 'stk'];
-  selectedFields: string[];
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;
 
+  public emailAddresses: string[];
+
+  @Input()
+  availableParameters: string[] = [];
+
+  @Input()
+  emailTypes: string[];
+
+  @Input()
+  parent: FormGroup;
+
   @Output()
   editorContentChange = new EventEmitter<string>();
+
+  @Output()
+  addEmailAddress = new EventEmitter();
+
+  ngOnInit(): void {
+    this.emailAddresses = this.parent.get('emailAddresses').value;
+  }
+
+  get emailAddressesArray(): FormArray {
+    return this.parent.get('emailAddresses') as FormArray;
+  }
 
   onContentChange(event: { html: string }) {
     const { html } = event;
@@ -29,6 +43,4 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
     console.log('content change');
     console.log({ event });
   }
-
-  ngOnInit() {}
 }

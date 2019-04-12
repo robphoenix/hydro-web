@@ -23,15 +23,15 @@ export interface IActionMetadataBlock {
 }
 
 export enum ActionBlockTimeUnit {
-  Minutes = 'minutes',
-  Hours = 'hours',
-  Days = 'days',
+  Minutes = 'MINUTES',
+  Hours = 'HOURS',
+  Days = 'DAYS',
 }
 
 export enum ActionBlockDelayUnit {
-  Seconds = 'seconds',
-  Minutes = 'minutes',
-  Hours = 'hours',
+  Seconds = 'SECONDS',
+  Minutes = 'MINUTES',
+  Hours = 'HOURS',
 }
 
 export interface IActionMetadataEmail {
@@ -50,4 +50,10 @@ export enum ActionParameters {
   Uname = 'User Name',
   UserAgent = 'User Agent',
   XForwardedFor = 'X-Forwarded-For',
+}
+
+export enum ActionEmailTypes {
+  Rate = 'Rate',
+  Batch = 'Batch',
+  Alert = 'Alert',
 }

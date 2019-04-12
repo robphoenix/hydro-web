@@ -31,7 +31,6 @@
         matInput
         placeholder="Block Duration"
         formControlName="blockTime"
-        [disabled]="parent.get('permanently').value"
       />
       <mat-hint *ngIf="!parent.get('permanently').value" align="end">
         *Required
@@ -43,13 +42,13 @@
     <mat-button-toggle-group
       #group="matButtonToggleGroup"
       formControlName="blockTimeUnit"
-      [disabled]="parent.get('permanently').value"
     >
       <mat-button-toggle
         *ngFor="let unit of units['duration']"
         value="{{ unit }}"
+        [disabled]="parent.get('permanently').value"
       >
-        <span class="ttc">{{ unit }}</span>
+        <span class="ttc">{{ unit | lowercase }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
@@ -57,12 +56,7 @@
   <div class="flex items-baseline">
     <mat-form-field appearance="outline" class="mr3">
       <mat-label>Block Delay</mat-label>
-      <input
-        matInput
-        placeholder="Block Delay"
-        formControlName="blockDelay"
-        [disabled]="parent.get('permanently').value"
-      />
+      <input matInput placeholder="Block Delay" formControlName="blockDelay" />
     </mat-form-field>
     <mat-button-toggle-group
       #group="matButtonToggleGroup"
@@ -73,7 +67,7 @@
         value="{{ unit }}"
         [disabled]="parent.get('permanently').value"
       >
-        <span class="ttc">{{ unit }}</span>
+        <span class="ttc">{{ unit | lowercase }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>

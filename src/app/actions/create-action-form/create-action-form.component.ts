@@ -4,12 +4,17 @@ import {
   FormBuilder,
   Validators,
   AbstractControl,
+  FormArray,
 } from '@angular/forms';
 import {
   IActionMetadataBlock,
   IActionMetadataEmail,
   IAction,
   ActionGroup,
+  ActionParameters,
+  ActionEmailTypes,
+  ActionBlockTimeUnit,
+  ActionBlockDelayUnit,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -23,9 +28,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-action-form.component.scss'],
 })
 export class CreateActionFormComponent implements OnInit {
-  createActionForm: FormGroup;
-  blockDataForm: FormGroup;
-  validationMessages: { [key: string]: { [key: string]: string } } = {
+  public createActionForm: FormGroup;
+  public blockDataForm: FormGroup;
+  public emailDataForm: FormGroup;
+
+  private parameters: typeof ActionParameters = ActionParameters;
+  public availableParameters: string[] = [];
+
+  private actionEmailTypes: typeof ActionEmailTypes = ActionEmailTypes;
+  public emailTypes: string[] = [];
+
+  private actionBlockTimeUnit: typeof ActionBlockTimeUnit = ActionBlockTimeUnit;
+  private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
+
+  public validationMessages: { [key: string]: { [key: string]: string } } = {
     description: {
       required: `You must enter an action description`,
     },
@@ -37,10 +53,7 @@ export class CreateActionFormComponent implements OnInit {
     },
   };
 
-  blockActionUnits: { [key: string]: string[] } = {
-    duration: [`minutes`, `hours`, `days`],
-    delay: [`seconds`, `minutes`, `hours`],
-  };
+  public blockActionUnits: { [key: string]: string[] } = {};
 
   @Input()
   title: string;
@@ -60,19 +73,36 @@ export class CreateActionFormComponent implements OnInit {
       blockDelay: [``],
       blockDelayUnit: [``],
     });
+    this.emailDataForm = this.fb.group({
+      parameters: [[``], Validators.required],
+      type: [ActionEmailTypes.Rate],
+      emailAddresses: this.fb.array([this.fb.group({ emailAddress: [``] })]),
+    });
     this.createActionForm = this.fb.group({
       name: ``,
       description: [``, Validators.required],
       group: [ActionGroup.Block, Validators.required],
       blockData: this.blockDataForm,
+      emailData: this.blockDataForm,
     });
   }
 
+  addEmailAddress() {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+
+    // emailAddresses.push(this.fb.control(``));
+    emailAddresses.push(this.fb.group({ emailAddress: [``] }));
+  }
+
   ngOnInit() {
-    this.blockDataForm.valueChanges.subscribe(() => {
-      const name = this.blockName();
-      this.createActionForm.patchValue({ name });
-    });
+    this.availableParameters = Object.values(this.parameters);
+    this.emailTypes = Object.values(this.actionEmailTypes);
+    this.blockActionUnits = {
+      duration: Object.values(this.actionBlockTimeUnit),
+      delay: Object.values(this.actionBlockDelayUnit),
+    };
 
     const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
     const blockTimeUnit: AbstractControl = this.blockDataForm.get(
@@ -83,13 +113,37 @@ export class CreateActionFormComponent implements OnInit {
       `blockDelayUnit`,
     );
 
+    this.createActionForm.get('group').valueChanges.subscribe((value) => {
+      switch (value) {
+        case 'email':
+          blockTime.clearValidators();
+          blockTime.updateValueAndValidity();
+          blockTimeUnit.clearValidators();
+          blockTimeUnit.updateValueAndValidity();
+          break;
+        case 'block':
+          blockTime.setValidators(Validators.required);
+          blockTimeUnit.setValidators(Validators.required);
+          break;
+        default:
+          break;
+      }
+    });
+
+    this.blockDataForm.valueChanges.subscribe(() => {
+      const name = this.blockName();
+      this.createActionForm.patchValue({ name });
+    });
+
     // We want to remove any validation from the time unit inputs if the user is blocking permanently
     this.blockDataForm
       .get('permanently')
-      .valueChanges.subscribe((blockPermanentlyValue: boolean) => {
-        if (blockPermanentlyValue) {
+      .valueChanges.subscribe((blockPermanently: boolean) => {
+        if (blockPermanently) {
           blockTime.clearValidators();
           blockTimeUnit.clearValidators();
+          blockTime.updateValueAndValidity();
+          blockTimeUnit.updateValueAndValidity();
           blockTime.setValue(``);
           blockTimeUnit.setValue(``);
           blockTime.disable();
@@ -147,6 +201,9 @@ export class CreateActionFormComponent implements OnInit {
   }
 
   submit() {
+    const emailForm = this.emailDataForm.getRawValue();
+    console.log({ emailForm });
+
     const { group, name, description } = this.createActionForm.getRawValue();
     let metadata: IActionMetadataBlock | IActionMetadataEmail;
     switch (group) {
@@ -159,6 +216,7 @@ export class CreateActionFormComponent implements OnInit {
           blockDelayUnit,
           parameters,
         } = this.blockDataForm.getRawValue();
+
         if (permanently) {
           metadata = {
             blockTime: -1,
@@ -192,9 +250,7 @@ export class CreateActionFormComponent implements OnInit {
           duration: 2000,
         });
       },
-      (err) => {
-        console.log({ err });
-
+      (err: IErrorMessage) => {
         const title = `error adding action`;
         const { message, cause } = err;
         this.dialog.open(ErrorDialogComponent, {

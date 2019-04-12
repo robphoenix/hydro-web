@@ -46,15 +46,15 @@
       >
         <mat-button-toggle value="block" [checked]="true">
           <mat-icon>block</mat-icon>
-          <span class="title">block</span>
+          <span class="ml2">Block</span>
         </mat-button-toggle>
         <mat-button-toggle value="email">
           <mat-icon>mail_outline</mat-icon>
-          <span class="title">email</span>
+          <span class="ml2">Email</span>
         </mat-button-toggle>
         <mat-button-toggle value="other">
           <mat-icon>graphic_eq</mat-icon>
-          <span class="title">other</span>
+          <span class="ml2">Other</span>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </section>
@@ -62,13 +62,21 @@
     <section *ngIf="group.value === 'block'">
       <app-create-action-form-section-block
         [parent]="blockDataForm"
+        [availableParameters]="availableParameters"
         [validationMessages]="validationMessages"
         [units]="blockActionUnits"
       ></app-create-action-form-section-block>
     </section>
+
     <section *ngIf="group.value === 'email'">
-      <app-create-action-form-section-email></app-create-action-form-section-email>
+      <app-create-action-form-section-email
+        [parent]="emailDataForm"
+        [availableParameters]="availableParameters"
+        [emailTypes]="emailTypes"
+        (addEmailAddress)="addEmailAddress()"
+      ></app-create-action-form-section-email>
     </section>
+
     <section *ngIf="group.value === 'other'">
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section>

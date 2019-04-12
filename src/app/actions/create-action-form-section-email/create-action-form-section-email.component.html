@@ -1,5 +1,5 @@
-<div class="email">
-  <section class="name">
+<form [formGroup]="parent" class="flex flex-column">
+  <!-- <section class="name">
     <span>
       Name: Email
       <span *ngIf="selectedEmails && selectedEmails.length">
@@ -24,49 +24,53 @@
         >alerting on {{ selectedFields.join(', ') }}</span
       >
     </span>
-  </section>
-  <mat-form-field appearance="outline" class="recipients">
-    <mat-label>Distribution List(s)*</mat-label>
-    <mat-select
-      placeholder="Distribution List(s)*"
-      multiple
-      [(ngModel)]="selectedEmails"
-    >
-      <mat-option *ngFor="let email of emails" [value]="email">
-        {{ email }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="email-type">
+  </section> -->
+
+  <mat-form-field appearance="outline" class="mb3">
     <mat-label>Email Type</mat-label>
-    <mat-select placeholder="Email Type" [(ngModel)]="selectedEmailType">
+    <mat-select placeholder="Email Type" formControlName="type">
       <mat-option *ngFor="let type of emailTypes" [value]="type">
         {{ type }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" *ngIf="selectedEmailType === 'Rate'">
-    <mat-label>Email Send Limit</mat-label>
-    <input
-      type="number"
-      min="0"
-      matInput
-      placeholder="Email Send Limit"
-      [(ngModel)]="sendLimit"
-    />
-  </mat-form-field>
 
-  <div *ngIf="selectedEmailType === 'Batch'">
-    <mat-form-field appearance="outline">
-      <mat-label>Send email every day at</mat-label>
+  <div formArrayName="emailAddresses">
+    <mat-form-field
+      appearance="outline"
+      class="mb4"
+      *ngFor="let address of emailAddressesArray.controls; index as i"
+      [formGroupName]="i"
+    >
+      <mat-label>Email Address*</mat-label>
       <input
         matInput
-        type="time"
-        placeholder="Send email every day at"
-        [(ngModel)]="batchTime"
+        placeholder="Email Recipient(s)"
+        formControlName="emailAddress"
       />
+      <mat-hint align="start">
+        A list of semi-colon separated email addresses. Eg:
+        grace.hopper@bet365.com;margaret.hamilton@bet365.com
+      </mat-hint>
     </mat-form-field>
-    <mat-button-toggle-group [(ngModel)]="batchTimeOfDay">
+  </div>
+
+  <button (click)="addEmailAddress.emit()">add new email</button>
+
+  <mat-form-field
+    appearance="outline"
+    *ngIf="parent.get('type').value === 'Rate'"
+  >
+    <mat-label>Email Send Limit</mat-label>
+    <input type="number" min="0" matInput placeholder="Email Send Limit" />
+  </mat-form-field>
+
+  <div *ngIf="parent.get('type').value === 'Batch'">
+    <mat-form-field appearance="outline">
+      <mat-label>Send email every day at</mat-label>
+      <input matInput type="time" placeholder="Send email every day at" />
+    </mat-form-field>
+    <mat-button-toggle-group>
       <mat-button-toggle value="AM">AM</mat-button-toggle>
       <mat-button-toggle value="PM">PM</mat-button-toggle>
     </mat-button-toggle-group>
@@ -75,20 +79,19 @@
   <mat-form-field
     appearance="outline"
     class="fields"
-    *ngIf="selectedEmailType === 'Alert'"
+    *ngIf="parent.get('type').value === 'Alert'"
   >
     <mat-label>Alert on fields*</mat-label>
-    <mat-select
-      placeholder="Alert on fields*"
-      multiple
-      [(ngModel)]="selectedFields"
-    >
-      <mat-option *ngFor="let field of fields" [value]="field">
-        {{ field }}
+    <mat-select placeholder="Alert on fields*" multiple>
+      <mat-option
+        *ngFor="let parameter of availableParameters"
+        [value]="parameter"
+      >
+        {{ parameter }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <section class="editor">
+  <section class="h7">
     <quill (contentChange)="onContentChange($event)"> </quill>
   </section>
-</div>
+</form>
