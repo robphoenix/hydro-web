@@ -8,10 +8,10 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint && npm run lint:styles",
-    "lint:styles": "stylelint \".src/**/*.scss\" \"./src/styles.css\"",
+    "lint:styles": "stylelint \"./src/**/*.scss\" \"./src/styles.scss\"",
     "e2e": "ng e2e",
-    "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\"",
-    "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.css\""
+    "format": "prettier --config .prettierrc --write \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.scss\"",
+    "format:ci": "prettier --config .prettierrc --list-different \"./src/**/*.ts\" \"./src/**/*.scss\" \"./src/styles.scss\""
   },
   "private": true,
   "dependencies": {

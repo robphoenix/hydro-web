@@ -1,9 +1,5 @@
 @import 'main';
 
-.content {
-  margin-bottom: $spacing-l;
-}
-
 .buttons {
   display: flex;
   justify-content: flex-end;
@@ -20,4 +16,5 @@
 .content {
   font-size: $fs-m;
   margin-left: $spacing-xs;
+  margin-bottom: $spacing-l;
 }
