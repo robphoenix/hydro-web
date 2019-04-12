@@ -23,6 +23,7 @@ import { Subject } from 'rxjs';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
 import { SortService } from '../sort.service';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 /**
  * Describes a single monitor.
@@ -196,12 +197,27 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get('id');
       this.editLink = `/monitors/${id}/edit`;
-      this.monitorService.getMonitorById(id).subscribe((monitor) => {
-        this.monitor = monitor;
-        this.getCachedData();
-        this.getLiveData();
-        this.getChangeEvents();
-      });
+      this.monitorService.getMonitorById(id).subscribe(
+        (monitor) => {
+          this.monitor = monitor;
+          this.getCachedData();
+          this.getLiveData();
+          this.getChangeEvents();
+        },
+        (error: IErrorMessage) => {
+          const { message, cause, uuid } = error;
+          const title = `Error fetching monitor`;
+
+          const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: { title, message, cause, uuid },
+            maxWidth: `800px`,
+          });
+
+          dialogRef.afterClosed().subscribe(() => {
+            this.router.navigateByUrl(`/monitors/view`);
+          });
+        },
+      );
     });
   }
 

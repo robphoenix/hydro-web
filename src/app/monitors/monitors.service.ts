@@ -89,10 +89,7 @@ export class MonitorsService {
   public getMonitorById(id: number): Observable<IMonitor> {
     return this.http
       .get<IMonitor>(`${this.monitorsUrl}/${id}`, { headers })
-      .pipe(
-        tap((monitor: IMonitor) => monitor),
-        catchError(this.handleError<IMonitor>('getMonitor')),
-      );
+      .pipe(tap((monitor: IMonitor) => monitor));
   }
 
   public addMonitor(body: IMonitor): Observable<IMonitor> {
@@ -145,18 +142,5 @@ export class MonitorsService {
     });
 
     return groups;
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error}`);
-      return of(result as T);
-    };
   }
 }

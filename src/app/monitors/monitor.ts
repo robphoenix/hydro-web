@@ -5,8 +5,6 @@ export interface IMonitor {
   name: string;
   query: string;
   description: string;
-  dateCreated: string;
-  dateUpdated: string;
   createdBy: string | null;
   updatedBy: string | null;
   status: MonitorStatus;
