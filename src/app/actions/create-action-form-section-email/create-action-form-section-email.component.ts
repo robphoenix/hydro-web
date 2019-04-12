@@ -1,12 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-create-action-form-section-email',
   templateUrl: './create-action-form-section-email.component.html',
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })
-export class CreateActionFormSectionEmailComponent implements OnInit {
+export class CreateActionFormSectionEmailComponent {
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;
@@ -28,8 +28,8 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
   @Output()
   addEmailAddress = new EventEmitter();
 
-  ngOnInit(): void {
-    this.emailAddresses = this.parent.get('emailAddresses').value;
+  emailAddressInvalid(i: number): boolean {
+    return (this.parent.get('emailAddresses') as FormArray).controls[i].invalid;
   }
 
   get emailAddressesArray(): FormArray {

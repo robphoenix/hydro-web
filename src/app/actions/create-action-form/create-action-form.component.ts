@@ -76,7 +76,9 @@ export class CreateActionFormComponent implements OnInit {
     this.emailDataForm = this.fb.group({
       parameters: [[``], Validators.required],
       type: [ActionEmailTypes.Rate],
-      emailAddresses: this.fb.array([this.fb.group({ emailAddress: [``] })]),
+      emailAddresses: this.fb.array([
+        this.fb.group({ emailAddress: [[``], Validators.email] }),
+      ]),
     });
     this.createActionForm = this.fb.group({
       name: ``,
@@ -92,8 +94,9 @@ export class CreateActionFormComponent implements OnInit {
       'emailAddresses',
     ) as FormArray;
 
-    // emailAddresses.push(this.fb.control(``));
-    emailAddresses.push(this.fb.group({ emailAddress: [``] }));
+    emailAddresses.push(
+      this.fb.group({ emailAddress: [[``], Validators.email] }),
+    );
   }
 
   ngOnInit() {
