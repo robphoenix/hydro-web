@@ -22,18 +22,26 @@ export class CreateActionFormSectionEmailComponent {
   @Input()
   parent: FormGroup;
 
+  @Input()
+  validationMessages: { [key: string]: { [key: string]: string } };
+
   @Output()
   editorContentChange = new EventEmitter<string>();
 
   @Output()
   addEmailAddress = new EventEmitter();
 
-  emailAddressInvalid(i: number): boolean {
-    return (this.parent.get('emailAddresses') as FormArray).controls[i].invalid;
-  }
+  @Output()
+  removeEmailAddress = new EventEmitter<number>();
 
   get emailAddressesArray(): FormArray {
     return this.parent.get('emailAddresses') as FormArray;
+  }
+
+  invalidBet365Email(index: number): boolean {
+    const errors = this.emailAddressesArray.controls[index].get('emailAddress')
+      .errors;
+    return errors && errors.validBet365Email;
   }
 
   onContentChange(event: { html: string }) {

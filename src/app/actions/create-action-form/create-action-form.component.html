@@ -73,7 +73,9 @@
         [parent]="emailDataForm"
         [availableParameters]="availableParameters"
         [emailTypes]="emailTypes"
+        [validationMessages]="validationMessages"
         (addEmailAddress)="addEmailAddress()"
+        (removeEmailAddress)="removeEmailAddress($event)"
       ></app-create-action-form-section-email>
     </section>
 

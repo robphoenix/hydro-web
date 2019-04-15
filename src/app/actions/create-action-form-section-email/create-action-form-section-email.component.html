@@ -35,10 +35,10 @@
     </mat-select>
   </mat-form-field>
 
-  <div formArrayName="emailAddresses">
+  <div class="flex flex-column w-100" formArrayName="emailAddresses">
     <mat-form-field
       appearance="outline"
-      class="mb4"
+      class="w-100 mb2"
       *ngFor="let address of emailAddressesArray.controls; let i = index"
       [formGroupName]="i"
     >
@@ -48,16 +48,31 @@
         placeholder="Email Recipient(s)"
         formControlName="emailAddress"
       />
+      <button
+        matSuffix
+        mat-icon-button
+        *ngIf="i > 0"
+        (click)="removeEmailAddress.emit(i)"
+      >
+        <mat-icon color="primary">close</mat-icon>
+      </button>
       <mat-hint *ngIf="i < 1" align="end">
-        *Required
+        *At least one email address is required
       </mat-hint>
-      <mat-error *ngIf="emailAddressInvalid(i)">
-        error
+      <mat-error *ngIf="invalidBet365Email(i)">
+        {{ validationMessages['emailAddresses']['validBet365Email'] }}
       </mat-error>
     </mat-form-field>
   </div>
 
-  <button (click)="addEmailAddress.emit()">add new email</button>
+  <div class="w-100 flex justify-end  mb4">
+    <app-primary-button
+      (click)="addEmailAddress.emit()"
+      [disabled]="parent.get('emailAddresses').invalid"
+    >
+      Add Email Address
+    </app-primary-button>
+  </div>
 
   <mat-form-field
     appearance="outline"

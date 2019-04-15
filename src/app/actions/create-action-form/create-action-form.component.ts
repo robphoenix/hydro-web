@@ -10,17 +10,18 @@ import {
   IActionMetadataBlock,
   IActionMetadataEmail,
   IAction,
-  ActionGroup,
   ActionParameters,
   ActionEmailTypes,
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
+  ActionGroup,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
+import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
 
 @Component({
   selector: 'app-create-action-form',
@@ -45,11 +46,14 @@ export class CreateActionFormComponent implements OnInit {
     description: {
       required: `You must enter an action description`,
     },
-    blockParameter: {
+    parameters: {
       required: `You must choose parameters to block on`,
     },
     blockTime: {
       required: `You must specify a block time or block permanently`,
+    },
+    emailAddresses: {
+      validBet365Email: `You must specify a valid bet365 email address`,
     },
   };
 
@@ -77,15 +81,15 @@ export class CreateActionFormComponent implements OnInit {
       parameters: [[``], Validators.required],
       type: [ActionEmailTypes.Rate],
       emailAddresses: this.fb.array([
-        this.fb.group({ emailAddress: [[``], Validators.email] }),
+        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
     });
     this.createActionForm = this.fb.group({
       name: ``,
       description: [``, Validators.required],
-      group: [ActionGroup.Block, Validators.required],
+      group: [ActionGroup.Email, Validators.required],
       blockData: this.blockDataForm,
-      emailData: this.blockDataForm,
+      emailData: this.emailDataForm,
     });
   }
 
@@ -95,8 +99,15 @@ export class CreateActionFormComponent implements OnInit {
     ) as FormArray;
 
     emailAddresses.push(
-      this.fb.group({ emailAddress: [[``], Validators.email] }),
+      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
     );
+  }
+
+  removeEmailAddress(index: number) {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+    emailAddresses.removeAt(index);
   }
 
   ngOnInit() {
