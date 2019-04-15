@@ -28,7 +28,7 @@
     </mat-chip>
 
     <input
-      placeholder="{{ placeholder }}"
+      placeholder="{{ selectedActions.length ? '' : placeholder }}"
       #actionsInput
       matInput
       formControlName="actionsInput"

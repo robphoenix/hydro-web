@@ -61,7 +61,6 @@ export class CreateMonitorFormComponent implements OnInit {
   maxSelectedCategories = 4;
   placeholderCategories = 'Please select monitor categories';
 
-  // availableActions: { [group: string]: IActions[] } = {};
   availableActions: IAction[] = [];
   selectedActions: IAction[] = [];
   filteredActions: Observable<IAction[]>;
@@ -103,7 +102,7 @@ export class CreateMonitorFormComponent implements OnInit {
     query: `Please enter a valid EPL Query`,
     categories: this.placeholderCategories,
     groups: `Please select monitor access groups`,
-    actions: `Please select monitor actions groups`,
+    actions: `Please select monitor actions`,
   };
 
   constructor(
@@ -174,6 +173,8 @@ export class CreateMonitorFormComponent implements OnInit {
         .setValue(this.selectedCategories);
       this.selectedGroups = this.monitor.groups;
       this.createMonitorForm.get('groups').setValue(this.selectedGroups);
+      this.selectedActions = this.monitor.actions;
+      this.createMonitorForm.get('actions').setValue(this.selectedActions);
     }
 
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
@@ -309,31 +310,14 @@ export class CreateMonitorFormComponent implements OnInit {
 
   getAvailableActions(): void {
     this.actionsService.getActions().subscribe((actions: IAction[]) => {
-      // const groups: { [group: string]: IActions[] } = {};
-
-      // actions.forEach((action: IActions) => {
-      //   if (groups[action.group] === undefined) {
-      //     groups[action.group] = [action];
-      //   } else {
-      //     groups[action.group].push(action);
-      //   }
-      // });
-
-      // Object.keys(groups).forEach((group: string) => {
-      //   groups[group] = groups[group].sort((a: IActions, b: IActions) =>
-      //     a.name.localeCompare(b.name),
-      //   );
-      // });
-      // console.log({ groups });
-
-      // this.availableActions = groups;
-
       this.availableActions = actions;
       this.loadingActions = false;
     });
   }
 
   removeAction(action: IAction): void {
+    console.log({ action });
+
     this.selectedActions = this.selectedActions.filter(
       (selected: IAction) => selected.id !== action.id,
     );

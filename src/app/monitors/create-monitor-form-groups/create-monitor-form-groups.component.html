@@ -28,7 +28,7 @@
     </mat-chip>
 
     <input
-      placeholder="{{placeholder}}"
+      placeholder="{{ selectedGroups.length ? '' : placeholder }}"
       #inputElement
       matInput
       formControlName="groupsInput"

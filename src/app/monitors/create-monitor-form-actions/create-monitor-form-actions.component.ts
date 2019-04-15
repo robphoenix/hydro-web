@@ -43,7 +43,7 @@ export class CreateMonitorFormActionsComponent implements OnChanges {
   placeholder: string;
 
   @Output()
-  removeActions = new EventEmitter<IAction>();
+  removeAction = new EventEmitter<IAction>();
 
   @Output()
   selectedAction = new EventEmitter<MatAutocompleteSelectedEvent>();
@@ -57,7 +57,7 @@ export class CreateMonitorFormActionsComponent implements OnChanges {
   matAutocomplete: MatAutocomplete;
 
   remove(actions: IAction) {
-    this.removeActions.emit(actions);
+    this.removeAction.emit(actions);
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
