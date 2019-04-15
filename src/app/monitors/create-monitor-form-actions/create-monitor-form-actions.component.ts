@@ -13,7 +13,7 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocomplete,
 } from '@angular/material';
-import { IActions } from 'src/app/actions/actions';
+import { IAction } from 'src/app/actions/action';
 
 @Component({
   selector: 'app-create-monitor-form-actions',
@@ -28,13 +28,13 @@ export class CreateMonitorFormActionsComponent implements OnChanges {
   loading: boolean;
 
   @Input()
-  selectedActions: IActions[];
+  selectedActions: IAction[];
 
   @Input()
   autocompleteOptions: { [key: string]: any };
 
   @Input()
-  filteredActions: Observable<IActions[]>;
+  filteredActions: Observable<IAction[]>;
 
   @Input()
   validationMessages: { [key: string]: string };
@@ -43,12 +43,12 @@ export class CreateMonitorFormActionsComponent implements OnChanges {
   placeholder: string;
 
   @Output()
-  removeActions = new EventEmitter<IActions>();
+  removeAction = new EventEmitter<IAction>();
 
   @Output()
   selectedAction = new EventEmitter<MatAutocompleteSelectedEvent>();
 
-  availableActions: IActions[];
+  availableActions: IAction[];
 
   @ViewChild('actionsInput')
   actionsInput: ElementRef;
@@ -56,8 +56,8 @@ export class CreateMonitorFormActionsComponent implements OnChanges {
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
 
-  remove(actions: IActions) {
-    this.removeActions.emit(actions);
+  remove(actions: IAction) {
+    this.removeAction.emit(actions);
   }
 
   selected(event: MatAutocompleteSelectedEvent) {

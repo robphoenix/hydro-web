@@ -51,8 +51,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @Input()
   monitorsType: MonitorStatus | MonitorType;
 
-  dataSource: MatTableDataSource<IMonitor>;
-  displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
+  public dataSource: MatTableDataSource<IMonitor>;
+  public displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
 
   // @ViewChild(MatPaginator)
   // private paginator: MatPaginator;

@@ -1,5 +1,5 @@
-<div class="email">
-  <section class="name">
+<form [formGroup]="parent" class="flex flex-column">
+  <!-- <section class="name">
     <span>
       Name: Email
       <span *ngIf="selectedEmails && selectedEmails.length">
@@ -24,49 +24,70 @@
         >alerting on {{ selectedFields.join(', ') }}</span
       >
     </span>
-  </section>
-  <mat-form-field appearance="outline" class="recipients">
-    <mat-label>Distribution List(s)*</mat-label>
-    <mat-select
-      placeholder="Distribution List(s)*"
-      multiple
-      [(ngModel)]="selectedEmails"
-    >
-      <mat-option *ngFor="let email of emails" [value]="email">
-        {{ email }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline" class="email-type">
+  </section> -->
+
+  <mat-form-field appearance="outline" class="mb3">
     <mat-label>Email Type</mat-label>
-    <mat-select placeholder="Email Type" [(ngModel)]="selectedEmailType">
+    <mat-select placeholder="Email Type" formControlName="type">
       <mat-option *ngFor="let type of emailTypes" [value]="type">
         {{ type }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline" *ngIf="selectedEmailType === 'Rate'">
-    <mat-label>Email Send Limit</mat-label>
-    <input
-      type="number"
-      min="0"
-      matInput
-      placeholder="Email Send Limit"
-      [(ngModel)]="sendLimit"
-    />
-  </mat-form-field>
 
-  <div *ngIf="selectedEmailType === 'Batch'">
-    <mat-form-field appearance="outline">
-      <mat-label>Send email every day at</mat-label>
+  <div class="flex flex-column w-100" formArrayName="emailAddresses">
+    <mat-form-field
+      appearance="outline"
+      class="w-100 mb2"
+      *ngFor="let address of emailAddressesArray.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <mat-label>Email Address*</mat-label>
       <input
         matInput
-        type="time"
-        placeholder="Send email every day at"
-        [(ngModel)]="batchTime"
+        placeholder="Email Recipient(s)"
+        formControlName="emailAddress"
       />
+      <button
+        matSuffix
+        mat-icon-button
+        *ngIf="i > 0"
+        (click)="removeEmailAddress.emit(i)"
+      >
+        <mat-icon color="primary">close</mat-icon>
+      </button>
+      <mat-hint *ngIf="i < 1" align="end">
+        *At least one email address is required
+      </mat-hint>
+      <mat-error *ngIf="invalidBet365Email(i)">
+        {{ validationMessages['emailAddresses']['validBet365Email'] }}
+      </mat-error>
     </mat-form-field>
-    <mat-button-toggle-group [(ngModel)]="batchTimeOfDay">
+  </div>
+
+  <div class="w-100 flex justify-end  mb4">
+    <app-primary-button
+      (click)="addEmailAddress.emit()"
+      [disabled]="parent.get('emailAddresses').invalid"
+    >
+      Add Email Address
+    </app-primary-button>
+  </div>
+
+  <mat-form-field
+    appearance="outline"
+    *ngIf="parent.get('type').value === 'Rate'"
+  >
+    <mat-label>Email Send Limit</mat-label>
+    <input type="number" min="0" matInput placeholder="Email Send Limit" />
+  </mat-form-field>
+
+  <div *ngIf="parent.get('type').value === 'Batch'">
+    <mat-form-field appearance="outline">
+      <mat-label>Send email every day at</mat-label>
+      <input matInput type="time" placeholder="Send email every day at" />
+    </mat-form-field>
+    <mat-button-toggle-group>
       <mat-button-toggle value="AM">AM</mat-button-toggle>
       <mat-button-toggle value="PM">PM</mat-button-toggle>
     </mat-button-toggle-group>
@@ -75,20 +96,19 @@
   <mat-form-field
     appearance="outline"
     class="fields"
-    *ngIf="selectedEmailType === 'Alert'"
+    *ngIf="parent.get('type').value === 'Alert'"
   >
     <mat-label>Alert on fields*</mat-label>
-    <mat-select
-      placeholder="Alert on fields*"
-      multiple
-      [(ngModel)]="selectedFields"
-    >
-      <mat-option *ngFor="let field of fields" [value]="field">
-        {{ field }}
+    <mat-select placeholder="Alert on fields*" multiple>
+      <mat-option
+        *ngFor="let parameter of availableParameters"
+        [value]="parameter"
+      >
+        {{ parameter }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <section class="editor">
+  <section class="h7">
     <quill (contentChange)="onContentChange($event)"> </quill>
   </section>
-</div>
+</form>

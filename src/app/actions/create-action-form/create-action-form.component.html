@@ -1,12 +1,15 @@
-<div class="container">
-  <div class="heading">
+<div class="w9 ml-auto mr-auto mv4 pt4">
+  <div class="mb4">
     <app-heading>{{ title }}</app-heading>
   </div>
 
-  <div class="action-name">
-    <p class="name">
-      <span class="label">Action Name: </span>
-      <span class="no-name" *ngIf="createActionForm.get('name').value === ''">
+  <div class="mb4">
+    <p>
+      <span class="fw5">Action Name: </span>
+      <span
+        class="light-silver"
+        *ngIf="createActionForm.get('name').value === ''"
+      >
         This will be defined by the chosen action
       </span>
       {{ createActionForm.get('name').value }}
@@ -14,8 +17,8 @@
   </div>
 
   <form [formGroup]="createActionForm" (ngSubmit)="submit()">
-    <section class="description">
-      <mat-form-field appearance="outline">
+    <section class="description w-100 mb3">
+      <mat-form-field appearance="outline" class="w-100">
         <mat-label>Description*</mat-label>
         <textarea
           matInput
@@ -36,22 +39,22 @@
       </mat-form-field>
     </section>
 
-    <section>
+    <section class="mb5">
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
         formControlName="group"
       >
         <mat-button-toggle value="block" [checked]="true">
           <mat-icon>block</mat-icon>
-          <span class="title">block</span>
+          <span class="ml2">Block</span>
         </mat-button-toggle>
         <mat-button-toggle value="email">
           <mat-icon>mail_outline</mat-icon>
-          <span class="title">email</span>
+          <span class="ml2">Email</span>
         </mat-button-toggle>
         <mat-button-toggle value="other">
           <mat-icon>graphic_eq</mat-icon>
-          <span class="title">other</span>
+          <span class="ml2">Other</span>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </section>
@@ -59,18 +62,28 @@
     <section *ngIf="group.value === 'block'">
       <app-create-action-form-section-block
         [parent]="blockDataForm"
+        [availableParameters]="availableParameters"
         [validationMessages]="validationMessages"
         [units]="blockActionUnits"
       ></app-create-action-form-section-block>
     </section>
+
     <section *ngIf="group.value === 'email'">
-      <app-create-action-form-section-email></app-create-action-form-section-email>
+      <app-create-action-form-section-email
+        [parent]="emailDataForm"
+        [availableParameters]="availableParameters"
+        [emailTypes]="emailTypes"
+        [validationMessages]="validationMessages"
+        (addEmailAddress)="addEmailAddress()"
+        (removeEmailAddress)="removeEmailAddress($event)"
+      ></app-create-action-form-section-email>
     </section>
+
     <section *ngIf="group.value === 'other'">
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section>
 
-    <div class="buttons">
+    <div class="flex justify-end mt4">
       <app-accent-submit-button [disabled]="!createActionForm.valid">
         Save Action
       </app-accent-submit-button>

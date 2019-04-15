@@ -8,6 +8,7 @@ import { AuthInterceptor } from './user/auth.interceptor';
 import { LayoutModule } from './layout/layout.module';
 import { ErrorInterceptor } from './shared/error.interceptor';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     BrowserAnimationsModule,
     HttpClientModule,
     LayoutModule,
+    ScrollingModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

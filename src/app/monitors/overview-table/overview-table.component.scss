@@ -12,15 +12,15 @@
 
 .search {
   flex: 0 0 25%;
-  margin-left: auto;
+  margin: 0 $spacing-l 0 auto;
 }
 
 .refresh {
   margin: 0 $spacing-l;
 }
 
-.clear-filters {
-  margin: 0 $spacing-l;
+.add-monitor {
+  margin-left: $spacing-l;
 }
 
 .table-outer-wrapper {

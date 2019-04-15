@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { IActions } from './actions';
+import { IAction } from './action';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -15,14 +15,14 @@ export class ActionsService {
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;
 
-  public getActions(): Observable<IActions[]> {
-    return this.http.get<IActions[]>(this.actionsUrl, { headers });
+  public getActions(): Observable<IAction[]> {
+    return this.http.get<IAction[]>(this.actionsUrl, { headers });
   }
 
-  public addAction(body: IActions): Observable<IActions> {
+  public addAction(body: IAction): Observable<IAction> {
     return this.http
-      .post<IActions>(this.actionsUrl, body, { headers })
-      .pipe(tap((action: IActions) => action));
+      .post<IAction>(this.actionsUrl, body, { headers })
+      .pipe(tap((action: IAction) => action));
   }
 
   constructor(private http: HttpClient) {}

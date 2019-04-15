@@ -1,14 +1,23 @@
-<h1 mat-dialog-title class="title">{{ data.title }}</h1>
-<div mat-dialog-content class="content">
-  <p class="message">
-    {{ data.message }}
-  </p>
-  <p class="cause">
+<h1 mat-dialog-title class="ttc">{{ data.title }}</h1>
+<div mat-dialog-content class="mb3">
+  <p class="silver mb3">
     {{ data.cause }}
   </p>
+  <p class="accent-warn mb3">
+    {{ data.message }}
+  </p>
+  <div *ngIf="data.uuid">
+    <mat-label>Error ID:</mat-label>
+    <div class="flex items-center gray mb3">
+      <p>{{ data.uuid }}</p>
+      <button mat-icon-button (click)="copyToClipboard(data.uuid)" class="ml3">
+        <mat-icon matTooltip="Copy error ID">file_copy</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
-<div mat-dialog-actions class="buttons">
-  <app-dialog-close-button>
+<div mat-dialog-actions class="flex justify-end">
+  <app-dialog-close-button class="mb3">
     Close
   </app-dialog-close-button>
 </div>

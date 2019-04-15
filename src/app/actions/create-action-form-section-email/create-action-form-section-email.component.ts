@@ -1,26 +1,48 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-create-action-form-section-email',
   templateUrl: './create-action-form-section-email.component.html',
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })
-export class CreateActionFormSectionEmailComponent implements OnInit {
-  emails: string[] = ['Forensic Monitoring', 'FRM', 'OTS'];
-  selectedEmails: string[];
-  templates: string[] = ['Template 1', 'Template 2', 'Template 3'];
-  selectedTemplate: string;
-  emailTypes: string[] = ['Rate', 'Batch', 'Alert'];
-  selectedEmailType: string;
-  fields: string[] = ['sip', 'stk'];
-  selectedFields: string[];
+export class CreateActionFormSectionEmailComponent {
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;
 
+  public emailAddresses: string[];
+
+  @Input()
+  availableParameters: string[] = [];
+
+  @Input()
+  emailTypes: string[];
+
+  @Input()
+  parent: FormGroup;
+
+  @Input()
+  validationMessages: { [key: string]: { [key: string]: string } };
+
   @Output()
   editorContentChange = new EventEmitter<string>();
+
+  @Output()
+  addEmailAddress = new EventEmitter();
+
+  @Output()
+  removeEmailAddress = new EventEmitter<number>();
+
+  get emailAddressesArray(): FormArray {
+    return this.parent.get('emailAddresses') as FormArray;
+  }
+
+  invalidBet365Email(index: number): boolean {
+    const errors = this.emailAddressesArray.controls[index].get('emailAddress')
+      .errors;
+    return errors && errors.validBet365Email;
+  }
 
   onContentChange(event: { html: string }) {
     const { html } = event;
@@ -29,6 +51,4 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
     console.log('content change');
     console.log({ event });
   }
-
-  ngOnInit() {}
 }

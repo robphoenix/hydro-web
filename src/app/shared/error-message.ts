@@ -8,6 +8,7 @@ export interface IErrorMessage {
   errorCode: string;
   message: string;
   cause: string;
+  uuid: string;
 }
 
 export const errorNoAvailableMonitors = 'NO_AVAILABLE_MONITORS';

@@ -1,10 +1,10 @@
+import { IAction } from '../actions/action';
+
 export interface IMonitor {
   id: number;
   name: string;
   query: string;
   description: string;
-  dateCreated: string;
-  dateUpdated: string;
   createdBy: string | null;
   updatedBy: string | null;
   status: MonitorStatus;
@@ -14,19 +14,6 @@ export interface IMonitor {
   categories: ICategory[];
   groups: IGroup[];
   actions: IAction[];
-}
-
-export interface IAction {
-  id: number;
-  name: string;
-  group: ActionGroup;
-}
-
-export enum ActionGroup {
-  Block = 'block',
-  Email = 'email',
-  Other = 'other',
-  Store = 'store',
 }
 
 export interface ICategory {

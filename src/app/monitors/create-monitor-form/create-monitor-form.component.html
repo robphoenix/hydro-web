@@ -55,7 +55,10 @@
       ></app-create-monitor-form-cache-window>
     </div>
 
-    <div class="form-field">
+    <div
+      class="form-field"
+      *ngIf="availableCategories && availableCategories.length"
+    >
       <app-create-monitor-form-categories
         [parent]="createMonitorForm"
         [loading]="loadingCategories"
