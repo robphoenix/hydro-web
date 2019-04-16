@@ -26,14 +26,23 @@
     </span>
   </section> -->
 
-  <mat-form-field appearance="outline" class="mb3">
-    <mat-label>Email Type</mat-label>
-    <mat-select placeholder="Email Type" formControlName="type">
-      <mat-option *ngFor="let type of emailTypes" [value]="type">
-        {{ type }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="flex items-center justify-between mb4">
+    <mat-form-field appearance="outline">
+      <mat-label>Email Type</mat-label>
+      <mat-select
+        placeholder="Email Type"
+        formControlName="type"
+        [(value)]="selectedEmailType"
+      >
+        <mat-option *ngFor="let type of emailTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p class="ml4 pb3 dark-gray">
+      {{ emailTypeExplanation[selectedEmailType] }}
+    </p>
+  </div>
 
   <div class="flex flex-column w-100" formArrayName="emailAddresses">
     <mat-form-field
@@ -65,7 +74,7 @@
     </mat-form-field>
   </div>
 
-  <div class="w-100 flex justify-end  mb4">
+  <div class="w-100 flex justify-end mb4">
     <app-primary-button
       (click)="addEmailAddress.emit()"
       [disabled]="parent.get('emailAddresses').invalid"
@@ -74,15 +83,21 @@
     </app-primary-button>
   </div>
 
-  <mat-form-field
-    appearance="outline"
-    *ngIf="parent.get('type').value === 'Rate'"
+  <div
+    *ngIf="selectedEmailType === 'Rate'"
+    class="flex items-center justify-between mb4"
   >
-    <mat-label>Email Send Limit</mat-label>
-    <input type="number" min="0" matInput placeholder="Email Send Limit" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email Send Limit</mat-label>
+      <input type="number" min="-1" matInput placeholder="Email Send Limit" />
+    </mat-form-field>
+    <p class="ml4 pb3 dark-gray">
+      The maximum number of emails to send out in any single hour, this resets
+      after every hour. Use -1 to specify an unlimited number of emails per hour
+    </p>
+  </div>
 
-  <div *ngIf="parent.get('type').value === 'Batch'">
+  <div *ngIf="selectedEmailType === 'Batch'">
     <mat-form-field appearance="outline">
       <mat-label>Send email every day at</mat-label>
       <input matInput type="time" placeholder="Send email every day at" />
@@ -96,7 +111,7 @@
   <mat-form-field
     appearance="outline"
     class="fields"
-    *ngIf="parent.get('type').value === 'Alert'"
+    *ngIf="selectedEmailType === 'Alert'"
   >
     <mat-label>Alert on fields*</mat-label>
     <mat-select placeholder="Alert on fields*" multiple>

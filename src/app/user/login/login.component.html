@@ -1,8 +1,10 @@
 <div class="flex flex-column items-center pa4">
   <div class="w6">
     <div class="mb4">
-      <app-heading>Login</app-heading>
-      <p class="f5 lh-copy mb4">Please enter your bet365 credentials</p>
+      <app-heading class="dark-gray">Login</app-heading>
+      <p class="f5 lh-copy mb4 dark-gray">
+        Please enter your bet365 credentials
+      </p>
 
       <app-error-message *ngIf="loginErrorMessage">
         {{ loginErrorMessage }}
@@ -39,7 +41,7 @@
           (click)="loginErrorMessage = ''"
         />
         <mat-icon
-          class="pointer"
+          class="pointer dark-gray"
           matSuffix
           (click)="hidePassword = !hidePassword"
         >
