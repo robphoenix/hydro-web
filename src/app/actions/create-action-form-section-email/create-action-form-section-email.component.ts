@@ -42,9 +42,9 @@ export class CreateActionFormSectionEmailComponent {
   }
 
   invalidBet365Email(index: number): boolean {
-    const errors = this.emailAddressesArray.controls[index].get('emailAddress')
-      .errors;
-    return errors && errors.validBet365Email;
+    return this.emailAddressesArray.controls[index]
+      .get('emailAddress')
+      .hasError('validBet365Email');
   }
 
   onContentChange(event: { html: string }) {

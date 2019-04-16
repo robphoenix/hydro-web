@@ -65,13 +65,35 @@
     </app-primary-button>
   </div>
 
+  <mat-form-field appearance="outline" class="w-100 mb4">
+    <mat-label>Email Subject*</mat-label>
+    <input
+      matInput
+      placeholder="Email Recipient(s)"
+      formControlName="emailSubject"
+    />
+    <mat-hint align="end">
+      *Required
+    </mat-hint>
+    <mat-error *ngIf="parent.get('emailSubject').hasError('required')">
+      {{ validationMessages['emailSubject']['required'] }}
+    </mat-error>
+  </mat-form-field>
+
   <div
     *ngIf="actionType === 'emailRate'"
     class="flex items-center justify-between mb4"
   >
     <mat-form-field appearance="outline">
       <mat-label>Email Send Limit</mat-label>
-      <input type="number" min="-1" matInput placeholder="Email Send Limit" />
+
+      <input
+        type="number"
+        min="-1"
+        matInput
+        placeholder="Email Send Limit"
+        formControlName="emailSendLimit"
+      />
     </mat-form-field>
     <p class="ml4 pb3 dark-gray">
       The maximum number of emails to send out in any single hour, this resets
@@ -105,6 +127,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
   <section class="h7">
     <quill (contentChange)="onContentChange($event)"> </quill>
   </section>

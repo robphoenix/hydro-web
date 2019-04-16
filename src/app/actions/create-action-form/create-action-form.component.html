@@ -43,10 +43,10 @@
           <mat-select placeholder="Action Type" formControlName="type">
             <mat-option
               *ngFor="let type of availableActionTypes"
-              [value]="type.value"
+              [value]="type"
             >
               <span class="ttc">
-                {{ type.name }}
+                {{ actionTypeDisplayName[type] }}
               </span>
             </mat-option>
           </mat-select>
@@ -80,9 +80,8 @@
     <!-- <section>
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section> -->
-
     <div class="flex justify-end mt4">
-      <app-accent-submit-button [disabled]="!createActionForm.valid">
+      <app-accent-submit-button [disabled]="disableSubmit">
         Save Action
       </app-accent-submit-button>
     </div>

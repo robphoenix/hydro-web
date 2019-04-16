@@ -59,6 +59,9 @@ export class CreateActionFormComponent implements OnInit {
     emailAddresses: {
       validBet365Email: `You must specify a valid bet365 email address`,
     },
+    emailSubject: {
+      required: `You must specify an email subject`,
+    },
   };
 
   public blockActionUnits: { [key: string]: string[] } = {};
@@ -97,6 +100,8 @@ export class CreateActionFormComponent implements OnInit {
       emailAddresses: this.fb.array([
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
+      emailSubject: [``, Validators.required],
+      emailSendLimit: [0, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: ``,
@@ -107,46 +112,38 @@ export class CreateActionFormComponent implements OnInit {
     });
   }
 
+  public actionTypeDisplayName: { [key: string]: string } = {
+    block: 'Block',
+    emailRate: 'Email Rate',
+    emailBatch: 'Email Batch',
+    emailAlert: 'Email Alert',
+    storeDB: 'Store in Database',
+    storeLogins: 'Store Logins',
+    storeAnalysis: 'Store Analysis',
+    misc: 'Miscellaneous',
+  };
+
   ngOnInit() {
-    this.availableActionTypes = Object.values(this.actionType).map(
-      (value: string) => {
-        const name = value.split(/(?=[A-Z])/).join(` `);
-        return { name, value };
-      },
-    );
+    this.availableActionTypes = Object.values(this.actionType);
     this.availableParameters = Object.values(this.parameters);
     this.blockActionUnits = {
       duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
     };
 
-    const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
-    const blockTimeUnit: AbstractControl = this.blockDataForm.get(
-      `blockTimeUnit`,
-    );
-    const blockDelay: AbstractControl = this.blockDataForm.get(`blockDelay`);
-    const blockDelayUnit: AbstractControl = this.blockDataForm.get(
-      `blockDelayUnit`,
-    );
-
     this.createActionForm.get('type').valueChanges.subscribe((value) => {
       switch (value) {
         case 'block':
           this.createActionForm.patchValue({ name: this.blockActionName });
-          blockTime.setValidators(Validators.required);
-          blockTimeUnit.setValidators(Validators.required);
           break;
         case 'emailRate':
           this.createActionForm.patchValue({ name: this.emailRateActionName });
-          this.clearValidators([blockTime, blockTimeUnit]);
           break;
         case 'emailBatch':
           this.createActionForm.patchValue({ name: this.emailBatchActionName });
-          this.clearValidators([blockTime, blockTimeUnit]);
           break;
         case 'emailAlert':
           this.createActionForm.patchValue({ name: this.emailAlertActionName });
-          this.clearValidators([blockTime, blockTimeUnit]);
           break;
       }
     });
@@ -157,6 +154,15 @@ export class CreateActionFormComponent implements OnInit {
         this.createActionForm.patchValue({ name: this.blockActionName });
       }
     });
+
+    const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
+    const blockTimeUnit: AbstractControl = this.blockDataForm.get(
+      `blockTimeUnit`,
+    );
+    const blockDelay: AbstractControl = this.blockDataForm.get(`blockDelay`);
+    const blockDelayUnit: AbstractControl = this.blockDataForm.get(
+      `blockDelayUnit`,
+    );
 
     // We want to remove any validation from the time unit inputs if the user is blocking permanently
     this.blockDataForm
@@ -191,6 +197,31 @@ export class CreateActionFormComponent implements OnInit {
       });
   }
 
+  get disableSubmit() {
+    const validName: boolean = this.createActionForm.get('name').valid;
+    const validDescription: boolean = this.createActionForm.get('description')
+      .valid;
+    const actionType: AbstractControl = this.createActionForm.get('type');
+    const validActionType: boolean = actionType.valid;
+    const actionTypeValue: string = actionType.value;
+    switch (actionTypeValue) {
+      case 'block':
+        return (
+          !validName ||
+          !validDescription ||
+          !validActionType ||
+          !this.blockDataForm.valid
+        );
+      case 'emailRate' || 'emailBatch' || 'emailAlert':
+        return (
+          !validName ||
+          !validDescription ||
+          !validActionType ||
+          !this.emailDataForm.valid
+        );
+    }
+  }
+
   clearValidators(controls: AbstractControl[]) {
     controls.map((ctrl: AbstractControl) => {
       ctrl.clearValidators();
@@ -212,12 +243,12 @@ export class CreateActionFormComponent implements OnInit {
 
     const duration: string =
       !permanently && blockTime && blockTimeUnit
-        ? `for ${blockTime} ${blockTimeUnit}`
+        ? `for ${blockTime} ${blockTimeUnit.toLowerCase()}`
         : ``;
 
     const delay: string =
       !permanently && blockDelay && blockDelayUnit
-        ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
+        ? `with up to ${blockDelay} ${blockDelayUnit.toLowerCase()} random delay`
         : ``;
 
     const time = `${duration} ${delay}`;

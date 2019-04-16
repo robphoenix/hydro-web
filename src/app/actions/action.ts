@@ -13,6 +13,10 @@ export enum ActionType {
   EmailRate = 'emailRate',
   EmailBatch = 'emailBatch',
   EmailAlert = 'emailAlert',
+  StoreDB = 'storeDB',
+  StoreLogins = 'storeLogins',
+  StoreAnalysis = 'storeAnalysis',
+  Misc = 'misc',
 }
 
 export interface IActionMetadataBlock {
