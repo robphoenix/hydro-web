@@ -36,15 +36,6 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
   @Output()
   removeEmailAddress = new EventEmitter<number>();
 
-  emailTypeExplanation = {
-    // tslint:disable-next-line:max-line-length
-    Alert: `The properties you define below will be used to send out an email for every esper event. Once an alert value such as an IP (eg 1.1.1.1) or session token has been sent then it, and all other data in the same row, will be ignored for four days and any future emails will not reference it even though it was part of an esper event.`,
-    // tslint:disable-next-line:max-line-length
-    Batch: `The properties you define below will be used to batch esper events into email sent every day at the time specified`,
-    // tslint:disable-next-line:max-line-length
-    Rate: `The properties you define below will be used to send out emails at a maximum number per hour`,
-  };
-
   ngOnInit(): void {
     this.selectedEmailType = this.emailTypes[0];
   }

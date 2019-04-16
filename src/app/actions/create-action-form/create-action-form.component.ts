@@ -11,10 +11,9 @@ import {
   IActionMetadataEmail,
   IAction,
   ActionParameters,
-  ActionEmailTypes,
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
-  ActionGroup,
+  ActionType,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -22,6 +21,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
+import { WrappedNodeExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-action-form',
@@ -32,12 +32,16 @@ export class CreateActionFormComponent implements OnInit {
   public createActionForm: FormGroup;
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
+  public blockActionName: string;
+  public emailRateActionName: string;
+  public emailBatchActionName: string;
+  public emailAlertActionName: string;
+
+  private actionType: typeof ActionType = ActionType;
+  public availableActionTypes: { name: string; value: string }[] = [];
 
   private parameters: typeof ActionParameters = ActionParameters;
   public availableParameters: string[] = [];
-
-  private actionEmailTypes: typeof ActionEmailTypes = ActionEmailTypes;
-  public emailTypes: string[] = [];
 
   private actionBlockTimeUnit: typeof ActionBlockTimeUnit = ActionBlockTimeUnit;
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
@@ -59,6 +63,17 @@ export class CreateActionFormComponent implements OnInit {
 
   public blockActionUnits: { [key: string]: string[] } = {};
 
+  public actionTypeExplanation = {
+    // tslint:disable-next-line:max-line-length
+    block: `The properties you define below will be used to block an individual entity such as an IP or Session Token`,
+    // tslint:disable-next-line:max-line-length
+    emailAlert: `The properties you define below will be used to send out an email for every esper event. Once an alert value such as an IP (eg 1.1.1.1) or session token has been sent then it, and all other data in the same row, will be ignored for four days and any future emails will not reference it even though it was part of an esper event.`,
+    // tslint:disable-next-line:max-line-length
+    emailBatch: `The properties you define below will be used to batch esper events into email sent every day at the time specified`,
+    // tslint:disable-next-line:max-line-length
+    emailRate: `The properties you define below will be used to send out emails at a maximum number per hour`,
+  };
+
   @Input()
   title: string;
 
@@ -79,7 +94,6 @@ export class CreateActionFormComponent implements OnInit {
     });
     this.emailDataForm = this.fb.group({
       parameters: [[``], Validators.required],
-      type: [ActionEmailTypes.Rate],
       emailAddresses: this.fb.array([
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
@@ -87,32 +101,20 @@ export class CreateActionFormComponent implements OnInit {
     this.createActionForm = this.fb.group({
       name: ``,
       description: [``, Validators.required],
-      group: [ActionGroup.Email, Validators.required],
+      type: [ActionType.Block, Validators.required],
       blockData: this.blockDataForm,
       emailData: this.emailDataForm,
     });
   }
 
-  addEmailAddress() {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
-    ) as FormArray;
-
-    emailAddresses.push(
-      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
-    );
-  }
-
-  removeEmailAddress(index: number) {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
-    ) as FormArray;
-    emailAddresses.removeAt(index);
-  }
-
   ngOnInit() {
+    this.availableActionTypes = Object.values(this.actionType).map(
+      (value: string) => {
+        const name = value.split(/(?=[A-Z])/).join(` `);
+        return { name, value };
+      },
+    );
     this.availableParameters = Object.values(this.parameters);
-    this.emailTypes = Object.values(this.actionEmailTypes);
     this.blockActionUnits = {
       duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
@@ -127,26 +129,33 @@ export class CreateActionFormComponent implements OnInit {
       `blockDelayUnit`,
     );
 
-    this.createActionForm.get('group').valueChanges.subscribe((value) => {
+    this.createActionForm.get('type').valueChanges.subscribe((value) => {
       switch (value) {
-        case 'email':
-          blockTime.clearValidators();
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.clearValidators();
-          blockTimeUnit.updateValueAndValidity();
-          break;
         case 'block':
+          this.createActionForm.patchValue({ name: this.blockActionName });
           blockTime.setValidators(Validators.required);
           blockTimeUnit.setValidators(Validators.required);
           break;
-        default:
+        case 'emailRate':
+          this.createActionForm.patchValue({ name: this.emailRateActionName });
+          this.clearValidators([blockTime, blockTimeUnit]);
+          break;
+        case 'emailBatch':
+          this.createActionForm.patchValue({ name: this.emailBatchActionName });
+          this.clearValidators([blockTime, blockTimeUnit]);
+          break;
+        case 'emailAlert':
+          this.createActionForm.patchValue({ name: this.emailAlertActionName });
+          this.clearValidators([blockTime, blockTimeUnit]);
           break;
       }
     });
 
     this.blockDataForm.valueChanges.subscribe(() => {
-      const name = this.blockName();
-      this.createActionForm.patchValue({ name });
+      if (this.createActionForm.get('type').value === 'block') {
+        this.blockActionName = this.blockName();
+        this.createActionForm.patchValue({ name: this.blockActionName });
+      }
     });
 
     // We want to remove any validation from the time unit inputs if the user is blocking permanently
@@ -154,10 +163,7 @@ export class CreateActionFormComponent implements OnInit {
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
         if (blockPermanently) {
-          blockTime.clearValidators();
-          blockTimeUnit.clearValidators();
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.updateValueAndValidity();
+          this.clearValidators([blockTime, blockTimeUnit]);
           blockTime.setValue(``);
           blockTimeUnit.setValue(``);
           blockTime.disable();
@@ -183,6 +189,13 @@ export class CreateActionFormComponent implements OnInit {
           blockDelayUnit.clearValidators();
         }
       });
+  }
+
+  clearValidators(controls: AbstractControl[]) {
+    controls.map((ctrl: AbstractControl) => {
+      ctrl.clearValidators();
+      ctrl.updateValueAndValidity();
+    });
   }
 
   blockName(): string {
@@ -214,14 +227,31 @@ export class CreateActionFormComponent implements OnInit {
     return name.trim();
   }
 
+  addEmailAddress() {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+
+    emailAddresses.push(
+      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+    );
+  }
+
+  removeEmailAddress(index: number) {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+    emailAddresses.removeAt(index);
+  }
+
   submit() {
     const emailForm = this.emailDataForm.getRawValue();
     console.log({ emailForm });
 
-    const { group, name, description } = this.createActionForm.getRawValue();
+    const { type, name, description } = this.createActionForm.getRawValue();
     let metadata: IActionMetadataBlock | IActionMetadataEmail;
-    switch (group) {
-      case ActionGroup.Block:
+    switch (type) {
+      case ActionType.Block:
         const {
           permanently,
           blockTime,
@@ -249,7 +279,7 @@ export class CreateActionFormComponent implements OnInit {
 
     const data = {
       name,
-      group,
+      type,
       description,
       metadata,
     } as IAction;
@@ -258,6 +288,8 @@ export class CreateActionFormComponent implements OnInit {
 
     this.actionsService.addAction(data).subscribe(
       (res: IAction) => {
+        console.log({ res });
+
         this.createActionForm.reset();
         this.router.navigateByUrl(`/actions`);
         this.snackBar.open(`Action ${name} created`, '', {
