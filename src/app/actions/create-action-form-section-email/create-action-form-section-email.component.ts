@@ -6,14 +6,15 @@ import { FormGroup, FormArray } from '@angular/forms';
   templateUrl: './create-action-form-section-email.component.html',
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })
-export class CreateActionFormSectionEmailComponent implements OnInit {
+export class CreateActionFormSectionEmailComponent {
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;
 
-  public selectedEmailType: string;
-
   public emailAddresses: string[];
+
+  @Input()
+  actionType: string;
 
   @Input()
   availableParameters: string[] = [];
@@ -35,10 +36,6 @@ export class CreateActionFormSectionEmailComponent implements OnInit {
 
   @Output()
   removeEmailAddress = new EventEmitter<number>();
-
-  ngOnInit(): void {
-    this.selectedEmailType = this.emailTypes[0];
-  }
 
   get emailAddressesArray(): FormArray {
     return this.parent.get('emailAddresses') as FormArray;

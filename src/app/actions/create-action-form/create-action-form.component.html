@@ -66,17 +66,18 @@
       ></app-create-action-form-section-block>
     </section>
 
-    <!-- <section>
+    <section *ngIf="createActionForm.get('type').value.startsWith('email')">
       <app-create-action-form-section-email
         [parent]="emailDataForm"
         [availableParameters]="availableParameters"
         [validationMessages]="validationMessages"
+        [actionType]="createActionForm.get('type').value"
         (addEmailAddress)="addEmailAddress()"
         (removeEmailAddress)="removeEmailAddress($event)"
       ></app-create-action-form-section-email>
     </section>
 
-    <section>
+    <!-- <section>
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section> -->
 

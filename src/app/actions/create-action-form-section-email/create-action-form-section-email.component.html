@@ -26,24 +26,6 @@
     </span>
   </section> -->
 
-  <div class="flex items-center justify-between mb4">
-    <mat-form-field appearance="outline">
-      <mat-label>Email Type</mat-label>
-      <mat-select
-        placeholder="Email Type"
-        formControlName="type"
-        [(value)]="selectedEmailType"
-      >
-        <mat-option *ngFor="let type of emailTypes" [value]="type">
-          {{ type }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p class="ml4 pb3 dark-gray">
-      {{ emailTypeExplanation[selectedEmailType] }}
-    </p>
-  </div>
-
   <div class="flex flex-column w-100" formArrayName="emailAddresses">
     <mat-form-field
       appearance="outline"
@@ -84,7 +66,7 @@
   </div>
 
   <div
-    *ngIf="selectedEmailType === 'Rate'"
+    *ngIf="actionType === 'emailRate'"
     class="flex items-center justify-between mb4"
   >
     <mat-form-field appearance="outline">
@@ -97,7 +79,7 @@
     </p>
   </div>
 
-  <div *ngIf="selectedEmailType === 'Batch'">
+  <div *ngIf="actionType === 'emailBatch'">
     <mat-form-field appearance="outline">
       <mat-label>Send email every day at</mat-label>
       <input matInput type="time" placeholder="Send email every day at" />
@@ -111,7 +93,7 @@
   <mat-form-field
     appearance="outline"
     class="fields"
-    *ngIf="selectedEmailType === 'Alert'"
+    *ngIf="actionType === 'emailAlert'"
   >
     <mat-label>Alert on fields*</mat-label>
     <mat-select placeholder="Alert on fields*" multiple>
