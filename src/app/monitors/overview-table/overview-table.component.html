@@ -98,7 +98,7 @@
             <app-table-heading [iconType]="'actions'">
               Actions
             </app-table-heading>
-            <button
+            <!-- <button
               mat-icon-button
               *ngIf="hasActions()"
               [matMenuTriggerFor]="actionsMenu"
@@ -123,9 +123,9 @@
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
-              </mat-menu>
+              </mat-menu> -->
 
-              <button
+            <!-- <button
                 mat-menu-item
                 *ngIf="hasActions('email')"
                 [matMenuTriggerFor]="email"
@@ -142,9 +142,9 @@
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
-              </mat-menu>
+              </mat-menu> -->
 
-              <button
+            <!-- <button
                 mat-menu-item
                 *ngIf="hasActions('store')"
                 [matMenuTriggerFor]="store"
@@ -161,9 +161,9 @@
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
-              </mat-menu>
+              </mat-menu> -->
 
-              <button
+            <!-- <button
                 mat-menu-item
                 *ngIf="hasActions('other')"
                 [matMenuTriggerFor]="other"
@@ -180,8 +180,8 @@
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
                 ></app-multiple-select>
-              </mat-menu>
-            </mat-menu>
+              </mat-menu> -->
+            <!-- </mat-menu> -->
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="actions">
             <app-cell-actions [actions]="monitor.actions"></app-cell-actions>

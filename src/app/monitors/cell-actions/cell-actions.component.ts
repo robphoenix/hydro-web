@@ -20,13 +20,13 @@ export class CellActionsComponent implements OnInit {
   groups: { [group: string]: string } = {};
 
   ngOnInit(): void {
-    this.actions.forEach((action: IAction) => {
-      if (this.groups[action.group] === undefined) {
-        this.groups[action.group] = action.name;
-      } else {
-        this.groups[action.group] += `\n${action.name}`;
-      }
-    });
+    // this.actions.forEach((action: IAction) => {
+    //   if (this.groups[action.group] === undefined) {
+    //     this.groups[action.group] = action.name;
+    //   } else {
+    //     this.groups[action.group] += `\n${action.name}`;
+    //   }
+    // });
   }
 
   public hasActions(): boolean {

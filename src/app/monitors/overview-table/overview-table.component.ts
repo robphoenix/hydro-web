@@ -63,8 +63,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @ViewChildren(MultipleSelectComponent)
   private selects: MultipleSelectComponent[];
 
-  @Input()
-  allCurrentActions: { [group: string]: string[] };
+  // @Input()
+  // allCurrentActions: { [group: string]: string[] };
 
   blockControl = new FormControl();
   storeControl = new FormControl();
@@ -175,22 +175,22 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     return hasActionsFilters && !this.filterValues.selectedCategories.length;
   }
 
-  public hasActions(group?: string): boolean {
-    const anyCurrentActions: boolean =
-      Object.entries(this.allCurrentActions).length > 0;
-    if (!anyCurrentActions) {
-      return false;
-    }
+  // public hasActions(group?: string): boolean {
+  //   const anyCurrentActions: boolean =
+  //     Object.entries(this.allCurrentActions).length > 0;
+  //   if (!anyCurrentActions) {
+  //     return false;
+  //   }
 
-    if (!group) {
-      return Object.values(this.allCurrentActions).every(
-        (curr: string[]) => !!curr.length,
-      );
-    }
+  //   if (!group) {
+  //     return Object.values(this.allCurrentActions).every(
+  //       (curr: string[]) => !!curr.length,
+  //     );
+  //   }
 
-    const actions = this.allCurrentActions[group];
-    return actions && actions.length > 0;
-  }
+  //   const actions = this.allCurrentActions[group];
+  //   return actions && actions.length > 0;
+  // }
 
   public clearAllFilters(): void {
     this.filterValues.selectedActions = {

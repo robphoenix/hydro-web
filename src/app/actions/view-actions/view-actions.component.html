@@ -3,7 +3,7 @@
     <app-heading>Actions</app-heading>
   </div>
   <div class="flex items-center w-100 mb4">
-    <mat-button-toggle-group
+    <!-- <mat-button-toggle-group
       [value]="group"
       (change)="filterActions($event.value)"
     >
@@ -27,7 +27,7 @@
           {{ icons['actions'].icon }}
         </mat-icon>
       </mat-button-toggle>
-    </mat-button-toggle-group>
+    </mat-button-toggle-group> -->
 
     <app-search-input
       [(searchTerm)]="searchTerm"
@@ -50,13 +50,13 @@
     <cdk-virtual-scroll-viewport itemSize="72" class="h7">
       <ng-container *cdkVirtualFor="let action of filteredActions">
         <mat-list-item class="flex items-center mv2 mh4">
-          <mat-icon
+          <!-- <mat-icon
             [ngClass]="icons[action.group].colour"
             matTooltip="All Actions"
             class="mr4"
           >
             {{ icons[action.group].icon }}
-          </mat-icon>
+          </mat-icon> -->
           <div>
             <h1 matLine class="f5 fw5 lh-title">
               {{ action.name }}

@@ -117,30 +117,30 @@ export class MonitorsService {
     ).sort();
   }
 
-  public allCurrentActions(
-    monitors: IMonitor[],
-  ): { [group: string]: string[] } {
-    const groups: { [group: string]: string[] } = {};
+  // public allCurrentActions(
+  //   monitors: IMonitor[],
+  // ): { [group: string]: string[] } {
+  //   const groups: { [group: string]: string[] } = {};
 
-    monitors.forEach((monitor: IMonitor) => {
-      monitor.actions.forEach((action: IAction) => {
-        const group: string = action.group;
-        const name: string = action.name;
-        if (groups[group] === undefined) {
-          // initialise the group array if it doesn't already exist
-          groups[group] = [name];
-        } else if (!groups[group].includes(name)) {
-          // avoid duplicates
-          groups[group].push(name);
-        }
-      });
-    });
+  //   monitors.forEach((monitor: IMonitor) => {
+  //     monitor.actions.forEach((action: IAction) => {
+  //       const group: string = action.group;
+  //       const name: string = action.name;
+  //       if (groups[group] === undefined) {
+  //         // initialise the group array if it doesn't already exist
+  //         groups[group] = [name];
+  //       } else if (!groups[group].includes(name)) {
+  //         // avoid duplicates
+  //         groups[group].push(name);
+  //       }
+  //     });
+  //   });
 
-    // sort it out mate
-    Object.keys(groups).forEach((group: string) => {
-      groups[group] = groups[group].sort();
-    });
+  //   // sort it out mate
+  //   Object.keys(groups).forEach((group: string) => {
+  //     groups[group] = groups[group].sort();
+  //   });
 
-    return groups;
-  }
+  //   return groups;
+  // }
 }

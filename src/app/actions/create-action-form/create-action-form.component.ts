@@ -204,21 +204,14 @@ export class CreateActionFormComponent implements OnInit {
     const actionType: AbstractControl = this.createActionForm.get('type');
     const validActionType: boolean = actionType.valid;
     const actionTypeValue: string = actionType.value;
+    const validBaseForm: boolean =
+      validName && validDescription && validActionType;
+
     switch (actionTypeValue) {
       case 'block':
-        return (
-          !validName ||
-          !validDescription ||
-          !validActionType ||
-          !this.blockDataForm.valid
-        );
+        return !(validBaseForm && this.blockDataForm.valid);
       case 'emailRate' || 'emailBatch' || 'emailAlert':
-        return (
-          !validName ||
-          !validDescription ||
-          !validActionType ||
-          !this.emailDataForm.valid
-        );
+        return !(validBaseForm && this.emailDataForm.valid);
     }
   }
 
