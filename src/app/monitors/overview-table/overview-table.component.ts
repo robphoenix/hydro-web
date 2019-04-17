@@ -28,6 +28,7 @@ import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
 import { SortService } from '../sort.service';
+import { ActionType } from 'src/app/actions/action';
 
 interface IFilterValues {
   searchTerm: string;
@@ -63,8 +64,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   @ViewChildren(MultipleSelectComponent)
   private selects: MultipleSelectComponent[];
 
-  // @Input()
-  // allCurrentActions: { [group: string]: string[] };
+  @Input()
+  allCurrentActions: { [group: string]: string[] };
 
   blockControl = new FormControl();
   storeControl = new FormControl();
@@ -175,22 +176,22 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     return hasActionsFilters && !this.filterValues.selectedCategories.length;
   }
 
-  // public hasActions(group?: string): boolean {
-  //   const anyCurrentActions: boolean =
-  //     Object.entries(this.allCurrentActions).length > 0;
-  //   if (!anyCurrentActions) {
-  //     return false;
-  //   }
+  public hasActions(actionType?: ActionType): boolean {
+    const anyCurrentActions: boolean =
+      Object.entries(this.allCurrentActions).length > 0;
+    if (!anyCurrentActions) {
+      return false;
+    }
 
-  //   if (!group) {
-  //     return Object.values(this.allCurrentActions).every(
-  //       (curr: string[]) => !!curr.length,
-  //     );
-  //   }
+    if (!actionType) {
+      return Object.values(this.allCurrentActions).every(
+        (curr: string[]) => !!curr.length,
+      );
+    }
 
-  //   const actions = this.allCurrentActions[group];
-  //   return actions && actions.length > 0;
-  // }
+    const actions = this.allCurrentActions[actionType];
+    return actions && actions.length > 0;
+  }
 
   public clearAllFilters(): void {
     this.filterValues.selectedActions = {

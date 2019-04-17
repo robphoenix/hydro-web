@@ -21,7 +21,7 @@ export class ViewMonitorsComponent implements OnInit {
   standardMonitors: IMonitor[] = [];
   archivedMonitors: IMonitor[] = [];
   systemMonitors: IMonitor[] = [];
-  // allCurrentActions: { [group: string]: string[] };
+  allCurrentActions: { [group: string]: string[] };
   allCurrentCategories: string[];
   canToggleStatus = true;
   lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
@@ -140,9 +140,9 @@ export class ViewMonitorsComponent implements OnInit {
     this.allCurrentCategories = this.monitorsService.allCurrentCategories(
       this.currentMonitors,
     );
-    // this.allCurrentActions = this.monitorsService.allCurrentActions(
-    //   this.currentMonitors,
-    // );
+    this.allCurrentActions = this.monitorsService.allCurrentActions(
+      this.currentMonitors,
+    );
   }
 
   private handleError(error: IErrorMessage, name: string) {

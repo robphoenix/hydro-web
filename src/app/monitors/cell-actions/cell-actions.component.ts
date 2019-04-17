@@ -11,25 +11,22 @@ export class CellActionsComponent implements OnInit {
   actions: IAction[];
 
   actionsIcons: { [action: string]: string } = {
-    email: 'mail_outline',
     block: 'block',
-    store: 'check',
-    other: 'subject',
   };
 
-  // groups: { [group: string]: string } = {};
+  actionTypes: { [actionType: string]: string } = {};
 
   ngOnInit(): void {
-    // this.actions.forEach((action: IAction) => {
-    //   if (this.groups[action.group] === undefined) {
-    //     this.groups[action.group] = action.name;
-    //   } else {
-    //     this.groups[action.group] += `\n${action.name}`;
-    //   }
-    // });
+    this.actions.forEach((action: IAction) => {
+      if (this.actionTypes[action.actionType] === undefined) {
+        this.actionTypes[action.actionType] = action.name;
+      } else {
+        this.actionTypes[action.actionType] += `\n${action.name}`;
+      }
+    });
   }
 
-  // public hasActions(): boolean {
-  //   return !!Object.values(this.groups).length;
-  // }
+  public hasActions(): boolean {
+    return !!Object.values(this.actionTypes).length;
+  }
 }
