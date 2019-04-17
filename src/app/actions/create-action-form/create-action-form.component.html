@@ -67,7 +67,9 @@
     </section>
 
     <section
-      *ngIf="createActionForm.get('actionType').value.startsWith('email')"
+      *ngIf="
+        (createActionForm.get('actionType').value || '').startsWith('email')
+      "
       class="mb4"
     >
       <app-create-action-form-section-email

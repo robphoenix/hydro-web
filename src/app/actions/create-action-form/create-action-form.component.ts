@@ -150,7 +150,7 @@ export class CreateActionFormComponent implements OnInit {
     });
 
     this.blockDataForm.valueChanges.subscribe(() => {
-      if (this.createActionForm.get('type').value === 'block') {
+      if (this.createActionForm.get('actionType').value === 'block') {
         this.blockActionName = this.blockName();
         this.createActionForm.patchValue({ name: this.blockActionName });
       }
@@ -327,7 +327,7 @@ export class CreateActionFormComponent implements OnInit {
         console.log({ res });
 
         this.createActionForm.reset();
-        this.router.navigateByUrl(`/actions`);
+        this.router.navigateByUrl(`/actions/view`);
         this.snackBar.open(`Action ${name} created`, '', {
           duration: 2000,
         });
