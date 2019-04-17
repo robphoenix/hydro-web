@@ -237,18 +237,30 @@ export class CreateActionFormComponent implements OnInit {
       ? parametersValue.map((param: string) => param.trim()).join(`, `)
       : ``;
     const blockTime: string = form.get(`blockTime`).value.trim();
+    const blockTimeGreaterThanOne: boolean =
+      ((blockTime as unknown) as number) > 1;
     const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
     const blockDelay: string = form.get(`blockDelay`).value.trim();
+    const blockDelayGreaterThanOne: boolean =
+      ((blockDelay as unknown) as number) > 1;
     const blockDelayUnit: string = form.get(`blockDelayUnit`).value.trim();
 
     const duration: string =
       !permanently && blockTime && blockTimeUnit
-        ? `for ${blockTime} ${blockTimeUnit.toLowerCase()}`
+        ? `for ${blockTime} ${
+            blockTimeGreaterThanOne
+              ? blockTimeUnit.toLowerCase()
+              : blockTimeUnit.toLowerCase().slice(0, -1) // Cut off the ending s
+          }`
         : ``;
 
     const delay: string =
       !permanently && blockDelay && blockDelayUnit
-        ? `with up to ${blockDelay} ${blockDelayUnit.toLowerCase()} random delay`
+        ? `with up to ${blockDelay} ${
+            blockDelayGreaterThanOne
+              ? blockDelayUnit.toLowerCase()
+              : blockDelayUnit.toLowerCase().slice(0, -1) // Cut off the ending s
+          } random delay`
         : ``;
 
     const time = `${duration} ${delay}`;
