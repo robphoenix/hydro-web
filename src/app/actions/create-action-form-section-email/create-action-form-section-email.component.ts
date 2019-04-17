@@ -14,7 +14,7 @@ export class CreateActionFormSectionEmailComponent {
   public emailAddresses: string[];
   public emailTextDescription =
     // tslint:disable-next-line:max-line-length
-    'The email text.This can be HTML.To customise this on the fly, use standard substitution points such as ${ uname }, ${ topic } and ${ sip }, where \'uname\', topic and \'sip\' are esper data fields.To display the esperdata there MUST be a ${ esperdata } substitution tag.The email service will replace this tag with a HTML table containing the data.You can also add all the EmailEvent attributes using the object\'s field name as the substitution value, eg: ${ name } will display the ExternalCallout name.';
+    "The email text.This can be HTML.To customise this on the fly, use standard substitution points such as ${ uname }, ${ topic } and ${ sip }, where 'uname', topic and 'sip' are esper data fields.To display the esperdata there MUST be a ${ esperdata } substitution tag.The email service will replace this tag with a HTML table containing the data.You can also add all the EmailEvent attributes using the object's field name as the substitution value, eg: ${ name } will display the ExternalCallout name.";
 
   @Input()
   actionType: string;
