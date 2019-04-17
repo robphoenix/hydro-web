@@ -176,7 +176,9 @@ export class CreateActionFormComponent implements OnInit {
           blockDelay.disable();
         } else {
           blockTime.setValidators(Validators.required);
+          blockTime.updateValueAndValidity();
           blockTimeUnit.setValidators(Validators.required);
+          blockTimeUnit.updateValueAndValidity();
           blockTime.enable();
           blockDelay.enable();
           blockTime.markAsUntouched();
