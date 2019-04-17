@@ -66,7 +66,7 @@ export class CreateActionFormComponent implements OnInit {
 
   public blockActionUnits: { [key: string]: string[] } = {};
 
-  public actionTypeExplanation = {
+  public actionTypeExplanation: { [key: string]: string } = {
     // tslint:disable-next-line:max-line-length
     block: `The properties you define below will be used to block an individual entity such as an IP or Session Token`,
     // tslint:disable-next-line:max-line-length
