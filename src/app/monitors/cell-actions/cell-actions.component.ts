@@ -17,7 +17,7 @@ export class CellActionsComponent implements OnInit {
     other: 'subject',
   };
 
-  groups: { [group: string]: string } = {};
+  // groups: { [group: string]: string } = {};
 
   ngOnInit(): void {
     // this.actions.forEach((action: IAction) => {
@@ -29,7 +29,7 @@ export class CellActionsComponent implements OnInit {
     // });
   }
 
-  public hasActions(): boolean {
-    return !!Object.values(this.groups).length;
-  }
+  // public hasActions(): boolean {
+  //   return !!Object.values(this.groups).length;
+  // }
 }

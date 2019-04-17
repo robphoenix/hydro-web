@@ -309,6 +309,7 @@ export class CreateActionFormComponent implements OnInit {
     } as IAction;
 
     console.log({ data });
+    console.log(data);
 
     this.actionsService.addAction(data).subscribe(
       (res: IAction) => {

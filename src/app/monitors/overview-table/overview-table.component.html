@@ -54,7 +54,7 @@
 
     <app-primary-button
       class="clear-filters"
-      *ngIf="hasActions() || allCurrentCategories.length"
+      *ngIf="allCurrentCategories.length"
       [disabled]="hasFilters()"
       [icon]="'clear_all'"
       (click)="clearAllFilters()"
