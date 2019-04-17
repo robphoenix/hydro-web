@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
@@ -12,6 +12,12 @@ export class CreateActionFormSectionEmailComponent {
   batchTimeOfDay: string;
 
   public emailAddresses: string[];
+  public emailTextDescription =
+    // tslint:disable-next-line:max-line-length
+    `The email text.This can be HTML.To customise this on the fly, use standard substitution points such as $\{uname}, $\{topic} and $\{sip}, where 'uname', topic and 'sip' are esper data fields.To display the esperdata there MUST be a $\{esperdata} substitution tag.The email service will replace this tag with a HTML table containing the data.You can also add all the EmailEvent attributes using the object's field name as the substitution value, eg: $\{name} will display the ExternalCallout name.`;
+
+  @Input()
+  actionType: string;
 
   @Input()
   availableParameters: string[] = [];
@@ -39,16 +45,13 @@ export class CreateActionFormSectionEmailComponent {
   }
 
   invalidBet365Email(index: number): boolean {
-    const errors = this.emailAddressesArray.controls[index].get('emailAddress')
-      .errors;
-    return errors && errors.validBet365Email;
+    return this.emailAddressesArray.controls[index]
+      .get('emailAddress')
+      .hasError('validBet365Email');
   }
 
   onContentChange(event: { html: string }) {
     const { html } = event;
     this.editorContentChange.emit(html);
-
-    console.log('content change');
-    console.log({ event });
   }
 }

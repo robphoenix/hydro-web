@@ -28,6 +28,7 @@ import { UserService } from 'src/app/user/user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
 import { SortService } from '../sort.service';
+import { ActionType } from 'src/app/actions/action';
 
 interface IFilterValues {
   searchTerm: string;
@@ -175,20 +176,20 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     return hasActionsFilters && !this.filterValues.selectedCategories.length;
   }
 
-  public hasActions(group?: string): boolean {
+  public hasActions(actionType?: ActionType): boolean {
     const anyCurrentActions: boolean =
       Object.entries(this.allCurrentActions).length > 0;
     if (!anyCurrentActions) {
       return false;
     }
 
-    if (!group) {
+    if (!actionType) {
       return Object.values(this.allCurrentActions).every(
         (curr: string[]) => !!curr.length,
       );
     }
 
-    const actions = this.allCurrentActions[group];
+    const actions = this.allCurrentActions[actionType];
     return actions && actions.length > 0;
   }
 

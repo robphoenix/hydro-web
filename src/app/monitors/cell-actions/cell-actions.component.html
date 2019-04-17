@@ -1,9 +1,9 @@
-<div *ngIf="hasActions(); else: noActions" class="actions">
+<div *ngIf="hasActions(); else noActions" class="moon-gray">
   <mat-icon
-    *ngFor="let group of (groups | keyvalue)"
-    matTooltip="{{groups[group.key]}}"
+    *ngFor="let actionType of (actionTypes | keyvalue)"
+    matTooltip="{{ actionTypes[actionType.key] }}"
     [matTooltipClass]="'tooltip'"
-    >{{ actionsIcons[group.key] }}</mat-icon
+    >{{ actionsIcons[actionType.key] }}</mat-icon
   >
 </div>
 <ng-template #noActions>

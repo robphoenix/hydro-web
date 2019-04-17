@@ -1,17 +1,22 @@
 export interface IAction {
   id: number;
   name: string;
-  group: ActionGroup;
+  actionType: ActionType;
   description: string;
   address: string;
   metadata: IActionMetadataBlock | IActionMetadataEmail;
   archived: boolean;
 }
 
-export enum ActionGroup {
+export enum ActionType {
   Block = 'block',
-  Email = 'email',
-  Store = 'store',
+  EmailRate = 'emailRate',
+  EmailBatch = 'emailBatch',
+  EmailAlert = 'emailAlert',
+  StoreDB = 'storeDB',
+  StoreLogins = 'storeLogins',
+  StoreAnalysis = 'storeAnalysis',
+  Misc = 'misc',
 }
 
 export interface IActionMetadataBlock {
@@ -35,7 +40,6 @@ export enum ActionBlockDelayUnit {
 }
 
 export interface IActionMetadataEmail {
-  type: string;
   emailText: string;
   emailSubject: string;
   emailAddresses: string;
@@ -50,10 +54,4 @@ export enum ActionParameters {
   Uname = 'User Name',
   UserAgent = 'User Agent',
   XForwardedFor = 'X-Forwarded-For',
-}
-
-export enum ActionEmailTypes {
-  Rate = 'Rate',
-  Batch = 'Batch',
-  Alert = 'Alert',
 }

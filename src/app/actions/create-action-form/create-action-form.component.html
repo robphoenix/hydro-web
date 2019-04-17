@@ -6,10 +6,7 @@
   <div class="mb4">
     <p>
       <span class="fw5">Action Name: </span>
-      <span
-        class="light-silver"
-        *ngIf="createActionForm.get('name').value === ''"
-      >
+      <span class="light-silver" *ngIf="!createActionForm.get('name').value">
         This will be defined by the chosen action
       </span>
       {{ createActionForm.get('name').value }}
@@ -40,26 +37,27 @@
     </section>
 
     <section class="mb5">
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        formControlName="group"
-      >
-        <mat-button-toggle value="block" [checked]="true">
-          <mat-icon>block</mat-icon>
-          <span class="ml2">Block</span>
-        </mat-button-toggle>
-        <mat-button-toggle value="email">
-          <mat-icon>mail_outline</mat-icon>
-          <span class="ml2">Email</span>
-        </mat-button-toggle>
-        <mat-button-toggle value="other">
-          <mat-icon>graphic_eq</mat-icon>
-          <span class="ml2">Other</span>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <div class="flex items-center justify-between mb4">
+        <mat-form-field appearance="outline">
+          <mat-label>Action Type</mat-label>
+          <mat-select placeholder="Action Type" formControlName="actionType">
+            <mat-option
+              *ngFor="let actionType of availableActionTypes"
+              [value]="actionType"
+            >
+              <span class="ttc">
+                {{ actionTypeDisplayName[actionType] }}
+              </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p class="ml4 pb3 dark-gray">
+          {{ actionTypeExplanation[createActionForm.get('actionType').value] }}
+        </p>
+      </div>
     </section>
 
-    <section *ngIf="group.value === 'block'">
+    <section *ngIf="createActionForm.get('actionType').value === 'block'">
       <app-create-action-form-section-block
         [parent]="blockDataForm"
         [availableParameters]="availableParameters"
@@ -68,23 +66,28 @@
       ></app-create-action-form-section-block>
     </section>
 
-    <section *ngIf="group.value === 'email'">
+    <section
+      *ngIf="
+        (createActionForm.get('actionType').value || '').startsWith('email')
+      "
+      class="mb4"
+    >
       <app-create-action-form-section-email
         [parent]="emailDataForm"
         [availableParameters]="availableParameters"
-        [emailTypes]="emailTypes"
         [validationMessages]="validationMessages"
+        [actionType]="createActionForm.get('actionType').value"
         (addEmailAddress)="addEmailAddress()"
         (removeEmailAddress)="removeEmailAddress($event)"
+        (editorContentChange)="emailEditorContentChange($event)"
       ></app-create-action-form-section-email>
     </section>
 
-    <section *ngIf="group.value === 'other'">
+    <!-- <section>
       <app-create-action-form-section-other></app-create-action-form-section-other>
-    </section>
-
-    <div class="flex justify-end mt4">
-      <app-accent-submit-button [disabled]="!createActionForm.valid">
+    </section> -->
+    <div class="flex justify-end">
+      <app-accent-submit-button [disabled]="disableSubmit">
         Save Action
       </app-accent-submit-button>
     </div>

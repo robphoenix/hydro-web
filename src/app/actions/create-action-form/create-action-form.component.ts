@@ -11,10 +11,9 @@ import {
   IActionMetadataEmail,
   IAction,
   ActionParameters,
-  ActionEmailTypes,
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
-  ActionGroup,
+  ActionType,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -22,6 +21,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
+import { WrappedNodeExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-action-form',
@@ -32,12 +32,16 @@ export class CreateActionFormComponent implements OnInit {
   public createActionForm: FormGroup;
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
+  public blockActionName: string;
+  public emailRateActionName: string;
+  public emailBatchActionName: string;
+  public emailAlertActionName: string;
+
+  private actionType: typeof ActionType = ActionType;
+  public availableActionTypes: { name: string; value: string }[] = [];
 
   private parameters: typeof ActionParameters = ActionParameters;
   public availableParameters: string[] = [];
-
-  private actionEmailTypes: typeof ActionEmailTypes = ActionEmailTypes;
-  public emailTypes: string[] = [];
 
   private actionBlockTimeUnit: typeof ActionBlockTimeUnit = ActionBlockTimeUnit;
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
@@ -55,9 +59,23 @@ export class CreateActionFormComponent implements OnInit {
     emailAddresses: {
       validBet365Email: `You must specify a valid bet365 email address`,
     },
+    emailSubject: {
+      required: `You must specify an email subject`,
+    },
   };
 
   public blockActionUnits: { [key: string]: string[] } = {};
+
+  public actionTypeExplanation: { [key: string]: string } = {
+    // tslint:disable-next-line:max-line-length
+    block: `The properties you define below will be used to block an individual entity such as an IP or Session Token`,
+    // tslint:disable-next-line:max-line-length
+    emailAlert: `The properties you define below will be used to send out an email for every esper event. Once an alert value such as an IP (eg 1.1.1.1) or session token has been sent then it, and all other data in the same row, will be ignored for four days and any future emails will not reference it even though it was part of an esper event.`,
+    // tslint:disable-next-line:max-line-length
+    emailBatch: `The properties you define below will be used to batch esper events into email sent every day at the time specified`,
+    // tslint:disable-next-line:max-line-length
+    emailRate: `The properties you define below will be used to send out emails at a maximum number per hour`,
+  };
 
   @Input()
   title: string;
@@ -79,44 +97,64 @@ export class CreateActionFormComponent implements OnInit {
     });
     this.emailDataForm = this.fb.group({
       parameters: [[``], Validators.required],
-      type: [ActionEmailTypes.Rate],
       emailAddresses: this.fb.array([
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
+      emailSubject: [``, Validators.required],
+      emailSendLimit: [0, Validators.required],
+      emailText: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: ``,
       description: [``, Validators.required],
-      group: [ActionGroup.Email, Validators.required],
+      actionType: [ActionType.Block, Validators.required],
       blockData: this.blockDataForm,
       emailData: this.emailDataForm,
     });
   }
 
-  addEmailAddress() {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
-    ) as FormArray;
-
-    emailAddresses.push(
-      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
-    );
-  }
-
-  removeEmailAddress(index: number) {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
-    ) as FormArray;
-    emailAddresses.removeAt(index);
-  }
+  public actionTypeDisplayName: { [key: string]: string } = {
+    block: 'Block',
+    emailRate: 'Email Rate',
+    emailBatch: 'Email Batch',
+    emailAlert: 'Email Alert',
+    storeDB: 'Store in Database',
+    storeLogins: 'Store Logins',
+    storeAnalysis: 'Store Analysis',
+    misc: 'Miscellaneous',
+  };
 
   ngOnInit() {
+    this.availableActionTypes = Object.values(this.actionType);
     this.availableParameters = Object.values(this.parameters);
-    this.emailTypes = Object.values(this.actionEmailTypes);
     this.blockActionUnits = {
       duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
     };
+
+    this.createActionForm.get('actionType').valueChanges.subscribe((value) => {
+      switch (value) {
+        case 'block':
+          this.createActionForm.patchValue({ name: this.blockActionName });
+          break;
+        case 'emailRate':
+          this.createActionForm.patchValue({ name: this.emailRateActionName });
+          break;
+        case 'emailBatch':
+          this.createActionForm.patchValue({ name: this.emailBatchActionName });
+          break;
+        case 'emailAlert':
+          this.createActionForm.patchValue({ name: this.emailAlertActionName });
+          break;
+      }
+    });
+
+    this.blockDataForm.valueChanges.subscribe(() => {
+      if (this.createActionForm.get('actionType').value === 'block') {
+        this.blockActionName = this.blockName();
+        this.createActionForm.patchValue({ name: this.blockActionName });
+      }
+    });
 
     const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
     const blockTimeUnit: AbstractControl = this.blockDataForm.get(
@@ -127,44 +165,21 @@ export class CreateActionFormComponent implements OnInit {
       `blockDelayUnit`,
     );
 
-    this.createActionForm.get('group').valueChanges.subscribe((value) => {
-      switch (value) {
-        case 'email':
-          blockTime.clearValidators();
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.clearValidators();
-          blockTimeUnit.updateValueAndValidity();
-          break;
-        case 'block':
-          blockTime.setValidators(Validators.required);
-          blockTimeUnit.setValidators(Validators.required);
-          break;
-        default:
-          break;
-      }
-    });
-
-    this.blockDataForm.valueChanges.subscribe(() => {
-      const name = this.blockName();
-      this.createActionForm.patchValue({ name });
-    });
-
     // We want to remove any validation from the time unit inputs if the user is blocking permanently
     this.blockDataForm
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
         if (blockPermanently) {
-          blockTime.clearValidators();
-          blockTimeUnit.clearValidators();
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.updateValueAndValidity();
+          this.clearValidators([blockTime, blockTimeUnit]);
           blockTime.setValue(``);
           blockTimeUnit.setValue(``);
           blockTime.disable();
           blockDelay.disable();
         } else {
           blockTime.setValidators(Validators.required);
+          blockTime.updateValueAndValidity();
           blockTimeUnit.setValidators(Validators.required);
+          blockTimeUnit.updateValueAndValidity();
           blockTime.enable();
           blockDelay.enable();
           blockTime.markAsUntouched();
@@ -185,6 +200,35 @@ export class CreateActionFormComponent implements OnInit {
       });
   }
 
+  emailEditorContentChange(content: string) {
+    this.emailDataForm.patchValue({ emailText: content });
+  }
+
+  get disableSubmit() {
+    const validName: boolean = this.createActionForm.get('name').valid;
+    const validDescription: boolean = this.createActionForm.get('description')
+      .valid;
+    const actionType: AbstractControl = this.createActionForm.get('actionType');
+    const validActionType: boolean = actionType.valid;
+    const actionTypeValue: string = actionType.value;
+    const validBaseForm: boolean =
+      validName && validDescription && validActionType;
+
+    switch (actionTypeValue) {
+      case 'block':
+        return !(validBaseForm && this.blockDataForm.valid);
+      case 'emailRate' || 'emailBatch' || 'emailAlert':
+        return !(validBaseForm && this.emailDataForm.valid);
+    }
+  }
+
+  clearValidators(controls: AbstractControl[]) {
+    controls.map((ctrl: AbstractControl) => {
+      ctrl.clearValidators();
+      ctrl.updateValueAndValidity();
+    });
+  }
+
   blockName(): string {
     const form = this.blockDataForm;
     const permanently: boolean = form.get(`permanently`).value;
@@ -193,18 +237,30 @@ export class CreateActionFormComponent implements OnInit {
       ? parametersValue.map((param: string) => param.trim()).join(`, `)
       : ``;
     const blockTime: string = form.get(`blockTime`).value.trim();
+    const blockTimeGreaterThanOne: boolean =
+      ((blockTime as unknown) as number) > 1;
     const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
     const blockDelay: string = form.get(`blockDelay`).value.trim();
+    const blockDelayGreaterThanOne: boolean =
+      ((blockDelay as unknown) as number) > 1;
     const blockDelayUnit: string = form.get(`blockDelayUnit`).value.trim();
 
     const duration: string =
       !permanently && blockTime && blockTimeUnit
-        ? `for ${blockTime} ${blockTimeUnit}`
+        ? `for ${blockTime} ${
+            blockTimeGreaterThanOne
+              ? blockTimeUnit.toLowerCase()
+              : blockTimeUnit.toLowerCase().slice(0, -1) // Cut off the ending s
+          }`
         : ``;
 
     const delay: string =
       !permanently && blockDelay && blockDelayUnit
-        ? `with up to ${blockDelay} ${blockDelayUnit} random delay`
+        ? `with up to ${blockDelay} ${
+            blockDelayGreaterThanOne
+              ? blockDelayUnit.toLowerCase()
+              : blockDelayUnit.toLowerCase().slice(0, -1) // Cut off the ending s
+          } random delay`
         : ``;
 
     const time = `${duration} ${delay}`;
@@ -214,14 +270,35 @@ export class CreateActionFormComponent implements OnInit {
     return name.trim();
   }
 
+  addEmailAddress() {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+
+    emailAddresses.push(
+      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+    );
+  }
+
+  removeEmailAddress(index: number) {
+    const emailAddresses = this.emailDataForm.get(
+      'emailAddresses',
+    ) as FormArray;
+    emailAddresses.removeAt(index);
+  }
+
   submit() {
     const emailForm = this.emailDataForm.getRawValue();
     console.log({ emailForm });
 
-    const { group, name, description } = this.createActionForm.getRawValue();
+    const {
+      actionType,
+      name,
+      description,
+    } = this.createActionForm.getRawValue();
     let metadata: IActionMetadataBlock | IActionMetadataEmail;
-    switch (group) {
-      case ActionGroup.Block:
+    switch (actionType) {
+      case ActionType.Block:
         const {
           permanently,
           blockTime,
@@ -249,17 +326,20 @@ export class CreateActionFormComponent implements OnInit {
 
     const data = {
       name,
-      group,
+      actionType,
       description,
       metadata,
     } as IAction;
 
     console.log({ data });
+    console.log(data);
 
     this.actionsService.addAction(data).subscribe(
       (res: IAction) => {
+        console.log({ res });
+
         this.createActionForm.reset();
-        this.router.navigateByUrl(`/actions`);
+        this.router.navigateByUrl(`/actions/view`);
         this.snackBar.open(`Action ${name} created`, '', {
           duration: 2000,
         });

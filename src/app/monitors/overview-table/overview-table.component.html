@@ -80,9 +80,9 @@
       >
         <ng-container matColumnDef="monitor">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <app-table-heading [iconType]="'monitor'">
+            <h2 class="f4 fw4 near-black ml4">
               Monitor
-            </app-table-heading>
+            </h2>
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="mat-monitor-cell">
             <app-cell-monitor
@@ -95,15 +95,13 @@
 
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef class="actions">
-            <app-table-heading [iconType]="'actions'">
-              Actions
-            </app-table-heading>
+            <h2 class="f4 fw4 near-black mr2">Actions</h2>
             <button
-              mat-icon-button
+              mat-stroked-button
               *ngIf="hasActions()"
               [matMenuTriggerFor]="actionsMenu"
             >
-              <mat-icon>filter_list</mat-icon>
+              Filter
             </button>
             <mat-menu #actionsMenu="matMenu">
               <button
@@ -190,15 +188,15 @@
 
         <ng-container matColumnDef="categories">
           <mat-header-cell *matHeaderCellDef class="categories">
-            <app-table-heading [iconType]="'categories'">
+            <h2 class="f4 fw4 near-black mr2">
               Categories
-            </app-table-heading>
+            </h2>
             <button
               *ngIf="allCurrentCategories.length"
-              mat-icon-button
+              mat-stroked-button
               [matMenuTriggerFor]="categoriesMenu"
             >
-              <mat-icon>filter_list</mat-icon>
+              Filter
             </button>
             <mat-menu #categoriesMenu="matMenu">
               <app-multiple-select

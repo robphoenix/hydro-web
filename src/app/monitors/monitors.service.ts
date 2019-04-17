@@ -117,30 +117,28 @@ export class MonitorsService {
     ).sort();
   }
 
-  public allCurrentActions(
-    monitors: IMonitor[],
-  ): { [group: string]: string[] } {
-    const groups: { [group: string]: string[] } = {};
+  public allCurrentActions(monitors: IMonitor[]) {
+    const actionTypes: { [group: string]: string[] } = {};
 
     monitors.forEach((monitor: IMonitor) => {
       monitor.actions.forEach((action: IAction) => {
-        const group: string = action.group;
+        const actionType: string = action.actionType;
         const name: string = action.name;
-        if (groups[group] === undefined) {
-          // initialise the group array if it doesn't already exist
-          groups[group] = [name];
-        } else if (!groups[group].includes(name)) {
+        if (actionTypes[actionType] === undefined) {
+          // initialise the actionType array if it doesn't already exist
+          actionTypes[actionType] = [name];
+        } else if (!actionTypes[actionType].includes(name)) {
           // avoid duplicates
-          groups[group].push(name);
+          actionTypes[actionType].push(name);
         }
       });
     });
 
     // sort it out mate
-    Object.keys(groups).forEach((group: string) => {
-      groups[group] = groups[group].sort();
+    Object.keys(actionTypes).forEach((actionType: string) => {
+      actionTypes[actionType] = actionTypes[actionType].sort();
     });
 
-    return groups;
+    return actionTypes;
   }
 }
