@@ -107,7 +107,7 @@ export class CreateActionFormComponent implements OnInit {
     this.createActionForm = this.fb.group({
       name: ``,
       description: [``, Validators.required],
-      type: [ActionType.Block, Validators.required],
+      actionType: [ActionType.Block, Validators.required],
       blockData: this.blockDataForm,
       emailData: this.emailDataForm,
     });
@@ -132,7 +132,7 @@ export class CreateActionFormComponent implements OnInit {
       delay: Object.values(this.actionBlockDelayUnit),
     };
 
-    this.createActionForm.get('type').valueChanges.subscribe((value) => {
+    this.createActionForm.get('actionType').valueChanges.subscribe((value) => {
       switch (value) {
         case 'block':
           this.createActionForm.patchValue({ name: this.blockActionName });
@@ -208,7 +208,7 @@ export class CreateActionFormComponent implements OnInit {
     const validName: boolean = this.createActionForm.get('name').valid;
     const validDescription: boolean = this.createActionForm.get('description')
       .valid;
-    const actionType: AbstractControl = this.createActionForm.get('type');
+    const actionType: AbstractControl = this.createActionForm.get('actionType');
     const validActionType: boolean = actionType.valid;
     const actionTypeValue: string = actionType.value;
     const validBaseForm: boolean =
@@ -279,9 +279,13 @@ export class CreateActionFormComponent implements OnInit {
     const emailForm = this.emailDataForm.getRawValue();
     console.log({ emailForm });
 
-    const { type, name, description } = this.createActionForm.getRawValue();
+    const {
+      actionType,
+      name,
+      description,
+    } = this.createActionForm.getRawValue();
     let metadata: IActionMetadataBlock | IActionMetadataEmail;
-    switch (type) {
+    switch (actionType) {
       case ActionType.Block:
         const {
           permanently,
@@ -310,7 +314,7 @@ export class CreateActionFormComponent implements OnInit {
 
     const data = {
       name,
-      type,
+      actionType,
       description,
       metadata,
     } as IAction;

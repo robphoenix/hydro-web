@@ -1,7 +1,7 @@
 export interface IAction {
   id: number;
   name: string;
-  type: ActionType;
+  actionType: ActionType;
   description: string;
   address: string;
   metadata: IActionMetadataBlock | IActionMetadataEmail;

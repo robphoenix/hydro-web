@@ -40,24 +40,24 @@
       <div class="flex items-center justify-between mb4">
         <mat-form-field appearance="outline">
           <mat-label>Action Type</mat-label>
-          <mat-select placeholder="Action Type" formControlName="type">
+          <mat-select placeholder="Action Type" formControlName="actionType">
             <mat-option
-              *ngFor="let type of availableActionTypes"
-              [value]="type"
+              *ngFor="let actionType of availableActionTypes"
+              [value]="actionType"
             >
               <span class="ttc">
-                {{ actionTypeDisplayName[type] }}
+                {{ actionTypeDisplayName[actionType] }}
               </span>
             </mat-option>
           </mat-select>
         </mat-form-field>
         <p class="ml4 pb3 dark-gray">
-          {{ actionTypeExplanation[createActionForm.get('type').value] }}
+          {{ actionTypeExplanation[createActionForm.get('actionType').value] }}
         </p>
       </div>
     </section>
 
-    <section *ngIf="createActionForm.get('type').value === 'block'">
+    <section *ngIf="createActionForm.get('actionType').value === 'block'">
       <app-create-action-form-section-block
         [parent]="blockDataForm"
         [availableParameters]="availableParameters"
@@ -67,14 +67,14 @@
     </section>
 
     <section
-      *ngIf="createActionForm.get('type').value.startsWith('email')"
+      *ngIf="createActionForm.get('actionType').value.startsWith('email')"
       class="mb4"
     >
       <app-create-action-form-section-email
         [parent]="emailDataForm"
         [availableParameters]="availableParameters"
         [validationMessages]="validationMessages"
-        [actionType]="createActionForm.get('type').value"
+        [actionType]="createActionForm.get('actionType').value"
         (addEmailAddress)="addEmailAddress()"
         (removeEmailAddress)="removeEmailAddress($event)"
         (editorContentChange)="emailEditorContentChange($event)"
