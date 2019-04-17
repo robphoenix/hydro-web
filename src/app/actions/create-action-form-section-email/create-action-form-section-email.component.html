@@ -61,7 +61,7 @@
       (click)="addEmailAddress.emit()"
       [disabled]="parent.get('emailAddresses').invalid"
     >
-      Add Email Address
+      Add Another Email Address
     </app-primary-button>
   </div>
 
@@ -69,7 +69,7 @@
     <mat-label>Email Subject*</mat-label>
     <input
       matInput
-      placeholder="Email Recipient(s)"
+      placeholder="Email Subject"
       formControlName="emailSubject"
     />
     <mat-hint align="end">
@@ -128,7 +128,14 @@
     </mat-select>
   </mat-form-field>
 
-  <section class="h7">
-    <quill (contentChange)="onContentChange($event)"> </quill>
-  </section>
+  <div>
+    <mat-label>Email Text</mat-label>
+    <p>
+      {{ emailTextDescription }}
+    </p>
+    <div class="h7 mb4">
+      <quill (contentChange)="onContentChange($event)"> </quill>
+      <mat-hint align="end">*Required</mat-hint>
+    </div>
+  </div>
 </form>

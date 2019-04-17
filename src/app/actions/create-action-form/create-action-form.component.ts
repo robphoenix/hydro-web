@@ -102,6 +102,7 @@ export class CreateActionFormComponent implements OnInit {
       ]),
       emailSubject: [``, Validators.required],
       emailSendLimit: [0, Validators.required],
+      emailText: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: ``,
@@ -197,6 +198,10 @@ export class CreateActionFormComponent implements OnInit {
           blockDelayUnit.clearValidators();
         }
       });
+  }
+
+  emailEditorContentChange(content: string) {
+    this.emailDataForm.patchValue({ emailText: content });
   }
 
   get disableSubmit() {

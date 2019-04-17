@@ -66,7 +66,10 @@
       ></app-create-action-form-section-block>
     </section>
 
-    <section *ngIf="createActionForm.get('type').value.startsWith('email')">
+    <section
+      *ngIf="createActionForm.get('type').value.startsWith('email')"
+      class="mb4"
+    >
       <app-create-action-form-section-email
         [parent]="emailDataForm"
         [availableParameters]="availableParameters"
@@ -74,13 +77,14 @@
         [actionType]="createActionForm.get('type').value"
         (addEmailAddress)="addEmailAddress()"
         (removeEmailAddress)="removeEmailAddress($event)"
+        (editorContentChange)="emailEditorContentChange($event)"
       ></app-create-action-form-section-email>
     </section>
 
     <!-- <section>
       <app-create-action-form-section-other></app-create-action-form-section-other>
     </section> -->
-    <div class="flex justify-end mt4">
+    <div class="flex justify-end">
       <app-accent-submit-button [disabled]="disableSubmit">
         Save Action
       </app-accent-submit-button>
