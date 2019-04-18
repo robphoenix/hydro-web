@@ -1,20 +1,20 @@
 <div class="w9 ml-auto mr-auto mv4 pt4">
-  <div class="mb4">
+  <div class="mb5">
     <app-heading>{{ title }}</app-heading>
   </div>
 
-  <div class="mb4">
-    <p>
-      <span class="fw5">Action Name: </span>
-      <span class="light-silver" *ngIf="!createActionForm.get('name').value">
-        This will be defined by the chosen action
-      </span>
-      {{ createActionForm.get('name').value }}
-    </p>
-  </div>
-
   <form [formGroup]="createActionForm" (ngSubmit)="submit()">
-    <section class="description w-100 mb3">
+    <div class="mb3 w-100">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Name*</mat-label>
+        <input matInput formControlName="name" />
+        <mat-hint align="end"> *Required </mat-hint>
+        <mat-error *ngIf="createActionForm.get('name').hasError('required')">
+          {{ validationMessages['name']['required'] }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <section class="w-100 mb3">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>Description*</mat-label>
         <textarea

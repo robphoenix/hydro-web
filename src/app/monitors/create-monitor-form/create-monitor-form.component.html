@@ -1,10 +1,14 @@
-<div class="container">
-  <div class="heading">
+<div class="w9 ml-auto mr-auto mv4 pt4">
+  <div class="mb5">
     <app-heading>{{ heading }} Monitor</app-heading>
   </div>
 
-  <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
-    <div class="form-field">
+  <form
+    [formGroup]="createMonitorForm"
+    (ngSubmit)="submit()"
+    class="flex flex-column"
+  >
+    <div class="mb3">
       <app-create-monitor-form-name
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['name']"
@@ -15,7 +19,7 @@
       </app-create-monitor-form-name>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-description
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['description']"
@@ -25,23 +29,23 @@
       </app-create-monitor-form-description>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-status [parent]="createMonitorForm">
       </app-create-monitor-form-status>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-type [parent]="createMonitorForm">
       </app-create-monitor-form-type>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-priority
         [parent]="createMonitorForm"
       ></app-create-monitor-form-priority>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-query
         [parent]="createMonitorForm"
         [validationMessages]="validationMessages['query']"
@@ -49,16 +53,13 @@
       ></app-create-monitor-form-query>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-cache-window
         [parent]="createMonitorForm"
       ></app-create-monitor-form-cache-window>
     </div>
 
-    <div
-      class="form-field"
-      *ngIf="availableCategories && availableCategories.length"
-    >
+    <div class="mb3" *ngIf="availableCategories && availableCategories.length">
       <app-create-monitor-form-categories
         [parent]="createMonitorForm"
         [loading]="loadingCategories"
@@ -74,7 +75,7 @@
       </app-create-monitor-form-categories>
     </div>
 
-    <div class="form-field">
+    <div class="mb3">
       <app-create-monitor-form-groups
         [parent]="createMonitorForm"
         [loading]="loadingGroups"
@@ -89,7 +90,7 @@
       </app-create-monitor-form-groups>
     </div>
 
-    <div class="form-field">
+    <div class="mb4">
       <app-create-monitor-form-actions
         [parent]="createMonitorForm"
         [loading]="loadingActions"
@@ -104,18 +105,18 @@
       </app-create-monitor-form-actions>
     </div>
 
-    <div class="buttons">
+    <div class="flex justify-end">
       <app-accent-submit-button [disabled]="!createMonitorForm.valid">
         Save Monitor
       </app-accent-submit-button>
       <app-accent-button
-        class="view"
+        class="ml4"
         (click)="submit(true)"
         [disabled]="!canViewMonitor"
       >
         Save Monitor and View
       </app-accent-button>
-      <app-warn-button class="cancel" (click)="cancel()">
+      <app-warn-button class="ml4" (click)="cancel()">
         Cancel
       </app-warn-button>
     </div>

@@ -21,7 +21,6 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
-import { WrappedNodeExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-action-form',
@@ -32,10 +31,6 @@ export class CreateActionFormComponent implements OnInit {
   public createActionForm: FormGroup;
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
-  public blockActionName: string;
-  public emailRateActionName: string;
-  public emailBatchActionName: string;
-  public emailAlertActionName: string;
 
   private actionType: typeof ActionType = ActionType;
   public availableActionTypes: { name: string; value: string }[] = [];
@@ -47,6 +42,9 @@ export class CreateActionFormComponent implements OnInit {
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
+    name: {
+      required: `You must enter an action name`,
+    },
     description: {
       required: `You must enter an action description`,
     },
@@ -80,6 +78,17 @@ export class CreateActionFormComponent implements OnInit {
   @Input()
   title: string;
 
+  public actionTypeDisplayName: { [key: string]: string } = {
+    block: 'Block',
+    emailRate: 'Email Rate',
+    emailBatch: 'Email Batch',
+    emailAlert: 'Email Alert',
+    storeDB: 'Store in Database',
+    storeLogins: 'Store Logins',
+    storeAnalysis: 'Store Analysis',
+    misc: 'Miscellaneous',
+  };
+
   constructor(
     private fb: FormBuilder,
     private actionsService: ActionsService,
@@ -105,24 +114,13 @@ export class CreateActionFormComponent implements OnInit {
       emailText: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
-      name: ``,
+      name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
       blockData: this.blockDataForm,
       emailData: this.emailDataForm,
     });
   }
-
-  public actionTypeDisplayName: { [key: string]: string } = {
-    block: 'Block',
-    emailRate: 'Email Rate',
-    emailBatch: 'Email Batch',
-    emailAlert: 'Email Alert',
-    storeDB: 'Store in Database',
-    storeLogins: 'Store Logins',
-    storeAnalysis: 'Store Analysis',
-    misc: 'Miscellaneous',
-  };
 
   ngOnInit() {
     this.availableActionTypes = Object.values(this.actionType);
@@ -131,30 +129,6 @@ export class CreateActionFormComponent implements OnInit {
       duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
     };
-
-    this.createActionForm.get('actionType').valueChanges.subscribe((value) => {
-      switch (value) {
-        case 'block':
-          this.createActionForm.patchValue({ name: this.blockActionName });
-          break;
-        case 'emailRate':
-          this.createActionForm.patchValue({ name: this.emailRateActionName });
-          break;
-        case 'emailBatch':
-          this.createActionForm.patchValue({ name: this.emailBatchActionName });
-          break;
-        case 'emailAlert':
-          this.createActionForm.patchValue({ name: this.emailAlertActionName });
-          break;
-      }
-    });
-
-    this.blockDataForm.valueChanges.subscribe(() => {
-      if (this.createActionForm.get('actionType').value === 'block') {
-        this.blockActionName = this.blockName();
-        this.createActionForm.patchValue({ name: this.blockActionName });
-      }
-    });
 
     const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
     const blockTimeUnit: AbstractControl = this.blockDataForm.get(
@@ -227,47 +201,6 @@ export class CreateActionFormComponent implements OnInit {
       ctrl.clearValidators();
       ctrl.updateValueAndValidity();
     });
-  }
-
-  blockName(): string {
-    const form = this.blockDataForm;
-    const permanently: boolean = form.get(`permanently`).value;
-    const parametersValue: string[] = form.get(`parameters`).value;
-    const parameters = parametersValue
-      ? parametersValue.map((param: string) => param.trim()).join(`, `)
-      : ``;
-    const blockTime: string = form.get(`blockTime`).value.trim();
-    const blockTimeGreaterThanOne: boolean =
-      ((blockTime as unknown) as number) > 1;
-    const blockTimeUnit: string = form.get(`blockTimeUnit`).value.trim();
-    const blockDelay: string = form.get(`blockDelay`).value.trim();
-    const blockDelayGreaterThanOne: boolean =
-      ((blockDelay as unknown) as number) > 1;
-    const blockDelayUnit: string = form.get(`blockDelayUnit`).value.trim();
-
-    const duration: string =
-      !permanently && blockTime && blockTimeUnit
-        ? `for ${blockTime} ${
-            blockTimeGreaterThanOne
-              ? blockTimeUnit.toLowerCase()
-              : blockTimeUnit.toLowerCase().slice(0, -1) // Cut off the ending s
-          }`
-        : ``;
-
-    const delay: string =
-      !permanently && blockDelay && blockDelayUnit
-        ? `with up to ${blockDelay} ${
-            blockDelayGreaterThanOne
-              ? blockDelayUnit.toLowerCase()
-              : blockDelayUnit.toLowerCase().slice(0, -1) // Cut off the ending s
-          } random delay`
-        : ``;
-
-    const time = `${duration} ${delay}`;
-
-    const name = `Block ${parameters} ${permanently ? `permanently` : time}`;
-
-    return name.trim();
   }
 
   addEmailAddress() {
