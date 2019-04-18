@@ -1,46 +1,33 @@
-<div class="ma5 pa4">
+<div class="w-60 pa4 mv5 ml-auto mr-auto">
   <div class="mb4">
     <app-heading>Actions</app-heading>
   </div>
-  <div class="flex items-center w-100 mb4">
-    <!-- <mat-button-toggle-group
-      [value]="group"
-      (change)="filterActions($event.value)"
-    >
-      <mat-button-toggle value="block">
-        <mat-icon [ngClass]="icons['block'].colour" matTooltip="Block">
-          {{ icons['block'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="email">
-        <mat-icon [ngClass]="icons['email'].colour" matTooltip="Email">
-          {{ icons['email'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="store">
-        <mat-icon [ngClass]="icons['store'].colour" matTooltip="Store">
-          {{ icons['store'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="all">
-        <mat-icon [ngClass]="icons['actions'].colour" matTooltip="All Actions">
-          {{ icons['actions'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group> -->
+  <div class="flex items-center w-100 mb4 justify-between">
+    <mat-form-field class="w-20">
+      <mat-label>Filter Action Types</mat-label>
+      <mat-select
+        [(value)]="selectedActionType"
+        (selectionChange)="filterActions()"
+      >
+        <mat-option>All Action Types</mat-option>
+        <mat-option value="block">Block</mat-option>
+        <mat-option value="emailAlert">Email Alert</mat-option>
+        <mat-option value="emailRate">Email Rate</mat-option>
+        <mat-option value="emailBatch">Email Batch</mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <app-search-input
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Actions'"
       (searchTermChange)="filterActions()"
-      class="w-40 ml-auto"
+      class="w-40"
     ></app-search-input>
 
     <app-accent-button
       mat-flat-button
       (click)="router.navigateByUrl('/actions/add')"
       [icon]="'add'"
-      class="ml4"
     >
       New Action
     </app-accent-button>
@@ -49,14 +36,7 @@
   <mat-list class="bg-white shadow-4 bt bw1 b--primary ">
     <cdk-virtual-scroll-viewport itemSize="72" class="h7">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="flex items-center mv2 mh4">
-          <!-- <mat-icon
-            [ngClass]="icons[action.group].colour"
-            matTooltip="All Actions"
-            class="mr4"
-          >
-            {{ icons[action.group].icon }}
-          </mat-icon> -->
+        <mat-list-item class="flex items-center ma3">
           <div>
             <h1 matLine class="f5 fw5 lh-title">
               {{ action.name }}
@@ -65,6 +45,9 @@
               {{ action.description }}
             </p>
           </div>
+          <span class="ml-auto mr4 pv1 ph2 primary bg-primary-lighter br1">
+            {{ actionTypeDisplayNames[action.actionType] }} Action
+          </span>
         </mat-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>

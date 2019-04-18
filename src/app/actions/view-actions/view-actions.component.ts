@@ -12,17 +12,13 @@ export class ViewActionsComponent implements OnInit {
   public actions: IAction[] = [];
   public filteredActions: IAction[] = [];
   public searchTerm: string;
-  // public type = 'all';
-  // public icons: { [type: string]: { icon: string; colour: string } } = {
-  //   actions: {
-  //     icon: 'play_circle_filled',
-  //     colour: 'orange',
-  //   },
-  //   block: { icon: 'block', colour: 'red' },
-  //   email: { icon: 'mail_outline', colour: 'green' },
-  //   store: { icon: 'check', colour: 'blue' },
-  //   other: { icon: 'subject', colour: 'yellow' },
-  // };
+  public selectedActionType: string;
+  public actionTypeDisplayNames: { [key: string]: string } = {
+    block: 'Block',
+    emailAlert: 'Email Alert',
+    emailRAte: 'Email Rate',
+    emailBatch: 'Email Batch',
+  };
 
   constructor(private actionsService: ActionsService, public router: Router) {}
 
@@ -40,7 +36,6 @@ export class ViewActionsComponent implements OnInit {
   }
 
   filterActions() {
-    // this.type = type || this.type;
     this.filteredActions = this.actions.filter((action: IAction) => {
       const searchTerm: string = this.searchTerm || '';
 
@@ -49,10 +44,11 @@ export class ViewActionsComponent implements OnInit {
         regex,
       );
       const matchesSearchTerm: boolean = match && match.length > 0;
-      // const isInGroup: boolean =
-      //   this.type === 'all' ? true : action.group === this.type;
+      const isActionType: boolean = this.selectedActionType
+        ? this.selectedActionType === action.actionType
+        : true;
 
-      return matchesSearchTerm;
+      return matchesSearchTerm && isActionType;
     });
   }
 }

@@ -1,16 +1,13 @@
-<ul
-  class="categories"
-  *ngIf="categories && categories.length; else: noCategories"
->
+<ul *ngIf="categories && categories.length; else noCategories">
   <li *ngFor="let category of categories.slice(0, 4)">
-    <p class="category">{{ category.name }}</p>
+    <p>{{ category.name }}</p>
   </li>
 </ul>
 <ng-template #noCategories>
   <mat-icon
     matTooltip="No Categories"
     [matTooltipClass]="'tooltip'"
-    class="no-categories"
+    class="silver"
   >
     remove
   </mat-icon>

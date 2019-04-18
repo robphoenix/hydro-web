@@ -316,8 +316,6 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   removeAction(action: IAction): void {
-    console.log({ action });
-
     this.selectedActions = this.selectedActions.filter(
       (selected: IAction) => selected.id !== action.id,
     );
@@ -335,16 +333,8 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   getAvailableGroups(): void {
-    // this is a test group that will eventually be filtered out on the server
-    const ignoreGroup: IGroup = {
-      id: 547,
-      name: LDAPGroup.AppForensicMonitoringS1,
-    } as IGroup;
-
     this.monitorsService.getGroups().subscribe((groups: IGroup[]) => {
-      this.availableGroups = groups.filter(
-        (group: IGroup) => group.id !== ignoreGroup.id,
-      );
+      this.availableGroups = groups;
       this.loadingGroups = false;
     });
   }

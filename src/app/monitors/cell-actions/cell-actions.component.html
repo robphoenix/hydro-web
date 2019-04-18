@@ -1,4 +1,4 @@
-<div *ngIf="hasActions(); else noActions" class="moon-gray">
+<div *ngIf="hasActions(); else noActions" class="silver">
   <mat-icon
     *ngFor="let actionType of (actionTypes | keyvalue)"
     matTooltip="{{ actionTypes[actionType.key] }}"
@@ -10,7 +10,7 @@
   <mat-icon
     matTooltip="No Actions"
     [matTooltipClass]="'tooltip'"
-    class="actions"
+    class="silver"
   >
     remove
   </mat-icon>
