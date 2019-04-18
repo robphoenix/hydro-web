@@ -60,6 +60,9 @@ export class CreateActionFormComponent implements OnInit {
     emailSubject: {
       required: `You must specify an email subject`,
     },
+    emailText: {
+      required: `You must specify an email text`,
+    },
   };
 
   public blockActionUnits: { [key: string]: string[] } = {};

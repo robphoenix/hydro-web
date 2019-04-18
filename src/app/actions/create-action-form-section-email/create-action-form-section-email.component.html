@@ -129,13 +129,22 @@
   </mat-form-field>
 
   <div>
-    <h3 class="mid-gray mb2">Email Text</h3>
-    <p>
-      {{ emailTextDescription }}
+    <h3 class="mid-gray mb2 f5 fw5">Email Text</h3>
+    <p class="mb3">
+      This text can contain variable data, using the
+      <b class="code">${{ '{' }}data{{ '}' }}</b> substitution tag, where
+      <b class="code">data</b> can be any esper data field, such as
+      <b class="code">${{ '{' }}uname{{ '}' }}</b
+      >, <b class="code">${{ '{' }}topic{{ '}' }}</b> or
+      <b class="code">${{ '{' }}sip{{ '}' }}</b
+      >. To display the esperdata there MUST be a
+      <b class="code">${{ '{' }}esperdata{{ '}' }}</b> substitution tag.
     </p>
+    <mat-error *ngIf="parent.get('emailText').hasError('required')" class="mb3">
+      {{ validationMessages['emailText']['required'] }}
+    </mat-error>
     <div class="h7 mb4">
       <quill (contentChange)="onContentChange($event)"> </quill>
-      <mat-hint align="end">*Required</mat-hint>
     </div>
   </div>
 </form>
