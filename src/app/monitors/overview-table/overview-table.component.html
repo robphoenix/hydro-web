@@ -1,17 +1,17 @@
-<div class="container" *ngIf="dataSource.data && dataSource.data.length">
-  <div class="toolbar">
+<div *ngIf="dataSource.data && dataSource.data.length">
+  <div class="flex items-center mb4">
     <mat-button-toggle-group
       [(value)]="monitorsType"
       (change)="changeMonitorsType.emit($event.value)"
     >
       <mat-button-toggle value="standard">
-        <span class="primary"> Standard </span>
+        <span class="mid-gray fw5"> Standard </span>
       </mat-button-toggle>
       <mat-button-toggle value="archived">
-        <span class="primary"> Archived </span>
+        <span class="mid-gray fw5"> Archived </span>
       </mat-button-toggle>
       <mat-button-toggle value="system">
-        <span class="primary"> System </span>
+        <span class="mid-gray fw5"> System </span>
       </mat-button-toggle>
     </mat-button-toggle-group>
 

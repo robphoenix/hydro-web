@@ -16,6 +16,7 @@ import {
   QUILL_CONFIG,
 } from 'ngx-quill-wrapper';
 import { ViewActionsComponent } from './view-actions/view-actions.component';
+import { EditActionComponent } from './edit-action/edit-action.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -48,6 +49,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
       { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewActionsComponent },
       { path: 'add', component: AddActionComponent },
+      { path: ':id/edit', component: EditActionComponent },
     ]),
     FormsModule,
     ReactiveFormsModule,
@@ -68,6 +70,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionFormSectionEmailComponent,
     CreateActionFormSectionOtherComponent,
     ViewActionsComponent,
+    EditActionComponent,
   ],
 })
 export class ActionsModule {}

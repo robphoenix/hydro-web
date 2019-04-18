@@ -48,6 +48,36 @@
           <span class="ml-auto mr4 pv1 ph2 primary bg-primary-lighter br1">
             {{ actionTypeDisplayNames[action.actionType] }} Action
           </span>
+
+          <div class="mr4">
+            <button
+              mat-stroked-button
+              [matMenuTriggerFor]="menu"
+              color="primary"
+            >
+              <span>
+                Menu
+              </span>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <div class="menu">
+                <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
+                  <mat-icon class="icon">edit</mat-icon>
+                  <span>
+                    Edit Action
+                  </span>
+                </a>
+
+                <button *ngIf="!isArchived" mat-menu-item>
+                  <mat-icon class="icon">archive</mat-icon>
+                  <span>
+                    Archive Action
+                  </span>
+                </button>
+              </div>
+            </mat-menu>
+          </div>
         </mat-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>
