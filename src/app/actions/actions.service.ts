@@ -25,5 +25,11 @@ export class ActionsService {
       .pipe(tap((action: IAction) => action));
   }
 
+  public putAction(action: IAction): Observable<IAction> {
+    return this.http
+      .put(`${this.actionsUrl}/${action.id}`, action, { headers })
+      .pipe(tap((a: IAction) => a));
+  }
+
   constructor(private http: HttpClient) {}
 }

@@ -17,6 +17,7 @@ import {
 } from 'ngx-quill-wrapper';
 import { ViewActionsComponent } from './view-actions/view-actions.component';
 import { EditActionComponent } from './edit-action/edit-action.component';
+import { ActionUpdateDialogComponent } from './action-update-dialog/action-update-dialog.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -38,7 +39,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
       ['link', 'image'],
     ],
   },
-  placeholder: 'Please enter your email template here...',
+  placeholder: 'Please enter your email template here. *Required.',
 };
 
 @NgModule({
@@ -71,6 +72,8 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionFormSectionOtherComponent,
     ViewActionsComponent,
     EditActionComponent,
+    ActionUpdateDialogComponent,
   ],
+  entryComponents: [ActionUpdateDialogComponent],
 })
 export class ActionsModule {}

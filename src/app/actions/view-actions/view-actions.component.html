@@ -69,7 +69,7 @@
                   </span>
                 </a>
 
-                <button *ngIf="!isArchived" mat-menu-item>
+                <button mat-menu-item (click)="archiveAction(action.id)">
                   <mat-icon class="icon">archive</mat-icon>
                   <span>
                     Archive Action

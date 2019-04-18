@@ -1,0 +1,20 @@
+@import 'main';
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $spacing-none;
+}
+
+.action-button {
+  margin-left: $spacing-m;
+  display: flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-l;
+}
+
+.content {
+  font-size: $fs-m;
+  margin-left: $spacing-xs;
+  margin-bottom: $spacing-l;
+}
