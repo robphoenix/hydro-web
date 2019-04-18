@@ -101,17 +101,6 @@
     </p>
   </div>
 
-  <div *ngIf="actionType === 'emailBatch'">
-    <mat-form-field appearance="outline">
-      <mat-label>Send email every day at</mat-label>
-      <input matInput type="time" placeholder="Send email every day at" />
-    </mat-form-field>
-    <mat-button-toggle-group>
-      <mat-button-toggle value="AM">AM</mat-button-toggle>
-      <mat-button-toggle value="PM">PM</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
-
   <mat-form-field
     appearance="outline"
     class="fields"
