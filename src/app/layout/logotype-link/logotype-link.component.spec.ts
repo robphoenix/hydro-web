@@ -8,9 +8,8 @@ describe('LogotypeLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogotypeLinkComponent ]
-    })
-    .compileComponents();
+      declarations: [LogotypeLinkComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

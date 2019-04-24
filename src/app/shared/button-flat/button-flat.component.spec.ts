@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarUserMenuComponent } from './navbar-user-menu.component';
+import { ButtonFlatComponent } from './button-flat.component';
 
-describe('NavbarUserMenuComponent', () => {
-  let component: NavbarUserMenuComponent;
-  let fixture: ComponentFixture<NavbarUserMenuComponent>;
+describe('ButtonFlatComponent', () => {
+  let component: ButtonFlatComponent;
+  let fixture: ComponentFixture<ButtonFlatComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NavbarUserMenuComponent],
+      declarations: [ButtonFlatComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarUserMenuComponent);
+    fixture = TestBed.createComponent(ButtonFlatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

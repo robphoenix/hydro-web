@@ -17,6 +17,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
 import { LogoComponent } from './logo/logo.component';
 import { ButtonRaisedComponent } from './button-raised/button-raised.component';
 import { HeadlineComponent } from './headline/headline.component';
+import { ButtonFlatComponent } from './button-flat/button-flat.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { HeadlineComponent } from './headline/headline.component';
     LogoComponent,
     ButtonRaisedComponent,
     HeadlineComponent,
+    ButtonFlatComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -57,6 +59,7 @@ import { HeadlineComponent } from './headline/headline.component';
     LogoComponent,
     ButtonRaisedComponent,
     HeadlineComponent,
+    ButtonFlatComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

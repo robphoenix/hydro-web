@@ -5,11 +5,26 @@
   </div>
 
   <nav *ngIf="authService.isLoggedIn">
-    <app-navbar-monitors-menu></app-navbar-monitors-menu>
-    <app-navbar-actions-menu></app-navbar-actions-menu>
-    <app-navbar-user-menu
-      [name]="authService.userDisplayName"
-      (logout)="authService.logout()"
-    ></app-navbar-user-menu>
+    <hydro-button-flat
+      color="primary"
+      (click)="router.navigateByUrl('/monitors')"
+    >
+      <span class="navbar__link-name">
+        Monitors
+      </span>
+    </hydro-button-flat>
+    <hydro-button-flat
+      (click)="router.navigateByUrl('/actions')"
+      color="primary"
+    >
+      <span class="navbar__link-name">
+        Actions
+      </span>
+    </hydro-button-flat>
+    <hydro-button-flat (click)="authService.logout()" color="primary">
+      <span class="navbar__link-name">
+        Log Out {{ authService.userDisplayName }}
+      </span>
+    </hydro-button-flat>
   </nav>
 </mat-toolbar>
