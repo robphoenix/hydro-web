@@ -14,6 +14,7 @@ import { HeadingComponent } from './heading/heading.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
 import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { LogoComponent } from './logo/logo.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
     TableHeadingComponent,
     DialogCloseButtonComponent,
     ErrorMessageComponent,
+    LogoComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -48,6 +50,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
     TableHeadingComponent,
     DialogCloseButtonComponent,
     ErrorMessageComponent,
+    LogoComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })
