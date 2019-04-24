@@ -28,9 +28,9 @@
         <mat-icon class="offline" matTooltip="Offline">flash_off</mat-icon>
       </mat-button-toggle>
       <mat-button-toggle value="all">
-        <mat-icon class="all-monitors" matTooltip="All Monitors"
-          >flash_on</mat-icon
-        >
+        <mat-icon class="all-monitors" matTooltip="All Monitors">
+          flash_on
+        </mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
 
@@ -60,6 +60,7 @@
     </app-primary-button>
 
     <hydro-button-raised
+      color="accent"
       class="add-monitor"
       (click)="router.navigateByUrl('/monitors/add')"
     >

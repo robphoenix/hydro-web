@@ -32,7 +32,7 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
  * @implements {OnInit}
  */
 @Component({
-  selector: 'app-monitor',
+  selector: 'hydro-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.scss'],
 })
@@ -174,17 +174,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public togglePause() {
     this.paused ? this.getLiveData() : this.eventbusService.closeConnections();
     this.paused = !this.paused;
-  }
-
-  /**
-   * Specifies the correct icon for whether the monitor is paused or not
-   *
-   * @readonly
-   * @type {string}
-   * @memberof MonitorComponent
-   */
-  public get pauseIcon(): string {
-    return this.paused ? 'play_arrow' : 'pause';
   }
 
   /**

@@ -12,7 +12,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-view-monitors',
+  selector: 'hydro-view-monitors',
   templateUrl: './view-monitors.component.html',
   styleUrls: ['./view-monitors.component.scss'],
 })

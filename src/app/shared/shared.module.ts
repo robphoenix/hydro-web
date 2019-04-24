@@ -18,6 +18,7 @@ import { ButtonRaisedComponent } from './button-raised/button-raised.component';
 import { HeadlineComponent } from './headline/headline.component';
 import { ButtonFlatComponent } from './button-flat/button-flat.component';
 import { PageNarrowComponent } from './page-narrow/page-narrow.component';
+import { PageWideComponent } from './page-wide/page-wide.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { PageNarrowComponent } from './page-narrow/page-narrow.component';
     HeadlineComponent,
     ButtonFlatComponent,
     PageNarrowComponent,
+    PageWideComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -60,6 +62,7 @@ import { PageNarrowComponent } from './page-narrow/page-narrow.component';
     HeadlineComponent,
     ButtonFlatComponent,
     PageNarrowComponent,
+    PageWideComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })
