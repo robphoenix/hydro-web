@@ -8,20 +8,32 @@ $fs-3xl: 3rem;
 $fs-subheadline: 5rem;
 $fs-headline: 6rem;
 
+$fontSizes: 12, 14, 16, 18, 24, 32, 48, 64, 72;
+
+$fs-1: nth($fontSizes, 1) + px;
+$fs-2: nth($fontSizes, 2) + px;
+$fs-3: nth($fontSizes, 3) + px;
+$fs-4: nth($fontSizes, 4) + px;
+$fs-5: nth($fontSizes, 5) + px;
+$fs-6: nth($fontSizes, 6) + px;
+$fs-7: nth($fontSizes, 7) + px;
+$fs-8: nth($fontSizes, 8) + px;
+$fs-9: nth($fontSizes, 9) + px;
+
 // Font Weight
 $fw-normal: normal;
 $fw-bold: bold;
-$fw-1: 100;
-$fw-2: 200;
 $fw-3: 300;
 $fw-4: 400;
 $fw-5: 500;
-$fw-6: 600;
-$fw-7: 700;
-$fw-8: 800;
-$fw-9: 900;
 
 // Line Height
 $lh-solid: 1;
 $lh-title: 1.25;
 $lh-copy: 1.5;
+
+// Letter Spacings
+$ls-normal: 'normal';
+$ls-tracked: '0.1em';
+$ls-tight: '-0.05em';
+$ls-mega: '0.25em';
