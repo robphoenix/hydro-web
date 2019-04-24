@@ -30,12 +30,13 @@
   </div>
 
   <div class="w-100 flex justify-end mb4">
-    <app-primary-button
+    <hydro-button-raised
+      color="primary"
       (click)="addEmailAddress.emit()"
       [disabled]="parent.get('emailAddresses').invalid"
     >
       Add Another Email Address
-    </app-primary-button>
+    </hydro-button-raised>
   </div>
 
   <mat-form-field appearance="outline" class="w-100 mb4">

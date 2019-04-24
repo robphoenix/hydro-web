@@ -12,7 +12,7 @@ export class MonitorStatusChangeDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
 
-  noThanks(): void {
+  cancel(): void {
     this.dialogRef.close();
   }
 }

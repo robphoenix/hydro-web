@@ -41,23 +41,15 @@
       (searchTermChange)="filterMonitors()"
     ></app-search-input>
 
-    <!-- <app-primary-button
-      [icon]="'cached'"
-      class="refresh"
-      (click)="refresh.emit()"
-    >
-      Refresh
-    </app-primary-button> -->
-
-    <app-primary-button
+    <hydro-button-raised
+      color="primary"
       class="clear-filters"
       *ngIf="hasActions() || allCurrentCategories.length"
       [disabled]="hasFilters()"
-      [icon]="'clear_all'"
       (click)="clearAllFilters()"
     >
       Clear Filters
-    </app-primary-button>
+    </hydro-button-raised>
 
     <hydro-button-raised
       color="accent"
