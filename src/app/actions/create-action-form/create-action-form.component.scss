@@ -1,3 +1,17 @@
-::ng-deep.mat-select-value-text {
-  text-transform: capitalize;
+@import 'main';
+
+.form-field {
+  width: 100%;
+  margin-bottom: $space-4;
+}
+
+.action-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
 }

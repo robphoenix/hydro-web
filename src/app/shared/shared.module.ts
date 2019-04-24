@@ -6,13 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
-import { WarnButtonComponent } from './warn-button/warn-button.component';
-import { HeadingComponent } from './heading/heading.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
 import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
-import { ErrorMessageComponent } from './error-message/error-message.component';
 import { LogoComponent } from './logo/logo.component';
 import { ButtonRaisedComponent } from './button-raised/button-raised.component';
 import { HeadlineComponent } from './headline/headline.component';
@@ -32,13 +28,9 @@ import { PageWideComponent } from './page-wide/page-wide.component';
     MultipleSelectComponent,
     IconComponent,
     ErrorDialogComponent,
-    PrimaryButtonComponent,
     AccentSubmitButtonComponent,
-    WarnButtonComponent,
-    HeadingComponent,
     TableHeadingComponent,
     DialogCloseButtonComponent,
-    ErrorMessageComponent,
     LogoComponent,
     ButtonRaisedComponent,
     HeadlineComponent,
@@ -51,12 +43,8 @@ import { PageWideComponent } from './page-wide/page-wide.component';
     MultipleSelectComponent,
     IconComponent,
     AccentSubmitButtonComponent,
-    PrimaryButtonComponent,
-    WarnButtonComponent,
-    HeadingComponent,
     TableHeadingComponent,
     DialogCloseButtonComponent,
-    ErrorMessageComponent,
     LogoComponent,
     ButtonRaisedComponent,
     HeadlineComponent,

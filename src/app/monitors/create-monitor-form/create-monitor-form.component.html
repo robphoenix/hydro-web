@@ -1,6 +1,6 @@
 <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
   <app-create-monitor-form-name
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['name']"
     [placeholder]="placeholders.name"
@@ -10,7 +10,7 @@
   </app-create-monitor-form-name>
 
   <app-create-monitor-form-description
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['description']"
     [placeholder]="placeholders.description"
@@ -20,35 +20,32 @@
 
   <app-create-monitor-form-status
     [parent]="createMonitorForm"
-    class="form-element"
+    class="form-field"
   >
   </app-create-monitor-form-status>
 
-  <app-create-monitor-form-type
-    [parent]="createMonitorForm"
-    class="form-element"
-  >
+  <app-create-monitor-form-type [parent]="createMonitorForm" class="form-field">
   </app-create-monitor-form-type>
 
   <app-create-monitor-form-priority
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
   ></app-create-monitor-form-priority>
 
   <app-create-monitor-form-query
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['query']"
     [placeholder]="placeholders.query"
   ></app-create-monitor-form-query>
 
   <app-create-monitor-form-cache-window
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
   ></app-create-monitor-form-cache-window>
 
   <app-create-monitor-form-categories
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingCategories"
     [selectedCategories]="selectedCategories"
@@ -63,7 +60,7 @@
   </app-create-monitor-form-categories>
 
   <app-create-monitor-form-groups
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingGroups"
     [selectedGroups]="selectedGroups"
@@ -77,7 +74,7 @@
   </app-create-monitor-form-groups>
 
   <app-create-monitor-form-actions
-    class="form-element"
+    class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingActions"
     [selectedActions]="selectedActions"

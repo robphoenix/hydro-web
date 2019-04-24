@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { CreateActionFormSectionBlockComponent } from './create-action-form-section-block/create-action-form-section-block.component';
 import { CreateActionFormSectionEmailComponent } from './create-action-form-section-email/create-action-form-section-email.component';
-import { CreateActionFormSectionOtherComponent } from './create-action-form-section-other/create-action-form-section-other.component';
 import {
   QuillModule,
   QuillConfigInterface,
@@ -69,7 +68,6 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     AddActionComponent,
     CreateActionFormSectionBlockComponent,
     CreateActionFormSectionEmailComponent,
-    CreateActionFormSectionOtherComponent,
     ViewActionsComponent,
     EditActionComponent,
     ActionUpdateDialogComponent,

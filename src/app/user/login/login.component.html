@@ -1,18 +1,18 @@
 <div class="login">
-  <div class="login__header">
+  <div class="headline">
     <hydro-headline>Login</hydro-headline>
-    <p class="login__subheadline">
+    <p class="subheadline">
       Please enter your bet365 credentials
     </p>
   </div>
 
   <form
     [formGroup]="loginForm"
-    class="login__form"
+    class="form"
     (keyup.enter)="attemptingLogIn = true; login()"
     (ngSubmit)="login()"
   >
-    <mat-form-field appearance="outline" class="login__form-field">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label> Username </mat-label>
       <input
         matInput
@@ -27,7 +27,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="login__form-field">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label> Password </mat-label>
       <input
         matInput
@@ -37,7 +37,7 @@
         (click)="loginErrorMessage = ''"
       />
       <mat-icon
-        class="login__visibility"
+        class="visibility"
         matSuffix
         (click)="hidePassword = !hidePassword"
       >
@@ -55,11 +55,11 @@
   <mat-progress-bar
     mode="indeterminate"
     *ngIf="attemptingLogIn"
-    class="login__progress-bar"
+    class="progress-bar"
   ></mat-progress-bar>
 
   <div
-    class="login__button"
+    class="button"
     [ngStyle]="{
       'justify-content': loginErrorMessage ? 'space-between' : 'flex-end'
     }"
