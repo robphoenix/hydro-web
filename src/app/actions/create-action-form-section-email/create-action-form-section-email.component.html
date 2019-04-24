@@ -1,31 +1,4 @@
 <form [formGroup]="parent" class="flex flex-column">
-  <!-- <section class="name">
-    <span>
-      Name: Email
-      <span *ngIf="selectedEmails && selectedEmails.length">
-        {{ selectedEmails.join(', ') }}
-      </span>
-      <span *ngIf="selectedTemplate"> with {{ selectedTemplate }} </span>
-      <span *ngIf="selectedEmailType === 'Rate' && sendLimit >= 0">
-        <span *ngIf="sendLimit === 0">unlimited</span>
-        <span *ngIf="sendLimit > 0">up to {{ sendLimit }}</span> emails per hour
-      </span>
-      <span
-        *ngIf="selectedEmailType === 'Batch' && batchTime && batchTimeOfDay"
-      >
-        at {{ batchTime }} {{ batchTimeOfDay }} every day
-      </span>
-      <span
-        *ngIf="
-          selectedEmailType === 'Alert' &&
-          selectedFields &&
-          selectedFields.length
-        "
-        >alerting on {{ selectedFields.join(', ') }}</span
-      >
-    </span>
-  </section> -->
-
   <div class="flex flex-column w-100" formArrayName="emailAddresses">
     <mat-form-field
       appearance="outline"
