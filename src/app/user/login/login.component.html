@@ -15,6 +15,7 @@
       [formGroup]="loginForm"
       class="flex flex-column"
       (keyup.enter)="attemptingLogIn = true; login()"
+      (ngSubmit)="login()"
     >
       <mat-form-field appearance="outline" class="mb2">
         <mat-label> Username </mat-label>
@@ -62,13 +63,15 @@
       *ngIf="attemptingLogIn"
     ></mat-progress-bar>
     <div class="flex justify-end">
-      <app-accent-button
+      <hydro-button-raised
+        color="accent"
+        type="submit"
         *ngIf="!attemptingLogIn"
         (click)="login()"
         [disabled]="!loginForm.valid"
       >
-        Log In
-      </app-accent-button>
+        log in
+      </hydro-button-raised>
     </div>
   </div>
 </div>
