@@ -1,77 +1,80 @@
-<div class="flex flex-column items-center pa4">
-  <div class="w6">
-    <div class="mb4">
-      <app-heading class="dark-gray">Login</app-heading>
-      <p class="f5 lh-copy mb4 dark-gray">
-        Please enter your bet365 credentials
-      </p>
+<div class="login">
+  <div class="login__header">
+    <hydro-headline>Login</hydro-headline>
+    <p class="login__subheadline">
+      Please enter your bet365 credentials
+    </p>
+  </div>
 
-      <app-error-message *ngIf="loginErrorMessage">
-        {{ loginErrorMessage }}
-      </app-error-message>
-    </div>
+  <form
+    [formGroup]="loginForm"
+    class="login__form"
+    (keyup.enter)="attemptingLogIn = true; login()"
+    (ngSubmit)="login()"
+  >
+    <mat-form-field appearance="outline" class="login__form-field">
+      <mat-label> Username </mat-label>
+      <input
+        matInput
+        autofocus
+        placeholder="Please enter your username"
+        type="text"
+        formControlName="username"
+        (click)="loginErrorMessage = ''"
+      />
+      <mat-error *ngIf="usernameControl.hasError('required')">
+        {{ validationMessages['username'].required }}
+      </mat-error>
+    </mat-form-field>
 
-    <form
-      [formGroup]="loginForm"
-      class="flex flex-column"
-      (keyup.enter)="attemptingLogIn = true; login()"
-      (ngSubmit)="login()"
-    >
-      <mat-form-field appearance="outline" class="mb2">
-        <mat-label> Username </mat-label>
-        <input
-          matInput
-          autofocus
-          placeholder="Please enter your username"
-          type="text"
-          formControlName="username"
-          (click)="loginErrorMessage = ''"
-        />
-        <mat-error *ngIf="usernameControl.hasError('required')">
-          {{ validationMessages['username'].required }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="mb2">
-        <mat-label> Password </mat-label>
-        <input
-          matInput
-          placeholder="Please enter your password"
-          [type]="hidePassword ? 'password' : 'text'"
-          formControlName="password"
-          (click)="loginErrorMessage = ''"
-        />
-        <mat-icon
-          class="pointer dark-gray"
-          matSuffix
-          (click)="hidePassword = !hidePassword"
-        >
-          {{ hidePassword ? 'visibility' : 'visibility_off' }}
-        </mat-icon>
-        <mat-error *ngIf="passwordControl.hasError('required')">
-          {{ validationMessages['password'].required }}
-        </mat-error>
-        <mat-error *ngIf="passwordControl.hasError('minlength')">
-          {{ validationMessages['password'].minlength }}
-        </mat-error>
-      </mat-form-field>
-    </form>
-
-    <mat-progress-bar
-      class="pa2"
-      mode="indeterminate"
-      *ngIf="attemptingLogIn"
-    ></mat-progress-bar>
-    <div class="flex justify-end">
-      <hydro-button-raised
-        color="accent"
-        type="submit"
-        *ngIf="!attemptingLogIn"
-        (click)="login()"
-        [disabled]="!loginForm.valid"
+    <mat-form-field appearance="outline" class="login__form-field">
+      <mat-label> Password </mat-label>
+      <input
+        matInput
+        placeholder="Please enter your password"
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        (click)="loginErrorMessage = ''"
+      />
+      <mat-icon
+        class="login__visibility"
+        matSuffix
+        (click)="hidePassword = !hidePassword"
       >
-        log in
-      </hydro-button-raised>
-    </div>
+        {{ hidePassword ? 'visibility' : 'visibility_off' }}
+      </mat-icon>
+      <mat-error *ngIf="passwordControl.hasError('required')">
+        {{ validationMessages['password'].required }}
+      </mat-error>
+      <mat-error *ngIf="passwordControl.hasError('minlength')">
+        {{ validationMessages['password'].minlength }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <mat-progress-bar
+    mode="indeterminate"
+    *ngIf="attemptingLogIn"
+    class="login__progress-bar"
+  ></mat-progress-bar>
+
+  <div
+    class="login__button"
+    [ngStyle]="{
+      'justify-content': loginErrorMessage ? 'space-between' : 'flex-end'
+    }"
+  >
+    <mat-error *ngIf="loginErrorMessage">
+      {{ loginErrorMessage }}
+    </mat-error>
+    <hydro-button-raised
+      color="accent"
+      type="submit"
+      *ngIf="!attemptingLogIn"
+      (click)="login()"
+      [disabled]="!loginForm.valid"
+    >
+      Log In
+    </hydro-button-raised>
   </div>
 </div>

@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
+    this.loginErrorMessage = '';
     this.attemptingLogIn = true;
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)

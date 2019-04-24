@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-heading',
+  selector: 'hydro-heading',
   templateUrl: './heading.component.html',
   styleUrls: ['./heading.component.scss'],
 })
-export class HeadingComponent implements OnInit {
-  constructor() {}
+export class HeadingComponent {
+  @Input()
+  is: String;
 
-  ngOnInit() {}
+  public isLevel(level: string) {
+    return this.is === level;
+  }
 }
