@@ -7,7 +7,6 @@ import {
   ICategory,
   IGroup,
   IMonitor,
-  LDAPGroup,
   MonitorPriority,
   MonitorStatus,
   MonitorType,
@@ -23,7 +22,7 @@ import { ActionsService } from 'src/app/actions/actions.service';
 import { IAction } from 'src/app/actions/action';
 
 @Component({
-  selector: 'app-create-monitor-form',
+  selector: 'hydro-create-monitor-form',
   templateUrl: './create-monitor-form.component.html',
   styleUrls: ['./create-monitor-form.component.scss'],
 })

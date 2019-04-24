@@ -1,124 +1,117 @@
-<div class="w9 ml-auto mr-auto mv4 pt4">
-  <div class="mb5">
-    <app-heading>{{ heading }} Monitor</app-heading>
-  </div>
+<div class="create-monitor">
+  <hydro-headline class="headline">{{ heading }} Monitor</hydro-headline>
 
-  <form
-    [formGroup]="createMonitorForm"
-    (ngSubmit)="submit()"
-    class="flex flex-column"
-  >
-    <div class="mb3">
-      <app-create-monitor-form-name
-        [parent]="createMonitorForm"
-        [validationMessages]="validationMessages['name']"
-        [placeholder]="placeholders.name"
-        [editForm]="editForm"
-        ngDefaultControl
+  <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
+    <app-create-monitor-form-name
+      class="form-element"
+      [parent]="createMonitorForm"
+      [validationMessages]="validationMessages['name']"
+      [placeholder]="placeholders.name"
+      [editForm]="editForm"
+      ngDefaultControl
+    >
+    </app-create-monitor-form-name>
+
+    <app-create-monitor-form-description
+      class="form-element"
+      [parent]="createMonitorForm"
+      [validationMessages]="validationMessages['description']"
+      [placeholder]="placeholders.description"
+      ngDefaultControl
+    >
+    </app-create-monitor-form-description>
+
+    <app-create-monitor-form-status
+      [parent]="createMonitorForm"
+      class="form-element"
+    >
+    </app-create-monitor-form-status>
+
+    <app-create-monitor-form-type
+      [parent]="createMonitorForm"
+      class="form-element"
+    >
+    </app-create-monitor-form-type>
+
+    <app-create-monitor-form-priority
+      class="form-element"
+      [parent]="createMonitorForm"
+    ></app-create-monitor-form-priority>
+
+    <app-create-monitor-form-query
+      class="form-element"
+      [parent]="createMonitorForm"
+      [validationMessages]="validationMessages['query']"
+      [placeholder]="placeholders.query"
+    ></app-create-monitor-form-query>
+
+    <app-create-monitor-form-cache-window
+      class="form-element"
+      [parent]="createMonitorForm"
+    ></app-create-monitor-form-cache-window>
+
+    <app-create-monitor-form-categories
+      class="form-element"
+      [parent]="createMonitorForm"
+      [loading]="loadingCategories"
+      [selectedCategories]="selectedCategories"
+      [autocompleteOptions]="autocompleteOptions"
+      [filteredCategories]="filteredCategories"
+      [maxSelectedCategories]="maxSelectedCategories"
+      [validationMessages]="validationMessages['categories']"
+      [placeholder]="placeholders.categories"
+      (removeCategory)="removeCategory($event)"
+      (selectedCategory)="selectedCategory($event)"
+    >
+    </app-create-monitor-form-categories>
+
+    <app-create-monitor-form-groups
+      class="form-element"
+      [parent]="createMonitorForm"
+      [loading]="loadingGroups"
+      [selectedGroups]="selectedGroups"
+      [autocompleteOptions]="autocompleteOptions"
+      [filteredGroups]="filteredGroups"
+      [placeholder]="placeholders.groups"
+      [validationMessages]="validationMessages['groups']"
+      (removeGroup)="removeGroup($event)"
+      (selectedGroup)="selectedGroup($event)"
+    >
+    </app-create-monitor-form-groups>
+
+    <app-create-monitor-form-actions
+      class="form-element"
+      [parent]="createMonitorForm"
+      [loading]="loadingActions"
+      [selectedActions]="selectedActions"
+      [autocompleteOptions]="autocompleteOptions"
+      [filteredActions]="filteredActions"
+      [placeholder]="placeholders.actions"
+      [validationMessages]="validationMessages['actions']"
+      (removeAction)="removeAction($event)"
+      (selectedAction)="selectedAction($event)"
+    >
+    </app-create-monitor-form-actions>
+
+    <div class="buttons">
+      <hydro-button-raised
+        [disabled]="!createMonitorForm.valid"
+        color="accent"
+        class="button"
       >
-      </app-create-monitor-form-name>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-description
-        [parent]="createMonitorForm"
-        [validationMessages]="validationMessages['description']"
-        [placeholder]="placeholders.description"
-        ngDefaultControl
-      >
-      </app-create-monitor-form-description>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-status [parent]="createMonitorForm">
-      </app-create-monitor-form-status>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-type [parent]="createMonitorForm">
-      </app-create-monitor-form-type>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-priority
-        [parent]="createMonitorForm"
-      ></app-create-monitor-form-priority>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-query
-        [parent]="createMonitorForm"
-        [validationMessages]="validationMessages['query']"
-        [placeholder]="placeholders.query"
-      ></app-create-monitor-form-query>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-cache-window
-        [parent]="createMonitorForm"
-      ></app-create-monitor-form-cache-window>
-    </div>
-
-    <div class="mb3" *ngIf="availableCategories && availableCategories.length">
-      <app-create-monitor-form-categories
-        [parent]="createMonitorForm"
-        [loading]="loadingCategories"
-        [selectedCategories]="selectedCategories"
-        [autocompleteOptions]="autocompleteOptions"
-        [filteredCategories]="filteredCategories"
-        [maxSelectedCategories]="maxSelectedCategories"
-        [validationMessages]="validationMessages['categories']"
-        [placeholder]="placeholders.categories"
-        (removeCategory)="removeCategory($event)"
-        (selectedCategory)="selectedCategory($event)"
-      >
-      </app-create-monitor-form-categories>
-    </div>
-
-    <div class="mb3">
-      <app-create-monitor-form-groups
-        [parent]="createMonitorForm"
-        [loading]="loadingGroups"
-        [selectedGroups]="selectedGroups"
-        [autocompleteOptions]="autocompleteOptions"
-        [filteredGroups]="filteredGroups"
-        [placeholder]="placeholders.groups"
-        [validationMessages]="validationMessages['groups']"
-        (removeGroup)="removeGroup($event)"
-        (selectedGroup)="selectedGroup($event)"
-      >
-      </app-create-monitor-form-groups>
-    </div>
-
-    <div class="mb4">
-      <app-create-monitor-form-actions
-        [parent]="createMonitorForm"
-        [loading]="loadingActions"
-        [selectedActions]="selectedActions"
-        [autocompleteOptions]="autocompleteOptions"
-        [filteredActions]="filteredActions"
-        [placeholder]="placeholders.actions"
-        [validationMessages]="validationMessages['actions']"
-        (removeAction)="removeAction($event)"
-        (selectedAction)="selectedAction($event)"
-      >
-      </app-create-monitor-form-actions>
-    </div>
-
-    <div class="flex justify-end">
-      <app-accent-submit-button [disabled]="!createMonitorForm.valid">
         Save Monitor
-      </app-accent-submit-button>
-      <app-accent-button
-        class="ml4"
+      </hydro-button-raised>
+      <hydro-button-raised
+        color="accent"
+        class="button"
         (click)="submit(true)"
         [disabled]="!canViewMonitor"
       >
         Save Monitor and View
-      </app-accent-button>
-      <app-warn-button class="ml4" (click)="cancel()">
+      </hydro-button-raised>
+      <hydro-button-raised color="warn" (click)="cancel()" class="button">
         Cancel
-      </app-warn-button>
+      </hydro-button-raised>
     </div>
   </form>
 </div>

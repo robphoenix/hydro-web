@@ -9,13 +9,14 @@
   justify-content: space-between;
 }
 
-.navbar__logo {
+.logo {
   display: flex;
   align-items: center;
 }
 
-.navbar__link-name {
+.link-name {
   font-size: $fs-4;
+  font-weight: $fw-3;
   color: $grey-2;
 
   &:hover {

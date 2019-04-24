@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="navbar">
-  <div class="navbar__logo">
+  <div class="logo">
     <hydro-logo></hydro-logo>
     <hydro-logotype-link color="primary"></hydro-logotype-link>
   </div>
@@ -9,7 +9,7 @@
       color="primary"
       (click)="router.navigateByUrl('/monitors')"
     >
-      <span class="navbar__link-name">
+      <span class="link-name">
         Monitors
       </span>
     </hydro-button-flat>
@@ -17,14 +17,12 @@
       (click)="router.navigateByUrl('/actions')"
       color="primary"
     >
-      <span class="navbar__link-name">
+      <span class="link-name">
         Actions
       </span>
     </hydro-button-flat>
     <hydro-button-flat (click)="authService.logout()" color="primary">
-      <span class="navbar__link-name">
-        Log Out {{ authService.userDisplayName }}
-      </span>
+      <span class="link-name"> Log Out {{ authService.userDisplayName }} </span>
     </hydro-button-flat>
   </nav>
 </mat-toolbar>
