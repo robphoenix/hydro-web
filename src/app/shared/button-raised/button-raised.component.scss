@@ -1,0 +1,10 @@
+@import 'main';
+
+.button {
+  padding: 0 $space-3;
+}
+
+.button__content {
+  font-size: $fs-3;
+  text-transform: capitalize;
+}
