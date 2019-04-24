@@ -8,6 +8,7 @@ import { NavbarUserMenuComponent } from './navbar-user-menu/navbar-user-menu.com
 import { NavbarActionsMenuComponent } from './navbar-actions-menu/navbar-actions-menu.component';
 import { PrimaryNavbarButtonComponent } from './primary-navbar-button/primary-navbar-button.component';
 import { SharedModule } from '../shared/shared.module';
+import { LogotypeLinkComponent } from './logotype-link/logotype-link.component';
 
 @NgModule({
   imports: [CommonModule, SharedModule, RouterModule, HydroMaterialModule],
@@ -18,6 +19,7 @@ import { SharedModule } from '../shared/shared.module';
     NavbarUserMenuComponent,
     NavbarActionsMenuComponent,
     PrimaryNavbarButtonComponent,
+    LogotypeLinkComponent,
   ],
 })
 export class LayoutModule {}

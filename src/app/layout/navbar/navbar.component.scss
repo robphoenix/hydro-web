@@ -1,0 +1,15 @@
+@import 'main';
+
+.navbar {
+  position: fixed;
+  z-index: 900;
+  top: 0;
+  box-shadow: $box-shadow;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
