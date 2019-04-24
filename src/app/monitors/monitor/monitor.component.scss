@@ -25,10 +25,14 @@
 .buttons {
   margin-left: auto;
   display: flex;
+}
 
-  .button {
-    margin-left: $spacing-m;
-  }
+.button {
+  margin-left: $spacing-m;
+}
+
+.icon {
+  margin-right: $space-2;
 }
 
 .table-outer-wrapper {

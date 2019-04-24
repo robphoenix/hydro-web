@@ -12,7 +12,6 @@ import {
   IMonitorDataAttributes,
   IMonitorDisplayData,
   IHeadersMetadata,
-  MonitorDataAttribute,
   MonitorDataAttributeType,
   MonitorChangeEvent,
 } from '../monitor-data';

@@ -1,9 +1,11 @@
 @import 'main';
 
 .button {
-  padding: 0 $space-3;
+  padding: $space-1 $space-3;
 }
 
 .button__content {
+  display: flex;
+  align-items: center;
   font-size: $fs-3;
 }

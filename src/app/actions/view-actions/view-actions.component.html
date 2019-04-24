@@ -24,13 +24,12 @@
       class="w-40"
     ></app-search-input>
 
-    <app-accent-button
-      mat-flat-button
+    <hydro-button-raised
       (click)="router.navigateByUrl('/actions/add')"
-      [icon]="'add'"
+      color="accent"
     >
-      New Action
-    </app-accent-button>
+      Add New Action
+    </hydro-button-raised>
   </div>
 
   <mat-list class="bg-white shadow-4 bt bw1 b--primary ">

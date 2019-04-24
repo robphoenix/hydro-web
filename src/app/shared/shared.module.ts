@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MultipleSelectComponent } from './multiple-select/multiple-select.component';
 import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import { AccentButtonComponent } from './accent-button/accent-button.component';
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { WarnButtonComponent } from './warn-button/warn-button.component';
@@ -32,7 +31,6 @@ import { PageNarrowComponent } from './page-narrow/page-narrow.component';
     MultipleSelectComponent,
     IconComponent,
     ErrorDialogComponent,
-    AccentButtonComponent,
     PrimaryButtonComponent,
     AccentSubmitButtonComponent,
     WarnButtonComponent,
@@ -50,7 +48,6 @@ import { PageNarrowComponent } from './page-narrow/page-narrow.component';
     SearchInputComponent,
     MultipleSelectComponent,
     IconComponent,
-    AccentButtonComponent,
     AccentSubmitButtonComponent,
     PrimaryButtonComponent,
     WarnButtonComponent,
