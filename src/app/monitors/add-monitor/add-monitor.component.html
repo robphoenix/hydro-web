@@ -1,4 +1,6 @@
-<hydro-create-monitor-form
-  [heading]="'Add'"
-  (submitForm)="addMonitor($event)"
-></hydro-create-monitor-form>
+<hydro-page-narrow>
+  <hydro-headline>Add Monitor</hydro-headline>
+  <hydro-create-monitor-form
+    (submitForm)="addMonitor($event)"
+  ></hydro-create-monitor-form>
+</hydro-page-narrow>

@@ -1,17 +1,10 @@
 @import 'main';
 
-.create-monitor {
-  width: 40%;
-  margin: 0 auto;
-  padding-top: $space-4;
-}
-
 .form {
   display: flex;
   flex-direction: column;
 }
 
-.headline,
 .form-element {
   margin-bottom: $space-4;
 }

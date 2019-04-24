@@ -1,7 +1,9 @@
-<hydro-create-monitor-form
-  *ngIf="monitor"
-  [heading]="'Edit'"
-  [monitor]="monitor"
-  [editForm]="editForm"
-  (submitForm)="saveMonitor($event)"
-></hydro-create-monitor-form>
+<hydro-page-narrow>
+  <hydro-headline>Edit Monitor</hydro-headline>
+  <hydro-create-monitor-form
+    *ngIf="monitor"
+    [monitor]="monitor"
+    [editForm]="editForm"
+    (submitForm)="saveMonitor($event)"
+  ></hydro-create-monitor-form>
+</hydro-page-narrow>

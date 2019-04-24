@@ -1,7 +1,9 @@
-<hydro-create-monitor-form
-  *ngIf="monitor && monitorName"
-  [heading]="'Duplicate'"
-  [monitor]="monitor"
-  [monitorName]="monitorName"
-  (submitForm)="addMonitor($event)"
-></hydro-create-monitor-form>
+<hydro-page-narrow>
+  <hydro-headline>Duplicate Monitor</hydro-headline>
+  <hydro-create-monitor-form
+    *ngIf="monitor && monitorName"
+    [monitor]="monitor"
+    [monitorName]="monitorName"
+    (submitForm)="addMonitor($event)"
+  ></hydro-create-monitor-form>
+</hydro-page-narrow>
