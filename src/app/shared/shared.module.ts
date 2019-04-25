@@ -15,6 +15,8 @@ import { HeadlineComponent } from './headline/headline.component';
 import { ButtonFlatComponent } from './button-flat/button-flat.component';
 import { PageNarrowComponent } from './page-narrow/page-narrow.component';
 import { PageWideComponent } from './page-wide/page-wide.component';
+import { PageFormComponent } from './page-form/page-form.component';
+import { CardFormComponent } from './card-form/card-form.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,8 @@ import { PageWideComponent } from './page-wide/page-wide.component';
     ButtonFlatComponent,
     PageNarrowComponent,
     PageWideComponent,
+    PageFormComponent,
+    CardFormComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -51,6 +55,8 @@ import { PageWideComponent } from './page-wide/page-wide.component';
     ButtonFlatComponent,
     PageNarrowComponent,
     PageWideComponent,
+    PageFormComponent,
+    CardFormComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

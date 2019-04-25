@@ -1,5 +1,5 @@
-<form [formGroup]="parent" class="flex flex-column">
-  <mat-form-field appearance="outline" class="mb3">
+<form [formGroup]="parent" class="form">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Parameters*</mat-label>
     <mat-select
       formControlName="parameters"
@@ -24,8 +24,8 @@
     Block Permanently
   </mat-slide-toggle>
 
-  <div class="flex items-baseline mb3">
-    <mat-form-field appearance="outline" class="mr3">
+  <div class="form-field block-duration">
+    <mat-form-field appearance="outline">
       <mat-label>Block Duration</mat-label>
       <input
         matInput
@@ -39,9 +39,11 @@
         {{ validationMessages['blockTime']['required'] }}
       </mat-error>
     </mat-form-field>
+
     <mat-button-toggle-group
       #group="matButtonToggleGroup"
       formControlName="blockTimeUnit"
+      class="toggle-group"
     >
       <mat-button-toggle
         *ngFor="let unit of units['duration']"
@@ -53,12 +55,14 @@
     </mat-button-toggle-group>
   </div>
 
-  <div class="flex items-baseline">
-    <mat-form-field appearance="outline" class="mr3">
+  <div class="form-field block-delay">
+    <mat-form-field appearance="outline">
       <mat-label>Block Delay</mat-label>
       <input matInput placeholder="Block Delay" formControlName="blockDelay" />
     </mat-form-field>
+
     <mat-button-toggle-group
+      class="toggle-group"
       #group="matButtonToggleGroup"
       formControlName="blockDelayUnit"
     >
