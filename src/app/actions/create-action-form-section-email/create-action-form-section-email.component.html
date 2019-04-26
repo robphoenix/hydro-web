@@ -1,8 +1,8 @@
-<form [formGroup]="parent" class="flex flex-column">
-  <div class="flex flex-column w-100" formArrayName="emailAddresses">
+<form [formGroup]="parent" class="form">
+  <div class="email-addresses" formArrayName="emailAddresses">
     <mat-form-field
       appearance="outline"
-      class="w-100 mb2"
+      class="form-field"
       *ngFor="let address of emailAddressesArray.controls; let i = index"
       [formGroupName]="i"
     >
@@ -29,7 +29,7 @@
     </mat-form-field>
   </div>
 
-  <div class="w-100 flex justify-end mb4">
+  <div class="add-email-address">
     <hydro-button-raised
       color="primary"
       (click)="addEmailAddress.emit()"
@@ -39,7 +39,7 @@
     </hydro-button-raised>
   </div>
 
-  <mat-form-field appearance="outline" class="w-100 mb4">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Email Subject*</mat-label>
     <input
       matInput
@@ -54,13 +54,9 @@
     </mat-error>
   </mat-form-field>
 
-  <div
-    *ngIf="actionType === 'emailRate'"
-    class="flex items-center justify-between mb4"
-  >
+  <div *ngIf="actionType === 'emailRate'" class="email-rate">
     <mat-form-field appearance="outline">
       <mat-label>Email Send Limit</mat-label>
-
       <input
         type="number"
         min="-1"
@@ -69,7 +65,7 @@
         formControlName="emailSendLimit"
       />
     </mat-form-field>
-    <p class="ml4 pb3 dark-gray">
+    <p class="email-rate-explanation">
       The maximum number of emails to send out in any single hour, this resets
       after every hour. Use -1 to specify an unlimited number of emails per hour
     </p>
@@ -77,7 +73,7 @@
 
   <mat-form-field
     appearance="outline"
-    class="fields"
+    class="form-field"
     *ngIf="actionType === 'emailAlert'"
   >
     <mat-label>Parameters*</mat-label>
@@ -91,9 +87,9 @@
     </mat-select>
   </mat-form-field>
 
-  <div>
-    <h3 class="mid-gray mb2 f5 fw5">Email Text</h3>
-    <p class="mb3">
+  <div class="email-text">
+    <h3 class="email-text-title">Email Text</h3>
+    <p class="email-text-explanation">
       This text can contain variable data, using the
       <b class="code">${{ '{' }}data{{ '}' }}</b> substitution tag, where
       <b class="code">data</b> can be any esper data field, such as
@@ -103,10 +99,13 @@
       >. To display the esperdata there MUST be a
       <b class="code">${{ '{' }}esperdata{{ '}' }}</b> substitution tag.
     </p>
-    <mat-error *ngIf="parent.get('emailText').hasError('required')" class="mb3">
+    <mat-error
+      *ngIf="parent.get('emailText').hasError('required')"
+      class="email-text-error"
+    >
       {{ validationMessages['emailText']['required'] }}
     </mat-error>
-    <div class="h7 mb4">
+    <div class="email-editor">
       <quill (contentChange)="onContentChange($event)"> </quill>
     </div>
   </div>
