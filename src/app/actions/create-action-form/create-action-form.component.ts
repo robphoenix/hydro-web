@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import {
   IActionMetadataBlock,
-  IActionMetadataEmail,
   IAction,
   ActionParameters,
   ActionBlockTimeUnit,
