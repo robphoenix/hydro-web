@@ -7,8 +7,13 @@
 
 .action-type {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+}
+
+.action-type-explanation {
+  margin-left: $space-4;
+  color: $grey-8;
 }
 
 .buttons {
