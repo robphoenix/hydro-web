@@ -14,6 +14,7 @@ import {
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
   ActionType,
+  IActionMetadataEmailRate,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -232,7 +233,7 @@ export class CreateActionFormComponent implements OnInit {
       name,
       description,
     } = this.createActionForm.getRawValue();
-    let metadata: IActionMetadataBlock | IActionMetadataEmail;
+    let metadata: IActionMetadataBlock | IActionMetadataEmailRate;
     switch (actionType) {
       case ActionType.Block:
         const {
@@ -258,6 +259,29 @@ export class CreateActionFormComponent implements OnInit {
             parameters,
           } as IActionMetadataBlock;
         }
+        break;
+      case ActionType.EmailRate:
+        const {
+          emailAddresses,
+          emailSubject,
+          emailSendLimit,
+          emailText,
+        } = this.emailDataForm.getRawValue();
+
+        const addresses: string = emailAddresses
+          .map((address: { emailAddress: string }) => {
+            return address.emailAddress;
+          })
+          .join(`;`);
+
+        console.log({ addresses });
+
+        metadata = {
+          emailAddresses: addresses,
+          emailSubject,
+          emailSendLimit,
+          emailText,
+        } as IActionMetadataEmailRate;
     }
 
     const data = {
@@ -268,7 +292,6 @@ export class CreateActionFormComponent implements OnInit {
     } as IAction;
 
     console.log({ data });
-    console.log(data);
 
     this.actionsService.addAction(data).subscribe(
       (res: IAction) => {
