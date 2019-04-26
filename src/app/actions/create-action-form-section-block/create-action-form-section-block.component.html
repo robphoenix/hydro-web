@@ -20,7 +20,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-slide-toggle class="mb4" formControlName="permanently">
+  <mat-slide-toggle class="form-field" formControlName="permanently">
     Block Permanently
   </mat-slide-toggle>
 
@@ -50,7 +50,7 @@
         value="{{ unit }}"
         [disabled]="parent.get('permanently').value"
       >
-        <span class="ttc">{{ unit | lowercase }}</span>
+        <span class="capitalize">{{ unit | lowercase }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
@@ -71,7 +71,7 @@
         value="{{ unit }}"
         [disabled]="parent.get('permanently').value"
       >
-        <span class="ttc">{{ unit | lowercase }}</span>
+        <span class="capitalize">{{ unit | lowercase }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
