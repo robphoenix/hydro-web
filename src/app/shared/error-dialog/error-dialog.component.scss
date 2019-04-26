@@ -1,0 +1,36 @@
+@import 'main';
+
+.title {
+  text-transform: capitalize;
+}
+
+.content {
+  margin-bottom: $space-3;
+}
+
+.cause {
+  color: $grey-7;
+  margin-bottom: $space-3;
+}
+
+.message {
+  color: $accent-warn;
+  margin-bottom: $space-3;
+}
+
+.uuid {
+  display: flex;
+  align-items: center;
+  color: $gray-7;
+  margin-bottom: $space-3;
+}
+
+.copy-button {
+  margin-left: $space-3;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $space-3;
+}
