@@ -9,14 +9,14 @@
   padding: $space-4;
 }
 
-.header,
+.headline,
 .form,
 .progress-bar,
 .button {
   width: 20%;
 }
 
-.header {
+.headline {
   margin-bottom: $space-4;
 }
 
@@ -42,4 +42,5 @@
 .button {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }

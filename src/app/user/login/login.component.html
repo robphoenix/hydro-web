@@ -4,6 +4,9 @@
     <p class="subheadline">
       Please enter your bet365 credentials
     </p>
+    <mat-error *ngIf="loginErrorMessage">
+      {{ loginErrorMessage }}
+    </mat-error>
   </div>
 
   <form
@@ -58,15 +61,7 @@
     class="progress-bar"
   ></mat-progress-bar>
 
-  <div
-    class="button"
-    [ngStyle]="{
-      'justify-content': loginErrorMessage ? 'space-between' : 'flex-end'
-    }"
-  >
-    <mat-error *ngIf="loginErrorMessage">
-      {{ loginErrorMessage }}
-    </mat-error>
+  <div class="button">
     <hydro-button-raised
       color="accent"
       *ngIf="!attemptingLogIn"
