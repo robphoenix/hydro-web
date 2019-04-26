@@ -13,7 +13,6 @@ import { LogoComponent } from './logo/logo.component';
 import { ButtonRaisedComponent } from './button-raised/button-raised.component';
 import { HeadlineComponent } from './headline/headline.component';
 import { ButtonFlatComponent } from './button-flat/button-flat.component';
-import { PageNarrowComponent } from './page-narrow/page-narrow.component';
 import { PageWideComponent } from './page-wide/page-wide.component';
 import { PageFormComponent } from './page-form/page-form.component';
 import { CardFormComponent } from './card-form/card-form.component';
@@ -37,7 +36,6 @@ import { CardFormComponent } from './card-form/card-form.component';
     ButtonRaisedComponent,
     HeadlineComponent,
     ButtonFlatComponent,
-    PageNarrowComponent,
     PageWideComponent,
     PageFormComponent,
     CardFormComponent,
@@ -53,7 +51,6 @@ import { CardFormComponent } from './card-form/card-form.component';
     ButtonRaisedComponent,
     HeadlineComponent,
     ButtonFlatComponent,
-    PageNarrowComponent,
     PageWideComponent,
     PageFormComponent,
     CardFormComponent,
