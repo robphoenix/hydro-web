@@ -27,8 +27,7 @@
               {
                 "input": "./src/sass/_theming.scss"
               },
-              "src/styles.scss",
-              "node_modules/tachyons/css/tachyons.min.css"
+              "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass", "node_modules"]

@@ -1,17 +1,17 @@
 <div *ngIf="dataSource.data && dataSource.data.length">
-  <div class="flex items-center mb4">
+  <div class="toolbar">
     <mat-button-toggle-group
       [(value)]="monitorsType"
       (change)="changeMonitorsType.emit($event.value)"
     >
       <mat-button-toggle value="standard">
-        <span class="mid-gray fw5"> Standard </span>
+        Standard
       </mat-button-toggle>
       <mat-button-toggle value="archived">
-        <span class="mid-gray fw5"> Archived </span>
+        Archived
       </mat-button-toggle>
       <mat-button-toggle value="system">
-        <span class="mid-gray fw5"> System </span>
+        System
       </mat-button-toggle>
     </mat-button-toggle-group>
 
@@ -69,7 +69,7 @@
       >
         <ng-container matColumnDef="monitor">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            <h2 class="f4 fw4 near-black ml4">
+            <h2 class="header-name">
               Monitor
             </h2>
           </mat-header-cell>
@@ -84,7 +84,7 @@
 
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef class="actions">
-            <h2 class="f4 fw4 near-black mr2">Actions</h2>
+            <h2 class="header-name">Actions</h2>
             <button
               mat-stroked-button
               *ngIf="hasActions()"
@@ -179,7 +179,7 @@
 
         <ng-container matColumnDef="categories">
           <mat-header-cell *matHeaderCellDef class="categories">
-            <h2 class="f4 fw4 near-black mr2">
+            <h2 class="header-name">
               Categories
             </h2>
             <button
