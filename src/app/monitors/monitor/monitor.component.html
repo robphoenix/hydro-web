@@ -1,6 +1,6 @@
 <div class="container" *ngIf="monitor">
   <div class="heading">
-    <app-heading>{{ monitor.name }}</app-heading>
+    <hydro-headline>{{ monitor.name }}</hydro-headline>
   </div>
   <div class="inner-wrapper">
     <div class="details">
@@ -14,27 +14,28 @@
     </div>
 
     <div class="buttons">
-      <app-primary-button
+      <hydro-button-raised
+        color="primary"
         (click)="togglePause()"
-        [icon]="pauseIcon"
         [disabled]="!(liveData && liveData.length)"
+        class="button"
       >
+        <mat-icon class="icon">{{ paused ? 'play_arrow' : 'pause' }}</mat-icon>
         {{ paused ? 'Run' : 'Pause' }}
-      </app-primary-button>
-      <app-accent-button
-        (click)="showEpl()"
-        class="button"
-        [icon]="'image_search'"
-      >
+      </hydro-button-raised>
+
+      <hydro-button-raised color="accent" (click)="showEpl()" class="button">
+        <mat-icon class="icon">image_search</mat-icon>
         Show Epl Query
-      </app-accent-button>
-      <app-accent-button
+      </hydro-button-raised>
+
+      <hydro-button-raised
         (click)="router.navigateByUrl(editLink)"
-        [icon]="'edit'"
         class="button"
       >
+        <mat-icon class="icon">edit</mat-icon>
         Edit Monitor
-      </app-accent-button>
+      </hydro-button-raised>
     </div>
   </div>
 

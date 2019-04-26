@@ -9,13 +9,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { CreateActionFormSectionBlockComponent } from './create-action-form-section-block/create-action-form-section-block.component';
 import { CreateActionFormSectionEmailComponent } from './create-action-form-section-email/create-action-form-section-email.component';
-import { CreateActionFormSectionOtherComponent } from './create-action-form-section-other/create-action-form-section-other.component';
 import {
   QuillModule,
   QuillConfigInterface,
   QUILL_CONFIG,
 } from 'ngx-quill-wrapper';
 import { ViewActionsComponent } from './view-actions/view-actions.component';
+import { EditActionComponent } from './edit-action/edit-action.component';
+import { ActionUpdateDialogComponent } from './action-update-dialog/action-update-dialog.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -37,7 +38,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
       ['link', 'image'],
     ],
   },
-  placeholder: 'Please enter your email template here...',
+  placeholder: 'Please enter your email template here. *Required.',
 };
 
 @NgModule({
@@ -48,6 +49,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
       { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewActionsComponent },
       { path: 'add', component: AddActionComponent },
+      { path: ':id/edit', component: EditActionComponent },
     ]),
     FormsModule,
     ReactiveFormsModule,
@@ -66,8 +68,10 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     AddActionComponent,
     CreateActionFormSectionBlockComponent,
     CreateActionFormSectionEmailComponent,
-    CreateActionFormSectionOtherComponent,
     ViewActionsComponent,
+    EditActionComponent,
+    ActionUpdateDialogComponent,
   ],
+  entryComponents: [ActionUpdateDialogComponent],
 })
 export class ActionsModule {}

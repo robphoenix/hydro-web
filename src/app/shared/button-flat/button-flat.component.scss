@@ -1,0 +1,11 @@
+@import 'main';
+
+.button {
+  padding: $space-1 $space-4;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  font-size: $fs-3;
+}

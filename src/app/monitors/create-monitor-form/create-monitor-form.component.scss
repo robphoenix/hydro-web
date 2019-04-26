@@ -1,31 +1,20 @@
 @import 'main';
 
-.container {
-  margin: $spacing-xl auto;
-  padding: $spacing-l;
-  width: 800px;
-}
-
-.heading {
-  margin-bottom: $spacing-xl;
-}
-
 .form {
   display: flex;
   flex-direction: column;
 }
 
 .form-field {
-  margin-bottom: $spacing-l;
+  margin-bottom: $space-4;
 }
 
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-top: $spacing-l;
+  margin-bottom: $space-5;
+}
 
-  .view,
-  .cancel {
-    margin-left: $spacing-m;
-  }
+.button {
+  margin-left: $space-3;
 }

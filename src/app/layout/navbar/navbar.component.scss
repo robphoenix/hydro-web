@@ -1,0 +1,26 @@
+@import 'main';
+
+.navbar {
+  position: fixed;
+  z-index: 900;
+  top: 0;
+  box-shadow: $box-shadow;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.link-name {
+  font-size: $fs-4;
+  font-weight: $fw-3;
+  color: $grey-2;
+
+  &:hover {
+    color: $white;
+    transition: color 0.3s ease-out;
+  }
+}

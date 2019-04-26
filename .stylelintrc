@@ -7,7 +7,6 @@
         "ignoreAtRules": ["include"]
       }
     ],
-    "no-empty-source": null,
     "selector-pseudo-element-no-unknown": [
       true,
       {

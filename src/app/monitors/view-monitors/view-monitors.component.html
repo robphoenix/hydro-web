@@ -1,9 +1,6 @@
-<div class="container">
-  <div class="heading">
-    <app-heading>Monitors</app-heading>
-  </div>
-
-  <app-overview-table
+<hydro-page-wide>
+  <hydro-headline>Monitors</hydro-headline>
+  <hydro-overview-table
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"
     [allCurrentCategories]="allCurrentCategories"
@@ -12,5 +9,5 @@
     (refresh)="refresh()"
     (changeMonitorsType)="updateMonitorsData($event)"
   >
-  </app-overview-table>
-</div>
+  </hydro-overview-table>
+</hydro-page-wide>

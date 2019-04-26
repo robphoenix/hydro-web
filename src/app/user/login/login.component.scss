@@ -1,0 +1,46 @@
+@import 'main';
+
+.login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $space-4;
+}
+
+.headline,
+.form,
+.progress-bar,
+.button {
+  width: 20%;
+}
+
+.headline {
+  margin-bottom: $space-4;
+}
+
+.subheadline {
+  color: $grey-5;
+  margin-bottom: $space-3;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field {
+  margin-bottom: $space-2;
+}
+
+.visibility {
+  cursor: pointer;
+  color: $grey-5;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

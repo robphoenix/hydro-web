@@ -1,27 +1,28 @@
-<mat-toolbar
-  color="primary"
-  class="fixed z-999 top-0
-shadow-4"
->
-  <img
-    height="40"
-    [src]="logo"
-    alt="hydro logo"
-    class="flex items-center ml4"
-    [ngStyle]="{ filter: 'invert(100%)' }"
-  />
-  <button mat-flat-button color="primary" routerLink="/" [disableRipple]="true">
-    <span class="f2 fw3">
-      Hydro
-    </span>
-  </button>
+<mat-toolbar color="primary" class="navbar">
+  <div class="logo">
+    <hydro-logo></hydro-logo>
+    <hydro-logotype-link color="primary"></hydro-logotype-link>
+  </div>
 
-  <nav class="ml-auto mr4" *ngIf="authService.isLoggedIn">
-    <app-navbar-monitors-menu></app-navbar-monitors-menu>
-    <app-navbar-actions-menu></app-navbar-actions-menu>
-    <app-navbar-user-menu
-      [name]="authService.userDisplayName"
-      (logout)="authService.logout()"
-    ></app-navbar-user-menu>
+  <nav *ngIf="authService.isLoggedIn">
+    <hydro-button-flat
+      color="primary"
+      (click)="router.navigateByUrl('/monitors')"
+    >
+      <span class="link-name">
+        Monitors
+      </span>
+    </hydro-button-flat>
+    <hydro-button-flat
+      (click)="router.navigateByUrl('/actions')"
+      color="primary"
+    >
+      <span class="link-name">
+        Actions
+      </span>
+    </hydro-button-flat>
+    <hydro-button-flat (click)="authService.logout()" color="primary">
+      <span class="link-name"> Log Out {{ authService.userDisplayName }} </span>
+    </hydro-button-flat>
   </nav>
 </mat-toolbar>

@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { CacheWindowService } from '../cache-window.service';
 
 @Component({
-  selector: 'app-create-monitor-form-cache-window',
+  selector: 'hydro-create-monitor-form-cache-window',
   templateUrl: './create-monitor-form-cache-window.component.html',
   styleUrls: ['./create-monitor-form-cache-window.component.scss'],
 })

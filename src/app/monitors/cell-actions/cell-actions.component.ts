@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IAction } from 'src/app/actions/action';
 
 @Component({
-  selector: 'app-cell-actions',
+  selector: 'hydro-cell-actions',
   templateUrl: './cell-actions.component.html',
   styleUrls: ['./cell-actions.component.scss'],
 })

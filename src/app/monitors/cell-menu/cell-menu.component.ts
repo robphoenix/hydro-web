@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MonitorStatus } from '../monitor';
 
 @Component({
-  selector: 'app-cell-menu',
+  selector: 'hydro-cell-menu',
   templateUrl: './cell-menu.component.html',
   styleUrls: ['./cell-menu.component.scss'],
 })

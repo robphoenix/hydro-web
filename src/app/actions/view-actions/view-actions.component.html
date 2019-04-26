@@ -1,72 +1,83 @@
-<div class="ma5 pa4">
-  <div class="mb4">
-    <app-heading>Actions</app-heading>
-  </div>
-  <div class="flex items-center w-100 mb4">
-    <!-- <mat-button-toggle-group
-      [value]="group"
-      (change)="filterActions($event.value)"
-    >
-      <mat-button-toggle value="block">
-        <mat-icon [ngClass]="icons['block'].colour" matTooltip="Block">
-          {{ icons['block'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="email">
-        <mat-icon [ngClass]="icons['email'].colour" matTooltip="Email">
-          {{ icons['email'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="store">
-        <mat-icon [ngClass]="icons['store'].colour" matTooltip="Store">
-          {{ icons['store'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="all">
-        <mat-icon [ngClass]="icons['actions'].colour" matTooltip="All Actions">
-          {{ icons['actions'].icon }}
-        </mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group> -->
+<hydro-page-wide>
+  <hydro-headline>Actions</hydro-headline>
 
-    <app-search-input
+  <div class="toolbar">
+    <mat-form-field class="filter">
+      <mat-label>Filter Action Types</mat-label>
+      <mat-select
+        [(value)]="selectedActionType"
+        (selectionChange)="filterActions()"
+      >
+        <mat-option>All Action Types</mat-option>
+        <mat-option value="block">Block</mat-option>
+        <mat-option value="emailAlert">Email Alert</mat-option>
+        <mat-option value="emailRate">Email Rate</mat-option>
+        <mat-option value="emailBatch">Email Batch</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <hydro-search-input
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Actions'"
       (searchTermChange)="filterActions()"
-      class="w-40 ml-auto"
-    ></app-search-input>
+      class="search"
+    ></hydro-search-input>
 
-    <app-accent-button
-      mat-flat-button
+    <hydro-button-raised
       (click)="router.navigateByUrl('/actions/add')"
-      [icon]="'add'"
-      class="ml4"
+      color="accent"
     >
-      New Action
-    </app-accent-button>
+      Add New Action
+    </hydro-button-raised>
   </div>
 
-  <mat-list class="bg-white shadow-4 bt bw1 b--primary ">
-    <cdk-virtual-scroll-viewport itemSize="72" class="h7">
+  <mat-list class="list">
+    <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="flex items-center mv2 mh4">
-          <!-- <mat-icon
-            [ngClass]="icons[action.group].colour"
-            matTooltip="All Actions"
-            class="mr4"
-          >
-            {{ icons[action.group].icon }}
-          </mat-icon> -->
+        <mat-list-item class="list-item">
           <div>
-            <h1 matLine class="f5 fw5 lh-title">
+            <h1 matLine class="action-name">
               {{ action.name }}
             </h1>
-            <p matLine class="f6 fw4 lh-copy silver">
+            <p matLine class="action-description">
               {{ action.description }}
             </p>
+          </div>
+          <span class="action-type">
+            {{ actionTypeDisplayNames[action.actionType] }} Action
+          </span>
+
+          <div class="menu">
+            <button
+              mat-stroked-button
+              [matMenuTriggerFor]="menu"
+              color="primary"
+            >
+              <span>
+                Menu
+              </span>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <div>
+                <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
+                  <mat-icon>edit</mat-icon>
+                  <span>
+                    Edit Action
+                  </span>
+                </a>
+
+                <button mat-menu-item (click)="archiveAction(action.id)">
+                  <mat-icon>archive</mat-icon>
+                  <span>
+                    Archive Action
+                  </span>
+                </button>
+              </div>
+            </mat-menu>
           </div>
         </mat-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>
   </mat-list>
-</div>
+</hydro-page-wide>

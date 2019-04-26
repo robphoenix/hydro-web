@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material';
 
 @Component({
-  selector: 'app-multiple-select',
+  selector: 'hydro-multiple-select',
   templateUrl: './multiple-select.component.html',
   styleUrls: ['./multiple-select.component.scss'],
 })

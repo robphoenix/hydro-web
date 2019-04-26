@@ -98,10 +98,10 @@ export class MonitorsService {
       .pipe(tap((monitor: IMonitor) => monitor));
   }
 
-  public patchMonitor(id: number, body: IMonitor): Observable<IMonitor> {
+  public putMonitor(monitor: IMonitor): Observable<IMonitor> {
     return this.http
-      .patch(`${this.monitorsUrl}/${id}`, body, { headers })
-      .pipe(tap((monitor: IMonitor) => monitor));
+      .put(`${this.monitorsUrl}/${monitor.id}`, monitor, { headers })
+      .pipe(tap((m: IMonitor) => m));
   }
 
   public allCurrentCategories(monitors: IMonitor[]): string[] {

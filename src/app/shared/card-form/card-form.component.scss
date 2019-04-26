@@ -1,0 +1,9 @@
+@import 'main';
+
+.card {
+  background-color: $white;
+  padding: $space-4;
+  border-top: 3px solid $primary;
+  box-shadow: $box-shadow;
+  margin-bottom: $space-4;
+}

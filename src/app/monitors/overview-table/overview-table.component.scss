@@ -1,11 +1,5 @@
 @import 'main';
 
-.toolbar {
-  display: flex;
-  align-items: center;
-  margin-bottom: $spacing-l;
-}
-
 .status-toggle {
   margin-left: $spacing-l;
 }
@@ -13,10 +7,6 @@
 .search {
   flex: 0 0 25%;
   margin: 0 $spacing-l 0 auto;
-}
-
-.refresh {
-  margin: 0 $spacing-l;
 }
 
 .add-monitor {

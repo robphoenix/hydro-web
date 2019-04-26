@@ -6,7 +6,7 @@ import { UserService } from '../user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
-  selector: 'app-login',
+  selector: 'hydro-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
+    this.loginErrorMessage = '';
     this.attemptingLogIn = true;
     this.authService
       .login(this.usernameControl.value, this.passwordControl.value)

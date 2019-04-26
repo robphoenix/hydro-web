@@ -38,7 +38,7 @@ interface IFilterValues {
 }
 
 @Component({
-  selector: 'app-overview-table',
+  selector: 'hydro-overview-table',
   templateUrl: './overview-table.component.html',
   styleUrls: ['./overview-table.component.scss'],
 })
@@ -218,8 +218,10 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       if (!archive) {
         return;
       }
-      const body = { status: MonitorStatus.Archived } as IMonitor;
-      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+      monitor.status = MonitorStatus.Archived;
+      console.log({ monitor });
+
+      this.monitorsService.putMonitor(monitor).subscribe(
         () => {
           this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
@@ -250,9 +252,9 @@ export class OverviewTableComponent implements OnInit, OnChanges {
         return;
       }
 
-      const body = { status: MonitorStatus.Offline } as IMonitor;
+      monitor.status = MonitorStatus.Offline;
 
-      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+      this.monitorsService.putMonitor(monitor).subscribe(
         () => {
           this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} unarchived`, '', {
@@ -282,8 +284,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       if (!enable) {
         return;
       }
-      const body = { status: MonitorStatus.Online } as IMonitor;
-      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+      monitor.status = MonitorStatus.Online;
+      this.monitorsService.putMonitor(monitor).subscribe(
         () => {
           this.refresh.emit();
           this.monitorsStatus = 'online';
@@ -314,8 +316,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
       if (!disable) {
         return;
       }
-      const body = { status: MonitorStatus.Offline } as IMonitor;
-      this.monitorsService.patchMonitor(monitor.id, body).subscribe(
+      monitor.status = MonitorStatus.Offline;
+      this.monitorsService.putMonitor(monitor).subscribe(
         () => {
           this.refresh.emit();
           this.monitorsStatus = 'offline';

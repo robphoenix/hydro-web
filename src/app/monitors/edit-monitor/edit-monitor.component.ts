@@ -9,7 +9,7 @@ import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
-  selector: 'app-edit-monitor',
+  selector: 'hydro-edit-monitor',
   templateUrl: './edit-monitor.component.html',
   styleUrls: ['./edit-monitor.component.scss'],
 })
@@ -44,7 +44,7 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
 
   saveMonitor(event: IMonitorSubmit) {
     const { monitor, view } = event;
-    this.monitorsService.patchMonitor(monitor.id, monitor).subscribe(
+    this.monitorsService.putMonitor(monitor).subscribe(
       () => {
         view
           ? this.router.navigateByUrl(`/monitors/${monitor.id}`)

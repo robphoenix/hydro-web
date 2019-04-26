@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-add-action',
+  selector: 'hydro-add-action',
   templateUrl: './add-action.component.html',
   styleUrls: ['./add-action.component.scss'],
 })

@@ -1,0 +1,64 @@
+@import 'main';
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-addresses {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-field {
+  margin-bottom: $space-2;
+}
+
+.add-email-address {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $space-4;
+}
+
+.email-rate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-4;
+}
+
+.email-rate-explanation {
+  margin-left: $space-4;
+  padding-bottom: $space-3;
+  color: $grey-8;
+}
+
+.email-text {
+  margin-bottom: $space-3;
+}
+
+.email-text-title {
+  color: $grey-9;
+  margin-bottom: $space-2;
+  font-size: $fs-4;
+  font-weight: $fw-4;
+}
+
+.email-text-explanation {
+  margin-bottom: $space-2;
+}
+
+.email-text-error {
+  margin-bottom: $space-2;
+}
+
+.code {
+  font-family: Consolas, monaco, monospace;
+}
+
+.email-editor {
+  height: 400px;
+  margin-bottom: $space-4;
+}

@@ -16,7 +16,7 @@ import {
 import { IAction } from 'src/app/actions/action';
 
 @Component({
-  selector: 'app-create-monitor-form-actions',
+  selector: 'hydro-create-monitor-form-actions',
   templateUrl: './create-monitor-form-actions.component.html',
   styleUrls: ['./create-monitor-form-actions.component.scss'],
 })

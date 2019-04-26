@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 import { ICategory } from '../monitor';
 
 @Component({
-  selector: 'app-create-monitor-form-categories',
+  selector: 'hydro-create-monitor-form-categories',
   templateUrl: './create-monitor-form-categories.component.html',
   styleUrls: ['./create-monitor-form-categories.component.scss'],
 })

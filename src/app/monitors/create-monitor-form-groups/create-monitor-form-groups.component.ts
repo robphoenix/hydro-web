@@ -16,7 +16,7 @@ import {
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-create-monitor-form-groups',
+  selector: 'hydro-create-monitor-form-groups',
   templateUrl: './create-monitor-form-groups.component.html',
   styleUrls: ['./create-monitor-form-groups.component.scss'],
 })

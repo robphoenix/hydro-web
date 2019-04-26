@@ -40,7 +40,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error.status === 401) {
           // auto logout if failed authentication response returned from api
-          this.authService.logout();
+          // this.authService.logout();
         }
 
         return throwError(error.error as IErrorMessage);
