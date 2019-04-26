@@ -34,12 +34,12 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <app-search-input
+    <hydro-search-input
       class="search"
       [(searchTerm)]="filterValues.searchTerm"
       [placeHolder]="'Search Monitors'"
       (searchTermChange)="filterMonitors()"
-    ></app-search-input>
+    ></hydro-search-input>
 
     <hydro-button-raised
       color="primary"
@@ -74,11 +74,11 @@
             </h2>
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="mat-monitor-cell">
-            <app-cell-monitor
+            <hydro-cell-monitor
               [monitor]="monitor"
               class="monitor-cell"
               (viewEplQuery)="viewEplQuery($event)"
-            ></app-cell-monitor>
+            ></hydro-cell-monitor>
           </mat-cell>
         </ng-container>
 
@@ -102,14 +102,14 @@
                 <span>Block</span>
               </button>
               <mat-menu #block="matMenu">
-                <app-multiple-select
+                <hydro-multiple-select
                   [formControl]="blockControl"
                   [placeHolder]="'Filter Block Actions'"
                   [options]="allCurrentActions['block']"
                   [(selectedOptions)]="filterValues.selectedActions['block']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
-                ></app-multiple-select>
+                ></hydro-multiple-select>
               </mat-menu>
 
               <button
@@ -121,14 +121,14 @@
                 <span>Email</span>
               </button>
               <mat-menu #email="matMenu">
-                <app-multiple-select
+                <hydro-multiple-select
                   [formControl]="emailControl"
                   [placeHolder]="'Filter Email Actions'"
                   [options]="allCurrentActions['email']"
                   [(selectedOptions)]="filterValues.selectedActions['email']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
-                ></app-multiple-select>
+                ></hydro-multiple-select>
               </mat-menu>
 
               <button
@@ -140,14 +140,14 @@
                 <span>Store</span>
               </button>
               <mat-menu #store="matMenu">
-                <app-multiple-select
+                <hydro-multiple-select
                   [formControl]="storeControl"
                   [placeHolder]="'Filter Store Actions'"
                   [options]="allCurrentActions['store']"
                   [(selectedOptions)]="filterValues.selectedActions['store']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
-                ></app-multiple-select>
+                ></hydro-multiple-select>
               </mat-menu>
 
               <button
@@ -159,19 +159,21 @@
                 <span>Other</span>
               </button>
               <mat-menu #other="matMenu">
-                <app-multiple-select
+                <hydro-multiple-select
                   [formControl]="otherControl"
                   [placeHolder]="'Filter Other Actions'"
                   [options]="allCurrentActions['other']"
                   [(selectedOptions)]="filterValues.selectedActions['other']"
                   (selectedOptionsChange)="filterMonitors()"
                   ngDefaultControl
-                ></app-multiple-select>
+                ></hydro-multiple-select>
               </mat-menu>
             </mat-menu>
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="actions">
-            <app-cell-actions [actions]="monitor.actions"></app-cell-actions>
+            <hydro-cell-actions
+              [actions]="monitor.actions"
+            ></hydro-cell-actions>
           </mat-cell>
         </ng-container>
 
@@ -188,34 +190,34 @@
               Filter
             </button>
             <mat-menu #categoriesMenu="matMenu">
-              <app-multiple-select
+              <hydro-multiple-select
                 [formControl]="categoriesControl"
                 [placeHolder]="'Filter Categories'"
                 [options]="allCurrentCategories"
                 [(selectedOptions)]="filterValues.selectedCategories"
                 (selectedOptionsChange)="filterMonitors()"
                 ngDefaultControl
-              ></app-multiple-select>
+              ></hydro-multiple-select>
             </mat-menu>
           </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="categories">
-            <app-cell-categories
+            <hydro-cell-categories
               [categories]="monitor.categories"
-            ></app-cell-categories>
+            ></hydro-cell-categories>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="menu">
           <mat-header-cell *matHeaderCellDef class="menu"> </mat-header-cell>
           <mat-cell *matCellDef="let monitor" class="menu">
-            <app-cell-menu
+            <hydro-cell-menu
               [status]="monitor.status"
               [id]="monitor.id"
               (archiveMonitor)="archiveMonitor($event)"
               (unArchiveMonitor)="unArchiveMonitor($event)"
               (enableMonitor)="enableMonitor($event)"
               (disableMonitor)="disableMonitor($event)"
-            ></app-cell-menu>
+            ></hydro-cell-menu>
           </mat-cell>
         </ng-container>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edit-action',
+  selector: 'hydro-edit-action',
   templateUrl: './edit-action.component.html',
   styleUrls: ['./edit-action.component.scss'],
 })

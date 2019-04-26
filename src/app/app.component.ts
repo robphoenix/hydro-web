@@ -2,7 +2,7 @@ import { AuthService } from './user/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'hydro-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

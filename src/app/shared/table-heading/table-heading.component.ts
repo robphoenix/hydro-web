@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-table-heading',
+  selector: 'hydro-table-heading',
   templateUrl: './table-heading.component.html',
   styleUrls: ['./table-heading.component.scss'],
 })

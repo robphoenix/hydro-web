@@ -1,5 +1,5 @@
 <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
-  <app-create-monitor-form-name
+  <hydro-create-monitor-form-name
     class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['name']"
@@ -7,44 +7,47 @@
     [editForm]="editForm"
     ngDefaultControl
   >
-  </app-create-monitor-form-name>
+  </hydro-create-monitor-form-name>
 
-  <app-create-monitor-form-description
+  <hydro-create-monitor-form-description
     class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['description']"
     [placeholder]="placeholders.description"
     ngDefaultControl
   >
-  </app-create-monitor-form-description>
+  </hydro-create-monitor-form-description>
 
-  <app-create-monitor-form-status
+  <hydro-create-monitor-form-status
     [parent]="createMonitorForm"
     class="form-field"
   >
-  </app-create-monitor-form-status>
+  </hydro-create-monitor-form-status>
 
-  <app-create-monitor-form-type [parent]="createMonitorForm" class="form-field">
-  </app-create-monitor-form-type>
+  <hydro-create-monitor-form-type
+    [parent]="createMonitorForm"
+    class="form-field"
+  >
+  </hydro-create-monitor-form-type>
 
-  <app-create-monitor-form-priority
+  <hydro-create-monitor-form-priority
     class="form-field"
     [parent]="createMonitorForm"
-  ></app-create-monitor-form-priority>
+  ></hydro-create-monitor-form-priority>
 
-  <app-create-monitor-form-query
+  <hydro-create-monitor-form-query
     class="form-field"
     [parent]="createMonitorForm"
     [validationMessages]="validationMessages['query']"
     [placeholder]="placeholders.query"
-  ></app-create-monitor-form-query>
+  ></hydro-create-monitor-form-query>
 
-  <app-create-monitor-form-cache-window
+  <hydro-create-monitor-form-cache-window
     class="form-field"
     [parent]="createMonitorForm"
-  ></app-create-monitor-form-cache-window>
+  ></hydro-create-monitor-form-cache-window>
 
-  <app-create-monitor-form-categories
+  <hydro-create-monitor-form-categories
     class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingCategories"
@@ -57,9 +60,9 @@
     (removeCategory)="removeCategory($event)"
     (selectedCategory)="selectedCategory($event)"
   >
-  </app-create-monitor-form-categories>
+  </hydro-create-monitor-form-categories>
 
-  <app-create-monitor-form-groups
+  <hydro-create-monitor-form-groups
     class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingGroups"
@@ -71,9 +74,9 @@
     (removeGroup)="removeGroup($event)"
     (selectedGroup)="selectedGroup($event)"
   >
-  </app-create-monitor-form-groups>
+  </hydro-create-monitor-form-groups>
 
-  <app-create-monitor-form-actions
+  <hydro-create-monitor-form-actions
     class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingActions"
@@ -85,7 +88,7 @@
     (removeAction)="removeAction($event)"
     (selectedAction)="selectedAction($event)"
   >
-  </app-create-monitor-form-actions>
+  </hydro-create-monitor-form-actions>
 
   <div class="buttons">
     <hydro-button-raised

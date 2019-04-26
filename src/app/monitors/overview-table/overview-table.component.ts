@@ -38,7 +38,7 @@ interface IFilterValues {
 }
 
 @Component({
-  selector: 'app-overview-table',
+  selector: 'hydro-overview-table',
   templateUrl: './overview-table.component.html',
   styleUrls: ['./overview-table.component.scss'],
 })

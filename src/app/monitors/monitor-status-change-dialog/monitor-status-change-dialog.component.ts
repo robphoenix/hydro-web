@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-monitor-status-change-dialog',
+  selector: 'hydro-monitor-status-change-dialog',
   templateUrl: './monitor-status-change-dialog.component.html',
   styleUrls: ['./monitor-status-change-dialog.component.scss'],
 })

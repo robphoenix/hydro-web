@@ -3,7 +3,7 @@ import { MonitorStatus, IMonitor } from '../monitor';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cell-monitor',
+  selector: 'hydro-cell-monitor',
   templateUrl: './cell-monitor.component.html',
   styleUrls: ['./cell-monitor.component.scss'],
 })

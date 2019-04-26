@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-create-action-form-section-email',
+  selector: 'hydro-create-action-form-section-email',
   templateUrl: './create-action-form-section-email.component.html',
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })

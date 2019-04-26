@@ -1,6 +1,6 @@
 <hydro-page-wide>
   <hydro-headline>Monitors</hydro-headline>
-  <app-overview-table
+  <hydro-overview-table
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"
     [allCurrentCategories]="allCurrentCategories"
@@ -9,5 +9,5 @@
     (refresh)="refresh()"
     (changeMonitorsType)="updateMonitorsData($event)"
   >
-  </app-overview-table>
+  </hydro-overview-table>
 </hydro-page-wide>

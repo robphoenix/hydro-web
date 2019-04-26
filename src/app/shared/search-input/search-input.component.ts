@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-search-input',
+  selector: 'hydro-search-input',
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
 })

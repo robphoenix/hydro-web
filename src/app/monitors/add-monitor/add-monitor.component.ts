@@ -9,7 +9,7 @@ import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
-  selector: 'app-add-monitor',
+  selector: 'hydro-add-monitor',
   templateUrl: './add-monitor.component.html',
   styleUrls: ['./add-monitor.component.scss'],
 })

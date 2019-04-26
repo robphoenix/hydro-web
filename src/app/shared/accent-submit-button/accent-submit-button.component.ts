@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-accent-submit-button',
+  selector: 'hydro-accent-submit-button',
   templateUrl: './accent-submit-button.component.html',
   styleUrls: ['./accent-submit-button.component.scss'],
 })

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-create-action-form-section-block',
+  selector: 'hydro-create-action-form-section-block',
   templateUrl: './create-action-form-section-block.component.html',
   styleUrls: ['./create-action-form-section-block.component.scss'],
 })

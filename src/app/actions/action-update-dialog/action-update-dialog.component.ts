@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-action-update-dialog',
+  selector: 'hydro-action-update-dialog',
   templateUrl: './action-update-dialog.component.html',
   styleUrls: ['./action-update-dialog.component.scss'],
 })

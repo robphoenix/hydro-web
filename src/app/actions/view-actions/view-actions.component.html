@@ -16,12 +16,12 @@
       </mat-select>
     </mat-form-field>
 
-    <app-search-input
+    <hydro-search-input
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Actions'"
       (searchTermChange)="filterActions()"
       class="w-40"
-    ></app-search-input>
+    ></hydro-search-input>
 
     <hydro-button-raised
       (click)="router.navigateByUrl('/actions/add')"

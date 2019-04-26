@@ -10,7 +10,7 @@ import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
-  selector: 'app-duplicate-monitor',
+  selector: 'hydro-duplicate-monitor',
   templateUrl: './duplicate-monitor.component.html',
   styleUrls: ['./duplicate-monitor.component.scss'],
 })

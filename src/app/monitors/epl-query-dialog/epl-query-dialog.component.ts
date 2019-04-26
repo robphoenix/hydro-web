@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'app-epl-query-dialog',
+  selector: 'hydro-epl-query-dialog',
   templateUrl: './epl-query-dialog.component.html',
   styleUrls: ['./epl-query-dialog.component.scss'],
 })

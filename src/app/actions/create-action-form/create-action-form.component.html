@@ -43,15 +43,15 @@
     </p>
   </div>
 
-  <app-create-action-form-section-block
+  <hydro-create-action-form-section-block
     *ngIf="createActionForm.get('actionType').value === 'block'"
     [parent]="blockDataForm"
     [availableParameters]="availableParameters"
     [validationMessages]="validationMessages"
     [units]="blockActionUnits"
-  ></app-create-action-form-section-block>
+  ></hydro-create-action-form-section-block>
 
-  <app-create-action-form-section-email
+  <hydro-create-action-form-section-email
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"
     [parent]="emailDataForm"
@@ -61,7 +61,7 @@
     (addEmailAddress)="addEmailAddress()"
     (removeEmailAddress)="removeEmailAddress($event)"
     (editorContentChange)="emailEditorContentChange($event)"
-  ></app-create-action-form-section-email>
+  ></hydro-create-action-form-section-email>
 
   <div class="buttons">
     <hydro-button-raised

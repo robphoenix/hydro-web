@@ -6,7 +6,7 @@ import { UserService } from '../user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
-  selector: 'app-login',
+  selector: 'hydro-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

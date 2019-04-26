@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
 
 @Component({
-  selector: 'app-create-action-form',
+  selector: 'hydro-create-action-form',
   templateUrl: './create-action-form.component.html',
   styleUrls: ['./create-action-form.component.scss'],
 })

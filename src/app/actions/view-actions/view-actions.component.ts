@@ -10,7 +10,7 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { ActionUpdateDialogComponent } from '../action-update-dialog/action-update-dialog.component';
 
 @Component({
-  selector: 'app-view-actions',
+  selector: 'hydro-view-actions',
   templateUrl: './view-actions.component.html',
   styleUrls: ['./view-actions.component.scss'],
 })
