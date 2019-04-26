@@ -1,0 +1,57 @@
+@import 'main';
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: $space-4;
+}
+
+.filter {
+  width: 20%;
+}
+
+.search {
+  width: 40%;
+}
+
+.list {
+  background-color: $white;
+  box-shadow: $box-shadow;
+  border-top: 3px solid $primary;
+}
+
+.scroll-viewport {
+  height: 800px;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  margin: $space-3;
+}
+
+.action-name {
+  font-size: $fs-4;
+  font-weight: $fw-5;
+  line-height: $lh-title;
+}
+
+.action-description {
+  font-size: $fs-6;
+  font-weight: $fw-4;
+  line-height: $lh-copy;
+  color: $grey-6;
+}
+
+.action-type {
+  margin: 0 $space-4 0 auto;
+  padding: $space-1 $space-2;
+  color: $primary-darker;
+  background-color: $primary-lighter;
+}
+
+.menu {
+  margin-right: $space-4;
+}

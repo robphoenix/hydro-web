@@ -1,8 +1,8 @@
 <hydro-page-wide>
   <hydro-headline>Actions</hydro-headline>
 
-  <div class="flex items-center w-100 mb4 justify-between">
-    <mat-form-field class="w-20">
+  <div class="toolbar">
+    <mat-form-field class="filter">
       <mat-label>Filter Action Types</mat-label>
       <mat-select
         [(value)]="selectedActionType"
@@ -20,7 +20,7 @@
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Actions'"
       (searchTermChange)="filterActions()"
-      class="w-40"
+      class="search"
     ></hydro-search-input>
 
     <hydro-button-raised
@@ -31,23 +31,23 @@
     </hydro-button-raised>
   </div>
 
-  <mat-list class="bg-white shadow-4 bt bw1 b--primary ">
-    <cdk-virtual-scroll-viewport itemSize="72" class="h7">
+  <mat-list class="list">
+    <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="flex items-center ma3">
+        <mat-list-item class="list-item">
           <div>
-            <h1 matLine class="f5 fw5 lh-title">
+            <h1 matLine class="action-name">
               {{ action.name }}
             </h1>
-            <p matLine class="f6 fw4 lh-copy silver">
+            <p matLine class="action-description">
               {{ action.description }}
             </p>
           </div>
-          <span class="ml-auto mr4 pv1 ph2 primary bg-primary-lighter br1">
+          <span class="action-type">
             {{ actionTypeDisplayNames[action.actionType] }} Action
           </span>
 
-          <div class="mr4">
+          <div class="menu">
             <button
               mat-stroked-button
               [matMenuTriggerFor]="menu"
@@ -59,16 +59,16 @@
             </button>
 
             <mat-menu #menu="matMenu">
-              <div class="menu">
+              <div>
                 <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
-                  <mat-icon class="icon">edit</mat-icon>
+                  <mat-icon>edit</mat-icon>
                   <span>
                     Edit Action
                   </span>
                 </a>
 
                 <button mat-menu-item (click)="archiveAction(action.id)">
-                  <mat-icon class="icon">archive</mat-icon>
+                  <mat-icon>archive</mat-icon>
                   <span>
                     Archive Action
                   </span>
