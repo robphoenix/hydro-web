@@ -63,6 +63,9 @@ export class CreateActionFormComponent implements OnInit {
     emailText: {
       required: `You must specify an email text`,
     },
+    emailCron: {
+      required: `You must specify an email cron expression`,
+    },
   };
 
   public blockActionUnits: { [key: string]: string[] } = {};
@@ -115,6 +118,7 @@ export class CreateActionFormComponent implements OnInit {
       emailSubject: [``, Validators.required],
       emailSendLimit: [0, Validators.required],
       emailText: [``, Validators.required],
+      emailCron: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],

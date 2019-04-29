@@ -6,10 +6,10 @@
       *ngFor="let address of emailAddressesArray.controls; let i = index"
       [formGroupName]="i"
     >
-      <mat-label>Email Address*</mat-label>
+      <mat-label>Email Recipient(s)*</mat-label>
       <input
         matInput
-        placeholder="Email Recipient(s)"
+        placeholder="Email Recipient(s)*"
         formControlName="emailAddress"
       />
       <button
@@ -68,6 +68,30 @@
     <p class="email-rate-explanation">
       The maximum number of emails to send out in any single hour, this resets
       after every hour. Use -1 to specify an unlimited number of emails per hour
+    </p>
+  </div>
+
+  <div *ngIf="actionType === 'emailBatch'" class="email-batch">
+    <mat-form-field appearance="outline">
+      <mat-label>Email Cron Expression*</mat-label>
+      <input
+        matInput
+        placeholder="Email Cron Expression*"
+        formControlName="emailCron"
+      />
+      <mat-hint align="end">
+        *Required
+      </mat-hint>
+      <mat-error *ngIf="parent.get('emailCron').hasError('required')">
+        {{ validationMessages['emailCron']['required'] }}
+      </mat-error>
+    </mat-form-field>
+    <p class="email-cron-explanation">
+      Batch together all events and send when the cron expression triggers.
+      Automatically adds the event time to each row in the table.
+      <a href="http://www.cronmaker.com/" target="_blank">
+        Generate Cron Expression
+      </a>
     </p>
   </div>
 
