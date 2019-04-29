@@ -213,6 +213,7 @@
             <hydro-cell-menu
               [status]="monitor.status"
               [id]="monitor.id"
+              [allowsEdit]="allowsEdit"
               (archiveMonitor)="archiveMonitor($event)"
               (unArchiveMonitor)="unArchiveMonitor($event)"
               (enableMonitor)="enableMonitor($event)"

@@ -6,7 +6,11 @@
 
 <mat-menu #menu="matMenu">
   <div class="menu">
-    <a *ngIf="!isArchived" mat-menu-item routerLink="/monitors/{{ id }}/edit">
+    <a
+      *ngIf="allowsEdit && !isArchived"
+      mat-menu-item
+      routerLink="/monitors/{{ id }}/edit"
+    >
       <mat-icon class="icon">edit</mat-icon>
       <span>
         Edit Monitor

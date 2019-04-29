@@ -29,6 +29,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { Router } from '@angular/router';
 import { SortService } from '../sort.service';
 import { ActionType } from 'src/app/actions/action';
+import { AuthService } from 'src/app/user/auth.service';
 
 interface IFilterValues {
   searchTerm: string;
@@ -94,6 +95,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     status: '',
   };
 
+  public allowsEdit: boolean;
+
   constructor(
     private filterService: FilterService,
     private monitorsService: MonitorsService,
@@ -102,9 +105,11 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     public dialog: MatDialog,
     public router: Router,
     private sortService: SortService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.allowsEdit = this.authService.allowsEdit;
     this.dataSource = new MatTableDataSource(this.monitors);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
