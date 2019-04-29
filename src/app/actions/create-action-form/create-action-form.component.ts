@@ -14,6 +14,7 @@ import {
   ActionBlockDelayUnit,
   ActionType,
   IActionMetadataEmailRate,
+  IActionMetadataEmailBatch,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -227,6 +228,67 @@ export class CreateActionFormComponent implements OnInit {
     emailAddresses.removeAt(index);
   }
 
+  private get blockMetadata(): IActionMetadataBlock {
+    const {
+      permanently,
+      blockTime,
+      blockTimeUnit,
+      blockDelay,
+      blockDelayUnit,
+      parameters,
+    } = this.blockDataForm.getRawValue();
+
+    const metadata = permanently
+      ? {
+          blockTime: -1,
+          parameters,
+        }
+      : {
+          blockTime,
+          blockTimeUnit,
+          blockDelay,
+          blockDelayUnit,
+          parameters,
+        };
+
+    return metadata as IActionMetadataBlock;
+  }
+
+  private emailAddresses(): string {
+    return this.emailDataForm
+      .getRawValue()
+      .emailAddresses.map((address: { emailAddress: string }) => {
+        return address.emailAddress;
+      })
+      .join(`;`);
+  }
+
+  private get emailRateMetadata(): IActionMetadataEmailRate {
+    const emailForm = this.emailDataForm.getRawValue();
+    const { emailSubject, emailSendLimit, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
+
+    return {
+      emailAddresses,
+      emailSubject,
+      emailSendLimit,
+      emailText,
+    } as IActionMetadataEmailRate;
+  }
+
+  private get emailBatchMetadata(): IActionMetadataEmailBatch {
+    const emailForm = this.emailDataForm.getRawValue();
+    const { emailSubject, emailCron, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
+
+    return {
+      emailAddresses,
+      emailSubject,
+      emailCron,
+      emailText,
+    } as IActionMetadataEmailBatch;
+  }
+
   submit() {
     const emailForm = this.emailDataForm.getRawValue();
     console.log({ emailForm });
@@ -236,55 +298,22 @@ export class CreateActionFormComponent implements OnInit {
       name,
       description,
     } = this.createActionForm.getRawValue();
-    let metadata: IActionMetadataBlock | IActionMetadataEmailRate;
+
+    let metadata:
+      | IActionMetadataBlock
+      | IActionMetadataEmailRate
+      | IActionMetadataEmailBatch;
+
     switch (actionType) {
       case ActionType.Block:
-        const {
-          permanently,
-          blockTime,
-          blockTimeUnit,
-          blockDelay,
-          blockDelayUnit,
-          parameters,
-        } = this.blockDataForm.getRawValue();
-
-        if (permanently) {
-          metadata = {
-            blockTime: -1,
-            parameters,
-          } as IActionMetadataBlock;
-        } else {
-          metadata = {
-            blockTime,
-            blockTimeUnit,
-            blockDelay,
-            blockDelayUnit,
-            parameters,
-          } as IActionMetadataBlock;
-        }
+        metadata = this.blockMetadata;
         break;
       case ActionType.EmailRate:
-        const {
-          emailAddresses,
-          emailSubject,
-          emailSendLimit,
-          emailText,
-        } = this.emailDataForm.getRawValue();
-
-        const addresses: string = emailAddresses
-          .map((address: { emailAddress: string }) => {
-            return address.emailAddress;
-          })
-          .join(`;`);
-
-        console.log({ addresses });
-
-        metadata = {
-          emailAddresses: addresses,
-          emailSubject,
-          emailSendLimit,
-          emailText,
-        } as IActionMetadataEmailRate;
+        metadata = this.emailRateMetadata;
+        break;
+      case ActionType.EmailBatch:
+        metadata = this.emailBatchMetadata;
+        break;
     }
 
     const data = {

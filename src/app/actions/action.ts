@@ -46,6 +46,13 @@ export interface IActionMetadataEmailRate {
   emailSendLimit: number;
 }
 
+export interface IActionMetadataEmailBatch {
+  emailText: string;
+  emailSubject: string;
+  emailAddresses: string;
+  emailCron: number;
+}
+
 export enum ActionParameters {
   Sip = 'IP Address',
   IpRange = 'IP Range',
