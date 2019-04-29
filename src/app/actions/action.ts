@@ -50,7 +50,14 @@ export interface IActionMetadataEmailBatch {
   emailText: string;
   emailSubject: string;
   emailAddresses: string;
-  emailCron: number;
+  emailCron: string;
+}
+
+export interface IActionMetadataEmailAlert {
+  emailText: string;
+  emailSubject: string;
+  emailAddresses: string;
+  parameters: ActionParameters[];
 }
 
 export enum ActionParameters {

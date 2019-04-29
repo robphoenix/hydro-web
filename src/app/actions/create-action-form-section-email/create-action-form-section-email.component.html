@@ -101,7 +101,7 @@
     *ngIf="actionType === 'emailAlert'"
   >
     <mat-label>Parameters*</mat-label>
-    <mat-select placeholder="Parameters*" multiple>
+    <mat-select placeholder="Parameters*" multiple formControlName="parameters">
       <mat-option
         *ngFor="let parameter of availableParameters"
         [value]="parameter"
@@ -109,6 +109,10 @@
         {{ parameter }}
       </mat-option>
     </mat-select>
+    <mat-hint align="end"> *Required </mat-hint>
+    <mat-error *ngIf="parent.get('parameters').hasError('required')">
+      {{ validationMessages['parameters']['required'] }}
+    </mat-error>
   </mat-form-field>
 
   <div class="email-text">

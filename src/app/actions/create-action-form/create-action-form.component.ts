@@ -15,6 +15,7 @@ import {
   ActionType,
   IActionMetadataEmailRate,
   IActionMetadataEmailBatch,
+  IActionMetadataEmailAlert,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -289,10 +290,20 @@ export class CreateActionFormComponent implements OnInit {
     } as IActionMetadataEmailBatch;
   }
 
-  submit() {
+  private get emailAlertMetadata(): IActionMetadataEmailAlert {
     const emailForm = this.emailDataForm.getRawValue();
-    console.log({ emailForm });
+    const { emailSubject, parameters, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
 
+    return {
+      emailAddresses,
+      emailSubject,
+      parameters,
+      emailText,
+    } as IActionMetadataEmailAlert;
+  }
+
+  submit() {
     const {
       actionType,
       name,
@@ -302,7 +313,8 @@ export class CreateActionFormComponent implements OnInit {
     let metadata:
       | IActionMetadataBlock
       | IActionMetadataEmailRate
-      | IActionMetadataEmailBatch;
+      | IActionMetadataEmailBatch
+      | IActionMetadataEmailAlert;
 
     switch (actionType) {
       case ActionType.Block:
@@ -313,6 +325,9 @@ export class CreateActionFormComponent implements OnInit {
         break;
       case ActionType.EmailBatch:
         metadata = this.emailBatchMetadata;
+        break;
+      case ActionType.EmailAlert:
+        metadata = this.emailAlertMetadata;
         break;
     }
 
