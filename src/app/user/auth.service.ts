@@ -279,4 +279,8 @@ export class AuthService {
   public get allowsEdit(): boolean {
     return this.userPermissions.includes(Permissions.AllowsEdit);
   }
+
+  public get allowsEnable(): boolean {
+    return this.userPermissions.includes(Permissions.AllowsEnable);
+  }
 }

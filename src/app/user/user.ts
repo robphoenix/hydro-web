@@ -19,6 +19,7 @@ export enum Permissions {
   AllowsUnblock = 'allowsUnblock',
   IsAdmin = 'isAdmin',
   AllowsEdit = 'allowsEdit',
+  AllowsEnable = 'allowsEnable',
   AppUser = 'appUser',
   ViewAll = 'viewAll',
 }

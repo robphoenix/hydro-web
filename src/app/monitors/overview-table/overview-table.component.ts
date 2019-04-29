@@ -2,16 +2,13 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
   ViewChildren,
   OnChanges,
   Output,
   EventEmitter,
 } from '@angular/core';
 import {
-  MatPaginator,
   MatTableDataSource,
-  MatSort,
   MatSnackBar,
   MatDialog,
   Sort,
@@ -96,6 +93,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
   };
 
   public allowsEdit: boolean;
+  public allowsEnable: boolean;
 
   constructor(
     private filterService: FilterService,
@@ -110,6 +108,7 @@ export class OverviewTableComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.allowsEdit = this.authService.allowsEdit;
+    this.allowsEnable = this.authService.allowsEnable;
     this.dataSource = new MatTableDataSource(this.monitors);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;

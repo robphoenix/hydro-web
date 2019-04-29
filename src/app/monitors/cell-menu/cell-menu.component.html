@@ -24,7 +24,7 @@
       </span>
     </a>
     <button
-      *ngIf="!isArchived && isOnline"
+      *ngIf="allowsEnable && !isArchived && isOnline"
       mat-menu-item
       (click)="disableMonitor.emit(id)"
     >
@@ -34,7 +34,7 @@
       </span>
     </button>
     <button
-      *ngIf="!isArchived && isOffline"
+      *ngIf="allowsEnable && !isArchived && isOffline"
       mat-menu-item
       (click)="enableMonitor.emit(id)"
     >

@@ -23,6 +23,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-create-action-form',

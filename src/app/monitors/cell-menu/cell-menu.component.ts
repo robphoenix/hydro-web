@@ -18,6 +18,9 @@ export class CellMenuComponent {
   @Input()
   allowsEdit: boolean;
 
+  @Input()
+  allowsEnable: boolean;
+
   @Output()
   archiveMonitor = new EventEmitter<number>();
 

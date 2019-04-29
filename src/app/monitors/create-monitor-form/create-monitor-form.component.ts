@@ -27,6 +27,8 @@ import { IAction } from 'src/app/actions/action';
   styleUrls: ['./create-monitor-form.component.scss'],
 })
 export class CreateMonitorFormComponent implements OnInit {
+  public allowsEnable: boolean;
+
   @Input()
   heading: string;
 
@@ -149,6 +151,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.allowsEnable = this.authService.allowsEnable;
     if (this.monitor) {
       this.createMonitorForm.patchValue({
         cacheWindow: this.cacheWindowService.durationValues.indexOf(
