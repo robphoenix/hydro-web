@@ -1,0 +1,13 @@
+<div class="form-field action-type">
+  <mat-form-field appearance="outline" [formGroup]="parent">
+    <mat-label>Action Type</mat-label>
+    <mat-select placeholder="Action Type" formControlName="actionType">
+      <mat-option *ngFor="let name of actionTypeNames" [value]="name">
+        {{ displayNames[name] }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p class="action-type-explanation">
+    {{ explanations[actionTypeValue] }}
+  </p>
+</div>

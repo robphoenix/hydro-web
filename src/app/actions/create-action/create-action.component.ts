@@ -34,9 +34,6 @@ export class CreateActionComponent implements OnInit {
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
-  private actionType: typeof ActionType = ActionType;
-  public availableActionTypes: { name: string; value: string }[] = [];
-
   private parameters: typeof ActionParameters = ActionParameters;
   public availableParameters: string[] = [];
 
@@ -66,30 +63,8 @@ export class CreateActionComponent implements OnInit {
 
   public blockActionUnits: { [key: string]: string[] } = {};
 
-  public actionTypeExplanation: { [key: string]: string } = {
-    // tslint:disable-next-line:max-line-length
-    block: `The properties you define below will be used to block an individual entity such as an IP or Session Token`,
-    // tslint:disable-next-line:max-line-length
-    emailAlert: `The properties you define below will be used to send out an email for every esper event. Once an alert value such as an IP (eg 1.1.1.1) or session token has been sent then it, and all other data in the same row, will be ignored for four days and any future emails will not reference it even though it was part of an esper event.`,
-    // tslint:disable-next-line:max-line-length
-    emailBatch: `The properties you define below will be used to batch esper events into email sent every day at the time specified`,
-    // tslint:disable-next-line:max-line-length
-    emailRate: `The properties you define below will be used to send out emails at a maximum number per hour`,
-  };
-
   @Input()
   title: string;
-
-  public actionTypeDisplayName: { [key: string]: string } = {
-    block: 'Block',
-    emailRate: 'Email Rate',
-    emailBatch: 'Email Batch',
-    emailAlert: 'Email Alert',
-    storeDB: 'Store in Database',
-    storeLogins: 'Store Logins',
-    storeAnalysis: 'Store Analysis',
-    misc: 'Miscellaneous',
-  };
 
   constructor(
     private fb: FormBuilder,
@@ -126,7 +101,6 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.availableActionTypes = Object.values(this.actionType);
     this.availableParameters = Object.values(this.parameters);
     this.blockActionUnits = {
       duration: Object.values(this.actionBlockTimeUnit),

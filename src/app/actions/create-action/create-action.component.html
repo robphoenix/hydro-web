@@ -7,22 +7,9 @@
     [parent]="createActionForm"
   ></hydro-create-action-description>
 
-  <div class="form-field action-type">
-    <mat-form-field appearance="outline">
-      <mat-label>Action Type</mat-label>
-      <mat-select placeholder="Action Type" formControlName="actionType">
-        <mat-option
-          *ngFor="let actionType of availableActionTypes"
-          [value]="actionType"
-        >
-          {{ actionTypeDisplayName[actionType] }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p class="action-type-explanation">
-      {{ actionTypeExplanation[createActionForm.get('actionType').value] }}
-    </p>
-  </div>
+  <hydro-create-action-type
+    [parent]="createActionForm"
+  ></hydro-create-action-type>
 
   <hydro-create-action-form-section-block
     *ngIf="createActionForm.get('actionType').value === 'block'"
