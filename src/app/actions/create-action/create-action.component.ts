@@ -23,15 +23,14 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
-import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
-  selector: 'hydro-create-action-form',
-  templateUrl: './create-action-form.component.html',
-  styleUrls: ['./create-action-form.component.scss'],
+  selector: 'hydro-create-action',
+  templateUrl: './create-action.component.html',
+  styleUrls: ['./create-action.component.scss'],
 })
-export class CreateActionFormComponent implements OnInit {
-  public createActionForm: FormGroup;
+export class CreateActionComponent implements OnInit {
+  public CreateAction: FormGroup;
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
@@ -123,7 +122,7 @@ export class CreateActionFormComponent implements OnInit {
       emailText: [``, Validators.required],
       emailCron: [``, Validators.required],
     });
-    this.createActionForm = this.fb.group({
+    this.CreateAction = this.fb.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
@@ -189,10 +188,10 @@ export class CreateActionFormComponent implements OnInit {
   }
 
   get disableSubmit() {
-    const validName: boolean = this.createActionForm.get('name').valid;
-    const validDescription: boolean = this.createActionForm.get('description')
+    const validName: boolean = this.CreateAction.get('name').valid;
+    const validDescription: boolean = this.CreateAction.get('description')
       .valid;
-    const actionType: AbstractControl = this.createActionForm.get('actionType');
+    const actionType: AbstractControl = this.CreateAction.get('actionType');
     const validActionType: boolean = actionType.valid;
     const actionTypeValue: string = actionType.value;
     const validBaseForm: boolean =
@@ -305,11 +304,7 @@ export class CreateActionFormComponent implements OnInit {
   }
 
   submit() {
-    const {
-      actionType,
-      name,
-      description,
-    } = this.createActionForm.getRawValue();
+    const { actionType, name, description } = this.CreateAction.getRawValue();
 
     let metadata:
       | IActionMetadataBlock
@@ -345,7 +340,7 @@ export class CreateActionFormComponent implements OnInit {
       (res: IAction) => {
         console.log({ res });
 
-        this.createActionForm.reset();
+        this.CreateAction.reset();
         this.router.navigateByUrl(`/actions/view`);
         this.snackBar.open(`Action ${name} created`, '', {
           duration: 2000,

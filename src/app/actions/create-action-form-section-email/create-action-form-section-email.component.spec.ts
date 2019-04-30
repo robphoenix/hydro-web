@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateActionFormSectionEmailComponent } from './create-action-form-section-email.component';
+import { CreateActionSectionEmailComponent } from './create-action-form-section-email.component';
 
-describe('CreateActionFormSectionEmailComponent', () => {
-  let component: CreateActionFormSectionEmailComponent;
-  let fixture: ComponentFixture<CreateActionFormSectionEmailComponent>;
+describe('CreateActionSectionEmailComponent', () => {
+  let component: CreateActionSectionEmailComponent;
+  let fixture: ComponentFixture<CreateActionSectionEmailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateActionFormSectionEmailComponent],
+      declarations: [CreateActionSectionEmailComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateActionFormSectionEmailComponent);
+    fixture = TestBed.createComponent(CreateActionSectionEmailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

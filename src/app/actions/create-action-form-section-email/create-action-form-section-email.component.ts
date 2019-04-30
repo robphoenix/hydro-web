@@ -6,7 +6,7 @@ import { FormGroup, FormArray, Validators } from '@angular/forms';
   templateUrl: './create-action-form-section-email.component.html',
   styleUrls: ['./create-action-form-section-email.component.scss'],
 })
-export class CreateActionFormSectionEmailComponent {
+export class CreateActionSectionEmailComponent {
   sendLimit: number;
   batchTime: string;
   batchTimeOfDay: string;

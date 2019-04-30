@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateActionFormComponent } from './create-action-form/create-action-form.component';
+import { CreateActionComponent } from './create-action/create-action.component';
 import { AddActionComponent } from './add-action/add-action.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
-import { CreateActionFormSectionBlockComponent } from './create-action-form-section-block/create-action-form-section-block.component';
-import { CreateActionFormSectionEmailComponent } from './create-action-form-section-email/create-action-form-section-email.component';
+import { CreateActionSectionBlockComponent } from './create-action-form-section-block/create-action-form-section-block.component';
+import { CreateActionSectionEmailComponent } from './create-action-form-section-email/create-action-form-section-email.component';
 import {
   QuillModule,
   QuillConfigInterface,
@@ -64,10 +64,10 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     },
   ],
   declarations: [
-    CreateActionFormComponent,
+    CreateActionComponent,
     AddActionComponent,
-    CreateActionFormSectionBlockComponent,
-    CreateActionFormSectionEmailComponent,
+    CreateActionSectionBlockComponent,
+    CreateActionSectionEmailComponent,
     ViewActionsComponent,
     EditActionComponent,
     ActionUpdateDialogComponent,

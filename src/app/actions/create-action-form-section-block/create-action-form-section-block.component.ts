@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './create-action-form-section-block.component.html',
   styleUrls: ['./create-action-form-section-block.component.scss'],
 })
-export class CreateActionFormSectionBlockComponent {
+export class CreateActionSectionBlockComponent {
   @Input()
   availableParameters: string[] = [];
 
