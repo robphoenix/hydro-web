@@ -8,12 +8,14 @@ import {
 } from '@angular/forms';
 import {
   IActionMetadataBlock,
-  IActionMetadataEmail,
   IAction,
   ActionParameters,
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
   ActionType,
+  IActionMetadataEmailRate,
+  IActionMetadataEmailBatch,
+  IActionMetadataEmailAlert,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -21,6 +23,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-create-action-form',
@@ -62,6 +65,9 @@ export class CreateActionFormComponent implements OnInit {
     },
     emailText: {
       required: `You must specify an email text`,
+    },
+    emailCron: {
+      required: `You must specify an email cron expression`,
     },
   };
 
@@ -115,6 +121,7 @@ export class CreateActionFormComponent implements OnInit {
       emailSubject: [``, Validators.required],
       emailSendLimit: [0, Validators.required],
       emailText: [``, Validators.required],
+      emailCron: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],
@@ -223,41 +230,106 @@ export class CreateActionFormComponent implements OnInit {
     emailAddresses.removeAt(index);
   }
 
-  submit() {
-    const emailForm = this.emailDataForm.getRawValue();
-    console.log({ emailForm });
-
+  private get blockMetadata(): IActionMetadataBlock {
     const {
-      actionType,
-      name,
-      description,
-    } = this.createActionForm.getRawValue();
-    let metadata: IActionMetadataBlock | IActionMetadataEmail;
-    switch (actionType) {
-      case ActionType.Block:
-        const {
-          permanently,
+      permanently,
+      blockTime,
+      blockTimeUnit,
+      blockDelay,
+      blockDelayUnit,
+      parameters,
+    } = this.blockDataForm.getRawValue();
+
+    const metadata = permanently
+      ? {
+          blockTime: -1,
+          parameters,
+        }
+      : {
           blockTime,
           blockTimeUnit,
           blockDelay,
           blockDelayUnit,
           parameters,
-        } = this.blockDataForm.getRawValue();
+        };
 
-        if (permanently) {
-          metadata = {
-            blockTime: -1,
-            parameters,
-          } as IActionMetadataBlock;
-        } else {
-          metadata = {
-            blockTime,
-            blockTimeUnit,
-            blockDelay,
-            blockDelayUnit,
-            parameters,
-          } as IActionMetadataBlock;
-        }
+    return metadata as IActionMetadataBlock;
+  }
+
+  private emailAddresses(): string {
+    return this.emailDataForm
+      .getRawValue()
+      .emailAddresses.map((address: { emailAddress: string }) => {
+        return address.emailAddress;
+      })
+      .join(`;`);
+  }
+
+  private get emailRateMetadata(): IActionMetadataEmailRate {
+    const emailForm = this.emailDataForm.getRawValue();
+    const { emailSubject, emailSendLimit, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
+
+    return {
+      emailAddresses,
+      emailSubject,
+      emailSendLimit,
+      emailText,
+    } as IActionMetadataEmailRate;
+  }
+
+  private get emailBatchMetadata(): IActionMetadataEmailBatch {
+    const emailForm = this.emailDataForm.getRawValue();
+    const { emailSubject, emailCron, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
+
+    return {
+      emailAddresses,
+      emailSubject,
+      emailCron,
+      emailText,
+    } as IActionMetadataEmailBatch;
+  }
+
+  private get emailAlertMetadata(): IActionMetadataEmailAlert {
+    const emailForm = this.emailDataForm.getRawValue();
+    const { emailSubject, parameters, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses();
+
+    return {
+      emailAddresses,
+      emailSubject,
+      parameters,
+      emailText,
+    } as IActionMetadataEmailAlert;
+  }
+
+  submit() {
+    const {
+      actionType,
+      name,
+      description,
+    } = this.createActionForm.getRawValue();
+
+    let metadata:
+      | IActionMetadataBlock
+      | IActionMetadataEmailRate
+      | IActionMetadataEmailBatch
+      | IActionMetadataEmailAlert;
+
+    switch (actionType) {
+      case ActionType.Block:
+        metadata = this.blockMetadata;
+        break;
+      case ActionType.EmailRate:
+        metadata = this.emailRateMetadata;
+        break;
+      case ActionType.EmailBatch:
+        metadata = this.emailBatchMetadata;
+        break;
+      case ActionType.EmailAlert:
+        metadata = this.emailAlertMetadata;
+        break;
     }
 
     const data = {
@@ -268,7 +340,6 @@ export class CreateActionFormComponent implements OnInit {
     } as IAction;
 
     console.log({ data });
-    console.log(data);
 
     this.actionsService.addAction(data).subscribe(
       (res: IAction) => {

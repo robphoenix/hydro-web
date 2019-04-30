@@ -1,5 +1,11 @@
 @import 'main';
 
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: $space-4;
+}
+
 .status-toggle {
   margin-left: $spacing-l;
 }
@@ -23,6 +29,12 @@
   overflow: auto;
 }
 
+.header-name {
+  font-size: $fs-3;
+  font-weight: $fw-5;
+  margin-right: $space-2;
+}
+
 .mat-header-row {
   padding: $spacing-xs 0;
 }
@@ -41,13 +53,6 @@
 
 .menu-icon {
   color: $accent-green;
-}
-
-.header-name {
-  font-size: $fs-m;
-  font-weight: $fw-5;
-  margin-left: $spacing-s;
-  color: $grey-5;
 }
 
 .monitor-cell {

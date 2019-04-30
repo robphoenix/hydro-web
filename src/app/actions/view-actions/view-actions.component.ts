@@ -22,7 +22,7 @@ export class ViewActionsComponent implements OnInit {
   public actionTypeDisplayNames: { [key: string]: string } = {
     block: 'Block',
     emailAlert: 'Email Alert',
-    emailRAte: 'Email Rate',
+    emailRate: 'Email Rate',
     emailBatch: 'Email Batch',
   };
 

@@ -6,7 +6,11 @@
 
 <mat-menu #menu="matMenu">
   <div class="menu">
-    <a *ngIf="!isArchived" mat-menu-item routerLink="/monitors/{{ id }}/edit">
+    <a
+      *ngIf="allowsEdit && !isArchived"
+      mat-menu-item
+      routerLink="/monitors/{{ id }}/edit"
+    >
       <mat-icon class="icon">edit</mat-icon>
       <span>
         Edit Monitor
@@ -20,7 +24,7 @@
       </span>
     </a>
     <button
-      *ngIf="!isArchived && isOnline"
+      *ngIf="allowsEnable && !isArchived && isOnline"
       mat-menu-item
       (click)="disableMonitor.emit(id)"
     >
@@ -30,7 +34,7 @@
       </span>
     </button>
     <button
-      *ngIf="!isArchived && isOffline"
+      *ngIf="allowsEnable && !isArchived && isOffline"
       mat-menu-item
       (click)="enableMonitor.emit(id)"
     >

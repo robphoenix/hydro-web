@@ -7,6 +7,7 @@ import {
   MatDialog,
   MatSort,
   Sort,
+  MatPaginator,
 } from '@angular/material';
 import {
   IMonitorDataAttributes,
@@ -23,6 +24,7 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-dialog.component';
 import { SortService } from '../sort.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { AuthService } from 'src/app/user/auth.service';
 
 /**
  * Describes a single monitor.
@@ -51,9 +53,13 @@ export class MonitorComponent implements OnInit, OnDestroy {
   public liveData: IMonitorDataAttributes[] = [];
   public dataType = '';
   public timeLiveDataReceived: Date;
+  public allowsEdit: boolean;
 
   @ViewChild(MatSort)
   private sort: MatSort;
+
+  @ViewChild(MatPaginator)
+  private paginator: MatPaginator;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,11 +68,14 @@ export class MonitorComponent implements OnInit, OnDestroy {
     private eventbusService: EventbusService,
     public dialog: MatDialog,
     private sortService: SortService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
+    this.allowsEdit = this.authService.allowsEdit;
     this.dataSource = new MatTableDataSource([]);
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.getMonitor();
   }
 
@@ -231,6 +240,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.displayedColumns = headers;
     this.dataSource.data = data;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   /**

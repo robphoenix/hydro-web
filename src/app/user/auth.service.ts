@@ -4,7 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IUser } from './user';
+import { IUser, Permissions } from './user';
 import { Router } from '@angular/router';
 import { ILoginResponse } from './login-response';
 import { IGroup } from '../monitors/monitor';
@@ -232,6 +232,12 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  private get authToken(): IAccessToken {
+    return this.jwtHelper.decodeToken(
+      localStorage.getItem(this.accessTokenName),
+    ) as IAccessToken;
+  }
+
   get isLoggedIn(): boolean {
     return !this.jwtHelper.isTokenExpired(
       localStorage.getItem(this.accessTokenName),
@@ -245,16 +251,12 @@ export class AuthService {
    * @memberof AuthService
    */
   get username(): string {
-    const { username } = this.jwtHelper.decodeToken(
-      localStorage.getItem(this.accessTokenName),
-    ) as IAccessToken;
+    const { username } = this.authToken;
     return username;
   }
 
   get userGroups(): IGroup[] {
-    const { groups } = this.jwtHelper.decodeToken(
-      localStorage.getItem(this.accessTokenName),
-    ) as IAccessToken;
+    const { groups } = this.authToken;
     return groups;
   }
 
@@ -265,9 +267,20 @@ export class AuthService {
    * @memberof AuthService
    */
   get userDisplayName(): string {
-    const { displayName } = this.jwtHelper.decodeToken(
-      localStorage.getItem(this.accessTokenName),
-    ) as IAccessToken;
+    const { displayName } = this.authToken;
     return displayName;
+  }
+
+  private get userPermissions(): Permissions[] {
+    const { permissions } = this.authToken;
+    return permissions;
+  }
+
+  public get allowsEdit(): boolean {
+    return this.userPermissions.includes(Permissions.AllowsEdit);
+  }
+
+  public get allowsEnable(): boolean {
+    return this.userPermissions.includes(Permissions.AllowsEnable);
   }
 }

@@ -4,7 +4,7 @@ export interface IAction {
   actionType: ActionType;
   description: string;
   address: string;
-  metadata: IActionMetadataBlock | IActionMetadataEmail;
+  metadata: IActionMetadataBlock | IActionMetadataEmailRate;
   archived: boolean;
 }
 
@@ -39,10 +39,25 @@ export enum ActionBlockDelayUnit {
   Hours = 'HOURS',
 }
 
-export interface IActionMetadataEmail {
+export interface IActionMetadataEmailRate {
   emailText: string;
   emailSubject: string;
   emailAddresses: string;
+  emailSendLimit: number;
+}
+
+export interface IActionMetadataEmailBatch {
+  emailText: string;
+  emailSubject: string;
+  emailAddresses: string;
+  emailCron: string;
+}
+
+export interface IActionMetadataEmailAlert {
+  emailText: string;
+  emailSubject: string;
+  emailAddresses: string;
+  parameters: ActionParameters[];
 }
 
 export enum ActionParameters {
