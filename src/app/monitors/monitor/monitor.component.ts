@@ -7,6 +7,7 @@ import {
   MatDialog,
   MatSort,
   Sort,
+  MatPaginator,
 } from '@angular/material';
 import {
   IMonitorDataAttributes,
@@ -57,6 +58,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   private sort: MatSort;
 
+  @ViewChild(MatPaginator)
+  private paginator: MatPaginator;
+
   constructor(
     private route: ActivatedRoute,
     public router: Router,
@@ -71,6 +75,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.allowsEdit = this.authService.allowsEdit;
     this.dataSource = new MatTableDataSource([]);
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.getMonitor();
   }
 
@@ -235,6 +240,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.displayedColumns = headers;
     this.dataSource.data = data;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   /**

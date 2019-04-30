@@ -84,6 +84,18 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
+
+    <!--
+      if we use ngif here to only show the paginator when there's data, it
+      screws the table up, I don't know why, so CSS to the rescue
+    -->
+    <mat-paginator
+      [ngStyle]="{ display: dataSource.data.length ? 'block' : 'none' }"
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25]"
+      showFirstLastButtons
+    ></mat-paginator>
   </div>
 </div>
 
