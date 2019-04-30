@@ -1,5 +1,5 @@
 <form [formGroup]="parent" class="form">
-  <mat-form-field appearance="outline" class="form-field">
+  <!-- <mat-form-field appearance="outline" class="form-field">
     <mat-label>Parameters*</mat-label>
     <mat-select
       formControlName="parameters"
@@ -18,7 +18,7 @@
     <mat-error *ngIf="parent.get('parameters').hasError('required')">
       {{ validationMessages['parameters']['required'] }}
     </mat-error>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <mat-slide-toggle class="form-field" formControlName="permanently">
     Block Permanently

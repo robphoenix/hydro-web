@@ -9,7 +9,6 @@ import {
 import {
   IActionMetadataBlock,
   IAction,
-  ActionParameters,
   ActionBlockTimeUnit,
   ActionBlockDelayUnit,
   ActionType,
@@ -34,16 +33,10 @@ export class CreateActionComponent implements OnInit {
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
-  private parameters: typeof ActionParameters = ActionParameters;
-  public availableParameters: string[] = [];
-
   private actionBlockTimeUnit: typeof ActionBlockTimeUnit = ActionBlockTimeUnit;
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    parameters: {
-      required: `You must choose parameters to block on`,
-    },
     blockTime: {
       required: `You must specify a block time or block permanently`,
     },
@@ -74,7 +67,7 @@ export class CreateActionComponent implements OnInit {
     public snackBar: MatSnackBar,
   ) {
     this.blockDataForm = this.fb.group({
-      parameters: [[``], Validators.required],
+      parameters: [[], Validators.required],
       permanently: [false],
       blockTime: [``, Validators.required],
       blockTimeUnit: [``, Validators.required],
@@ -82,7 +75,7 @@ export class CreateActionComponent implements OnInit {
       blockDelayUnit: [``],
     });
     this.emailDataForm = this.fb.group({
-      parameters: [[``], Validators.required],
+      parameters: [[], Validators.required],
       emailAddresses: this.fb.array([
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
@@ -101,7 +94,6 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.availableParameters = Object.values(this.parameters);
     this.blockActionUnits = {
       duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
@@ -149,6 +141,10 @@ export class CreateActionComponent implements OnInit {
           blockDelayUnit.clearValidators();
         }
       });
+  }
+
+  public showActionType(actionType: string): boolean {
+    return actionType === this.createActionForm.get('actionType').value;
   }
 
   emailEditorContentChange(content: string) {

@@ -11,19 +11,21 @@
     [parent]="createActionForm"
   ></hydro-create-action-type>
 
-  <hydro-create-action-form-section-block
-    *ngIf="createActionForm.get('actionType').value === 'block'"
-    [parent]="blockDataForm"
-    [availableParameters]="availableParameters"
-    [validationMessages]="validationMessages"
-    [units]="blockActionUnits"
-  ></hydro-create-action-form-section-block>
+  <div *ngIf="showActionType('block')">
+    <hydro-create-action-parameters
+      [parent]="blockDataForm"
+    ></hydro-create-action-parameters>
+    <hydro-create-action-form-section-block
+      [parent]="blockDataForm"
+      [validationMessages]="validationMessages"
+      [units]="blockActionUnits"
+    ></hydro-create-action-form-section-block>
+  </div>
 
   <hydro-create-action-form-section-email
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"
     [parent]="emailDataForm"
-    [availableParameters]="availableParameters"
     [validationMessages]="validationMessages"
     [actionType]="createActionForm.get('actionType').value"
     (addEmailAddress)="addEmailAddress()"

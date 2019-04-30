@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'hydro-create-action-description',
@@ -7,17 +7,12 @@ import { FormGroup, AbstractControl } from '@angular/forms';
   styleUrls: ['./create-action-description.component.scss'],
 })
 export class CreateActionDescriptionComponent {
-  public controlName = `description`;
   public validationMessage = `You must enter an action description`;
 
   @Input()
   parent: FormGroup;
 
-  public get control(): AbstractControl {
-    return this.parent.get(this.controlName);
-  }
-
   public get hasError(): boolean {
-    return this.control.hasError(`required`);
+    return this.parent.get(`description`).hasError(`required`);
   }
 }

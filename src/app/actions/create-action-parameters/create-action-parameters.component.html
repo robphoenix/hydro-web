@@ -1,0 +1,18 @@
+<mat-form-field appearance="outline" [formGroup]="parent" class="form-field">
+  <mat-label>Parameters</mat-label>
+  <mat-select
+    formControlName="parameters"
+    placeholder="Parameter to block on"
+    ngDefaultControl
+    multiple
+    required
+  >
+    <mat-option *ngFor="let parameter of parameters" [value]="parameter">
+      {{ parameter }}
+    </mat-option>
+  </mat-select>
+  <mat-hint align="end"> *Required </mat-hint>
+  <mat-error *ngIf="hasError">
+    {{ validationMessage }}
+  </mat-error>
+</mat-form-field>
