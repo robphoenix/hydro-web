@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" [formGroup]="parent" class="form-field">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput formControlName="{{ controlName }}" />
+  <mat-hint align="end">{{ hint }}</mat-hint>
+  <mat-error *ngIf="hasError">
+    {{ validationMessage }}
+  </mat-error>
+</mat-form-field>

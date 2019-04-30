@@ -30,7 +30,7 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
   styleUrls: ['./create-action.component.scss'],
 })
 export class CreateActionComponent implements OnInit {
-  public CreateAction: FormGroup;
+  public createActionForm: FormGroup;
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
@@ -122,7 +122,7 @@ export class CreateActionComponent implements OnInit {
       emailText: [``, Validators.required],
       emailCron: [``, Validators.required],
     });
-    this.CreateAction = this.fb.group({
+    this.createActionForm = this.fb.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
@@ -188,10 +188,10 @@ export class CreateActionComponent implements OnInit {
   }
 
   get disableSubmit() {
-    const validName: boolean = this.CreateAction.get('name').valid;
-    const validDescription: boolean = this.CreateAction.get('description')
+    const validName: boolean = this.createActionForm.get('name').valid;
+    const validDescription: boolean = this.createActionForm.get('description')
       .valid;
-    const actionType: AbstractControl = this.CreateAction.get('actionType');
+    const actionType: AbstractControl = this.createActionForm.get('actionType');
     const validActionType: boolean = actionType.valid;
     const actionTypeValue: string = actionType.value;
     const validBaseForm: boolean =
@@ -304,7 +304,11 @@ export class CreateActionComponent implements OnInit {
   }
 
   submit() {
-    const { actionType, name, description } = this.CreateAction.getRawValue();
+    const {
+      actionType,
+      name,
+      description,
+    } = this.createActionForm.getRawValue();
 
     let metadata:
       | IActionMetadataBlock
@@ -340,7 +344,7 @@ export class CreateActionComponent implements OnInit {
       (res: IAction) => {
         console.log({ res });
 
-        this.CreateAction.reset();
+        this.createActionForm.reset();
         this.router.navigateByUrl(`/actions/view`);
         this.snackBar.open(`Action ${name} created`, '', {
           duration: 2000,

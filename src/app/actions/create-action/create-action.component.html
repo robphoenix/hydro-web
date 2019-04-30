@@ -1,12 +1,12 @@
-<form [formGroup]="CreateAction" (ngSubmit)="submit()">
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Name*</mat-label>
-    <input matInput formControlName="name" />
-    <mat-hint align="end"> *Required </mat-hint>
-    <mat-error *ngIf="CreateAction.get('name').hasError('required')">
-      {{ validationMessages['name']['required'] }}
-    </mat-error>
-  </mat-form-field>
+<form [formGroup]="createActionForm" (ngSubmit)="submit()">
+  <hydro-create-action-name
+    [parent]="createActionForm"
+    [validationMessage]="validationMessages['name']['required']"
+    [control]="createActionForm.get('name')"
+    [controlName]="'name'"
+    [label]="'Name*'"
+    [hint]="'*Required'"
+  ></hydro-create-action-name>
 
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>Description*</mat-label>
@@ -21,7 +21,7 @@
       formControlName="description"
     ></textarea>
     <mat-hint align="end"> *Required </mat-hint>
-    <mat-error *ngIf="CreateAction.get('description').hasError('required')">
+    <mat-error *ngIf="createActionForm.get('description').hasError('required')">
       {{ validationMessages['description']['required'] }}
     </mat-error>
   </mat-form-field>
@@ -39,12 +39,12 @@
       </mat-select>
     </mat-form-field>
     <p class="action-type-explanation">
-      {{ actionTypeExplanation[CreateAction.get('actionType').value] }}
+      {{ actionTypeExplanation[createActionForm.get('actionType').value] }}
     </p>
   </div>
 
   <hydro-create-action-form-section-block
-    *ngIf="CreateAction.get('actionType').value === 'block'"
+    *ngIf="createActionForm.get('actionType').value === 'block'"
     [parent]="blockDataForm"
     [availableParameters]="availableParameters"
     [validationMessages]="validationMessages"
@@ -52,12 +52,12 @@
   ></hydro-create-action-form-section-block>
 
   <hydro-create-action-form-section-email
-    *ngIf="(CreateAction.get('actionType').value || '').startsWith('email')"
+    *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"
     [parent]="emailDataForm"
     [availableParameters]="availableParameters"
     [validationMessages]="validationMessages"
-    [actionType]="CreateAction.get('actionType').value"
+    [actionType]="createActionForm.get('actionType').value"
     (addEmailAddress)="addEmailAddress()"
     (removeEmailAddress)="removeEmailAddress($event)"
     (editorContentChange)="emailEditorContentChange($event)"

@@ -17,6 +17,7 @@ import {
 import { ViewActionsComponent } from './view-actions/view-actions.component';
 import { EditActionComponent } from './edit-action/edit-action.component';
 import { ActionUpdateDialogComponent } from './action-update-dialog/action-update-dialog.component';
+import { CreateActionNameComponent } from './create-action-name/create-action-name.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -71,6 +72,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     ViewActionsComponent,
     EditActionComponent,
     ActionUpdateDialogComponent,
+    CreateActionNameComponent,
   ],
   entryComponents: [ActionUpdateDialogComponent],
 })
