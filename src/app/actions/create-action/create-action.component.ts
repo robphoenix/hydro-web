@@ -44,9 +44,6 @@ export class CreateActionComponent implements OnInit {
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    name: {
-      required: `You must enter an action name`,
-    },
     description: {
       required: `You must enter an action description`,
     },

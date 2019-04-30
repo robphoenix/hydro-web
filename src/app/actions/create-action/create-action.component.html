@@ -1,11 +1,6 @@
 <form [formGroup]="createActionForm" (ngSubmit)="submit()">
   <hydro-create-action-name
     [parent]="createActionForm"
-    [validationMessage]="validationMessages['name']['required']"
-    [control]="createActionForm.get('name')"
-    [controlName]="'name'"
-    [label]="'Name*'"
-    [hint]="'*Required'"
   ></hydro-create-action-name>
 
   <mat-form-field appearance="outline" class="form-field">

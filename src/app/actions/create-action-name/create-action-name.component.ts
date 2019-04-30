@@ -7,25 +7,17 @@ import { FormGroup, AbstractControl } from '@angular/forms';
   styleUrls: ['./create-action-name.component.scss'],
 })
 export class CreateActionNameComponent {
+  public controlName = `name`;
+  public validationMessage = `You must enter an action name`;
+
   @Input()
   parent: FormGroup;
 
-  @Input()
-  validationMessage: String;
-
-  @Input()
-  control: AbstractControl;
-
-  @Input()
-  controlName: String;
-
-  @Input()
-  label: String;
-
-  @Input()
-  hint: String;
+  public get control(): AbstractControl {
+    return this.parent.get(this.controlName);
+  }
 
   public get hasError(): boolean {
-    return this.control.hasError('required');
+    return this.control.hasError(`required`);
   }
 }
