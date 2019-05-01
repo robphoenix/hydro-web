@@ -33,8 +33,6 @@ export class CreateActionComponent implements OnInit {
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
-  private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
-
   public validationMessages: { [key: string]: { [key: string]: string } } = {
     emailAddresses: {
       validBet365Email: `You must specify a valid bet365 email address`,
@@ -49,8 +47,6 @@ export class CreateActionComponent implements OnInit {
       required: `You must specify an email cron expression`,
     },
   };
-
-  public blockActionUnits: { [key: string]: string[] } = {};
 
   @Input()
   title: string;
@@ -90,10 +86,6 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.blockActionUnits = {
-      delay: Object.values(this.actionBlockDelayUnit),
-    };
-
     const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
     const blockTimeUnit: AbstractControl = this.blockDataForm.get(
       `blockTimeUnit`,

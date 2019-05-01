@@ -20,10 +20,10 @@ export class CreateActionBlockDurationComponent implements OnInit {
   }
 
   public get isBlockPermanently(): boolean {
-    return this.parent.get('permanently').value;
+    return this.parent.get(`permanently`).value;
   }
 
   public get hasError(): boolean {
-    return this.parent.get('blockTime').hasError('required');
+    return this.parent.get(`blockTime`).hasError(`required`);
   }
 }
