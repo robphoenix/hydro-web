@@ -8,9 +8,8 @@ describe('CreateActionTypeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionTypeComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionTypeComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

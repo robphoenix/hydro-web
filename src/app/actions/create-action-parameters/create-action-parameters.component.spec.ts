@@ -8,9 +8,8 @@ describe('CreateActionParametersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionParametersComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionParametersComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
