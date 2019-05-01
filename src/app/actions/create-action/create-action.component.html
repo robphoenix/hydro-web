@@ -11,29 +11,34 @@
     [parent]="createActionForm"
   ></hydro-create-action-type>
 
-  <div *ngIf="showActionType('block')">
+  <div *ngIf="isActionType('block')">
     <hydro-create-action-parameters
-      [parent]="blockDataForm"
+      [parent]="blockForm"
     ></hydro-create-action-parameters>
     <hydro-create-action-block-permanently
-      [parent]="blockDataForm"
+      [parent]="blockForm"
     ></hydro-create-action-block-permanently>
     <hydro-create-action-block-duration
-      [parent]="blockDataForm"
+      [parent]="blockForm"
     ></hydro-create-action-block-duration>
     <hydro-create-action-block-delay
-      [parent]="blockDataForm"
+      [parent]="blockForm"
     ></hydro-create-action-block-delay>
   </div>
 
+  <div *ngIf="isActionType('emailRate')">
+    <hydro-create-action-email-addresses
+      [parent]="emailRateForm"
+      (addEmailAddress)="addEmailAddress($event)"
+      (removeEmailAddress)="removeEmailAddress($event)"
+    ></hydro-create-action-email-addresses>
+  </div>
   <hydro-create-action-form-section-email
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"
     [parent]="emailDataForm"
     [validationMessages]="validationMessages"
     [actionType]="createActionForm.get('actionType').value"
-    (addEmailAddress)="addEmailAddress()"
-    (removeEmailAddress)="removeEmailAddress($event)"
     (editorContentChange)="emailEditorContentChange($event)"
   ></hydro-create-action-form-section-email>
 

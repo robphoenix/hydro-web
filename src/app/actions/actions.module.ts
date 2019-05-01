@@ -23,6 +23,7 @@ import { CreateActionParametersComponent } from './create-action-parameters/crea
 import { CreateActionBlockPermanentlyComponent } from './create-action-block-permanently/create-action-block-permanently.component';
 import { CreateActionBlockDurationComponent } from './create-action-block-duration/create-action-block-duration.component';
 import { CreateActionBlockDelayComponent } from './create-action-block-delay/create-action-block-delay.component';
+import { CreateActionEmailAddressesComponent } from './create-action-email-addresses/create-action-email-addresses.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -83,6 +84,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionBlockPermanentlyComponent,
     CreateActionBlockDurationComponent,
     CreateActionBlockDelayComponent,
+    CreateActionEmailAddressesComponent,
   ],
   entryComponents: [ActionUpdateDialogComponent],
 })

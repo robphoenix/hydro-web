@@ -8,9 +8,8 @@ describe('CreateActionBlockDelayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionBlockDelayComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionBlockDelayComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

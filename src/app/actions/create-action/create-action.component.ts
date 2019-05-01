@@ -9,8 +9,6 @@ import {
 import {
   IActionMetadataBlock,
   IAction,
-  ActionBlockTimeUnit,
-  ActionBlockDelayUnit,
   ActionType,
   IActionMetadataEmailRate,
   IActionMetadataEmailBatch,
@@ -30,13 +28,11 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
 })
 export class CreateActionComponent implements OnInit {
   public createActionForm: FormGroup;
-  public blockDataForm: FormGroup;
+  public blockForm: FormGroup;
   public emailDataForm: FormGroup;
+  public emailRateForm: FormGroup;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    emailAddresses: {
-      validBet365Email: `You must specify a valid bet365 email address`,
-    },
     emailSubject: {
       required: `You must specify an email subject`,
     },
@@ -58,7 +54,7 @@ export class CreateActionComponent implements OnInit {
     private router: Router,
     public snackBar: MatSnackBar,
   ) {
-    this.blockDataForm = this.fb.group({
+    this.blockForm = this.fb.group({
       parameters: [[], Validators.required],
       permanently: [false],
       blockTime: [``, Validators.required],
@@ -76,27 +72,31 @@ export class CreateActionComponent implements OnInit {
       emailText: [``, Validators.required],
       emailCron: [``, Validators.required],
     });
+    this.emailRateForm = this.fb.group({
+      emailAddresses: this.fb.array([
+        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+      ]),
+    });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
-      blockData: this.blockDataForm,
+      blockData: this.blockForm,
       emailData: this.emailDataForm,
+      emailRateData: this.emailRateForm,
     });
   }
 
   ngOnInit() {
-    const blockTime: AbstractControl = this.blockDataForm.get(`blockTime`);
-    const blockTimeUnit: AbstractControl = this.blockDataForm.get(
-      `blockTimeUnit`,
-    );
-    const blockDelay: AbstractControl = this.blockDataForm.get(`blockDelay`);
-    const blockDelayUnit: AbstractControl = this.blockDataForm.get(
+    const blockTime: AbstractControl = this.blockForm.get(`blockTime`);
+    const blockTimeUnit: AbstractControl = this.blockForm.get(`blockTimeUnit`);
+    const blockDelay: AbstractControl = this.blockForm.get(`blockDelay`);
+    const blockDelayUnit: AbstractControl = this.blockForm.get(
       `blockDelayUnit`,
     );
 
     // We want to remove any validation from the time unit inputs if the user is blocking permanently
-    this.blockDataForm
+    this.blockForm
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
         if (blockPermanently) {
@@ -118,7 +118,7 @@ export class CreateActionComponent implements OnInit {
       });
 
     // We don't want to submit a block action that has a delay time but no delay unit
-    this.blockDataForm
+    this.blockForm
       .get(`blockDelay`)
       .valueChanges.subscribe((blockDelayValue: string) => {
         if (blockDelayValue !== ``) {
@@ -130,8 +130,8 @@ export class CreateActionComponent implements OnInit {
       });
   }
 
-  public showActionType(actionType: string): boolean {
-    return actionType === this.createActionForm.get('actionType').value;
+  public isActionType(actionType: string): boolean {
+    return actionType === this.createActionForm.get(`actionType`).value;
   }
 
   emailEditorContentChange(content: string) {
@@ -150,7 +150,7 @@ export class CreateActionComponent implements OnInit {
 
     switch (actionTypeValue) {
       case 'block':
-        return !(validBaseForm && this.blockDataForm.valid);
+        return !(validBaseForm && this.blockForm.valid);
       case 'emailRate' || 'emailBatch' || 'emailAlert':
         return !(validBaseForm && this.emailDataForm.valid);
     }
@@ -163,19 +163,15 @@ export class CreateActionComponent implements OnInit {
     });
   }
 
-  addEmailAddress() {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
-    ) as FormArray;
-
-    emailAddresses.push(
+  addEmailAddress(formGroup: FormGroup) {
+    (formGroup.get(`emailAddresses`) as FormArray).push(
       this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
     );
   }
 
   removeEmailAddress(index: number) {
-    const emailAddresses = this.emailDataForm.get(
-      'emailAddresses',
+    const emailAddresses = this.emailRateForm.get(
+      `emailAddresses`,
     ) as FormArray;
     emailAddresses.removeAt(index);
   }
@@ -188,7 +184,7 @@ export class CreateActionComponent implements OnInit {
       blockDelay,
       blockDelayUnit,
       parameters,
-    } = this.blockDataForm.getRawValue();
+    } = this.blockForm.getRawValue();
 
     const metadata = permanently
       ? {

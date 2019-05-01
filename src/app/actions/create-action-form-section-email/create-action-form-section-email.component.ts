@@ -31,22 +31,6 @@ export class CreateActionSectionEmailComponent {
   @Output()
   editorContentChange = new EventEmitter<string>();
 
-  @Output()
-  addEmailAddress = new EventEmitter();
-
-  @Output()
-  removeEmailAddress = new EventEmitter<number>();
-
-  get emailAddressesArray(): FormArray {
-    return this.parent.get('emailAddresses') as FormArray;
-  }
-
-  invalidBet365Email(index: number): boolean {
-    return this.emailAddressesArray.controls[index]
-      .get('emailAddress')
-      .hasError('validBet365Email');
-  }
-
   onContentChange(event: { html: string }) {
     const { html } = event;
     this.editorContentChange.emit(html);

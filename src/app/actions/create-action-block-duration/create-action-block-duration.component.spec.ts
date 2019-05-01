@@ -8,9 +8,8 @@ describe('CreateActionBlockDurationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionBlockDurationComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionBlockDurationComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

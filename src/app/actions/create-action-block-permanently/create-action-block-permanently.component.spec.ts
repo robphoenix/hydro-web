@@ -8,9 +8,8 @@ describe('CreateActionBlockPermanentlyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionBlockPermanentlyComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionBlockPermanentlyComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

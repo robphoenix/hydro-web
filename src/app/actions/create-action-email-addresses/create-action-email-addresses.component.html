@@ -1,0 +1,43 @@
+<div [formGroup]="parent">
+  <div class="email-addresses" formArrayName="emailAddresses">
+    <mat-form-field
+      appearance="outline"
+      class="form-field"
+      *ngFor="let address of addresses; let i = index"
+      [formGroupName]="i"
+    >
+      <mat-label>Email Address</mat-label>
+      <input
+        matInput
+        placeholder="Email Address"
+        formControlName="emailAddress"
+        required
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        *ngIf="i > 0"
+        (click)="removeEmailAddress.emit(i)"
+      >
+        <mat-icon color="primary">close</mat-icon>
+      </button>
+      <mat-hint *ngIf="i < 1" align="end">
+        *At least one email address is required
+      </mat-hint>
+      <mat-error *ngIf="invalidBet365Email(i)">
+        {{ validationMessage }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="add-email-address">
+    <hydro-button-raised
+      color="primary"
+      (click)="add()"
+      [disabled]="disabled"
+      [type]="'button'"
+    >
+      Add Another Email Address
+    </hydro-button-raised>
+  </div>
+</div>
