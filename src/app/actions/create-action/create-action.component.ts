@@ -33,13 +33,9 @@ export class CreateActionComponent implements OnInit {
   public blockDataForm: FormGroup;
   public emailDataForm: FormGroup;
 
-  private actionBlockTimeUnit: typeof ActionBlockTimeUnit = ActionBlockTimeUnit;
   private actionBlockDelayUnit: typeof ActionBlockDelayUnit = ActionBlockDelayUnit;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    blockTime: {
-      required: `You must specify a block time or block permanently`,
-    },
     emailAddresses: {
       validBet365Email: `You must specify a valid bet365 email address`,
     },
@@ -95,7 +91,6 @@ export class CreateActionComponent implements OnInit {
 
   ngOnInit() {
     this.blockActionUnits = {
-      duration: Object.values(this.actionBlockTimeUnit),
       delay: Object.values(this.actionBlockDelayUnit),
     };
 

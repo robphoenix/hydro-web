@@ -22,6 +22,7 @@ import { CreateActionDescriptionComponent } from './create-action-description/cr
 import { CreateActionTypeComponent } from './create-action-type/create-action-type.component';
 import { CreateActionParametersComponent } from './create-action-parameters/create-action-parameters.component';
 import { CreateActionBlockPermanentlyComponent } from './create-action-block-permanently/create-action-block-permanently.component';
+import { CreateActionBlockDurationComponent } from './create-action-block-duration/create-action-block-duration.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -81,6 +82,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionTypeComponent,
     CreateActionParametersComponent,
     CreateActionBlockPermanentlyComponent,
+    CreateActionBlockDurationComponent,
   ],
   entryComponents: [ActionUpdateDialogComponent],
 })
