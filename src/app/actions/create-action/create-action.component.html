@@ -35,7 +35,11 @@
     <hydro-create-action-email-subject
       [parent]="emailRateForm"
     ></hydro-create-action-email-subject>
+    <hydro-create-action-email-send-limit
+      [parent]="emailRateForm"
+    ></hydro-create-action-email-send-limit>
   </div>
+
   <hydro-create-action-form-section-email
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"

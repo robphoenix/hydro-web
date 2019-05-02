@@ -25,6 +25,7 @@ import { CreateActionBlockDurationComponent } from './create-action-block-durati
 import { CreateActionBlockDelayComponent } from './create-action-block-delay/create-action-block-delay.component';
 import { CreateActionEmailAddressesComponent } from './create-action-email-addresses/create-action-email-addresses.component';
 import { CreateActionEmailSubjectComponent } from './create-action-email-subject/create-action-email-subject.component';
+import { CreateActionEmailSendLimitComponent } from './create-action-email-send-limit/create-action-email-send-limit.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -87,6 +88,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionBlockDelayComponent,
     CreateActionEmailAddressesComponent,
     CreateActionEmailSubjectComponent,
+    CreateActionEmailSendLimitComponent,
   ],
   entryComponents: [ActionUpdateDialogComponent],
 })

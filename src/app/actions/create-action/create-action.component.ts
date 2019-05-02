@@ -74,6 +74,7 @@ export class CreateActionComponent implements OnInit {
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
       emailSubject: [``, Validators.required],
+      emailSendLimit: [0, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],

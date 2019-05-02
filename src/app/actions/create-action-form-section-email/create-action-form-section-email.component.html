@@ -1,21 +1,4 @@
 <form [formGroup]="parent" class="form">
-  <div *ngIf="actionType === 'emailRate'" class="email-rate">
-    <mat-form-field appearance="outline">
-      <mat-label>Email Send Limit</mat-label>
-      <input
-        type="number"
-        min="-1"
-        matInput
-        placeholder="Email Send Limit"
-        formControlName="emailSendLimit"
-      />
-    </mat-form-field>
-    <p class="email-rate-explanation">
-      The maximum number of emails to send out in any single hour, this resets
-      after every hour. Use -1 to specify an unlimited number of emails per hour
-    </p>
-  </div>
-
   <div *ngIf="actionType === 'emailBatch'" class="email-batch">
     <mat-form-field appearance="outline">
       <mat-label>Email Cron Expression*</mat-label>
