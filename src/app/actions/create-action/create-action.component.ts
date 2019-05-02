@@ -79,9 +79,6 @@ export class CreateActionComponent implements OnInit {
       name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
-      // blockData: this.blockForm,
-      // emailData: this.emailDataForm,
-      // emailRateData: this.emailRateForm,
     });
   }
 
@@ -138,20 +135,21 @@ export class CreateActionComponent implements OnInit {
   }
 
   get disableSubmit() {
-    const validName: boolean = this.createActionForm.get('name').valid;
-    const validDescription: boolean = this.createActionForm.get('description')
-      .valid;
-    const actionType: AbstractControl = this.createActionForm.get('actionType');
-    const validActionType: boolean = actionType.valid;
-    const actionTypeValue: string = actionType.value;
-    const validBaseForm: boolean =
-      validName && validDescription && validActionType;
+    const {
+      valid: actionTypeValid,
+      value: actionType,
+    } = this.createActionForm.get(`actionType`);
 
-    switch (actionTypeValue) {
-      case 'block':
+    const validBaseForm: boolean =
+      this.createActionForm.get(`name`).valid &&
+      this.createActionForm.get(`description`).valid &&
+      actionTypeValid;
+
+    switch (actionType) {
+      case ActionType.Block:
         return !(validBaseForm && this.blockForm.valid);
-      case 'emailRate' || 'emailBatch' || 'emailAlert':
-        return !(validBaseForm && this.emailDataForm.valid);
+      case ActionType.EmailRate:
+        return !(validBaseForm && this.emailRateForm.valid);
     }
   }
 
@@ -199,8 +197,8 @@ export class CreateActionComponent implements OnInit {
     return metadata as IActionMetadataBlock;
   }
 
-  private emailAddresses(): string {
-    return this.emailDataForm
+  private emailAddresses(form: FormGroup): string {
+    return form
       .getRawValue()
       .emailAddresses.map((address: { emailAddress: string }) => {
         return address.emailAddress;
@@ -209,9 +207,12 @@ export class CreateActionComponent implements OnInit {
   }
 
   private get emailRateMetadata(): IActionMetadataEmailRate {
-    const emailForm = this.emailDataForm.getRawValue();
-    const { emailSubject, emailSendLimit, emailText } = emailForm;
-    const emailAddresses = this.emailAddresses();
+    const {
+      emailSubject,
+      emailSendLimit,
+      emailText,
+    } = this.emailRateForm.getRawValue();
+    const emailAddresses = this.emailAddresses(this.emailRateForm);
 
     return {
       emailAddresses,
@@ -221,31 +222,31 @@ export class CreateActionComponent implements OnInit {
     } as IActionMetadataEmailRate;
   }
 
-  private get emailBatchMetadata(): IActionMetadataEmailBatch {
-    const emailForm = this.emailDataForm.getRawValue();
-    const { emailSubject, emailCron, emailText } = emailForm;
-    const emailAddresses = this.emailAddresses();
+  // private get emailBatchMetadata(): IActionMetadataEmailBatch {
+  //   const emailForm = this.emailDataForm.getRawValue();
+  //   const { emailSubject, emailCron, emailText } = emailForm;
+  //   const emailAddresses = this.emailAddresses();
 
-    return {
-      emailAddresses,
-      emailSubject,
-      emailCron,
-      emailText,
-    } as IActionMetadataEmailBatch;
-  }
+  //   return {
+  //     emailAddresses,
+  //     emailSubject,
+  //     emailCron,
+  //     emailText,
+  //   } as IActionMetadataEmailBatch;
+  // }
 
-  private get emailAlertMetadata(): IActionMetadataEmailAlert {
-    const emailForm = this.emailDataForm.getRawValue();
-    const { emailSubject, parameters, emailText } = emailForm;
-    const emailAddresses = this.emailAddresses();
+  // private get emailAlertMetadata(): IActionMetadataEmailAlert {
+  //   const emailForm = this.emailDataForm.getRawValue();
+  //   const { emailSubject, parameters, emailText } = emailForm;
+  //   const emailAddresses = this.emailAddresses();
 
-    return {
-      emailAddresses,
-      emailSubject,
-      parameters,
-      emailText,
-    } as IActionMetadataEmailAlert;
-  }
+  //   return {
+  //     emailAddresses,
+  //     emailSubject,
+  //     parameters,
+  //     emailText,
+  //   } as IActionMetadataEmailAlert;
+  // }
 
   submit() {
     const {
@@ -267,12 +268,12 @@ export class CreateActionComponent implements OnInit {
       case ActionType.EmailRate:
         metadata = this.emailRateMetadata;
         break;
-      case ActionType.EmailBatch:
-        metadata = this.emailBatchMetadata;
-        break;
-      case ActionType.EmailAlert:
-        metadata = this.emailAlertMetadata;
-        break;
+      // case ActionType.EmailBatch:
+      //   metadata = this.emailBatchMetadata;
+      //   break;
+      // case ActionType.EmailAlert:
+      //   metadata = this.emailAlertMetadata;
+      //   break;
     }
 
     const data = {
