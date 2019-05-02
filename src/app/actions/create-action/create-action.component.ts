@@ -32,9 +32,7 @@ export class CreateActionComponent implements OnInit {
   public emailDataForm: FormGroup;
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
-
-  @Input()
-  title: string;
+  public emailAlertForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +41,11 @@ export class CreateActionComponent implements OnInit {
     private router: Router,
     public snackBar: MatSnackBar,
   ) {
+    this.createActionForm = this.fb.group({
+      name: [``, Validators.required],
+      description: [``, Validators.required],
+      actionType: [ActionType.Block, Validators.required],
+    });
     this.blockForm = this.fb.group({
       parameters: [[], Validators.required],
       permanently: [false],
@@ -50,16 +53,6 @@ export class CreateActionComponent implements OnInit {
       blockTimeUnit: [``, Validators.required],
       blockDelay: [``],
       blockDelayUnit: [``],
-    });
-    this.emailDataForm = this.fb.group({
-      parameters: [[], Validators.required],
-      emailAddresses: this.fb.array([
-        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
-      ]),
-      emailSubject: [``, Validators.required],
-      emailSendLimit: [0, Validators.required],
-      emailText: [``, Validators.required],
-      emailCron: [``, Validators.required],
     });
     this.emailRateForm = this.fb.group({
       emailAddresses: this.fb.array([
@@ -77,11 +70,13 @@ export class CreateActionComponent implements OnInit {
       emailCron: [``, Validators.required],
       emailText: [``, Validators.required],
     });
-
-    this.createActionForm = this.fb.group({
-      name: [``, Validators.required],
-      description: [``, Validators.required],
-      actionType: [ActionType.Block, Validators.required],
+    this.emailAlertForm = this.fb.group({
+      emailAddresses: this.fb.array([
+        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+      ]),
+      emailSubject: [``, Validators.required],
+      emailText: [``, Validators.required],
+      parameters: [[], Validators.required],
     });
   }
 
@@ -155,6 +150,8 @@ export class CreateActionComponent implements OnInit {
         return !(validBaseForm && this.emailRateForm.valid);
       case ActionType.EmailBatch:
         return !(validBaseForm && this.emailBatchForm.valid);
+      case ActionType.EmailAlert:
+        return !(validBaseForm && this.emailAlertForm.valid);
     }
   }
 
@@ -239,18 +236,18 @@ export class CreateActionComponent implements OnInit {
     } as IActionMetadataEmailBatch;
   }
 
-  // private get emailAlertMetadata(): IActionMetadataEmailAlert {
-  //   const emailForm = this.emailDataForm.getRawValue();
-  //   const { emailSubject, parameters, emailText } = emailForm;
-  //   const emailAddresses = this.emailAddresses();
+  private get emailAlertMetadata(): IActionMetadataEmailAlert {
+    const emailForm = this.emailAlertForm.getRawValue();
+    const { emailSubject, parameters, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses(this.emailAlertForm);
 
-  //   return {
-  //     emailAddresses,
-  //     emailSubject,
-  //     parameters,
-  //     emailText,
-  //   } as IActionMetadataEmailAlert;
-  // }
+    return {
+      emailAddresses,
+      emailSubject,
+      parameters,
+      emailText,
+    } as IActionMetadataEmailAlert;
+  }
 
   submit() {
     const {
@@ -275,9 +272,9 @@ export class CreateActionComponent implements OnInit {
       case ActionType.EmailBatch:
         metadata = this.emailBatchMetadata;
         break;
-      // case ActionType.EmailAlert:
-      //   metadata = this.emailAlertMetadata;
-      //   break;
+      case ActionType.EmailAlert:
+        metadata = this.emailAlertMetadata;
+        break;
     }
 
     const data = {

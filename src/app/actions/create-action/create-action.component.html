@@ -62,12 +62,23 @@
     ></hydro-create-action-email-text>
   </div>
 
-  <hydro-create-action-form-section-email
-    *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
-    class="form-field"
-    [parent]="emailDataForm"
-    [actionType]="createActionForm.get('actionType').value"
-  ></hydro-create-action-form-section-email>
+  <div *ngIf="isActionType('emailAlert')">
+    <hydro-create-action-parameters
+      [parent]="emailAlertForm"
+    ></hydro-create-action-parameters>
+    <hydro-create-action-email-addresses
+      [parent]="emailAlertForm"
+      (addEmailAddress)="addEmailAddress(emailAlertForm)"
+      (removeEmailAddress)="removeEmailAddress($event, emailAlertForm)"
+    ></hydro-create-action-email-addresses>
+    <hydro-create-action-email-subject
+      [parent]="emailAlertForm"
+    ></hydro-create-action-email-subject>
+    <hydro-create-action-email-text
+      [parent]="emailAlertForm"
+      (editorContentChange)="emailEditorContentChange($event)"
+    ></hydro-create-action-email-text>
+  </div>
 
   <div class="buttons">
     <hydro-button-raised
