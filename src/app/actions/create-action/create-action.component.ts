@@ -16,6 +16,7 @@ import {
   IActionMetadataEmpty,
 } from '../action';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hydro-create-action',
@@ -32,7 +33,7 @@ export class CreateActionComponent implements OnInit {
   @Output()
   submitForm = new EventEmitter<IAction>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router) {
     this.createActionForm = this.formBuilder.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
@@ -288,5 +289,9 @@ export class CreateActionComponent implements OnInit {
     this.createActionForm.reset();
 
     console.log({ data });
+  }
+
+  cancel() {
+    this.router.navigateByUrl('/actions/view');
   }
 }
