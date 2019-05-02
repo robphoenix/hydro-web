@@ -33,9 +33,6 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    emailText: {
-      required: `You must specify an email text`,
-    },
     emailCron: {
       required: `You must specify an email cron expression`,
     },
@@ -75,6 +72,7 @@ export class CreateActionComponent implements OnInit {
       ]),
       emailSubject: [``, Validators.required],
       emailSendLimit: [0, Validators.required],
+      emailText: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],
@@ -133,8 +131,9 @@ export class CreateActionComponent implements OnInit {
     return actionType === this.createActionForm.get(`actionType`).value;
   }
 
-  emailEditorContentChange(content: string) {
-    this.emailDataForm.patchValue({ emailText: content });
+  emailEditorContentChange(editorData: { form: FormGroup; emailText: string }) {
+    const { form, emailText } = editorData;
+    form.patchValue({ emailText });
   }
 
   get disableSubmit() {

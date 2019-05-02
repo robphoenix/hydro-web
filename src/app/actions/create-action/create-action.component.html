@@ -38,6 +38,10 @@
     <hydro-create-action-email-send-limit
       [parent]="emailRateForm"
     ></hydro-create-action-email-send-limit>
+    <hydro-create-action-email-text
+      [parent]="emailRateForm"
+      (editorContentChange)="emailEditorContentChange($event)"
+    ></hydro-create-action-email-text>
   </div>
 
   <hydro-create-action-form-section-email
@@ -46,7 +50,6 @@
     [parent]="emailDataForm"
     [validationMessages]="validationMessages"
     [actionType]="createActionForm.get('actionType').value"
-    (editorContentChange)="emailEditorContentChange($event)"
   ></hydro-create-action-form-section-email>
 
   <div class="buttons">

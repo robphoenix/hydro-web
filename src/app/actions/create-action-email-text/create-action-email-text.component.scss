@@ -1,0 +1,29 @@
+@import 'main';
+
+.email-text {
+  margin-bottom: $space-3;
+}
+
+.email-text-title {
+  color: $grey-9;
+  margin-bottom: $space-2;
+  font-size: $fs-4;
+  font-weight: $fw-4;
+}
+
+.email-text-explanation {
+  margin-bottom: $space-2;
+}
+
+.email-text-error {
+  margin-bottom: $space-2;
+}
+
+.code {
+  font-family: Consolas, monaco, monospace;
+}
+
+.email-editor {
+  height: 400px;
+  margin-bottom: $space-4;
+}

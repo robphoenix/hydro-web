@@ -1,0 +1,19 @@
+<div class="email-text">
+  <h3 class="email-text-title">Email Text</h3>
+  <p class="email-text-explanation">
+    This text can contain variable data, using the
+    <b class="code">${{ '{' }}data{{ '}' }}</b> substitution tag, where
+    <b class="code">data</b> can be any esper data field, such as
+    <b class="code">${{ '{' }}uname{{ '}' }}</b
+    >, <b class="code">${{ '{' }}topic{{ '}' }}</b> or
+    <b class="code">${{ '{' }}sip{{ '}' }}</b
+    >. To display the esperdata there MUST be a
+    <b class="code">${{ '{' }}esperdata{{ '}' }}</b> substitution tag.
+  </p>
+  <mat-error *ngIf="hasError" class="email-text-error">
+    {{ validationMessage }}
+  </mat-error>
+  <div class="email-editor">
+    <quill (contentChange)="onContentChange($event)"> </quill>
+  </div>
+</div>

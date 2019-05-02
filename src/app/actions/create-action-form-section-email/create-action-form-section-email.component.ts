@@ -27,12 +27,4 @@ export class CreateActionSectionEmailComponent {
 
   @Input()
   validationMessages: { [key: string]: { [key: string]: string } };
-
-  @Output()
-  editorContentChange = new EventEmitter<string>();
-
-  onContentChange(event: { html: string }) {
-    const { html } = event;
-    this.editorContentChange.emit(html);
-  }
 }
