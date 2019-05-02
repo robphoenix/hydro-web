@@ -3,8 +3,6 @@ import { IAction } from '../action';
 import { ActionsService } from '../actions.service';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { MonitorStatusChangeDialogComponent } from 'src/app/monitors/monitor-status-change-dialog/monitor-status-change-dialog.component';
-import { MonitorStatus } from 'src/app/monitors/monitor';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { ActionUpdateDialogComponent } from '../action-update-dialog/action-update-dialog.component';
@@ -20,10 +18,14 @@ export class ViewActionsComponent implements OnInit {
   public searchTerm: string;
   public selectedActionType: string;
   public actionTypeDisplayNames: { [key: string]: string } = {
-    block: 'Block',
-    emailAlert: 'Email Alert',
-    emailRate: 'Email Rate',
-    emailBatch: 'Email Batch',
+    block: `Block`,
+    emailAlert: `Email Alert`,
+    emailRate: `Email Rate`,
+    emailBatch: `Email Batch`,
+    storeDB: `Store in Database`,
+    storeLogins: `Store Logins`,
+    storeAnalysis: `Store Analysis`,
+    misc: `Miscellaneous`,
   };
 
   constructor(
