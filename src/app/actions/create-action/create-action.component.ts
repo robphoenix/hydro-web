@@ -28,7 +28,6 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
   styleUrls: ['./create-action.component.scss'],
 })
 export class CreateActionComponent implements OnInit {
-  ctrl = new FormControl();
   public editorValue = `<h1>Helloooooo</h1>`;
   public createActionForm: FormGroup;
   public blockForm: FormGroup;
@@ -85,6 +84,7 @@ export class CreateActionComponent implements OnInit {
       blockData: this.blockForm,
       emailData: this.emailDataForm,
       emailRateData: this.emailRateForm,
+      ctrl: [``, Validators.required],
     });
   }
 
@@ -100,8 +100,6 @@ export class CreateActionComponent implements OnInit {
     this.blockForm
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
-        console.log(this.ctrl);
-
         if (blockPermanently) {
           this.clearValidators([blockTime, blockTimeUnit]);
           blockTime.setValue(``);
@@ -131,6 +129,14 @@ export class CreateActionComponent implements OnInit {
           blockDelayUnit.clearValidators();
         }
       });
+  }
+
+  public get hasError(): boolean {
+    const ctrl = this.createActionForm.get(`ctrl`);
+    const errors = ctrl.errors;
+    console.log({ errors });
+
+    return ctrl.hasError(`required`);
   }
 
   public isActionType(actionType: string): boolean {

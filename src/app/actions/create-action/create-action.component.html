@@ -26,7 +26,14 @@
     ></hydro-create-action-block-delay>
   </div>
 
-  <hydro-rich-editor [formControl]="ctrl"> </hydro-rich-editor>
+  <mat-form-field class="form-field">
+    <hydro-rich-editor formControlName="ctrl" [required]="true">
+    </hydro-rich-editor>
+    <mat-error *ngIf="hasError">
+      I got a fucking problem
+    </mat-error>
+  </mat-form-field>
+  <div *ngIf="hasError">errrorrrr</div>
 
   <div *ngIf="isActionType('emailRate')">
     <hydro-create-action-email-addresses
