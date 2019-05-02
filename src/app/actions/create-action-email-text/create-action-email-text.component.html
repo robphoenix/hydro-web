@@ -14,6 +14,6 @@
     {{ validationMessage }}
   </mat-error>
   <div class="email-editor">
-    <quill (contentChange)="onContentChange($event)"> </quill>
+    <quill (contentChange)="onContentChange($event)" (blur)="onBlur()"> </quill>
   </div>
 </div>

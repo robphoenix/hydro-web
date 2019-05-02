@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './create-action-email-text.component.html',
   styleUrls: ['./create-action-email-text.component.scss'],
 })
-export class CreateActionEmailTextComponent implements OnInit {
+export class CreateActionEmailTextComponent {
   public validationMessage = `You must specify an email text`;
 
   @Input()
@@ -19,17 +19,19 @@ export class CreateActionEmailTextComponent implements OnInit {
   }>();
 
   public get hasError(): boolean {
-    return this.parent.get(`emailText`).hasError(`required`);
+    const ctrl = this.parent.get(`emailText`);
+    return ctrl.touched && ctrl.hasError(`required`);
+  }
+
+  onBlur() {
+    const ctrl = this.parent.get(`emailText`);
+    if (ctrl) {
+      ctrl.markAsTouched();
+    }
   }
 
   public onContentChange(event: { html: string }) {
-    const { html } = event;
-    const form = this.parent;
-    const emailText = html;
-    this.editorContentChange.emit({ form, emailText });
+    const { html: emailText } = event;
+    this.editorContentChange.emit({ form: this.parent, emailText });
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }
