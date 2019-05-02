@@ -1,19 +1,4 @@
 <form [formGroup]="parent" class="form">
-  <mat-form-field appearance="outline" class="form-field">
-    <mat-label>Email Subject*</mat-label>
-    <input
-      matInput
-      placeholder="Email Subject"
-      formControlName="emailSubject"
-    />
-    <mat-hint align="end">
-      *Required
-    </mat-hint>
-    <mat-error *ngIf="parent.get('emailSubject').hasError('required')">
-      {{ validationMessages['emailSubject']['required'] }}
-    </mat-error>
-  </mat-form-field>
-
   <div *ngIf="actionType === 'emailRate'" class="email-rate">
     <mat-form-field appearance="outline">
       <mat-label>Email Send Limit</mat-label>

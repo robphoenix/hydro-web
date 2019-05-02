@@ -33,9 +33,6 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
-    emailSubject: {
-      required: `You must specify an email subject`,
-    },
     emailText: {
       required: `You must specify an email text`,
     },
@@ -76,6 +73,7 @@ export class CreateActionComponent implements OnInit {
       emailAddresses: this.fb.array([
         this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
+      emailSubject: [``, Validators.required],
     });
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],

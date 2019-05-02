@@ -32,6 +32,9 @@
       (addEmailAddress)="addEmailAddress($event)"
       (removeEmailAddress)="removeEmailAddress($event)"
     ></hydro-create-action-email-addresses>
+    <hydro-create-action-email-subject
+      [parent]="emailRateForm"
+    ></hydro-create-action-email-subject>
   </div>
   <hydro-create-action-form-section-email
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
