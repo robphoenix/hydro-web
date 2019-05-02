@@ -27,7 +27,8 @@
               {
                 "input": "./src/sass/_theming.scss"
               },
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/sass", "node_modules"]

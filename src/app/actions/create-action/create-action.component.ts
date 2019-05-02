@@ -27,6 +27,7 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
   styleUrls: ['./create-action.component.scss'],
 })
 export class CreateActionComponent implements OnInit {
+  public editorValue = `<h1>Helloooooo</h1>`;
   public createActionForm: FormGroup;
   public blockForm: FormGroup;
   public emailDataForm: FormGroup;
@@ -129,6 +130,10 @@ export class CreateActionComponent implements OnInit {
 
   public isActionType(actionType: string): boolean {
     return actionType === this.createActionForm.get(`actionType`).value;
+  }
+
+  editorValueChanged(event: any) {
+    console.log({ event });
   }
 
   emailEditorContentChange(editorData: { form: FormGroup; emailText: string }) {
