@@ -1,4 +1,4 @@
-<form [formGroup]="createActionForm" (ngSubmit)="submit()">
+<form [formGroup]="createActionForm" (ngSubmit)="onSubmit()">
   <hydro-create-action-name
     [parent]="createActionForm"
   ></hydro-create-action-name>
@@ -83,7 +83,7 @@
   <div class="buttons">
     <hydro-button-raised
       color="accent"
-      [type]="submit"
+      [type]="onSubmit"
       [disabled]="disableSubmit"
     >
       Save Action

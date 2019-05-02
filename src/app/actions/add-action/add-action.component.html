@@ -1,6 +1,6 @@
 <hydro-page-form>
   <hydro-headline>Add Action</hydro-headline>
   <hydro-card-form>
-    <hydro-create-action [title]="title"></hydro-create-action>
+    <hydro-create-action (submitForm)="onSubmit($event)"></hydro-create-action>
   </hydro-card-form>
 </hydro-page-form>

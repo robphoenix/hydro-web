@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -15,11 +15,6 @@ import {
   IActionMetadataEmailAlert,
   IActionMetadataEmpty,
 } from '../action';
-import { ActionsService } from '../actions.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { IErrorMessage } from 'src/app/shared/error-message';
-import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-import { Router } from '@angular/router';
 import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
 
 @Component({
@@ -30,24 +25,20 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
 export class CreateActionComponent implements OnInit {
   public createActionForm: FormGroup;
   public blockForm: FormGroup;
-  public emailDataForm: FormGroup;
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
   public emailAlertForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private actionsService: ActionsService,
-    public dialog: MatDialog,
-    private router: Router,
-    public snackBar: MatSnackBar,
-  ) {
-    this.createActionForm = this.fb.group({
+  @Output()
+  submitForm = new EventEmitter<IAction>();
+
+  constructor(private formBuilder: FormBuilder) {
+    this.createActionForm = this.formBuilder.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
       actionType: [ActionType.Block, Validators.required],
     });
-    this.blockForm = this.fb.group({
+    this.blockForm = this.formBuilder.group({
       parameters: [[], Validators.required],
       permanently: [false],
       blockTime: [``, Validators.required],
@@ -55,25 +46,25 @@ export class CreateActionComponent implements OnInit {
       blockDelay: [``],
       blockDelayUnit: [``],
     });
-    this.emailRateForm = this.fb.group({
-      emailAddresses: this.fb.array([
-        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+    this.emailRateForm = this.formBuilder.group({
+      emailAddresses: this.formBuilder.array([
+        this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
       emailSubject: [``, Validators.required],
       emailSendLimit: [0],
       emailText: [``, Validators.required],
     });
-    this.emailBatchForm = this.fb.group({
-      emailAddresses: this.fb.array([
-        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+    this.emailBatchForm = this.formBuilder.group({
+      emailAddresses: this.formBuilder.array([
+        this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
       emailSubject: [``, Validators.required],
       emailCron: [``, Validators.required],
       emailText: [``, Validators.required],
     });
-    this.emailAlertForm = this.fb.group({
-      emailAddresses: this.fb.array([
-        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+    this.emailAlertForm = this.formBuilder.group({
+      emailAddresses: this.formBuilder.array([
+        this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
       ]),
       emailSubject: [``, Validators.required],
       emailText: [``, Validators.required],
@@ -128,12 +119,15 @@ export class CreateActionComponent implements OnInit {
     return actionType === this.createActionForm.get(`actionType`).value;
   }
 
-  emailEditorContentChange(editorData: { form: FormGroup; emailText: string }) {
+  public emailEditorContentChange(editorData: {
+    form: FormGroup;
+    emailText: string;
+  }) {
     const { form, emailText } = editorData;
     form.patchValue({ emailText });
   }
 
-  get disableSubmit() {
+  public get disableSubmit() {
     const {
       valid: actionTypeValid,
       value: actionType,
@@ -158,20 +152,20 @@ export class CreateActionComponent implements OnInit {
     }
   }
 
-  clearValidators(controls: AbstractControl[]) {
+  public clearValidators(controls: AbstractControl[]) {
     controls.map((ctrl: AbstractControl) => {
       ctrl.clearValidators();
       ctrl.updateValueAndValidity();
     });
   }
 
-  addEmailAddress(form: FormGroup) {
+  public addEmailAddress(form: FormGroup) {
     (form.get(`emailAddresses`) as FormArray).push(
-      this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+      this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
     );
   }
 
-  removeEmailAddress(index: number, form: FormGroup) {
+  public removeEmailAddress(index: number, form: FormGroup) {
     (form.get(`emailAddresses`) as FormArray).removeAt(index);
   }
 
@@ -252,7 +246,7 @@ export class CreateActionComponent implements OnInit {
     } as IActionMetadataEmailAlert;
   }
 
-  submit() {
+  public onSubmit() {
     const {
       actionType,
       name,
@@ -290,26 +284,9 @@ export class CreateActionComponent implements OnInit {
       metadata,
     } as IAction;
 
+    this.submitForm.emit(data);
+    this.createActionForm.reset();
+
     console.log({ data });
-
-    this.actionsService.addAction(data).subscribe(
-      (res: IAction) => {
-        console.log({ res });
-
-        this.createActionForm.reset();
-        this.router.navigateByUrl(`/actions/view`);
-        this.snackBar.open(`Action ${name} created`, '', {
-          duration: 2000,
-        });
-      },
-      (err: IErrorMessage) => {
-        const title = `error adding action`;
-        const { message, cause } = err;
-        this.dialog.open(ErrorDialogComponent, {
-          data: { title, message, cause },
-          maxWidth: `800px`,
-        });
-      },
-    );
   }
 }
