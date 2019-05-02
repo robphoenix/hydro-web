@@ -1,0 +1,31 @@
+<div class="form-field" [formGroup]="parent">
+  <mat-form-field appearance="outline">
+    <mat-label>Block Duration</mat-label>
+    <input
+      matInput
+      placeholder="Block Duration"
+      formControlName="blockTime"
+      required
+    />
+    <mat-hint *ngIf="!isBlockPermanently" align="end">
+      *Required
+    </mat-hint>
+    <mat-error *ngIf="hasError">
+      {{ validationMessage }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-button-toggle-group
+    #group="matButtonToggleGroup"
+    formControlName="blockTimeUnit"
+    class="toggle-group"
+  >
+    <mat-button-toggle
+      *ngFor="let unit of units"
+      value="{{ unit }}"
+      [disabled]="isBlockPermanently"
+    >
+      <span class="capitalize">{{ unit | lowercase }}</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

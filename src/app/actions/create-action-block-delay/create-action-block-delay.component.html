@@ -1,0 +1,25 @@
+<div class="form-field" [formGroup]="parent">
+  <mat-form-field appearance="outline">
+    <mat-label>Block Delay</mat-label>
+    <input
+      matInput
+      placeholder="Block Delay"
+      formControlName="blockDelay"
+      required
+    />
+  </mat-form-field>
+
+  <mat-button-toggle-group
+    class="toggle-group"
+    #group="matButtonToggleGroup"
+    formControlName="blockDelayUnit"
+  >
+    <mat-button-toggle
+      *ngFor="let unit of units"
+      value="{{ unit }}"
+      [disabled]="isBlockPermanently"
+    >
+      <span class="capitalize">{{ unit | lowercase }}</span>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

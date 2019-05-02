@@ -3,9 +3,6 @@
 .form-field {
   width: 100%;
   margin-bottom: $space-4;
-}
-
-.action-type {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -13,10 +10,5 @@
 
 .action-type-explanation {
   margin-left: $space-4;
-  color: $grey-8;
-}
-
-.buttons {
-  display: flex;
-  justify-content: flex-end;
+  color: $grey-7;
 }

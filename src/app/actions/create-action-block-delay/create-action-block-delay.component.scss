@@ -1,16 +1,8 @@
 @import 'main';
 
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
 .form-field {
+  width: 100%;
   margin-bottom: $space-4;
-}
-
-.block-duration,
-.block-delay {
   display: flex;
   align-items: baseline;
 }

@@ -1,0 +1,16 @@
+@import 'main';
+
+.form-field {
+  width: 100%;
+  margin-bottom: $space-4;
+}
+
+.buttons {
+  margin-top: $space-3;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  margin-left: $space-3;
+}

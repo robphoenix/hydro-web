@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" [formGroup]="parent" class="form-field">
+  <mat-label>Name</mat-label>
+  <input matInput formControlName="name" required />
+  <mat-hint align="end">*Required</mat-hint>
+  <mat-error *ngIf="hasError">
+    {{ validationMessage }}
+  </mat-error>
+</mat-form-field>

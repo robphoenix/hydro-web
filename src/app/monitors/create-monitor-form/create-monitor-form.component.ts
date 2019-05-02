@@ -363,6 +363,6 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigateByUrl('/monitors');
+    this.router.navigateByUrl('/monitors/view');
   }
 }

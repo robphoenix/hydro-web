@@ -1,0 +1,16 @@
+@import 'main';
+
+.form-field {
+  width: 100%;
+  margin-bottom: $space-4;
+  display: flex;
+  align-items: baseline;
+}
+
+.toggle-group {
+  margin-left: $space-3;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

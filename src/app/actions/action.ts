@@ -4,7 +4,12 @@ export interface IAction {
   actionType: ActionType;
   description: string;
   address: string;
-  metadata: IActionMetadataBlock | IActionMetadataEmailRate;
+  metadata:
+    | IActionMetadataBlock
+    | IActionMetadataEmailRate
+    | IActionMetadataEmailBatch
+    | IActionMetadataEmailAlert
+    | IActionMetadataEmpty;
   archived: boolean;
 }
 
@@ -70,3 +75,5 @@ export enum ActionParameters {
   UserAgent = 'User Agent',
   XForwardedFor = 'X-Forwarded-For',
 }
+
+export enum IActionMetadataEmpty {}

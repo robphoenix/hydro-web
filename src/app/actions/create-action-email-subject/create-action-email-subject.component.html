@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" [formGroup]="parent" class="form-field">
+  <mat-label>Email Subject</mat-label>
+  <input
+    matInput
+    placeholder="Email Subject"
+    formControlName="emailSubject"
+    required
+  />
+  <mat-hint align="end">
+    *Required
+  </mat-hint>
+  <mat-error *ngIf="hasError">
+    {{ validationMessage }}
+  </mat-error>
+</mat-form-field>
