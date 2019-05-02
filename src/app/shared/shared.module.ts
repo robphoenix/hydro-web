@@ -16,7 +16,6 @@ import { ButtonFlatComponent } from './button-flat/button-flat.component';
 import { PageWideComponent } from './page-wide/page-wide.component';
 import { PageFormComponent } from './page-form/page-form.component';
 import { CardFormComponent } from './card-form/card-form.component';
-import { RichEditorComponent } from './rich-editor/rich-editor.component';
 
 @NgModule({
   imports: [
@@ -40,7 +39,6 @@ import { RichEditorComponent } from './rich-editor/rich-editor.component';
     PageWideComponent,
     PageFormComponent,
     CardFormComponent,
-    RichEditorComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -56,7 +54,6 @@ import { RichEditorComponent } from './rich-editor/rich-editor.component';
     PageWideComponent,
     PageFormComponent,
     CardFormComponent,
-    RichEditorComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })
