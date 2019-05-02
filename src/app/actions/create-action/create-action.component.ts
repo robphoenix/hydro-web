@@ -161,17 +161,15 @@ export class CreateActionComponent implements OnInit {
     });
   }
 
-  addEmailAddress(formGroup: FormGroup) {
-    (formGroup.get(`emailAddresses`) as FormArray).push(
+  addEmailAddress(form: FormGroup) {
+    (form.get(`emailAddresses`) as FormArray).push(
       this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
     );
   }
 
-  removeEmailAddress(index: number) {
-    const emailAddresses = this.emailRateForm.get(
-      `emailAddresses`,
-    ) as FormArray;
-    emailAddresses.removeAt(index);
+  removeEmailAddress(toRemove: { form: FormGroup; index: number }) {
+    const { form, index } = toRemove;
+    (form.get(`emailAddresses`) as FormArray).removeAt(index);
   }
 
   private get blockMetadata(): IActionMetadataBlock {

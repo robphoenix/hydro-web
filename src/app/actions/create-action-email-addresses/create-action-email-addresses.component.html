@@ -13,12 +13,7 @@
         formControlName="emailAddress"
         required
       />
-      <button
-        matSuffix
-        mat-icon-button
-        *ngIf="i > 0"
-        (click)="removeEmailAddress.emit(i)"
-      >
+      <button matSuffix mat-icon-button *ngIf="i > 0" (click)="remove(i)">
         <mat-icon color="primary">close</mat-icon>
       </button>
       <mat-hint *ngIf="i < 1" align="end">

@@ -17,10 +17,15 @@ export class CreateActionEmailAddressesComponent implements OnInit {
   addEmailAddress = new EventEmitter<FormGroup>();
 
   @Output()
-  removeEmailAddress = new EventEmitter<number>();
+  removeEmailAddress = new EventEmitter<{ form: FormGroup; index: number }>();
 
   public add() {
     this.addEmailAddress.emit(this.parent);
+  }
+
+  public remove(index: number) {
+    const form = this.parent;
+    this.removeEmailAddress.emit({ form, index });
   }
 
   public get addresses(): AbstractControl[] {
