@@ -23,6 +23,12 @@ export class CreateActionTypeComponent implements OnInit {
     emailBatch: `The properties you define below will be used to batch esper events into email sent every day at the time specified`,
     // tslint:disable-next-line:max-line-length
     emailRate: `The properties you define below will be used to send out emails at a maximum number per hour`,
+    // tslint:disable-next-line:max-line-length
+    storeDB: `This needs to be rewritten. Selecting this option indicates that the receiver of this message will the esper-results-node and will store the esper event data in the DB. If this option is selected, then the 'storing' tick will be displayed on the main screen irrespective of the actual action taken.
+You have selected 'database' callout type. This means that this callout will be storing esper results into the Postgres database.`,
+    storeLogins: `You'll have to ask Roger what this does`,
+    storeAnalysis: `You'll have to ask Roger what this does`,
+    misc: `This is miscellaneous callout type, with no additional properties.`,
   };
 
   public displayNames: { [key: string]: string } = {

@@ -13,6 +13,7 @@ import {
   IActionMetadataEmailRate,
   IActionMetadataEmailBatch,
   IActionMetadataEmailAlert,
+  IActionMetadataEmpty,
 } from '../action';
 import { ActionsService } from '../actions.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -152,6 +153,8 @@ export class CreateActionComponent implements OnInit {
         return !(validBaseForm && this.emailBatchForm.valid);
       case ActionType.EmailAlert:
         return !(validBaseForm && this.emailAlertForm.valid);
+      default:
+        return !validBaseForm;
     }
   }
 
@@ -260,7 +263,8 @@ export class CreateActionComponent implements OnInit {
       | IActionMetadataBlock
       | IActionMetadataEmailRate
       | IActionMetadataEmailBatch
-      | IActionMetadataEmailAlert;
+      | IActionMetadataEmailAlert
+      | IActionMetadataEmpty;
 
     switch (actionType) {
       case ActionType.Block:
@@ -275,6 +279,8 @@ export class CreateActionComponent implements OnInit {
       case ActionType.EmailAlert:
         metadata = this.emailAlertMetadata;
         break;
+      default:
+        metadata = {} as IActionMetadataEmpty;
     }
 
     const data = {
