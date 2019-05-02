@@ -8,9 +8,8 @@ describe('CreateActionEmailSendLimitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionEmailSendLimitComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionEmailSendLimitComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

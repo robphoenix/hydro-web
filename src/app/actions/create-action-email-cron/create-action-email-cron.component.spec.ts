@@ -8,9 +8,8 @@ describe('CreateActionEmailCronComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateActionEmailCronComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateActionEmailCronComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
