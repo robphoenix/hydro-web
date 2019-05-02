@@ -29,8 +29,8 @@
   <div *ngIf="isActionType('emailRate')">
     <hydro-create-action-email-addresses
       [parent]="emailRateForm"
-      (addEmailAddress)="addEmailAddress($event)"
-      (removeEmailAddress)="removeEmailAddress($event)"
+      (addEmailAddress)="addEmailAddress(emailRateForm)"
+      (removeEmailAddress)="removeEmailAddress($event, emailRateForm)"
     ></hydro-create-action-email-addresses>
     <hydro-create-action-email-subject
       [parent]="emailRateForm"
@@ -40,6 +40,21 @@
     ></hydro-create-action-email-send-limit>
     <hydro-create-action-email-text
       [parent]="emailRateForm"
+      (editorContentChange)="emailEditorContentChange($event)"
+    ></hydro-create-action-email-text>
+  </div>
+
+  <div *ngIf="isActionType('emailBatch')">
+    <hydro-create-action-email-addresses
+      [parent]="emailBatchForm"
+      (addEmailAddress)="addEmailAddress(emailBatchForm)"
+      (removeEmailAddress)="removeEmailAddress($event, emailBatchForm)"
+    ></hydro-create-action-email-addresses>
+    <hydro-create-action-email-subject
+      [parent]="emailBatchForm"
+    ></hydro-create-action-email-subject>
+    <hydro-create-action-email-text
+      [parent]="emailBatchForm"
       (editorContentChange)="emailEditorContentChange($event)"
     ></hydro-create-action-email-text>
   </div>

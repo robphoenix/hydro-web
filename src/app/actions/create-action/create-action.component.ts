@@ -31,6 +31,7 @@ export class CreateActionComponent implements OnInit {
   public blockForm: FormGroup;
   public emailDataForm: FormGroup;
   public emailRateForm: FormGroup;
+  public emailBatchForm: FormGroup;
 
   public validationMessages: { [key: string]: { [key: string]: string } } = {
     emailCron: {
@@ -72,6 +73,14 @@ export class CreateActionComponent implements OnInit {
       ]),
       emailSubject: [``, Validators.required],
       emailSendLimit: [0],
+      emailText: [``, Validators.required],
+    });
+    this.emailBatchForm = this.fb.group({
+      emailAddresses: this.fb.array([
+        this.fb.group({ emailAddress: [``, ValidateBet365Email] }),
+      ]),
+      emailSubject: [``, Validators.required],
+      emailCron: [``, Validators.required],
       emailText: [``, Validators.required],
     });
 
@@ -166,8 +175,7 @@ export class CreateActionComponent implements OnInit {
     );
   }
 
-  removeEmailAddress(toRemove: { form: FormGroup; index: number }) {
-    const { form, index } = toRemove;
+  removeEmailAddress(index: number, form: FormGroup) {
     (form.get(`emailAddresses`) as FormArray).removeAt(index);
   }
 
