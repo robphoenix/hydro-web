@@ -27,6 +27,7 @@ import { CreateActionEmailAddressesComponent } from './create-action-email-addre
 import { CreateActionEmailSubjectComponent } from './create-action-email-subject/create-action-email-subject.component';
 import { CreateActionEmailSendLimitComponent } from './create-action-email-send-limit/create-action-email-send-limit.component';
 import { CreateActionEmailTextComponent } from './create-action-email-text/create-action-email-text.component';
+import { CreateActionEmailCronComponent } from './create-action-email-cron/create-action-email-cron.component';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -91,6 +92,7 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     CreateActionEmailSubjectComponent,
     CreateActionEmailSendLimitComponent,
     CreateActionEmailTextComponent,
+    CreateActionEmailCronComponent,
   ],
   entryComponents: [ActionUpdateDialogComponent],
 })

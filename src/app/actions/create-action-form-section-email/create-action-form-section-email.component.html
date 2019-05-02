@@ -1,28 +1,4 @@
 <form [formGroup]="parent" class="form">
-  <div *ngIf="actionType === 'emailBatch'" class="email-batch">
-    <mat-form-field appearance="outline">
-      <mat-label>Email Cron Expression*</mat-label>
-      <input
-        matInput
-        placeholder="Email Cron Expression*"
-        formControlName="emailCron"
-      />
-      <mat-hint align="end">
-        *Required
-      </mat-hint>
-      <mat-error *ngIf="parent.get('emailCron').hasError('required')">
-        {{ validationMessages['emailCron']['required'] }}
-      </mat-error>
-    </mat-form-field>
-    <p class="email-cron-explanation">
-      Batch together all events and send when the cron expression triggers.
-      Automatically adds the event time to each row in the table.
-      <a href="http://www.cronmaker.com/" target="_blank">
-        Generate Cron Expression
-      </a>
-    </p>
-  </div>
-
   <mat-form-field
     appearance="outline"
     class="form-field"

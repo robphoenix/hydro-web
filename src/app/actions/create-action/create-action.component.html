@@ -50,6 +50,9 @@
       (addEmailAddress)="addEmailAddress(emailBatchForm)"
       (removeEmailAddress)="removeEmailAddress($event, emailBatchForm)"
     ></hydro-create-action-email-addresses>
+    <hydro-create-action-email-cron
+      [parent]="emailBatchForm"
+    ></hydro-create-action-email-cron>
     <hydro-create-action-email-subject
       [parent]="emailBatchForm"
     ></hydro-create-action-email-subject>
@@ -63,7 +66,6 @@
     *ngIf="(createActionForm.get('actionType').value || '').startsWith('email')"
     class="form-field"
     [parent]="emailDataForm"
-    [validationMessages]="validationMessages"
     [actionType]="createActionForm.get('actionType').value"
   ></hydro-create-action-form-section-email>
 

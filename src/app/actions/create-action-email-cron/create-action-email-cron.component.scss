@@ -1,0 +1,14 @@
+@import 'main';
+
+.email-batch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $space-4;
+}
+
+.email-cron-explanation {
+  margin-left: $space-4;
+  padding-bottom: $space-3;
+  color: $grey-8;
+}

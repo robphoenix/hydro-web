@@ -33,12 +33,6 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
 
-  public validationMessages: { [key: string]: { [key: string]: string } } = {
-    emailCron: {
-      required: `You must specify an email cron expression`,
-    },
-  };
-
   @Input()
   title: string;
 
@@ -159,6 +153,8 @@ export class CreateActionComponent implements OnInit {
         return !(validBaseForm && this.blockForm.valid);
       case ActionType.EmailRate:
         return !(validBaseForm && this.emailRateForm.valid);
+      case ActionType.EmailBatch:
+        return !(validBaseForm && this.emailBatchForm.valid);
     }
   }
 
@@ -230,18 +226,18 @@ export class CreateActionComponent implements OnInit {
     } as IActionMetadataEmailRate;
   }
 
-  // private get emailBatchMetadata(): IActionMetadataEmailBatch {
-  //   const emailForm = this.emailDataForm.getRawValue();
-  //   const { emailSubject, emailCron, emailText } = emailForm;
-  //   const emailAddresses = this.emailAddresses();
+  private get emailBatchMetadata(): IActionMetadataEmailBatch {
+    const emailForm = this.emailBatchForm.getRawValue();
+    const { emailSubject, emailCron, emailText } = emailForm;
+    const emailAddresses = this.emailAddresses(this.emailBatchForm);
 
-  //   return {
-  //     emailAddresses,
-  //     emailSubject,
-  //     emailCron,
-  //     emailText,
-  //   } as IActionMetadataEmailBatch;
-  // }
+    return {
+      emailAddresses,
+      emailSubject,
+      emailCron,
+      emailText,
+    } as IActionMetadataEmailBatch;
+  }
 
   // private get emailAlertMetadata(): IActionMetadataEmailAlert {
   //   const emailForm = this.emailDataForm.getRawValue();
@@ -276,9 +272,9 @@ export class CreateActionComponent implements OnInit {
       case ActionType.EmailRate:
         metadata = this.emailRateMetadata;
         break;
-      // case ActionType.EmailBatch:
-      //   metadata = this.emailBatchMetadata;
-      //   break;
+      case ActionType.EmailBatch:
+        metadata = this.emailBatchMetadata;
+        break;
       // case ActionType.EmailAlert:
       //   metadata = this.emailAlertMetadata;
       //   break;
