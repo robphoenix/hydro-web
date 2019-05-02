@@ -7,26 +7,39 @@ import {
   Input,
   Output,
   EventEmitter,
+  forwardRef,
 } from '@angular/core';
 import Quill from 'quill';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Quill as QuillInstance } from 'quill';
 
 @Component({
   selector: 'hydro-rich-editor',
   templateUrl: './rich-editor.component.html',
   styleUrls: ['./rich-editor.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RichEditorComponent),
+      multi: true,
+    },
+  ],
 })
-export class RichEditorComponent implements OnInit, OnChanges {
+export class RichEditorComponent
+  implements OnInit, OnChanges, ControlValueAccessor {
+  touched: boolean;
+
   @ViewChild('container', { read: ElementRef })
   container: ElementRef;
 
   @Input()
-  value: string;
+  value: any;
 
   @Output()
   changed: EventEmitter<any> = new EventEmitter();
 
-  quill: any = Quill;
-  editor: any;
+  // quill: QuillInstance;
+  editor: QuillInstance;
 
   constructor(public elementRef: ElementRef) {}
 
@@ -54,12 +67,28 @@ export class RichEditorComponent implements OnInit, OnChanges {
       },
       placeholder: 'Please enter your email template here. *Required.',
     });
-    this.editor.on('editor-change', () =>
-      this.changed.emit(this.editor.getContents()),
-    );
-    if (this.editor) {
-      this.editor.setContents(this.value);
-    }
+    this.editor.on('editor-change', () => {
+      this.onChange(this.editor.root.innerHTML);
+    });
+  }
+
+  onChange = (delta: any) => {};
+
+  onTouched = () => {
+    this.touched = true;
+  }
+
+  writeValue(delta: any): void {
+    this.editor.setContents(delta);
+    this.value = delta;
+  }
+
+  registerOnChange(fn: (v: any) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 
   ngOnChanges() {

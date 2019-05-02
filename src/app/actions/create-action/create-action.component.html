@@ -26,11 +26,7 @@
     ></hydro-create-action-block-delay>
   </div>
 
-  <hydro-rich-editor
-    [value]="editorValue"
-    (changed)="editorValueChanged($event)"
-  >
-  </hydro-rich-editor>
+  <hydro-rich-editor [formControl]="ctrl"> </hydro-rich-editor>
 
   <div *ngIf="isActionType('emailRate')">
     <hydro-create-action-email-addresses

@@ -5,6 +5,7 @@ import {
   Validators,
   AbstractControl,
   FormArray,
+  FormControl,
 } from '@angular/forms';
 import {
   IActionMetadataBlock,
@@ -27,6 +28,7 @@ import { ValidateBet365Email } from 'src/validators/bet365-email.validator';
   styleUrls: ['./create-action.component.scss'],
 })
 export class CreateActionComponent implements OnInit {
+  ctrl = new FormControl();
   public editorValue = `<h1>Helloooooo</h1>`;
   public createActionForm: FormGroup;
   public blockForm: FormGroup;
@@ -75,6 +77,7 @@ export class CreateActionComponent implements OnInit {
       emailSendLimit: [0, Validators.required],
       emailText: [``, Validators.required],
     });
+
     this.createActionForm = this.fb.group({
       name: [``, Validators.required],
       description: [``, Validators.required],
@@ -97,6 +100,8 @@ export class CreateActionComponent implements OnInit {
     this.blockForm
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
+        console.log(this.ctrl);
+
         if (blockPermanently) {
           this.clearValidators([blockTime, blockTimeUnit]);
           blockTime.setValue(``);
