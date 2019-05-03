@@ -33,6 +33,11 @@ export class ActionsService {
       .pipe(tap((a: IAction) => a));
   }
 
+  public archiveAction(action: IAction): Observable<IAction> {
+    action.archived = true;
+    return this.putAction(action);
+  }
+
   public getActionById(id: number): Observable<IAction> {
     return this.http
       .get<IAction>(`${this.actionsUrl}/${id}`, { headers })

@@ -76,9 +76,8 @@ export class ViewActionsComponent implements OnInit {
       if (!archive) {
         return;
       }
-      actionToArchive.archived = true;
 
-      this.actionsService.putAction(actionToArchive).subscribe(
+      this.actionsService.archiveAction(actionToArchive).subscribe(
         () => {
           this.refresh();
           this.snackBar.open(`Action ${actionToArchive.name} archived`, '', {
