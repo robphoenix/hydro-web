@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -29,6 +29,9 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
   public emailAlertForm: FormGroup;
+
+  @Input()
+  action: IAction;
 
   @Output()
   submitForm = new EventEmitter<IAction>();
@@ -74,10 +77,50 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    const blockTime: AbstractControl = this.blockForm.get(`blockTime`);
-    const blockTimeUnit: AbstractControl = this.blockForm.get(`blockTimeUnit`);
-    const blockDelay: AbstractControl = this.blockForm.get(`blockDelay`);
-    const blockDelayUnit: AbstractControl = this.blockForm.get(
+    if (this.action) {
+      const { name, description, actionType, metadata } = this.action;
+      this.createActionForm.patchValue({
+        name,
+        description,
+        actionType,
+      });
+      switch (actionType) {
+        case ActionType.Block:
+          const {
+            parameters,
+            blockTime,
+            blockTimeUnit,
+            blockDelay,
+            blockDelayUnit,
+          } = metadata as IActionMetadataBlock;
+          if (blockTime < 0) {
+            this.blockForm.patchValue({
+              parameters,
+              permanently: true,
+            });
+          } else {
+            this.blockForm.patchValue({
+              parameters,
+              permanently: false,
+              blockTime,
+              blockTimeUnit,
+              blockDelay,
+              blockDelayUnit,
+            });
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    const blockTimeCtrl: AbstractControl = this.blockForm.get(`blockTime`);
+    const blockTimeUnitCtrl: AbstractControl = this.blockForm.get(
+      `blockTimeUnit`,
+    );
+    const blockDelayCtrl: AbstractControl = this.blockForm.get(`blockDelay`);
+    const blockDelayUnitCtrl: AbstractControl = this.blockForm.get(
       `blockDelayUnit`,
     );
 
@@ -86,20 +129,20 @@ export class CreateActionComponent implements OnInit {
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
         if (blockPermanently) {
-          this.clearValidators([blockTime, blockTimeUnit]);
-          blockTime.setValue(``);
-          blockTimeUnit.setValue(``);
-          blockTime.disable();
-          blockDelay.disable();
+          this.clearValidators([blockTimeCtrl, blockTimeUnitCtrl]);
+          blockTimeCtrl.setValue(``);
+          blockTimeUnitCtrl.setValue(``);
+          blockTimeCtrl.disable();
+          blockDelayCtrl.disable();
         } else {
-          blockTime.setValidators(Validators.required);
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.setValidators(Validators.required);
-          blockTimeUnit.updateValueAndValidity();
-          blockTime.enable();
-          blockDelay.enable();
-          blockTime.markAsUntouched();
-          blockTimeUnit.markAsUntouched();
+          blockTimeCtrl.setValidators(Validators.required);
+          blockTimeCtrl.updateValueAndValidity();
+          blockTimeUnitCtrl.setValidators(Validators.required);
+          blockTimeUnitCtrl.updateValueAndValidity();
+          blockTimeCtrl.enable();
+          blockDelayCtrl.enable();
+          blockTimeCtrl.markAsUntouched();
+          blockTimeUnitCtrl.markAsUntouched();
         }
       });
 
@@ -108,10 +151,10 @@ export class CreateActionComponent implements OnInit {
       .get(`blockDelay`)
       .valueChanges.subscribe((blockDelayValue: string) => {
         if (blockDelayValue !== ``) {
-          blockDelayUnit.setValidators(Validators.required);
-          blockDelayUnit.setErrors({ required: true });
+          blockDelayUnitCtrl.setValidators(Validators.required);
+          blockDelayUnitCtrl.setErrors({ required: true });
         } else {
-          blockDelayUnit.clearValidators();
+          blockDelayUnitCtrl.clearValidators();
         }
       });
   }
