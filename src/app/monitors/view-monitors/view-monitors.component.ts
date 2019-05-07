@@ -10,6 +10,7 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
+import { MonitorsTypeToggleComponent } from '../monitors-type-toggle/monitors-type-toggle.component';
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -26,6 +27,9 @@ export class ViewMonitorsComponent implements OnInit {
   canToggleStatus = true;
   lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
   totalNumberOfMonitors: number;
+
+  @ViewChild(MonitorsTypeToggleComponent)
+  typeToggle: MonitorsTypeToggleComponent;
 
   @ViewChild(OverviewTableComponent)
   overviewTable: OverviewTableComponent;
@@ -70,7 +74,7 @@ export class ViewMonitorsComponent implements OnInit {
 
   private getMonitors() {
     const monitorsType: string = this.lastMonitorsType as string;
-    this.updateMonitorsData(monitorsType);
+    this.onMonitorsTypeChange(monitorsType);
   }
 
   getStandardMonitors(): void {
@@ -155,7 +159,7 @@ export class ViewMonitorsComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        this.overviewTable.monitorsType = this.lastMonitorsType;
+        this.typeToggle.monitorsType = this.lastMonitorsType;
         this.getMonitors();
       });
     }
@@ -165,7 +169,7 @@ export class ViewMonitorsComponent implements OnInit {
     this.getMonitors();
   }
 
-  public updateMonitorsData(monitorsType: string) {
+  public onMonitorsTypeChange(monitorsType: string) {
     switch (monitorsType) {
       case MonitorType.Standard:
         this.getStandardMonitors();

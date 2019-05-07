@@ -1,5 +1,11 @@
 <hydro-page-wide>
   <hydro-headline>Monitors</hydro-headline>
+  <div class="toolbar">
+    <hydro-monitors-type-toggle
+      [monitorsType]="lastMonitorsType"
+      (monitorsTypeChange)="onMonitorsTypeChange($event)"
+    ></hydro-monitors-type-toggle>
+  </div>
   <hydro-overview-table
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"

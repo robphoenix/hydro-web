@@ -30,6 +30,7 @@ import { CreateMonitorFormNameComponent } from './create-monitor-form-name/creat
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
+import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
+    MonitorsTypeToggleComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

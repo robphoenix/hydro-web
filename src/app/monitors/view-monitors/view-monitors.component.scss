@@ -1,1 +1,7 @@
 @import 'main';
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: $space-4;
+}
