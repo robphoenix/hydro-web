@@ -14,6 +14,14 @@
 .progress-bar,
 .button {
   width: 20%;
+
+  @include breakpoint(lg) {
+    width: 30%;
+  }
+
+  @include breakpoint(md) {
+    width: 40%;
+  }
 }
 
 .headline {
