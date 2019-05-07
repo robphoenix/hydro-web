@@ -4,4 +4,12 @@
   width: 40%;
   margin: 0 auto;
   padding-top: $space-4;
+
+  @include breakpoint(xl) {
+    width: 50%;
+  }
+
+  @include breakpoint(md) {
+    width: 70%;
+  }
 }

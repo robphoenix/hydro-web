@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: $spacing-m $spacing-l;
+  padding: $space-3 $space-5;
   transition: background-color 0.5s ease;
 }
 
@@ -40,14 +40,14 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-left: $spacing-m;
+  margin-left: $space-3;
 }
 
 .name {
   font-size: $fs-3;
   font-weight: $fw-5;
   line-height: $lh-title;
-  margin-bottom: $spacing-xs;
+  margin-bottom: $space-1;
 }
 
 .online-icon {
@@ -78,7 +78,7 @@
   cursor: help;
 
   .icon {
-    margin-right: $spacing-s;
+    margin-right: $space-2;
   }
 
   &:hover {

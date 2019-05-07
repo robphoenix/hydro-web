@@ -31,15 +31,15 @@
     </hydro-button-raised>
   </div>
 
-  <mat-list class="list">
+  <ul class="list">
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="list-item">
+        <li class="list-item">
           <div>
-            <h1 matLine class="action-name">
+            <h1 class="action-name">
               {{ action.name }}
             </h1>
-            <p matLine class="action-description">
+            <p class="action-description">
               {{ action.description }}
             </p>
           </div>
@@ -76,8 +76,8 @@
               </div>
             </mat-menu>
           </div>
-        </mat-list-item>
+        </li>
       </ng-container>
     </cdk-virtual-scroll-viewport>
-  </mat-list>
+  </ul>
 </hydro-page-wide>

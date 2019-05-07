@@ -5,14 +5,16 @@
 // support mobile.
 
 // breakpoints
-$width-sm: 544px;
+$width-sm: 768px;
 $width-md: 1024px;
-$width-lg: 1400px;
+$width-lg: 1440px;
+$width-xl: 1600px;
 
 $breakpoints: (
   sm: $width-sm,
   md: $width-md,
   lg: $width-lg,
+  xl: $width-xl,
 ) !default;
 
 // https://github.com/primer/css/blob/master/src/support/mixins/layout.scss#L3

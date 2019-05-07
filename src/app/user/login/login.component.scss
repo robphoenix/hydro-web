@@ -13,14 +13,14 @@
 .form,
 .progress-bar,
 .button {
-  width: 20%;
+  width: 15%;
 
-  @include breakpoint(lg) {
-    width: 30%;
+  @include breakpoint(xl) {
+    width: 20%;
   }
 
   @include breakpoint(md) {
-    width: 40%;
+    width: 30%;
   }
 }
 

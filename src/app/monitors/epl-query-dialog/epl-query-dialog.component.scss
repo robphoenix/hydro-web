@@ -1,7 +1,7 @@
 @import 'main';
 
 .query {
-  margin-bottom: $spacing-l;
+  margin-bottom: $space-5;
   font-family: monospace;
   font-size: $fs-4;
 }
@@ -9,5 +9,5 @@
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: $spacing-none;
+  margin-bottom: 0;
 }

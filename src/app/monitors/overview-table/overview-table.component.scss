@@ -7,16 +7,16 @@
 }
 
 .status-toggle {
-  margin-left: $spacing-l;
+  margin-left: $space-5;
 }
 
 .search {
   flex: 0 0 25%;
-  margin: 0 $spacing-l 0 auto;
+  margin: 0 $space-5 0 auto;
 }
 
 .add-monitor {
-  margin-left: $spacing-l;
+  margin-left: $space-5;
 }
 
 .table-outer-wrapper {
@@ -36,7 +36,7 @@
 }
 
 .mat-header-row {
-  padding: $spacing-xs 0;
+  padding: $space-1 0;
 }
 
 .mat-row {
@@ -90,7 +90,7 @@
 .online,
 .offline,
 .all-monitors {
-  margin-left: $spacing-xs;
+  margin-left: $space-1;
 }
 
 .primary {
@@ -105,7 +105,7 @@
 
 .button-text {
   font-size: $fs-3;
-  padding: $spacing-xs $spacing-s;
+  padding: $space-1 $space-2;
 }
 
 .new-monitors {

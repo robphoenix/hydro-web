@@ -1,4 +1,4 @@
-$space: 4, 8, 16, 32, 64, 128, 256, 512;
+$space: 4, 8, 16, 24, 32, 40, 48, 56, 64;
 
 $space-1: nth($space, 1) + px;
 $space-2: nth($space, 2) + px;
@@ -8,12 +8,4 @@ $space-5: nth($space, 5) + px;
 $space-6: nth($space, 6) + px;
 $space-7: nth($space, 7) + px;
 $space-8: nth($space, 8) + px;
-
-$spacing-none: 0;
-$spacing-xs: 0.25rem;
-$spacing-s: 0.5rem;
-$spacing-m: 1rem;
-$spacing-l: 2rem;
-$spacing-xl: 4rem;
-$spacing-2xl: 8rem;
-$spacing-3xl: 16rem;
+$space-9: nth($space, 9) + px;
