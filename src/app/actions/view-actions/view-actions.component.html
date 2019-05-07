@@ -31,10 +31,10 @@
     </hydro-button-raised>
   </div>
 
-  <ul class="list">
+  <hydro-list>
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <li class="list-item">
+        <hydro-list-item>
           <div>
             <h1 class="action-name">
               {{ action.name }}
@@ -76,8 +76,8 @@
               </div>
             </mat-menu>
           </div>
-        </li>
+        </hydro-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>
-  </ul>
+  </hydro-list>
 </hydro-page-wide>

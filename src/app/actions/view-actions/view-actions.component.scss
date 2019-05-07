@@ -16,25 +16,8 @@
   width: 40%;
 }
 
-.list {
-  background-color: $white;
-  box-shadow: $box-shadow;
-  border-top: 3px solid $primary;
-}
-
 .scroll-viewport {
   height: 800px;
-}
-
-.list-item {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid $grey-3;
-  padding: $space-3 0 $space-3 $space-5;
-}
-
-.list-item:first-child {
-  margin-top: $space-2;
 }
 
 .action-name {

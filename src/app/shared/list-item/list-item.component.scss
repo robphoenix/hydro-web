@@ -1,0 +1,12 @@
+@import 'main';
+
+.list-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $grey-3;
+  padding: $space-3 0 $space-3 $space-5;
+}
+
+.list-item:first-child {
+  margin-top: $space-2;
+}
