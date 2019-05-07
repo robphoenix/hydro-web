@@ -41,52 +41,18 @@ export class CreateActionComponent implements OnInit {
         description,
         actionType,
       });
-
       switch (actionType) {
         case ActionType.Block:
-          const {
-            parameters,
-            blockTime,
-            blockTimeUnit,
-            blockDelay,
-            blockDelayUnit,
-          } = metadata as IActionMetadataBlock;
-          if (blockTime < 0) {
-            this.blockForm.patchValue({
-              parameters,
-              permanently: true,
-            });
-          } else {
-            this.blockForm.patchValue({
-              parameters,
-              permanently: false,
-              blockTime,
-              blockTimeUnit,
-              blockDelay,
-              blockDelayUnit,
-            });
-          }
+          this.patchBlockForm(metadata as IActionMetadataBlock);
           break;
         case ActionType.EmailRate:
-          const emailRateMetadata = metadata as IActionMetadataEmailRate;
-
-          // empty the initial form array
-          (this.emailRateForm.get(`emailAddresses`) as FormArray).removeAt(0);
-          // and push any existing email addresses onto it
-          emailRateMetadata.emailAddresses
-            .split(`;`)
-            .map((emailAddress: string) => {
-              this.addEmailAddress(this.emailRateForm, emailAddress.trim());
-            });
-
-          const { emailSubject, emailSendLimit, emailText } = emailRateMetadata;
-          this.emailRateForm.patchValue({
-            emailSubject,
-            emailSendLimit,
-            emailText,
-          });
+          this.patchEmailRateForm(metadata as IActionMetadataEmailRate);
           break;
-        default:
+        case ActionType.EmailBatch:
+          this.patchEmailBatchForm(metadata as IActionMetadataEmailBatch);
+          break;
+        case ActionType.EmailAlert:
+          this.patchEmailAlertForm(metadata as IActionMetadataEmailAlert);
           break;
       }
     }
@@ -182,6 +148,80 @@ export class CreateActionComponent implements OnInit {
           blockDelayUnitCtrl.clearValidators();
         }
       });
+  }
+
+  private patchBlockForm(metadata: IActionMetadataBlock): void {
+    const {
+      parameters,
+      blockTime,
+      blockTimeUnit,
+      blockDelay,
+      blockDelayUnit,
+    } = metadata;
+
+    if (blockTime < 0) {
+      this.blockForm.patchValue({
+        parameters,
+        permanently: true,
+      });
+    } else {
+      this.blockForm.patchValue({
+        parameters,
+        permanently: false,
+        blockTime,
+        blockTimeUnit,
+        blockDelay,
+        blockDelayUnit,
+      });
+    }
+  }
+
+  private patchEmailRateForm(metadata: IActionMetadataEmailRate): void {
+    // empty the initial form array
+    (this.emailRateForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, emailSendLimit, emailText } = metadata;
+    this.emailRateForm.patchValue({
+      emailSubject,
+      emailSendLimit,
+      emailText,
+    });
+  }
+
+  private patchEmailBatchForm(metadata: IActionMetadataEmailBatch): void {
+    // empty the initial form array
+    (this.emailBatchForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, emailCron, emailText } = metadata;
+    this.emailBatchForm.patchValue({
+      emailSubject,
+      emailCron,
+      emailText,
+    });
+  }
+
+  private patchEmailAlertForm(metadata: IActionMetadataEmailAlert): void {
+    // empty the initial form array
+    (this.emailAlertForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, parameters, emailText } = metadata;
+    this.emailAlertForm.patchValue({
+      emailSubject,
+      parameters,
+      emailText,
+    });
   }
 
   public isActionType(actionType: string): boolean {
@@ -360,8 +400,6 @@ export class CreateActionComponent implements OnInit {
     }
 
     this.submitForm.emit(data);
-
-    console.log({ data });
   }
 
   reset() {
