@@ -67,7 +67,25 @@ export class CreateActionComponent implements OnInit {
             });
           }
           break;
+        case ActionType.EmailRate:
+          const emailRateMetadata = metadata as IActionMetadataEmailRate;
 
+          // empty the initial form array
+          (this.emailRateForm.get(`emailAddresses`) as FormArray).removeAt(0);
+          // and push any existing email addresses onto it
+          emailRateMetadata.emailAddresses
+            .split(`;`)
+            .map((emailAddress: string) => {
+              this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+            });
+
+          const { emailSubject, emailSendLimit, emailText } = emailRateMetadata;
+          this.emailRateForm.patchValue({
+            emailSubject,
+            emailSendLimit,
+            emailText,
+          });
+          break;
         default:
           break;
       }
@@ -210,9 +228,11 @@ export class CreateActionComponent implements OnInit {
     });
   }
 
-  public addEmailAddress(form: FormGroup) {
+  public addEmailAddress(form: FormGroup, emailAddress?: string) {
     (form.get(`emailAddresses`) as FormArray).push(
-      this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
+      this.formBuilder.group({
+        emailAddress: [emailAddress || ``, ValidateBet365Email],
+      }),
     );
   }
 
