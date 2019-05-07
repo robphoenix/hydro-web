@@ -29,9 +29,54 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
   public emailAlertForm: FormGroup;
+  private _action: IAction;
 
   @Input()
-  action: IAction;
+  public set action(action: IAction) {
+    this._action = action;
+    if (action) {
+      const { name, description, actionType, metadata } = this.action;
+      this.createActionForm.patchValue({
+        name,
+        description,
+        actionType,
+      });
+
+      switch (actionType) {
+        case ActionType.Block:
+          const {
+            parameters,
+            blockTime,
+            blockTimeUnit,
+            blockDelay,
+            blockDelayUnit,
+          } = metadata as IActionMetadataBlock;
+          if (blockTime < 0) {
+            this.blockForm.patchValue({
+              parameters,
+              permanently: true,
+            });
+          } else {
+            this.blockForm.patchValue({
+              parameters,
+              permanently: false,
+              blockTime,
+              blockTimeUnit,
+              blockDelay,
+              blockDelayUnit,
+            });
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  public get action(): IAction {
+    return this._action;
+  }
 
   @Output()
   submitForm = new EventEmitter<IAction>();
@@ -77,44 +122,6 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.action) {
-      const { name, description, actionType, metadata } = this.action;
-      this.createActionForm.patchValue({
-        name,
-        description,
-        actionType,
-      });
-      switch (actionType) {
-        case ActionType.Block:
-          const {
-            parameters,
-            blockTime,
-            blockTimeUnit,
-            blockDelay,
-            blockDelayUnit,
-          } = metadata as IActionMetadataBlock;
-          if (blockTime < 0) {
-            this.blockForm.patchValue({
-              parameters,
-              permanently: true,
-            });
-          } else {
-            this.blockForm.patchValue({
-              parameters,
-              permanently: false,
-              blockTime,
-              blockTimeUnit,
-              blockDelay,
-              blockDelayUnit,
-            });
-          }
-          break;
-
-        default:
-          break;
-      }
-    }
-
     const blockTimeCtrl: AbstractControl = this.blockForm.get(`blockTime`);
     const blockTimeUnitCtrl: AbstractControl = this.blockForm.get(
       `blockTimeUnit`,
@@ -328,10 +335,23 @@ export class CreateActionComponent implements OnInit {
       metadata,
     } as IAction;
 
+    if (this.action) {
+      data.id = this.action.id;
+    }
+
     this.submitForm.emit(data);
-    this.createActionForm.reset();
 
     console.log({ data });
+  }
+
+  reset() {
+    [
+      this.createActionForm,
+      this.blockForm,
+      this.emailRateForm,
+      this.emailAlertForm,
+      this.emailBatchForm,
+    ].map((form: FormGroup) => form.reset());
   }
 
   cancel() {
