@@ -7,8 +7,8 @@ import {
 } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { IAction } from '../actions/action';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -64,10 +64,6 @@ export class MonitorsService {
     const params = new HttpParams().set('type', type);
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
   }
-
-  // public getActions(): Observable<IAction[]> {
-  //   return this.http.get<IAction[]>(this.actionsUrl, { headers });
-  // }
 
   public getCategories(): Observable<ICategory[]> {
     return this.http.get<ICategory[]>(this.categoriesUrl, {

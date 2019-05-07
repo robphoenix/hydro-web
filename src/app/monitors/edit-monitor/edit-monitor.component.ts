@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { IMonitor } from '../monitor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MonitorsService } from '../monitors.service';
@@ -7,6 +7,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
 
 @Component({
   selector: 'hydro-edit-monitor',
@@ -17,6 +18,9 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   monitor: IMonitor;
   sub: Subscription;
   editForm = true;
+
+  @ViewChild(CreateMonitorFormComponent)
+  form: CreateMonitorFormComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,8 +52,9 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
       () => {
         view
           ? this.router.navigateByUrl(`/monitors/${monitor.id}`)
-          : this.router.navigateByUrl(`/monitors`);
+          : this.router.navigateByUrl(`/monitors/view`);
 
+        this.form.reset();
         this.snackBar.open(`Monitor ${monitor.name} edited`, ``, {
           duration: 2000,
         });

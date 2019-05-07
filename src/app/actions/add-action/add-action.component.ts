@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActionsService } from '../actions.service';
 import { IAction } from '../action';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { CreateActionComponent } from '../create-action/create-action.component';
 
 @Component({
   selector: 'hydro-add-action',
@@ -12,6 +13,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-action.component.scss'],
 })
 export class AddActionComponent {
+  @ViewChild(CreateActionComponent)
+  form: CreateActionComponent;
+
   constructor(
     private actionsService: ActionsService,
     public dialog: MatDialog,
@@ -23,6 +27,7 @@ export class AddActionComponent {
     this.actionsService.addAction(action).subscribe(
       () => {
         this.router.navigateByUrl(`/actions/view`);
+        this.form.reset();
         this.snackBar.open(`Action ${action.name} created`, '', {
           duration: 2000,
         });

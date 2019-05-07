@@ -15,6 +15,8 @@ export class ActionsService {
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;
 
+  constructor(private http: HttpClient) {}
+
   public getActions(): Observable<IAction[]> {
     return this.http.get<IAction[]>(this.actionsUrl, { headers });
   }
@@ -22,7 +24,7 @@ export class ActionsService {
   public addAction(body: IAction): Observable<IAction> {
     return this.http
       .post<IAction>(this.actionsUrl, body, { headers })
-      .pipe(tap((action: IAction) => action));
+      .pipe(tap((a: IAction) => a));
   }
 
   public putAction(action: IAction): Observable<IAction> {
@@ -31,5 +33,14 @@ export class ActionsService {
       .pipe(tap((a: IAction) => a));
   }
 
-  constructor(private http: HttpClient) {}
+  public archiveAction(action: IAction): Observable<IAction> {
+    action.archived = true;
+    return this.putAction(action);
+  }
+
+  public getActionById(id: number): Observable<IAction> {
+    return this.http
+      .get<IAction>(`${this.actionsUrl}/${id}`, { headers })
+      .pipe(tap((a: IAction) => a));
+  }
 }

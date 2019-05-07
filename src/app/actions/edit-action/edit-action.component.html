@@ -1,3 +1,9 @@
-<p>
-  edit-action works!
-</p>
+<hydro-page-form>
+  <hydro-headline>Edit Action</hydro-headline>
+  <hydro-card-form>
+    <hydro-create-action
+      [action]="action"
+      (submitForm)="onSubmit($event)"
+    ></hydro-create-action>
+  </hydro-card-form>
+</hydro-page-form>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -29,6 +29,38 @@ export class CreateActionComponent implements OnInit {
   public emailRateForm: FormGroup;
   public emailBatchForm: FormGroup;
   public emailAlertForm: FormGroup;
+  private _action: IAction;
+
+  @Input()
+  public set action(action: IAction) {
+    this._action = action;
+    if (action) {
+      const { name, description, actionType, metadata } = this.action;
+      this.createActionForm.patchValue({
+        name,
+        description,
+        actionType,
+      });
+      switch (actionType) {
+        case ActionType.Block:
+          this.patchBlockForm(metadata as IActionMetadataBlock);
+          break;
+        case ActionType.EmailRate:
+          this.patchEmailRateForm(metadata as IActionMetadataEmailRate);
+          break;
+        case ActionType.EmailBatch:
+          this.patchEmailBatchForm(metadata as IActionMetadataEmailBatch);
+          break;
+        case ActionType.EmailAlert:
+          this.patchEmailAlertForm(metadata as IActionMetadataEmailAlert);
+          break;
+      }
+    }
+  }
+
+  public get action(): IAction {
+    return this._action;
+  }
 
   @Output()
   submitForm = new EventEmitter<IAction>();
@@ -74,10 +106,12 @@ export class CreateActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    const blockTime: AbstractControl = this.blockForm.get(`blockTime`);
-    const blockTimeUnit: AbstractControl = this.blockForm.get(`blockTimeUnit`);
-    const blockDelay: AbstractControl = this.blockForm.get(`blockDelay`);
-    const blockDelayUnit: AbstractControl = this.blockForm.get(
+    const blockTimeCtrl: AbstractControl = this.blockForm.get(`blockTime`);
+    const blockTimeUnitCtrl: AbstractControl = this.blockForm.get(
+      `blockTimeUnit`,
+    );
+    const blockDelayCtrl: AbstractControl = this.blockForm.get(`blockDelay`);
+    const blockDelayUnitCtrl: AbstractControl = this.blockForm.get(
       `blockDelayUnit`,
     );
 
@@ -86,20 +120,20 @@ export class CreateActionComponent implements OnInit {
       .get('permanently')
       .valueChanges.subscribe((blockPermanently: boolean) => {
         if (blockPermanently) {
-          this.clearValidators([blockTime, blockTimeUnit]);
-          blockTime.setValue(``);
-          blockTimeUnit.setValue(``);
-          blockTime.disable();
-          blockDelay.disable();
+          this.clearValidators([blockTimeCtrl, blockTimeUnitCtrl]);
+          blockTimeCtrl.setValue(``);
+          blockTimeUnitCtrl.setValue(``);
+          blockTimeCtrl.disable();
+          blockDelayCtrl.disable();
         } else {
-          blockTime.setValidators(Validators.required);
-          blockTime.updateValueAndValidity();
-          blockTimeUnit.setValidators(Validators.required);
-          blockTimeUnit.updateValueAndValidity();
-          blockTime.enable();
-          blockDelay.enable();
-          blockTime.markAsUntouched();
-          blockTimeUnit.markAsUntouched();
+          blockTimeCtrl.setValidators(Validators.required);
+          blockTimeCtrl.updateValueAndValidity();
+          blockTimeUnitCtrl.setValidators(Validators.required);
+          blockTimeUnitCtrl.updateValueAndValidity();
+          blockTimeCtrl.enable();
+          blockDelayCtrl.enable();
+          blockTimeCtrl.markAsUntouched();
+          blockTimeUnitCtrl.markAsUntouched();
         }
       });
 
@@ -108,12 +142,86 @@ export class CreateActionComponent implements OnInit {
       .get(`blockDelay`)
       .valueChanges.subscribe((blockDelayValue: string) => {
         if (blockDelayValue !== ``) {
-          blockDelayUnit.setValidators(Validators.required);
-          blockDelayUnit.setErrors({ required: true });
+          blockDelayUnitCtrl.setValidators(Validators.required);
+          blockDelayUnitCtrl.setErrors({ required: true });
         } else {
-          blockDelayUnit.clearValidators();
+          blockDelayUnitCtrl.clearValidators();
         }
       });
+  }
+
+  private patchBlockForm(metadata: IActionMetadataBlock): void {
+    const {
+      parameters,
+      blockTime,
+      blockTimeUnit,
+      blockDelay,
+      blockDelayUnit,
+    } = metadata;
+
+    if (blockTime < 0) {
+      this.blockForm.patchValue({
+        parameters,
+        permanently: true,
+      });
+    } else {
+      this.blockForm.patchValue({
+        parameters,
+        permanently: false,
+        blockTime,
+        blockTimeUnit,
+        blockDelay,
+        blockDelayUnit,
+      });
+    }
+  }
+
+  private patchEmailRateForm(metadata: IActionMetadataEmailRate): void {
+    // empty the initial form array
+    (this.emailRateForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, emailSendLimit, emailText } = metadata;
+    this.emailRateForm.patchValue({
+      emailSubject,
+      emailSendLimit,
+      emailText,
+    });
+  }
+
+  private patchEmailBatchForm(metadata: IActionMetadataEmailBatch): void {
+    // empty the initial form array
+    (this.emailBatchForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, emailCron, emailText } = metadata;
+    this.emailBatchForm.patchValue({
+      emailSubject,
+      emailCron,
+      emailText,
+    });
+  }
+
+  private patchEmailAlertForm(metadata: IActionMetadataEmailAlert): void {
+    // empty the initial form array
+    (this.emailAlertForm.get(`emailAddresses`) as FormArray).removeAt(0);
+    // and push any existing email addresses onto it
+    metadata.emailAddresses.split(`;`).map((emailAddress: string) => {
+      this.addEmailAddress(this.emailRateForm, emailAddress.trim());
+    });
+
+    const { emailSubject, parameters, emailText } = metadata;
+    this.emailAlertForm.patchValue({
+      emailSubject,
+      parameters,
+      emailText,
+    });
   }
 
   public isActionType(actionType: string): boolean {
@@ -160,9 +268,11 @@ export class CreateActionComponent implements OnInit {
     });
   }
 
-  public addEmailAddress(form: FormGroup) {
+  public addEmailAddress(form: FormGroup, emailAddress?: string) {
     (form.get(`emailAddresses`) as FormArray).push(
-      this.formBuilder.group({ emailAddress: [``, ValidateBet365Email] }),
+      this.formBuilder.group({
+        emailAddress: [emailAddress || ``, ValidateBet365Email],
+      }),
     );
   }
 
@@ -285,10 +395,21 @@ export class CreateActionComponent implements OnInit {
       metadata,
     } as IAction;
 
-    this.submitForm.emit(data);
-    this.createActionForm.reset();
+    if (this.action) {
+      data.id = this.action.id;
+    }
 
-    console.log({ data });
+    this.submitForm.emit(data);
+  }
+
+  reset() {
+    [
+      this.createActionForm,
+      this.blockForm,
+      this.emailRateForm,
+      this.emailAlertForm,
+      this.emailBatchForm,
+    ].map((form: FormGroup) => form.reset());
   }
 
   cancel() {
