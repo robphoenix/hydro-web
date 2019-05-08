@@ -77,3 +77,14 @@ export enum ActionParameters {
 }
 
 export enum IActionMetadataEmpty {}
+
+export const actionTypeDisplayNames: { [key: string]: string } = {
+  block: `Block`,
+  emailAlert: `Email Alert`,
+  emailRate: `Email Rate`,
+  emailBatch: `Email Batch`,
+  storeDB: `Store in Database`,
+  storeLogins: `Store Logins`,
+  storeAnalysis: `Store Analysis`,
+  misc: `Miscellaneous`,
+};

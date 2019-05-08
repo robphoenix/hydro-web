@@ -6,14 +6,15 @@
       (monitorsTypeChange)="onMonitorsTypeChange($event)"
     ></hydro-monitors-type-toggle>
   </div>
-  <hydro-overview-table
+
+  <!-- <hydro-overview-table
     [monitors]="currentMonitors"
     [allCurrentActions]="allCurrentActions"
     [allCurrentCategories]="allCurrentCategories"
     [canToggleStatus]="canToggleStatus"
     [monitorsType]="lastMonitorsType"
     (refresh)="refresh()"
-    (changeMonitorsType)="updateMonitorsData($event)"
+    (changeMonitorsType)="onMonitorsTypeChange($event)"
   >
-  </hydro-overview-table>
+  </hydro-overview-table> -->
 </hydro-page-wide>

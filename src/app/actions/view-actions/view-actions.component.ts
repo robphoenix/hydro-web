@@ -17,16 +17,6 @@ export class ViewActionsComponent implements OnInit {
   public filteredActions: IAction[] = [];
   public searchTerm: string;
   public selectedActionType: string;
-  public actionTypeDisplayNames: { [key: string]: string } = {
-    block: `Block`,
-    emailAlert: `Email Alert`,
-    emailRate: `Email Rate`,
-    emailBatch: `Email Batch`,
-    storeDB: `Store in Database`,
-    storeLogins: `Store Logins`,
-    storeAnalysis: `Store Analysis`,
-    misc: `Miscellaneous`,
-  };
 
   constructor(
     private actionsService: ActionsService,
@@ -65,7 +55,7 @@ export class ViewActionsComponent implements OnInit {
     });
   }
 
-  archiveAction(id: number) {
+  onArchiveAction(id: number) {
     const actionToArchive = this.actions.find((a: IAction) => a.id === id);
     const action = `Archive`;
     const dialogRef = this.dialog.open(ActionUpdateDialogComponent, {

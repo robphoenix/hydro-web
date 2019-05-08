@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
 import { MonitorsService } from '../monitors.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import {
   IErrorMessage,
   errorNoAvailableMonitors,
@@ -11,6 +11,14 @@ import { OverviewTableComponent } from '../overview-table/overview-table.compone
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { MonitorsTypeToggleComponent } from '../monitors-type-toggle/monitors-type-toggle.component';
+import { FilterService } from '../filter.service';
+
+interface IFilterValues {
+  searchTerm: string;
+  selectedActions: { [action: string]: string[] };
+  selectedCategories: string[];
+  status: string;
+}
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -27,6 +35,20 @@ export class ViewMonitorsComponent implements OnInit {
   canToggleStatus = true;
   lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
   totalNumberOfMonitors: number;
+  public dataSource: MatTableDataSource<IMonitor>;
+  public displayedColumns = ['monitor', 'actions', 'categories', 'menu'];
+
+  public filterValues: IFilterValues = {
+    searchTerm: '',
+    selectedActions: {
+      block: [],
+      store: [],
+      email: [],
+      other: [],
+    },
+    selectedCategories: [],
+    status: '',
+  };
 
   @ViewChild(MonitorsTypeToggleComponent)
   typeToggle: MonitorsTypeToggleComponent;
@@ -39,6 +61,7 @@ export class ViewMonitorsComponent implements OnInit {
     private userService: UserService,
     public dialog: MatDialog,
     private router: Router,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {

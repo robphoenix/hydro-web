@@ -1,0 +1,37 @@
+<div class="action">
+  <div>
+    <h1 class="action-name">
+      {{ action.name }}
+    </h1>
+    <p class="action-description">
+      {{ action.description }}
+    </p>
+  </div>
+  <span class="action-type"> {{ names[action.actionType] }} Action </span>
+
+  <div class="menu">
+    <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+      <span>
+        Menu
+      </span>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <div>
+        <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
+          <mat-icon>edit</mat-icon>
+          <span>
+            Edit Action
+          </span>
+        </a>
+
+        <button mat-menu-item (click)="onArchiveAction(action.id)">
+          <mat-icon>archive</mat-icon>
+          <span>
+            Archive Action
+          </span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+</div>
