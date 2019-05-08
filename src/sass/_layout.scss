@@ -21,7 +21,9 @@ $breakpoints: (
 @mixin breakpoint($breakpoint) {
   @if $breakpoint == '' {
     @content;
-  } @else {
+  }
+
+  @else {
     // Retrieves the value from the key
     $value: map-get($breakpoints, $breakpoint);
 
