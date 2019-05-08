@@ -32,7 +32,7 @@ export class MarginDirective implements OnInit {
   constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
-    const elementStyle = this.el.nativeElement.style;
+    const elementStyle: CSSStyleDeclaration = this.el.nativeElement.style;
     elementStyle.margin = this.m || this.margin;
     elementStyle.marginTop = this.mt || this.mx;
     elementStyle.marginBottom = this.mb || this.mx;
