@@ -18,6 +18,7 @@ import { PageFormComponent } from './page-form/page-form.component';
 import { CardFormComponent } from './card-form/card-form.component';
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
+import { MarginDirective } from './margin.directive';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { ListItemComponent } from './list-item/list-item.component';
     CardFormComponent,
     ListComponent,
     ListItemComponent,
+    MarginDirective,
   ],
   exports: [
     SearchInputComponent,
@@ -60,6 +62,7 @@ import { ListItemComponent } from './list-item/list-item.component';
     CardFormComponent,
     ListComponent,
     ListItemComponent,
+    MarginDirective,
   ],
   entryComponents: [ErrorDialogComponent],
 })
