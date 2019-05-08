@@ -8,9 +8,8 @@ describe('MonitorsTypeToggleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MonitorsTypeToggleComponent ]
-    })
-    .compileComponents();
+      declarations: [MonitorsTypeToggleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
