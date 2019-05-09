@@ -5,3 +5,29 @@
   align-items: center;
   margin-bottom: $space-4;
 }
+
+.status-toggle {
+  margin-left: $space-5;
+}
+
+.online {
+  color: $accent-green;
+}
+
+.offline {
+  color: $accent-red;
+}
+
+.all-monitors {
+  color: $accent-yellow;
+}
+
+.online,
+.offline,
+.all-monitors {
+  margin-left: $space-1;
+}
+
+.scroll-viewport {
+  height: 800px;
+}

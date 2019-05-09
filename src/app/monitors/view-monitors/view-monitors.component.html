@@ -5,7 +5,52 @@
       [monitorsType]="lastMonitorsType"
       (monitorsTypeChange)="onMonitorsTypeChange($event)"
     ></hydro-monitors-type-toggle>
+
+    <mat-button-toggle-group
+      class="status-toggle"
+      [value]="monitorsStatus"
+      (change)="toggleStatus($event.value)"
+      [disabled]="!canToggleStatus"
+    >
+      <mat-button-toggle value="online">
+        <mat-icon
+          class="online"
+          matTooltip="Online"
+          [ngStyle]="{ cursor: canToggleStatus ? 'pointer' : 'not-allowed' }"
+        >
+          flash_on
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="offline">
+        <mat-icon
+          class="offline"
+          matTooltip="Offline"
+          [ngStyle]="{ cursor: canToggleStatus ? 'pointer' : 'not-allowed' }"
+        >
+          flash_off
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="all">
+        <mat-icon
+          class="all-monitors"
+          matTooltip="All Monitors"
+          [ngStyle]="{ cursor: canToggleStatus ? 'pointer' : 'not-allowed' }"
+        >
+          flash_on
+        </mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
+
+  <hydro-list>
+    <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
+      <ng-container *cdkVirtualFor="let monitor of filteredMonitors">
+        <hydro-list-item>
+          <p>{{ monitor.name }}</p>
+        </hydro-list-item>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </hydro-list>
 
   <!-- <hydro-overview-table
     [monitors]="currentMonitors"
