@@ -1,3 +1,11 @@
+@import 'main';
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: $space-4;
+}
+
 .scroll-viewport {
   height: 800px;
 }

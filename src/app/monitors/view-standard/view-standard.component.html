@@ -1,9 +1,16 @@
 <hydro-page-wide>
   <hydro-headline>Monitors</hydro-headline>
 
+  <div class="toolbar">
+    <hydro-view-toggle-status
+      [status]="status"
+      (toggleStatus)="onToggleStatus($event)"
+    ></hydro-view-toggle-status>
+  </div>
+
   <hydro-list>
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
-      <ng-container *cdkVirtualFor="let monitor of monitors">
+      <ng-container *cdkVirtualFor="let monitor of filteredMonitors">
         <hydro-list-item>
           <p>{{ monitor.name }}</p>
         </hydro-list-item>

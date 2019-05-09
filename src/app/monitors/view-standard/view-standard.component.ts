@@ -7,6 +7,7 @@ import {
 } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'hydro-view-standard',
@@ -14,34 +15,39 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./view-standard.component.scss'],
 })
 export class ViewStandardComponent implements OnInit {
-  private _currentMonitors: IMonitor[] = [];
-  private _filteredMonitors: IMonitor[] = [];
+  public filteredMonitors: IMonitor[] = [];
+
+  private monitors: IMonitor[] = [];
+  private monitorsStatus: string;
 
   constructor(
     private monitorsService: MonitorsService,
+    private userService: UserService,
     public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
+    this.status = this.userService.lastMonitorsStatus || `all`;
     this.getMonitors();
   }
 
-  public get monitors(): IMonitor[] {
-    return this._filteredMonitors;
+  public get status(): string {
+    return this.monitorsStatus;
   }
 
-  public set monitors(monitors: IMonitor[]) {
-    this._currentMonitors = monitors;
-    this._filteredMonitors = monitors;
+  public set status(status: string) {
+    this.monitorsStatus = status;
+    this.userService.lastMonitorsStatus = status;
   }
 
   getMonitors(): void {
-    this.monitorsService
-      .getStandardMonitors()
-      .subscribe(
-        (monitors: IMonitor[]) => (this.monitors = monitors),
-        (error: IErrorMessage) => this.handleError(error, `standard`),
-      );
+    this.monitorsService.getStandardMonitors().subscribe(
+      (monitors: IMonitor[]) => {
+        this.monitors = monitors;
+        this.filteredMonitors = this.filterOnStatus(this.status);
+      },
+      (error: IErrorMessage) => this.handleError(error, `standard`),
+    );
   }
 
   private handleError(error: IErrorMessage, name: string) {
@@ -57,5 +63,15 @@ export class ViewStandardComponent implements OnInit {
         this.getMonitors();
       });
     }
+  }
+
+  public onToggleStatus(status: string) {
+    this.filteredMonitors = this.filterOnStatus(status);
+  }
+
+  private filterOnStatus(status: string): IMonitor[] {
+    return this.monitors.filter((monitor: IMonitor) => {
+      return status === `all monitors` ? true : monitor.status === status;
+    });
   }
 }

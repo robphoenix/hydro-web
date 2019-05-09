@@ -1,0 +1,9 @@
+<mat-button-toggle-group
+  class="status-toggle"
+  [value]="status"
+  (change)="onToggleStatus($event)"
+>
+  <mat-button-toggle *ngFor="let status of statuses" value="{{ status }}">
+    <span class="status">{{ status }}</span>
+  </mat-button-toggle>
+</mat-button-toggle-group>
