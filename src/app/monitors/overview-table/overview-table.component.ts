@@ -110,6 +110,8 @@ export class OverviewTableComponent implements OnInit, OnChanges {
     this.allowsEdit = this.authService.allowsEdit;
     this.allowsEnable = this.authService.allowsEnable;
     this.dataSource = new MatTableDataSource(this.monitors);
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = this.filterService.filterPredicate();
     this.updateMonitorsStatus();
   }
