@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IAction } from '../actions/action';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -50,7 +50,7 @@ export class MonitorsService {
     return this.http
       .get<IMonitor[]>(this.monitorsUrl, { headers, params })
       .pipe(
-        tap(
+        map(
           // filter out archived monitors
           (monitors: IMonitor[]) =>
             monitors.filter(
@@ -93,21 +93,19 @@ export class MonitorsService {
    * @memberof MonitorsService
    */
   public getMonitorById(id: number): Observable<IMonitor> {
-    return this.http
-      .get<IMonitor>(`${this.monitorsUrl}/${id}`, { headers })
-      .pipe(tap((monitor: IMonitor) => monitor));
+    return this.http.get<IMonitor>(`${this.monitorsUrl}/${id}`, { headers });
   }
 
   public addMonitor(body: IMonitor): Observable<IMonitor> {
-    return this.http
-      .post<IMonitor>(this.monitorsUrl, body, { headers })
-      .pipe(tap((monitor: IMonitor) => monitor));
+    return this.http.post<IMonitor>(this.monitorsUrl, body, { headers });
   }
 
   public putMonitor(monitor: IMonitor): Observable<IMonitor> {
-    return this.http
-      .put(`${this.monitorsUrl}/${monitor.id}`, monitor, { headers })
-      .pipe(tap((m: IMonitor) => m));
+    return this.http.put<IMonitor>(
+      `${this.monitorsUrl}/${monitor.id}`,
+      monitor,
+      { headers },
+    );
   }
 
   public allCurrentCategories(monitors: IMonitor[]): string[] {

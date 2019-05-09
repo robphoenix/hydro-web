@@ -9,6 +9,8 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
+import { IFilterValues } from '../filter-values';
+import { FilterService } from '../filter.service';
 
 @Component({
   selector: 'hydro-view-standard',
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
 })
 export class ViewStandardComponent implements OnInit {
   public filteredMonitors: IMonitor[] = [];
+  public searchTerm: string;
 
   private monitors: IMonitor[] = [];
   private monitorsStatus: string;
@@ -24,12 +27,13 @@ export class ViewStandardComponent implements OnInit {
   constructor(
     private monitorsService: MonitorsService,
     private userService: UserService,
+    private filterService: FilterService,
     public dialog: MatDialog,
     public router: Router,
   ) {}
 
   ngOnInit() {
-    this.status = this.userService.lastMonitorsStatus || `all`;
+    this.status = this.userService.lastMonitorsStatus || `all monitors`;
     this.getMonitors();
   }
 
@@ -46,7 +50,7 @@ export class ViewStandardComponent implements OnInit {
     this.monitorsService.getStandardMonitors().subscribe(
       (monitors: IMonitor[]) => {
         this.monitors = monitors;
-        this.filteredMonitors = this.filterOnStatus(this.status);
+        this.filterMonitors();
       },
       (error: IErrorMessage) => this.handleError(error, `standard`),
     );
@@ -68,13 +72,19 @@ export class ViewStandardComponent implements OnInit {
   }
 
   public onToggleStatus(status: string) {
-    this.filteredMonitors = this.filterOnStatus(status);
+    this.status = status;
+    this.filterMonitors();
   }
 
-  private filterOnStatus(status: string): IMonitor[] {
-    return this.monitors.filter((monitor: IMonitor) => {
-      return status === `all monitors` ? true : monitor.status === status;
-    });
+  private filterMonitors() {
+    if (!this.status && !this.searchTerm) {
+      this.filteredMonitors = this.monitors;
+    } else {
+      this.filteredMonitors = this.filterService.filterMonitors(this.monitors, {
+        status: this.status,
+        searchTerm: this.searchTerm,
+      } as IFilterValues);
+    }
   }
 
   public onAddNewMonitor() {

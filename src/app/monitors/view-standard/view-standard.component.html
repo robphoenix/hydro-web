@@ -7,6 +7,13 @@
       (toggleStatus)="onToggleStatus($event)"
     ></hydro-view-toggle-status>
 
+    <hydro-search-input
+      class="search"
+      [(searchTerm)]="searchTerm"
+      [placeHolder]="'Search Monitors'"
+      (searchTermChange)="filterMonitors()"
+    ></hydro-search-input>
+
     <hydro-button-raised
       color="accent"
       class="add-monitor"
