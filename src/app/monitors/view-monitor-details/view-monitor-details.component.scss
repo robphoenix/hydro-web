@@ -1,0 +1,34 @@
+@import 'main';
+
+.monitor {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header {
+  width: 30%;
+}
+
+.description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.status {
+  text-transform: capitalize;
+}
+
+.online {
+  color: $accent-green;
+  border: 1px solid $accent-green;
+  padding: $space-1;
+}
+
+.offline {
+  color: $accent-red;
+  border: 1px solid $accent-red;
+  padding: $space-1;
+}

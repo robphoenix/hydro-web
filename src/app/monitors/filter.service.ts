@@ -49,12 +49,7 @@ export class FilterService {
     const { status, searchTerm } = filterValues;
 
     return monitors.filter((monitor: IMonitor) => {
-      console.log({ status });
-
-      console.log(monitor.status);
-
       const hasStatus = status === `all monitors` || monitor.status === status;
-
       return hasStatus && this.matchesSearchTerm(monitor, searchTerm);
     });
   }

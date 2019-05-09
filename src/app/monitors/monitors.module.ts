@@ -33,6 +33,7 @@ import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
 import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
 import { ViewStandardComponent } from './view-standard/view-standard.component';
 import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
+import { ViewMonitorDetailsComponent } from './view-monitor-details/view-monitor-details.component';
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-stat
     MonitorsTypeToggleComponent,
     ViewStandardComponent,
     ViewToggleStatusComponent,
+    ViewMonitorDetailsComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

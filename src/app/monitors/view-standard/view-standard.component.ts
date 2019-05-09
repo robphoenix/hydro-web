@@ -33,7 +33,7 @@ export class ViewStandardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.status = this.userService.lastMonitorsStatus || `all monitors`;
+    this.status = this.userService.lastMonitorsStatus || `online`;
     this.getMonitors();
   }
 

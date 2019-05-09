@@ -2,14 +2,23 @@
 
 .toolbar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: $space-4;
 }
 
+.search {
+  width: 30%;
+}
+
 .scroll-viewport {
-  height: 800px;
+  height: 700px;
 }
 
 .add-monitor {
   margin-left: $space-5;
+}
+
+.monitor-details {
+  width: 100%;
 }
