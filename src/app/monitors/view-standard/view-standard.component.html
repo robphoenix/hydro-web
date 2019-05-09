@@ -6,6 +6,14 @@
       [status]="status"
       (toggleStatus)="onToggleStatus($event)"
     ></hydro-view-toggle-status>
+
+    <hydro-button-raised
+      color="accent"
+      class="add-monitor"
+      (click)="onAddNewMonitor()"
+    >
+      Add New Monitor
+    </hydro-button-raised>
   </div>
 
   <hydro-list>

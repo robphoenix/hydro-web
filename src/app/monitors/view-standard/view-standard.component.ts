@@ -8,6 +8,7 @@ import {
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hydro-view-standard',
@@ -24,6 +25,7 @@ export class ViewStandardComponent implements OnInit {
     private monitorsService: MonitorsService,
     private userService: UserService,
     public dialog: MatDialog,
+    public router: Router,
   ) {}
 
   ngOnInit() {
@@ -73,5 +75,9 @@ export class ViewStandardComponent implements OnInit {
     return this.monitors.filter((monitor: IMonitor) => {
       return status === `all monitors` ? true : monitor.status === status;
     });
+  }
+
+  public onAddNewMonitor() {
+    this.router.navigateByUrl('/monitors/add');
   }
 }

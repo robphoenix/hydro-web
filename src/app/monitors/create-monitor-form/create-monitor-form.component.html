@@ -49,6 +49,7 @@
   ></hydro-create-monitor-form-cache-window>
 
   <hydro-create-monitor-form-categories
+    *ngIf="availableCategories && availableCategories.length"
     class="form-field"
     [parent]="createMonitorForm"
     [loading]="loadingCategories"
