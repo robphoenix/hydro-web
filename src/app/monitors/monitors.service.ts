@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 import { IAction } from '../actions/action';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -47,7 +47,17 @@ export class MonitorsService {
   public getStandardMonitors(): Observable<IMonitor[]> {
     const type: MonitorType = MonitorType.Standard;
     const params = new HttpParams().set('type', type);
-    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+    return this.http
+      .get<IMonitor[]>(this.monitorsUrl, { headers, params })
+      .pipe(
+        tap(
+          // filter out archived monitors
+          (monitors: IMonitor[]) =>
+            monitors.filter(
+              (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
+            ),
+        ),
+      );
   }
 
   public getArchivedMonitors(): Observable<IMonitor[]> {

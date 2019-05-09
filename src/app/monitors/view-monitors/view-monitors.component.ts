@@ -54,6 +54,7 @@ export class ViewMonitorsComponent implements OnInit {
       ? (lastViewed as MonitorType) || (lastViewed as MonitorStatus)
       : this.lastMonitorsType;
 
+    // Ensure there are monitors to display
     this.monitorsService.getMonitors().subscribe(
       () => this.getMonitors(),
       (error: IErrorMessage) => {

@@ -1,0 +1,13 @@
+<hydro-page-wide>
+  <hydro-headline>Monitors</hydro-headline>
+
+  <hydro-list>
+    <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
+      <ng-container *cdkVirtualFor="let monitor of monitors">
+        <hydro-list-item>
+          <p>{{ monitor.name }}</p>
+        </hydro-list-item>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
+  </hydro-list>
+</hydro-page-wide>

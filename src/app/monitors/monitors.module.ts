@@ -31,14 +31,16 @@ import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/creat
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
 import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
+import { ViewStandardComponent } from './view-standard/view-standard.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', redirectTo: 'view', pathMatch: 'full' },
+      { path: '', redirectTo: 'view/standard', pathMatch: 'full' },
       { path: 'view', component: ViewMonitorsComponent },
+      { path: 'view/standard', component: ViewStandardComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },
@@ -76,6 +78,7 @@ import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-typ
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
     MonitorsTypeToggleComponent,
+    ViewStandardComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
