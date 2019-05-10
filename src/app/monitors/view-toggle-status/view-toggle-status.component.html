@@ -4,12 +4,12 @@
   (change)="onToggleStatus($event)"
 >
   <mat-button-toggle value="online">
-    <span class="status">online</span>
+    <span class="status">Online</span>
   </mat-button-toggle>
   <mat-button-toggle value="offline">
-    <span class="status">offline</span>
+    <span class="status">Offline</span>
   </mat-button-toggle>
   <mat-button-toggle value="archived" *ngIf="isAdmin">
-    <span class="status">archived</span>
+    <span class="status">Archived</span>
   </mat-button-toggle>
 </mat-button-toggle-group>

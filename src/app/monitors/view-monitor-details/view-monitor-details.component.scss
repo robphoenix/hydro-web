@@ -1,33 +1,29 @@
 @import 'main';
 
+.container {
+  display: flex;
+  align-items: center;
+}
+
 .monitor {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: $space-3 $space-5;
 }
 
 .header {
-  width: 30%;
-  cursor: pointer;
+  width: 40ch;
+}
 
-  .name {
-    display: flex;
-    align-items: center;
-    font-size: $fs-3;
-    font-weight: $fw-4;
-    color: $grey-8;
-    margin-bottom: $space-2;
-  }
-
-  &:hover {
-    .name {
-      text-decoration: underline;
-      text-decoration-style: wavy;
-      text-decoration-color: $accent;
-    }
-  }
+.name {
+  display: flex;
+  align-items: center;
+  font-size: $fs-3;
+  font-weight: $fw-4;
+  color: $grey-8;
+  margin-bottom: $space-2;
 }
 
 .description {
@@ -35,6 +31,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
+  font-size: $fs-2;
+  font-weight: $fw-4;
+  color: $grey-7;
 }
 
 .status {
@@ -54,9 +53,18 @@
   color: $grey-4;
 }
 
+.view-monitor {
+  margin-left: auto;
+}
+
+.buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .epl-query {
   cursor: help;
-  margin-left: $space-5;
 }
 
 .epl-query-tooltip {
@@ -65,5 +73,5 @@
 }
 
 .menu {
-  margin-left: auto;
+  margin-left: $space-5;
 }

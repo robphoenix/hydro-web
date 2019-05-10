@@ -1,27 +1,39 @@
-<div class="monitor">
-  <div class="header" (click)="viewMonitor()">
-    <h3 class="name">
-      {{ monitor.name }}
-      <span class="status" [ngClass]="monitor.status">•</span>
-    </h3>
-    <p class="description">
-      {{ monitor.description }}
-    </p>
+<div class="container">
+  <div class="monitor">
+    <div class="header">
+      <h3 class="name">
+        {{ monitor.name }}
+        <span class="status" [ngClass]="monitor.status">•</span>
+      </h3>
+      <p class="description">
+        {{ monitor.description }}
+      </p>
+    </div>
+    <button
+      mat-stroked-button
+      color="accent"
+      (click)="viewMonitor()"
+      class="view-monitor"
+    >
+      View Monitor
+    </button>
   </div>
 
-  <button
-    mat-stroked-button
-    [disableRipple]="true"
-    matTooltip="{{ monitor.query }}"
-    [matTooltipPosition]="'right'"
-    [matTooltipClass]="'epl-query-tooltip'"
-    class="epl-query"
-  >
-    View EPL Query
-  </button>
+  <div class="buttons">
+    <button
+      mat-stroked-button
+      [disableRipple]="true"
+      matTooltip="{{ monitor.query }}"
+      [matTooltipPosition]="'below'"
+      [matTooltipClass]="'epl-query-tooltip'"
+      class="epl-query"
+    >
+      View EPL Query
+    </button>
 
-  <hydro-view-monitor-details-menu
-    class="menu"
-    [monitor]="monitor"
-  ></hydro-view-monitor-details-menu>
+    <hydro-view-monitor-details-menu
+      class="menu"
+      [monitor]="monitor"
+    ></hydro-view-monitor-details-menu>
+  </div>
 </div>

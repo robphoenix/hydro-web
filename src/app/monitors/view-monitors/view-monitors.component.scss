@@ -8,11 +8,7 @@
 }
 
 .search {
-  width: 25%;
-
-  @include breakpoint(xl) {
-    width: 30%;
-  }
+  width: 30%;
 }
 
 .scroll-viewport {
@@ -29,4 +25,8 @@
 
 .monitor-details {
   width: 100%;
+}
+
+.odd {
+  background: $grey-2;
 }

@@ -36,7 +36,7 @@ export class DuplicateMonitorComponent implements OnInit, OnDestroy {
       const id = +params.get('id');
       this.monitorsService.getMonitorById(id).subscribe(
         (monitor: IMonitor) => {
-          this.monitorName = `DUPLICATE ${monitor.name}`;
+          this.monitorName = `[duplicate] ${monitor.name}`;
           this.monitor = monitor;
         },
         (error: any) => console.log({ error }),

@@ -1,6 +1,7 @@
 @import 'theming';
 
 // Greys
+$grey-0: mat-color(mat-palette($mat-gray, 50));
 $grey-1: mat-color(mat-palette($mat-gray, 100));
 $grey-2: mat-color(mat-palette($mat-gray, 200));
 $grey-3: mat-color(mat-palette($mat-gray, 300));
