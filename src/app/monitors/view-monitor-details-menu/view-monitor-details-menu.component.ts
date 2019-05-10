@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MonitorStatus, IMonitor } from '../monitor';
 import { AuthService } from 'src/app/user/auth.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
+import { IErrorMessage } from 'src/app/shared/error-message';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { MonitorsService } from '../monitors.service';
 
 @Component({
   selector: 'hydro-view-monitor-details-menu',
@@ -15,7 +20,12 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
   @Input()
   monitor: IMonitor;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private monitorsService: MonitorsService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
     this.allowsEdit = this.authService.allowsEdit;
@@ -35,7 +45,7 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
   }
 
   public archiveMonitor(id: number) {
-    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const monitor: IMonitor = this.monitor;
     const action = `Archive`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
@@ -50,7 +60,8 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
 
       this.monitorsService.putMonitor(monitor).subscribe(
         () => {
-          this.refresh.emit();
+          // TODO: refresh?
+          // this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} archived`, '', {
             duration: 2000,
           });
@@ -68,7 +79,7 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
   }
 
   public unArchiveMonitor(id: number) {
-    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const monitor: IMonitor = this.monitor;
     const action = `unarchive`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
@@ -83,7 +94,8 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
 
       this.monitorsService.putMonitor(monitor).subscribe(
         () => {
-          this.refresh.emit();
+          // TODO: refresh??
+          // this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} unarchived`, '', {
             duration: 2000,
           });
@@ -101,7 +113,7 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
   }
 
   public enableMonitor(id: number) {
-    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+    const monitor: IMonitor = this.monitor;
     const action = `Enable`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
@@ -114,8 +126,8 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
       monitor.status = MonitorStatus.Online;
       this.monitorsService.putMonitor(monitor).subscribe(
         () => {
-          this.refresh.emit();
-          this.monitorsStatus = 'online';
+          // TODO: refresh??
+          // this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} enabled`, '', {
             duration: 2000,
           });
@@ -132,8 +144,8 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
     });
   }
 
-  public disableMonitor(id: number) {
-    const monitor: IMonitor = this.monitors.find((m: IMonitor) => m.id === id);
+  public disableMonitor() {
+    const monitor: IMonitor = this.monitor;
     const action = `Disable`;
     const dialogRef = this.dialog.open(MonitorStatusChangeDialogComponent, {
       data: { monitor, action },
@@ -146,8 +158,8 @@ export class ViewMonitorDetailsMenuComponent implements OnInit {
       monitor.status = MonitorStatus.Offline;
       this.monitorsService.putMonitor(monitor).subscribe(
         () => {
-          this.refresh.emit();
-          this.monitorsStatus = 'offline';
+          // TODO: refresh??
+          // this.refresh.emit();
           this.snackBar.open(`Monitor ${monitor.name} disabled`, '', {
             duration: 2000,
           });

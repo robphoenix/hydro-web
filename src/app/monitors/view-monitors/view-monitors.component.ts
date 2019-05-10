@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { MatDialog } from '@angular/material';
@@ -7,7 +7,6 @@ import {
   errorNoAvailableMonitors,
 } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { FilterService } from '../filter.service';

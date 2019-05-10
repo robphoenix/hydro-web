@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { OverviewTableComponent } from './overview-table/overview-table.component';
 import { CellActionsComponent } from './cell-actions/cell-actions.component';
 import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
@@ -55,7 +54,6 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
   ],
   declarations: [
     MonitorComponent,
-    OverviewTableComponent,
     CellActionsComponent,
     CellMonitorComponent,
     LoadingSpinnerComponent,
