@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IMonitor } from '../monitor';
+import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import {
   IErrorMessage,
@@ -11,7 +11,6 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { IFilterValues } from '../filter-values';
 import { FilterService } from '../filter.service';
-import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-view-standard',
@@ -21,9 +20,12 @@ import { AuthService } from 'src/app/user/auth.service';
 export class ViewStandardComponent implements OnInit {
   public filteredMonitors: IMonitor[] = [];
   public searchTerm: string;
+  public monitorsType: MonitorType = MonitorType.Standard;
 
   private monitors: IMonitor[] = [];
-  private monitorsStatus: string;
+  private standardMonitors: IMonitor[] = [];
+  private systemMonitors: IMonitor[] = [];
+  private monitorsStatus: MonitorStatus;
 
   constructor(
     private monitorsService: MonitorsService,
@@ -34,30 +36,65 @@ export class ViewStandardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.status = this.userService.lastMonitorsStatus || `online`;
+    this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
     this.getMonitors();
   }
 
-  public get status(): string {
+  public get status(): MonitorStatus {
     return this.monitorsStatus;
   }
 
-  public set status(status: string) {
+  public set status(status: MonitorStatus) {
     this.monitorsStatus = status;
     this.userService.lastMonitorsStatus = status;
   }
 
   getMonitors(): void {
+    switch (this.monitorsType) {
+      case MonitorType.Standard:
+        this.getStandardMonitors();
+        break;
+      case MonitorType.System:
+        this.getSystemMonitors();
+        break;
+      default:
+        this.getStandardMonitors();
+        break;
+    }
+  }
+
+  private getStandardMonitors() {
+    // have we got some monitors to show whilst we're waiting to get the current
+    // set of monitors from the server?
+    if (this.hasStandardMonitors) {
+      this.monitors = this.standardMonitors;
+    }
+    // update the monitors
     this.monitorsService.getStandardMonitors().subscribe(
       (monitors: IMonitor[]) => {
+        this.standardMonitors = monitors;
         this.monitors = monitors;
         this.filterMonitors();
       },
-      (error: IErrorMessage) => this.handleError(error, `standard`),
+      (error: IErrorMessage) => this.handleError(error, MonitorType.Standard),
     );
   }
 
-  private handleError(error: IErrorMessage, name: string) {
+  private getSystemMonitors() {
+    if (this.hasSystemMonitors) {
+      this.monitors = this.systemMonitors;
+    }
+    this.monitorsService.getSystemMonitors().subscribe(
+      (monitors: IMonitor[]) => {
+        this.systemMonitors = monitors;
+        this.monitors = monitors;
+        this.filterMonitors();
+      },
+      (error: IErrorMessage) => this.handleError(error, MonitorType.System),
+    );
+  }
+
+  private handleError(error: IErrorMessage, name: MonitorType) {
     const { errorCode } = error;
     if (errorCode === errorNoAvailableMonitors) {
       const title = `Error fetching ${name} monitors`;
@@ -67,12 +104,32 @@ export class ViewStandardComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        this.getMonitors();
+        switch (name) {
+          case MonitorType.Standard:
+            if (this.hasSystemMonitors) {
+              this.monitorsType = MonitorType.System;
+              this.getMonitors();
+            } else {
+              this.onAddNewMonitor();
+            }
+            break;
+          case MonitorType.System:
+            if (this.hasStandardMonitors) {
+              this.monitorsType = MonitorType.Standard;
+              this.getMonitors();
+            } else {
+              this.onAddNewMonitor();
+            }
+            break;
+          default:
+            this.onAddNewMonitor();
+            break;
+        }
       });
     }
   }
 
-  public onToggleStatus(status: string) {
+  public onToggleStatus(status: MonitorStatus) {
     this.status = status;
     this.filterMonitors();
   }
@@ -90,5 +147,17 @@ export class ViewStandardComponent implements OnInit {
 
   public onAddNewMonitor() {
     this.router.navigateByUrl('/monitors/add');
+  }
+
+  public onSelectionChange() {
+    this.getMonitors();
+  }
+
+  private get hasStandardMonitors(): boolean {
+    return !!(this.standardMonitors && this.standardMonitors.length);
+  }
+
+  private get hasSystemMonitors(): boolean {
+    return !!(this.systemMonitors && this.systemMonitors.length);
   }
 }

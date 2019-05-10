@@ -47,11 +47,11 @@ export class FilterService {
     filterValues: IFilterValues,
   ): IMonitor[] {
     const { status, searchTerm } = filterValues;
-
-    return monitors.filter((monitor: IMonitor) => {
-      const hasStatus = status === `all monitors` || monitor.status === status;
-      return hasStatus && this.matchesSearchTerm(monitor, searchTerm);
-    });
+    return monitors.filter(
+      (monitor: IMonitor) =>
+        monitor.status === status &&
+        this.matchesSearchTerm(monitor, searchTerm),
+    );
   }
 
   private matchesSearchTerm(monitor: IMonitor, searchTerm: string): boolean {

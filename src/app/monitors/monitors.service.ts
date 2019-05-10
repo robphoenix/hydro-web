@@ -44,42 +44,39 @@ export class MonitorsService {
     return this.http.get<IMonitor[]>(this.monitorsUrl, { headers });
   }
 
+  private compareByName(a: IMonitor, b: IMonitor): -1 | 1 | 0 {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
+
   public getStandardMonitors(): Observable<IMonitor[]> {
     const type: MonitorType = MonitorType.Standard;
     const params = new HttpParams().set('type', type);
     return this.http
       .get<IMonitor[]>(this.monitorsUrl, { headers, params })
-      .pipe(
-        map(
-          // filter out archived monitors
-          (monitors: IMonitor[]) =>
-            monitors
-              .filter(
-                (monitor: IMonitor) =>
-                  monitor.status !== MonitorStatus.Archived,
-              )
-              // and sort by name
-              .sort(
-                (a: IMonitor, b: IMonitor) =>
-                  a.name > b.name ? 1 : b.name > a.name ? -1 : 0,
-              ),
-        ),
-      );
+      .pipe(map((monitors: IMonitor[]) => monitors.sort(this.compareByName)));
   }
 
   public getArchivedMonitors(): Observable<IMonitor[]> {
-    const type: MonitorType = MonitorType.Standard;
-    const status: MonitorStatus = MonitorStatus.Archived;
     const params: HttpParams = new HttpParams()
-      .set('type', type)
-      .set('status', status);
-    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+      .set('type', MonitorType.Standard)
+      .set('status', MonitorStatus.Archived);
+
+    return this.http
+      .get<IMonitor[]>(this.monitorsUrl, { headers, params })
+      .pipe(map((monitors: IMonitor[]) => monitors.sort(this.compareByName)));
   }
 
   public getSystemMonitors(): Observable<IMonitor[]> {
-    const type: MonitorType = MonitorType.System;
-    const params = new HttpParams().set('type', type);
-    return this.http.get<IMonitor[]>(this.monitorsUrl, { headers, params });
+    const params = new HttpParams().set('type', MonitorType.System);
+    return this.http
+      .get<IMonitor[]>(this.monitorsUrl, { headers, params })
+      .pipe(map((monitors: IMonitor[]) => monitors.sort(this.compareByName)));
   }
 
   public getCategories(): Observable<ICategory[]> {

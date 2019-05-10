@@ -12,6 +12,8 @@
 }
 
 .name {
+  display: flex;
+  align-items: center;
   font-size: $fs-4;
   font-weight: $fw-5;
   color: $grey-8;
@@ -25,11 +27,8 @@
 }
 
 .status {
-  width: 7ch;
-  font-size: $fs-3;
-  text-transform: uppercase;
-  letter-spacing: $ls-tracked;
-  margin-left: $space-5;
+  font-size: $fs-5;
+  margin-left: $space-2;
 }
 
 .online {
@@ -38,6 +37,10 @@
 
 .offline {
   color: $accent-red;
+}
+
+.archived {
+  color: $grey-4;
 }
 
 .epl-query {

@@ -3,7 +3,13 @@
   [value]="status"
   (change)="onToggleStatus($event)"
 >
-  <mat-button-toggle *ngFor="let status of statuses" value="{{ status }}">
-    <span class="status">{{ status }}</span>
+  <mat-button-toggle value="online">
+    <span class="status">online</span>
+  </mat-button-toggle>
+  <mat-button-toggle value="offline">
+    <span class="status">offline</span>
+  </mat-button-toggle>
+  <mat-button-toggle value="archived" *ngIf="isAdmin">
+    <span class="status">archived</span>
   </mat-button-toggle>
 </mat-button-toggle-group>

@@ -14,6 +14,17 @@
       (searchTermChange)="filterMonitors()"
     ></hydro-search-input>
 
+    <mat-form-field>
+      <mat-label>Monitors Type</mat-label>
+      <mat-select
+        [(value)]="monitorsType"
+        (selectionChange)="onSelectionChange()"
+      >
+        <mat-option value="standard">Standard</mat-option>
+        <mat-option value="system">System</mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <hydro-button-raised
       color="accent"
       class="add-monitor"

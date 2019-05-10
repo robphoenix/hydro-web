@@ -8,10 +8,10 @@
 }
 
 .search {
-  width: 30%;
+  width: 25%;
 
   @include breakpoint(xl) {
-    width: 40%;
+    width: 30%;
   }
 }
 

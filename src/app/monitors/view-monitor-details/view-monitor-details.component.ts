@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IMonitor } from '../monitor';
 
 @Component({
@@ -6,11 +6,7 @@ import { IMonitor } from '../monitor';
   templateUrl: './view-monitor-details.component.html',
   styleUrls: ['./view-monitor-details.component.scss'],
 })
-export class ViewMonitorDetailsComponent implements OnInit {
+export class ViewMonitorDetailsComponent {
   @Input()
   monitor: IMonitor;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

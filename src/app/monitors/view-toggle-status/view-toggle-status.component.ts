@@ -1,25 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material';
+import { AuthService } from 'src/app/user/auth.service';
+import { MonitorStatus } from '../monitor';
 
 @Component({
   selector: 'hydro-view-toggle-status',
   templateUrl: './view-toggle-status.component.html',
   styleUrls: ['./view-toggle-status.component.scss'],
 })
-export class ViewToggleStatusComponent implements OnInit {
-  public statuses: string[] = [`online`, `offline`, `all monitors`];
-
+export class ViewToggleStatusComponent {
   @Input()
   status: string;
 
   @Output()
-  toggleStatus = new EventEmitter<string>();
+  toggleStatus = new EventEmitter<MonitorStatus>();
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit() {}
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin;
+  }
 
   public onToggleStatus(event: MatButtonToggleChange) {
-    this.toggleStatus.emit(event.value);
+    const status: MonitorStatus = event.value;
+    this.toggleStatus.emit(status);
   }
 }

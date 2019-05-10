@@ -1,3 +1,8 @@
+@import 'main';
+
 .status {
-  text-transform: capitalize;
+  text-transform: uppercase;
+  letter-spacing: $ls-tracked;
+  font-size: $fs-3;
+  font-weight: $fw-4;
 }
