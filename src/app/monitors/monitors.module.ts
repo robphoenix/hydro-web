@@ -31,7 +31,6 @@ import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/creat
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
 import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
-import { ViewStandardComponent } from './view-standard/view-standard.component';
 import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
 import { ViewMonitorDetailsComponent } from './view-monitor-details/view-monitor-details.component';
 import { ViewMonitorDetailsMenuComponent } from './view-monitor-details-menu/view-monitor-details-menu.component';
@@ -42,9 +41,8 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
     CommonModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', redirectTo: 'view/standard', pathMatch: 'full' },
+      { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewMonitorsComponent },
-      { path: 'view/standard', component: ViewStandardComponent },
       { path: 'add', component: AddMonitorComponent },
       { path: ':id', component: MonitorComponent },
       { path: ':id/edit', component: EditMonitorComponent },
@@ -82,7 +80,6 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
     MonitorsTypeToggleComponent,
-    ViewStandardComponent,
     ViewToggleStatusComponent,
     ViewMonitorDetailsComponent,
     ViewMonitorDetailsMenuComponent,
