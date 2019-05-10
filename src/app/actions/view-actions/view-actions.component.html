@@ -24,6 +24,7 @@
     ></hydro-search-input>
 
     <hydro-button-raised
+      *ngIf="allowsEdit"
       (click)="router.navigateByUrl('/actions/add')"
       color="accent"
     >
@@ -31,53 +32,17 @@
     </hydro-button-raised>
   </div>
 
-  <mat-list class="list">
+  <hydro-list>
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let action of filteredActions">
-        <mat-list-item class="list-item">
-          <div>
-            <h1 matLine class="action-name">
-              {{ action.name }}
-            </h1>
-            <p matLine class="action-description">
-              {{ action.description }}
-            </p>
-          </div>
-          <span class="action-type">
-            {{ actionTypeDisplayNames[action.actionType] }} Action
-          </span>
-
-          <div class="menu">
-            <button
-              mat-stroked-button
-              [matMenuTriggerFor]="menu"
-              color="primary"
-            >
-              <span>
-                Menu
-              </span>
-            </button>
-
-            <mat-menu #menu="matMenu">
-              <div>
-                <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
-                  <mat-icon>edit</mat-icon>
-                  <span>
-                    Edit Action
-                  </span>
-                </a>
-
-                <button mat-menu-item (click)="archiveAction(action.id)">
-                  <mat-icon>archive</mat-icon>
-                  <span>
-                    Archive Action
-                  </span>
-                </button>
-              </div>
-            </mat-menu>
-          </div>
-        </mat-list-item>
+        <hydro-list-item>
+          <hydro-view-actions-list-item
+            class="action-list-item"
+            [action]="action"
+            (archiveAction)="onArchiveAction($event)"
+          ></hydro-view-actions-list-item>
+        </hydro-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>
-  </mat-list>
+  </hydro-list>
 </hydro-page-wide>

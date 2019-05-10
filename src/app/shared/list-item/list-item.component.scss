@@ -1,0 +1,9 @@
+@import 'main';
+
+.list-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid $grey-3;
+  background-color: $white;
+  padding: $space-4 $space-5;
+}

@@ -1,0 +1,67 @@
+<button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
+  <span>
+    Menu
+  </span>
+</button>
+
+<mat-menu #menu="matMenu">
+  <div class="menu">
+    <a
+      *ngIf="allowsEdit && !isArchived"
+      mat-menu-item
+      routerLink="/monitors/{{ monitor.id }}/edit"
+    >
+      <mat-icon class="icon">edit</mat-icon>
+      <span>
+        Edit Monitor
+      </span>
+    </a>
+
+    <a mat-menu-item routerLink="/monitors/{{ monitor.id }}/duplicate">
+      <mat-icon class="icon">file_copy</mat-icon>
+      <span>
+        Duplicate Monitor
+      </span>
+    </a>
+    <button
+      *ngIf="allowsEnable && !isArchived && isOnline"
+      mat-menu-item
+      (click)="disableMonitor(monitor.id)"
+    >
+      <mat-icon class="icon">flash_off</mat-icon>
+      <span>
+        Disable Monitor
+      </span>
+    </button>
+    <button
+      *ngIf="allowsEnable && !isArchived && isOffline"
+      mat-menu-item
+      (click)="enableMonitor(monitor.id)"
+    >
+      <mat-icon class="icon">flash_on</mat-icon>
+      <span>
+        Enable Monitor
+      </span>
+    </button>
+    <button
+      *ngIf="!isArchived"
+      mat-menu-item
+      (click)="archiveMonitor(monitor.id)"
+    >
+      <mat-icon class="icon">archive</mat-icon>
+      <span>
+        Archive Monitor
+      </span>
+    </button>
+    <button
+      *ngIf="isArchived"
+      mat-menu-item
+      (click)="unArchiveMonitor(monitor.id)"
+    >
+      <mat-icon class="icon">unarchive</mat-icon>
+      <span>
+        Unarchive Monitor
+      </span>
+    </button>
+  </div>
+</mat-menu>

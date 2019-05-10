@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { MatDialog } from '@angular/material';
@@ -7,9 +7,10 @@ import {
   errorNoAvailableMonitors,
 } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-import { OverviewTableComponent } from '../overview-table/overview-table.component';
 import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
+import { FilterService } from '../filter.service';
+import { IFilterValues } from '../filter-values';
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -17,135 +18,83 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-monitors.component.scss'],
 })
 export class ViewMonitorsComponent implements OnInit {
-  currentMonitors: IMonitor[] = [];
-  standardMonitors: IMonitor[] = [];
-  archivedMonitors: IMonitor[] = [];
-  systemMonitors: IMonitor[] = [];
-  allCurrentActions: { [group: string]: string[] };
-  allCurrentCategories: string[];
-  canToggleStatus = true;
-  lastMonitorsType: MonitorType | MonitorStatus = MonitorType.Standard;
-  totalNumberOfMonitors: number;
+  public filteredMonitors: IMonitor[] = [];
+  public searchTerm: string;
+  public monitorsType: MonitorType = MonitorType.Standard;
 
-  @ViewChild(OverviewTableComponent)
-  overviewTable: OverviewTableComponent;
+  private monitors: IMonitor[] = [];
+  private standardMonitors: IMonitor[] = [];
+  private systemMonitors: IMonitor[] = [];
+  private monitorsStatus: MonitorStatus;
 
   constructor(
     private monitorsService: MonitorsService,
     private userService: UserService,
+    private filterService: FilterService,
     public dialog: MatDialog,
-    private router: Router,
+    public router: Router,
   ) {}
 
-  ngOnInit(): void {
-    const lastViewed: string = this.userService.lastMonitorsType;
-    if (lastViewed) {
-      this.lastMonitorsType =
-        (lastViewed as MonitorType) || (lastViewed as MonitorStatus);
-    }
-    this.monitorsService.getMonitors().subscribe(
-      () => {
-        this.getMonitors();
-      },
-      (error: IErrorMessage) => {
-        const { errorCode } = error;
-        let { message } = error;
-        const { cause } = error;
-        const title = `Error fetching monitors`;
-        if (errorCode === errorNoAvailableMonitors) {
-          message = `There are no monitors currently available to view. Please add a monitor.`;
-        }
-
-        const dialogRef = this.dialog.open(ErrorDialogComponent, {
-          data: { title, message, cause },
-          maxWidth: `800px`,
-        });
-
-        dialogRef.afterClosed().subscribe(() => {
-          this.router.navigateByUrl(`/monitors/add`);
-        });
-      },
-    );
+  ngOnInit() {
+    this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
+    this.getMonitors();
   }
 
-  private getMonitors() {
-    const monitorsType: string = this.lastMonitorsType as string;
-    this.updateMonitorsData(monitorsType);
+  public get status(): MonitorStatus {
+    return this.monitorsStatus;
   }
 
-  getStandardMonitors(): void {
-    if (this.standardMonitors && this.standardMonitors.length) {
-      this.currentMonitors = this.standardMonitors;
+  public set status(status: MonitorStatus) {
+    this.monitorsStatus = status;
+    this.userService.lastMonitorsStatus = status;
+  }
+
+  getMonitors(): void {
+    switch (this.monitorsType) {
+      case MonitorType.Standard:
+        this.getStandardMonitors();
+        break;
+      case MonitorType.System:
+        this.getSystemMonitors();
+        break;
+      default:
+        this.getStandardMonitors();
+        break;
     }
+  }
+
+  private getStandardMonitors() {
+    // have we got some monitors to show whilst we're waiting to get the current
+    // set of monitors from the server?
+    if (this.hasStandardMonitors) {
+      this.monitors = this.standardMonitors;
+    }
+    // update the monitors
     this.monitorsService.getStandardMonitors().subscribe(
       (monitors: IMonitor[]) => {
-        this.standardMonitors = monitors.filter(
-          (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
-        );
-        this.canToggleStatus = true;
-        this.lastMonitorsType = MonitorType.Standard;
-        this.updateCurrentMonitors(this.standardMonitors);
-        this.userService.lastMonitorsType = 'standard';
+        this.standardMonitors = monitors;
+        this.monitors = monitors;
+        this.filterMonitors();
       },
-      (error: IErrorMessage) => {
-        this.handleError(error, `standard`);
-      },
+      (error: IErrorMessage) => this.handleError(error, MonitorType.Standard),
     );
   }
 
-  getArchivedMonitors(): void {
-    if (this.archivedMonitors && this.archivedMonitors.length) {
-      this.currentMonitors = this.archivedMonitors;
-    }
-    this.monitorsService.getArchivedMonitors().subscribe(
-      (monitors: IMonitor[]) => {
-        this.archivedMonitors = monitors;
-        this.canToggleStatus = false;
-        this.lastMonitorsType = MonitorStatus.Archived;
-        this.updateCurrentMonitors(this.archivedMonitors);
-        this.userService.lastMonitorsType = 'archived';
-      },
-      (error: IErrorMessage) => {
-        this.handleError(error, `archived`);
-      },
-    );
-  }
-
-  getSystemMonitors(): void {
-    if (this.systemMonitors && this.systemMonitors.length) {
-      this.currentMonitors = this.systemMonitors;
+  private getSystemMonitors() {
+    if (this.hasSystemMonitors) {
+      this.monitors = this.systemMonitors;
     }
     this.monitorsService.getSystemMonitors().subscribe(
       (monitors: IMonitor[]) => {
-        this.systemMonitors = monitors.filter(
-          (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
-        );
-        this.canToggleStatus = true;
-        this.lastMonitorsType = MonitorType.System;
-        this.updateCurrentMonitors(this.systemMonitors);
-        this.userService.lastMonitorsType = 'system';
+        this.systemMonitors = monitors;
+        this.monitors = monitors;
+        this.filterMonitors();
       },
-      (error: IErrorMessage) => {
-        this.handleError(error, `system`);
-      },
+      (error: IErrorMessage) => this.handleError(error, MonitorType.System),
     );
   }
 
-  private updateCurrentMonitors(monitors: IMonitor[]) {
-    if (this.overviewTable) {
-      this.overviewTable.updateMonitorsStatus();
-    }
-    this.currentMonitors = monitors;
-
-    this.allCurrentCategories = this.monitorsService.allCurrentCategories(
-      this.currentMonitors,
-    );
-    this.allCurrentActions = this.monitorsService.allCurrentActions(
-      this.currentMonitors,
-    );
-  }
-
-  private handleError(error: IErrorMessage, name: string) {
+  private handleError(error: IErrorMessage, name: MonitorType) {
     const { errorCode } = error;
     if (errorCode === errorNoAvailableMonitors) {
       const title = `Error fetching ${name} monitors`;
@@ -155,29 +104,60 @@ export class ViewMonitorsComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        this.overviewTable.monitorsType = this.lastMonitorsType;
-        this.getMonitors();
+        switch (name) {
+          case MonitorType.Standard:
+            if (this.hasSystemMonitors) {
+              this.monitorsType = MonitorType.System;
+              this.getMonitors();
+            } else {
+              this.onAddNewMonitor();
+            }
+            break;
+          case MonitorType.System:
+            if (this.hasStandardMonitors) {
+              this.monitorsType = MonitorType.Standard;
+              this.getMonitors();
+            } else {
+              this.onAddNewMonitor();
+            }
+            break;
+          default:
+            this.onAddNewMonitor();
+            break;
+        }
       });
     }
   }
 
-  refresh() {
+  public onToggleStatus(status: MonitorStatus) {
+    this.status = status;
+    this.filterMonitors();
+  }
+
+  public filterMonitors() {
+    if (!this.status && !this.searchTerm) {
+      this.filteredMonitors = this.monitors;
+    } else {
+      this.filteredMonitors = this.filterService.filterMonitors(this.monitors, {
+        status: this.status,
+        searchTerm: this.searchTerm,
+      } as IFilterValues);
+    }
+  }
+
+  public onAddNewMonitor() {
+    this.router.navigateByUrl('/monitors/add');
+  }
+
+  public onSelectionChange() {
     this.getMonitors();
   }
 
-  public updateMonitorsData(monitorsType: string) {
-    switch (monitorsType) {
-      case MonitorType.Standard:
-        this.getStandardMonitors();
-        break;
-      case MonitorStatus.Archived:
-        this.getArchivedMonitors();
-        break;
-      case MonitorType.System:
-        this.getSystemMonitors();
-        break;
-      default:
-        this.getStandardMonitors();
-    }
+  private get hasStandardMonitors(): boolean {
+    return !!(this.standardMonitors && this.standardMonitors.length);
+  }
+
+  private get hasSystemMonitors(): boolean {
+    return !!(this.systemMonitors && this.systemMonitors.length);
   }
 }

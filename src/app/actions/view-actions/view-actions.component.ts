@@ -6,6 +6,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { ActionUpdateDialogComponent } from '../action-update-dialog/action-update-dialog.component';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-view-actions',
@@ -17,25 +18,18 @@ export class ViewActionsComponent implements OnInit {
   public filteredActions: IAction[] = [];
   public searchTerm: string;
   public selectedActionType: string;
-  public actionTypeDisplayNames: { [key: string]: string } = {
-    block: `Block`,
-    emailAlert: `Email Alert`,
-    emailRate: `Email Rate`,
-    emailBatch: `Email Batch`,
-    storeDB: `Store in Database`,
-    storeLogins: `Store Logins`,
-    storeAnalysis: `Store Analysis`,
-    misc: `Miscellaneous`,
-  };
+  public allowsEdit: boolean;
 
   constructor(
     private actionsService: ActionsService,
+    private authService: AuthService,
     public router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
+    this.allowsEdit = this.authService.allowsEdit;
     this.getActions();
   }
 
@@ -65,7 +59,7 @@ export class ViewActionsComponent implements OnInit {
     });
   }
 
-  archiveAction(id: number) {
+  onArchiveAction(id: number) {
     const actionToArchive = this.actions.find((a: IAction) => a.id === id);
     const action = `Archive`;
     const dialogRef = this.dialog.open(ActionUpdateDialogComponent, {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IMonitor, ICategory, IGroup } from './monitor';
 import { IAction } from '../actions/action';
+import { IFilterValues } from './filter-values';
 
 @Injectable({
   providedIn: 'root',
@@ -41,11 +42,25 @@ export class FilterService {
     };
   }
 
-  matchesSearchTerm(monitor: IMonitor, searchTerm: string): boolean {
-    const regex: RegExp = new RegExp(searchTerm.trim().toLowerCase(), 'gi');
-    const match = `${monitor.name.toLowerCase()} ${monitor.description.toLowerCase()}`.match(
-      regex,
+  public filterMonitors(
+    monitors: IMonitor[],
+    filterValues: IFilterValues,
+  ): IMonitor[] {
+    const { status, searchTerm } = filterValues;
+    return monitors.filter(
+      (monitor: IMonitor) =>
+        monitor.status === status &&
+        this.matchesSearchTerm(monitor, searchTerm),
     );
+  }
+
+  private matchesSearchTerm(monitor: IMonitor, searchTerm: string): boolean {
+    if (!searchTerm) {
+      return true;
+    }
+    const regex: RegExp = new RegExp(searchTerm.trim().toLowerCase(), 'gi');
+    const term = `${monitor.name} ${monitor.description}`.toLowerCase();
+    const match = term.match(regex);
     return match && match.length > 0;
   }
 

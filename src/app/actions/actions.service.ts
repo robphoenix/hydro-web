@@ -22,15 +22,13 @@ export class ActionsService {
   }
 
   public addAction(body: IAction): Observable<IAction> {
-    return this.http
-      .post<IAction>(this.actionsUrl, body, { headers })
-      .pipe(tap((a: IAction) => a));
+    return this.http.post<IAction>(this.actionsUrl, body, { headers });
   }
 
   public putAction(action: IAction): Observable<IAction> {
-    return this.http
-      .put(`${this.actionsUrl}/${action.id}`, action, { headers })
-      .pipe(tap((a: IAction) => a));
+    return this.http.put<IAction>(`${this.actionsUrl}/${action.id}`, action, {
+      headers,
+    });
   }
 
   public archiveAction(action: IAction): Observable<IAction> {
@@ -39,8 +37,6 @@ export class ActionsService {
   }
 
   public getActionById(id: number): Observable<IAction> {
-    return this.http
-      .get<IAction>(`${this.actionsUrl}/${id}`, { headers })
-      .pipe(tap((a: IAction) => a));
+    return this.http.get<IAction>(`${this.actionsUrl}/${id}`, { headers });
   }
 }

@@ -5,7 +5,7 @@
 }
 
 .content {
-  margin-bottom: $spacing-l;
+  margin-bottom: $space-5;
 }
 
 .error {
@@ -15,5 +15,5 @@
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: $spacing-none;
+  margin-bottom: 0;
 }

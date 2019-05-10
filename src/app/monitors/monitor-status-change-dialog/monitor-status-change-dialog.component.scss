@@ -3,18 +3,18 @@
 .buttons {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: $spacing-none;
+  margin-bottom: 0;
 }
 
 .action-button {
-  margin-left: $spacing-m;
+  margin-left: $space-3;
   display: flex;
   align-items: center;
-  padding: $spacing-xs $spacing-l;
+  padding: $space-1 $space-5;
 }
 
 .content {
-  font-size: $fs-m;
-  margin-left: $spacing-xs;
-  margin-bottom: $spacing-l;
+  font-size: $fs-3;
+  margin-left: $space-1;
+  margin-bottom: $space-5;
 }

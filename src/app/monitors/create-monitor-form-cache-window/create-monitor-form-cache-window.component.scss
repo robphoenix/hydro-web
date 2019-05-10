@@ -7,19 +7,19 @@
 }
 
 .label {
-  margin-bottom: $spacing-m;
+  margin-bottom: $space-3;
   display: flex;
   align-items: center;
 
   .icon {
     color: $grey-4;
-    margin-left: $spacing-s;
+    margin-left: $space-2;
     cursor: help;
   }
 }
 
 ::ng-deep .tooltip {
-  font-size: $fs-s;
+  font-size: $fs-2;
   line-height: $lh-copy;
   white-space: pre-line;
 }

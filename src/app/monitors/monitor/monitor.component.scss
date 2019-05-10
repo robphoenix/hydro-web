@@ -1,25 +1,25 @@
 @import 'main';
 
 .container {
-  margin: $spacing-xl;
-  padding: $spacing-l;
+  margin: $space-9;
+  padding: $space-5;
 }
 
 .heading {
-  margin-bottom: $spacing-l;
+  margin-bottom: $space-5;
 }
 
 .header-name {
-  font-size: $fs-s;
+  font-size: $fs-2;
   font-weight: $fw-4;
-  margin-left: $spacing-s;
+  margin-left: $space-2;
   color: $grey-5;
 }
 
 .inner-wrapper {
   display: flex;
   align-items: center;
-  margin-bottom: $spacing-l;
+  margin-bottom: $space-5;
 }
 
 .buttons {
@@ -28,7 +28,7 @@
 }
 
 .button {
-  margin-left: $spacing-m;
+  margin-left: $space-3;
 }
 
 .icon {
@@ -50,7 +50,7 @@
 
 .mat-header-cell,
 .mat-cell {
-  padding: $spacing-m;
+  padding: $space-3;
   display: table-cell;
   white-space: nowrap;
   overflow: hidden;
@@ -76,7 +76,7 @@
 .messages {
   display: flex;
   flex-direction: column;
-  margin: $spacing-2xl auto;
+  margin: $space-9 auto;
   width: 300px;
 }
 
@@ -86,7 +86,7 @@
   color: $grey-7;
 
   .description {
-    margin-bottom: $spacing-s;
+    margin-bottom: $space-2;
   }
 }
 

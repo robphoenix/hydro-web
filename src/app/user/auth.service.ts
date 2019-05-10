@@ -283,4 +283,8 @@ export class AuthService {
   public get allowsEnable(): boolean {
     return this.userPermissions.includes(Permissions.AllowsEnable);
   }
+
+  public get isAdmin(): boolean {
+    return this.userPermissions.includes(Permissions.IsAdmin);
+  }
 }

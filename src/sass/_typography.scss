@@ -1,14 +1,5 @@
-// Font Size
-$fs-s: 0.875rem;
-$fs-m: 1rem;
-$fs-l: 1.25rem;
-$fs-xl: 1.5rem;
-$fs-2xl: 2.25rem;
-$fs-3xl: 3rem;
-$fs-subheadline: 5rem;
-$fs-headline: 6rem;
-
-$fontSizes: 12, 14, 16, 18, 24, 32, 48, 64, 72;
+// Font Sizes
+$fontSizes: 12, 14, 16, 20, 24, 32, 40, 48, 64, 72;
 
 $fs-1: nth($fontSizes, 1) + px;
 $fs-2: nth($fontSizes, 2) + px;
