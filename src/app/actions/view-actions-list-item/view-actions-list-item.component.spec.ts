@@ -8,9 +8,8 @@ describe('ViewActionsListItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewActionsListItemComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewActionsListItemComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

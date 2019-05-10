@@ -8,9 +8,8 @@ describe('ViewMonitorDetailsMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewMonitorDetailsMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewMonitorDetailsMenuComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

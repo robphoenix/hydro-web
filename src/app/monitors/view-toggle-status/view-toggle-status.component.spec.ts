@@ -8,9 +8,8 @@ describe('ViewToggleStatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewToggleStatusComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewToggleStatusComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
