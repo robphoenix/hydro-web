@@ -134,7 +134,7 @@ export class ViewMonitorsComponent implements OnInit {
     this.filterMonitors();
   }
 
-  private filterMonitors() {
+  public filterMonitors() {
     if (!this.status && !this.searchTerm) {
       this.filteredMonitors = this.monitors;
     } else {
