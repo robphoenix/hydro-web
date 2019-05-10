@@ -1,10 +1,10 @@
 <div class="monitor">
-  <div class="header">
+  <div class="header" (click)="viewMonitor()">
     <h3 class="name">
       {{ monitor.name }}
       <span class="status" [ngClass]="monitor.status">•</span>
     </h3>
-    <p class="description" matTooltip="{{ monitor.description }}">
+    <p class="description">
       {{ monitor.description }}
     </p>
   </div>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IMonitor } from '../monitor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'hydro-view-monitor-details',
@@ -9,4 +10,10 @@ import { IMonitor } from '../monitor';
 export class ViewMonitorDetailsComponent {
   @Input()
   monitor: IMonitor;
+
+  constructor(private router: Router) {}
+
+  public viewMonitor() {
+    this.router.navigateByUrl(`/monitors/${this.monitor.id}`);
+  }
 }
