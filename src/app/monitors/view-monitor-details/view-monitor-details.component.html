@@ -1,7 +1,26 @@
 <div class="monitor">
   <div class="header">
     <h3 class="name">{{ monitor.name }}</h3>
-    <p class="description">{{ monitor.description }}</p>
+    <p class="description" matTooltip="{{ monitor.description }}">
+      {{ monitor.description }}
+    </p>
   </div>
+
   <span class="status" [ngClass]="monitor.status">{{ monitor.status }}</span>
+
+  <button
+    mat-stroked-button
+    [disableRipple]="true"
+    matTooltip="{{ monitor.query }}"
+    [matTooltipPosition]="'right'"
+    [matTooltipClass]="'epl-query-tooltip'"
+    class="epl-query"
+  >
+    View EPL Query
+  </button>
+
+  <hydro-view-monitor-details-menu
+    class="menu"
+    [monitor]="monitor"
+  ></hydro-view-monitor-details-menu>
 </div>

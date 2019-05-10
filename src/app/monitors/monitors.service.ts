@@ -53,9 +53,16 @@ export class MonitorsService {
         map(
           // filter out archived monitors
           (monitors: IMonitor[]) =>
-            monitors.filter(
-              (monitor: IMonitor) => monitor.status !== MonitorStatus.Archived,
-            ),
+            monitors
+              .filter(
+                (monitor: IMonitor) =>
+                  monitor.status !== MonitorStatus.Archived,
+              )
+              // and sort by name
+              .sort(
+                (a: IMonitor, b: IMonitor) =>
+                  a.name > b.name ? 1 : b.name > a.name ? -1 : 0,
+              ),
         ),
       );
   }

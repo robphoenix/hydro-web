@@ -11,6 +11,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { IFilterValues } from '../filter-values';
 import { FilterService } from '../filter.service';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-view-standard',

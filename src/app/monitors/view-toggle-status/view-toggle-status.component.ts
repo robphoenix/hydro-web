@@ -7,7 +7,7 @@ import { MatButtonToggleChange } from '@angular/material';
   styleUrls: ['./view-toggle-status.component.scss'],
 })
 export class ViewToggleStatusComponent implements OnInit {
-  public statuses: string[] = [`all monitors`, `online`, `offline`];
+  public statuses: string[] = [`online`, `offline`, `all monitors`];
 
   @Input()
   status: string;

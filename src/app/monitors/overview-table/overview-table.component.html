@@ -52,6 +52,7 @@
     </hydro-button-raised>
 
     <hydro-button-raised
+      *ngIf="allowsEdit"
       color="accent"
       class="add-monitor"
       (click)="router.navigateByUrl('/monitors/add')"

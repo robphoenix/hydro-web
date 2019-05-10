@@ -3,11 +3,18 @@
 .monitor {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
 .header {
   width: 30%;
+}
+
+.name {
+  font-size: $fs-4;
+  font-weight: $fw-5;
+  color: $grey-8;
 }
 
 .description {
@@ -18,17 +25,31 @@
 }
 
 .status {
-  text-transform: capitalize;
+  width: 7ch;
+  font-size: $fs-3;
+  text-transform: uppercase;
+  letter-spacing: $ls-tracked;
+  margin-left: $space-5;
 }
 
 .online {
   color: $accent-green;
-  border: 1px solid $accent-green;
-  padding: $space-1;
 }
 
 .offline {
   color: $accent-red;
-  border: 1px solid $accent-red;
-  padding: $space-1;
+}
+
+.epl-query {
+  cursor: help;
+  margin-left: $space-5;
+}
+
+.epl-query-tooltip {
+  // I had to put this in styles.scss for it to take effect
+  // https://github.com/angular/material2/issues/3927
+}
+
+.menu {
+  margin-left: auto;
 }

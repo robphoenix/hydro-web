@@ -24,6 +24,7 @@
     ></hydro-search-input>
 
     <hydro-button-raised
+      *ngIf="allowsEdit"
       (click)="router.navigateByUrl('/actions/add')"
       color="accent"
     >

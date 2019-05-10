@@ -9,10 +9,18 @@
 
 .search {
   width: 30%;
+
+  @include breakpoint(xl) {
+    width: 40%;
+  }
 }
 
 .scroll-viewport {
   height: 700px;
+
+  @include breakpoint(xl) {
+    height: 450px;
+  }
 }
 
 .add-monitor {
