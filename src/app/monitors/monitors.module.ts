@@ -29,11 +29,9 @@ import { CreateMonitorFormNameComponent } from './create-monitor-form-name/creat
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
-import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
 import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
 import { ViewMonitorDetailsComponent } from './view-monitor-details/view-monitor-details.component';
 import { ViewMonitorDetailsMenuComponent } from './view-monitor-details-menu/view-monitor-details-menu.component';
-import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-type.component';
 
 @NgModule({
   imports: [
@@ -77,11 +75,9 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
-    MonitorsTypeToggleComponent,
     ViewToggleStatusComponent,
     ViewMonitorDetailsComponent,
     ViewMonitorDetailsMenuComponent,
-    ViewMonitorsTypeComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
