@@ -1,4 +1,5 @@
 <<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
+<<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MonitorStatus, IMonitor } from '../monitor';
 =======
@@ -10,6 +11,9 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
+=======
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+>>>>>>> Set menu button permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
 import { IMonitor, MonitorStatus } from '../monitor';
 >>>>>>> Add refresh service & update permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
 import { AuthService } from 'src/app/user/auth.service';

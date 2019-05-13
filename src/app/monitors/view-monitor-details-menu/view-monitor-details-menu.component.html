@@ -47,7 +47,11 @@
         Enable Monitor
       </span>
     </button>
-    <button *ngIf="!isArchived" mat-menu-item (click)="archiveMonitor()">
+    <button
+      *ngIf="allowsEnable && !isArchived"
+      mat-menu-item
+      (click)="archiveMonitor()"
+    >
       <mat-icon class="icon">archive</mat-icon>
       <span>
         Archive Monitor
