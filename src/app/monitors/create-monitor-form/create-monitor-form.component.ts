@@ -28,6 +28,7 @@ import { IAction } from 'src/app/actions/action';
 })
 export class CreateMonitorFormComponent implements OnInit {
   public allowsEnable: boolean;
+  public isAdmin: boolean;
 
   @Input()
   heading: string;
@@ -151,6 +152,7 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin;
     this.allowsEnable = this.authService.allowsEnable;
     if (this.monitor) {
       this.createMonitorForm.patchValue({
@@ -163,7 +165,7 @@ export class CreateMonitorFormComponent implements OnInit {
         priority: this.monitor.priority || this.defaultPriority,
         query: this.monitor.query,
         status: this.monitor.status,
-        type: this.monitor.type,
+        type: this.isAdmin ? this.monitor.type : MonitorType.Standard,
       });
 
       if (this.editForm) {

@@ -5,11 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { CellActionsComponent } from './cell-actions/cell-actions.component';
-import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { CellMenuComponent } from './cell-menu/cell-menu.component';
-import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
 import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
@@ -29,11 +24,10 @@ import { CreateMonitorFormNameComponent } from './create-monitor-form-name/creat
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
-import { MonitorsTypeToggleComponent } from './monitors-type-toggle/monitors-type-toggle.component';
-import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
-import { ViewMonitorDetailsComponent } from './view-monitor-details/view-monitor-details.component';
-import { ViewMonitorDetailsMenuComponent } from './view-monitor-details-menu/view-monitor-details-menu.component';
-import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-type.component';
+import { ViewMonitorsListItemComponent } from './view-monitors-list-item/view-monitors-list-item.component';
+import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-menu/view-monitors-list-item-menu.component';
+import { AllowsEditGuard } from '../user/allows-edit.guard';
+import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle/view-monitors-status-toggle.component';
 
 @NgModule({
   imports: [
@@ -42,10 +36,22 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
     RouterModule.forChild([
       { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewMonitorsComponent },
-      { path: 'add', component: AddMonitorComponent },
+      {
+        path: 'add',
+        component: AddMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
       { path: ':id', component: MonitorComponent },
-      { path: ':id/edit', component: EditMonitorComponent },
-      { path: ':id/duplicate', component: DuplicateMonitorComponent },
+      {
+        path: ':id/edit',
+        component: EditMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
+      {
+        path: ':id/duplicate',
+        component: DuplicateMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
     ]),
     FormsModule,
     ReactiveFormsModule,
@@ -54,11 +60,6 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
   ],
   declarations: [
     MonitorComponent,
-    CellActionsComponent,
-    CellMonitorComponent,
-    LoadingSpinnerComponent,
-    CellMenuComponent,
-    CellCategoriesComponent,
     CreateMonitorFormComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
@@ -77,11 +78,9 @@ import { ViewMonitorsTypeComponent } from './view-monitors-type/view-monitors-ty
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
-    MonitorsTypeToggleComponent,
-    ViewToggleStatusComponent,
-    ViewMonitorDetailsComponent,
-    ViewMonitorDetailsMenuComponent,
-    ViewMonitorsTypeComponent,
+    ViewMonitorsListItemComponent,
+    ViewMonitorsListItemMenuComponent,
+    ViewMonitorsStatusToggleComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="monitor">
+    <div class="header">
+      <div class="name">
+        <hydro-list-item-title>
+          {{ monitor.name }}
+        </hydro-list-item-title>
+        <span class="status" [ngClass]="monitor.status">•</span>
+      </div>
+
+      <hydro-list-item-subtitle>
+        {{ monitor.description }}
+      </hydro-list-item-subtitle>
+    </div>
+
+    <button
+      mat-stroked-button
+      color="accent"
+      (click)="viewMonitor()"
+      class="view-monitor"
+    >
+      View Monitor
+    </button>
+  </div>
+
+  <div class="buttons">
+    <button
+      mat-stroked-button
+      matTooltip="{{ monitor.query }}"
+      [matTooltipPosition]="'below'"
+      [matTooltipClass]="'epl-query-tooltip'"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()"
+      (click)="copyToClipboard()"
+    >
+      {{ eplQueryButtonText }} EPL Query
+    </button>
+
+    <hydro-view-monitors-list-item-menu
+      *ngIf="allowsEnable"
+      class="menu"
+      [monitor]="monitor"
+    ></hydro-view-monitors-list-item-menu>
+  </div>
+</div>

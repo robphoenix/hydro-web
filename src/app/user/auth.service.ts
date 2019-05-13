@@ -276,12 +276,16 @@ export class AuthService {
     return permissions;
   }
 
+  // allowsEdit has the permissions of allowsEnable and can edit/create monitors
   public get allowsEdit(): boolean {
     return this.userPermissions.includes(Permissions.AllowsEdit);
   }
 
+  // allowsEnable can enable/disable but not edit or create a monitor
   public get allowsEnable(): boolean {
-    return this.userPermissions.includes(Permissions.AllowsEnable);
+    return (
+      this.userPermissions.includes(Permissions.AllowsEnable) || this.allowsEdit
+    );
   }
 
   public get isAdmin(): boolean {

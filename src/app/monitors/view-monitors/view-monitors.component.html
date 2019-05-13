@@ -2,10 +2,10 @@
   <hydro-headline>Monitors</hydro-headline>
 
   <div class="toolbar">
-    <hydro-view-toggle-status
+    <hydro-view-monitors-status-toggle
       [status]="status"
       (toggleStatus)="onToggleStatus($event)"
-    ></hydro-view-toggle-status>
+    ></hydro-view-monitors-status-toggle>
 
     <hydro-search-input
       class="search"
@@ -14,7 +14,7 @@
       (searchTermChange)="filterMonitors()"
     ></hydro-search-input>
 
-    <mat-form-field>
+    <mat-form-field *ngIf="isAdmin">
       <mat-label>Monitors Type</mat-label>
       <mat-select
         [(value)]="monitorsType"
@@ -26,6 +26,7 @@
     </mat-form-field>
 
     <hydro-button-raised
+      *ngIf="allowsEdit"
       color="accent"
       class="add-monitor"
       (click)="onAddNewMonitor()"
@@ -38,10 +39,10 @@
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let monitor of filteredMonitors">
         <hydro-list-item>
-          <hydro-view-monitor-details
+          <hydro-view-monitors-list-item
             class="monitor-details"
             [monitor]="monitor"
-          ></hydro-view-monitor-details>
+          ></hydro-view-monitors-list-item>
         </hydro-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>

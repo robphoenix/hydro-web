@@ -24,7 +24,7 @@
     ></hydro-search-input>
 
     <hydro-button-raised
-      *ngIf="allowsEdit"
+      *ngIf="isAdmin"
       (click)="router.navigateByUrl('/actions/add')"
       color="accent"
     >

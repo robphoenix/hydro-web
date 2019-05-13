@@ -1,15 +1,15 @@
 <div class="action">
   <div>
-    <h1 class="action-name">
+    <hydro-list-item-title>
       {{ action.name }}
-    </h1>
-    <p class="action-description">
+    </hydro-list-item-title>
+    <hydro-list-item-subtitle>
       {{ action.description }}
-    </p>
+    </hydro-list-item-subtitle>
   </div>
   <span class="action-type"> {{ names[action.actionType] }} Action </span>
 
-  <div class="menu">
+  <div *ngIf="isAdmin" class="menu">
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       <span>
         Menu

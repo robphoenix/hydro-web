@@ -1,0 +1,59 @@
+@import 'main';
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.monitor {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header {
+  width: 40ch;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+}
+
+.status {
+  font-size: $fs-5;
+  margin: 0 0 $space-2 $space-2;
+}
+
+.online {
+  color: $accent-green;
+}
+
+.offline {
+  color: $accent-red;
+}
+
+.archived {
+  color: $grey-4;
+}
+
+.view-monitor {
+  margin-left: auto;
+}
+
+.buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.epl-query-tooltip {
+  // I had to put this in styles.scss for it to take effect
+  // https://github.com/angular/material2/issues/3927
+}
+
+.menu {
+  margin-left: $space-5;
+}

@@ -11,6 +11,8 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { FilterService } from '../filter.service';
 import { IFilterValues } from '../filter-values';
+import { AuthService } from 'src/app/user/auth.service';
+import { RefreshService } from '../refresh.service';
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -21,6 +23,8 @@ export class ViewMonitorsComponent implements OnInit {
   public filteredMonitors: IMonitor[] = [];
   public searchTerm: string;
   public monitorsType: MonitorType = MonitorType.Standard;
+  public allowsEdit: boolean;
+  public isAdmin: boolean;
 
   private monitors: IMonitor[] = [];
   private standardMonitors: IMonitor[] = [];
@@ -31,12 +35,17 @@ export class ViewMonitorsComponent implements OnInit {
     private monitorsService: MonitorsService,
     private userService: UserService,
     private filterService: FilterService,
+    private authService: AuthService,
+    private refreshService: RefreshService,
     public dialog: MatDialog,
     public router: Router,
   ) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin;
+    this.allowsEdit = this.authService.allowsEdit;
     this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
+    this.refreshService.$refreshEvent.subscribe(() => this.onRefresh());
     this.getMonitors();
   }
 
@@ -81,6 +90,9 @@ export class ViewMonitorsComponent implements OnInit {
   }
 
   private getSystemMonitors() {
+    if (!this.isAdmin) {
+      return;
+    }
     if (this.hasSystemMonitors) {
       this.monitors = this.systemMonitors;
     }
@@ -159,5 +171,9 @@ export class ViewMonitorsComponent implements OnInit {
 
   private get hasSystemMonitors(): boolean {
     return !!(this.systemMonitors && this.systemMonitors.length);
+  }
+
+  public onRefresh() {
+    this.getMonitors();
   }
 }
