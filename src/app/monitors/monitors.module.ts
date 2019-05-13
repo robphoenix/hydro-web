@@ -5,11 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HydroMaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { CellActionsComponent } from './cell-actions/cell-actions.component';
-import { CellMonitorComponent } from './cell-monitor/cell-monitor.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { CellMenuComponent } from './cell-menu/cell-menu.component';
-import { CellCategoriesComponent } from './cell-categories/cell-categories.component';
 import { RouterModule } from '@angular/router';
 import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
@@ -33,6 +28,7 @@ import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-stat
 import { ViewMonitorsListItemComponent } from './view-monitors-list-item/view-monitors-list-item.component';
 import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-menu/view-monitors-list-item-menu.component';
 import { AllowsEditGuard } from '../user/allows-edit.guard';
+import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle/view-monitors-status-toggle.component';
 
 @NgModule({
   imports: [
@@ -65,11 +61,6 @@ import { AllowsEditGuard } from '../user/allows-edit.guard';
   ],
   declarations: [
     MonitorComponent,
-    CellActionsComponent,
-    CellMonitorComponent,
-    LoadingSpinnerComponent,
-    CellMenuComponent,
-    CellCategoriesComponent,
     CreateMonitorFormComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
@@ -91,6 +82,7 @@ import { AllowsEditGuard } from '../user/allows-edit.guard';
     ViewToggleStatusComponent,
     ViewMonitorsListItemComponent,
     ViewMonitorsListItemMenuComponent,
+    ViewMonitorsStatusToggleComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
