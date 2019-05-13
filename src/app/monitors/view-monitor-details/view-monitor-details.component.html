@@ -22,13 +22,14 @@
   <div class="buttons">
     <button
       mat-stroked-button
-      [disableRipple]="true"
       matTooltip="{{ monitor.query }}"
       [matTooltipPosition]="'below'"
       [matTooltipClass]="'epl-query-tooltip'"
-      class="epl-query"
+      (mouseenter)="onMouseEnter()"
+      (mouseleave)="onMouseLeave()"
+      (click)="copyToClipboard()"
     >
-      View EPL Query
+      {{ eplQueryButtonText }} EPL Query
     </button>
 
     <hydro-view-monitor-details-menu
