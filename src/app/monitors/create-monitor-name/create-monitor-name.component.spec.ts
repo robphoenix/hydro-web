@@ -8,9 +8,8 @@ describe('CreateMonitorNameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateMonitorNameComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateMonitorNameComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

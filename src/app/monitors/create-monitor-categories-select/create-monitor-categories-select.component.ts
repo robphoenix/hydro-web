@@ -3,25 +3,24 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
   ViewChild,
   ElementRef,
-  OnInit,
+  OnChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ICategory } from '../monitor';
+import { Observable } from 'rxjs';
 import {
   MatAutocompleteSelectedEvent,
   MatAutocomplete,
 } from '@angular/material';
-import { Observable } from 'rxjs';
-import { ICategory } from '../monitor';
 
 @Component({
-  selector: 'hydro-create-monitor-form-categories',
-  templateUrl: './create-monitor-form-categories.component.html',
-  styleUrls: ['./create-monitor-form-categories.component.scss'],
+  selector: 'hydro-create-monitor-categories-select',
+  templateUrl: './create-monitor-categories-select.component.html',
+  styleUrls: ['./create-monitor-categories-select.component.scss'],
 })
-export class CreateMonitorFormCategoriesComponent implements OnChanges, OnInit {
+export class CreateMonitorCategoriesSelectComponent implements OnChanges {
   @Input()
   parent: FormGroup;
 
@@ -52,7 +51,6 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges, OnInit {
   @Output()
   selectedCategory = new EventEmitter<MatAutocompleteSelectedEvent>();
 
-  hint = '';
   availableCategories: ICategory[];
 
   @ViewChild('categoryInput')
@@ -60,10 +58,6 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges, OnInit {
 
   @ViewChild('auto')
   matAutocomplete: MatAutocomplete;
-
-  ngOnInit(): void {
-    this.hint = `You can apply up to ${this.maxSelectedCategories} categories`;
-  }
 
   remove(category: ICategory) {
     this.removeCategory.emit(category);
@@ -78,5 +72,17 @@ export class CreateMonitorFormCategoriesComponent implements OnChanges, OnInit {
     this.filteredCategories.subscribe((filtered) => {
       this.availableCategories = filtered;
     });
+  }
+
+  public get label(): string {
+    return !!this.availableCategories.length
+      ? `Categories`
+      : `Categories: none currently exist :(`;
+  }
+
+  public get hint(): string {
+    return !!this.availableCategories.length
+      ? `You can apply up to ${this.maxSelectedCategories} categories`
+      : ``;
   }
 }

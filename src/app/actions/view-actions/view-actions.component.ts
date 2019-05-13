@@ -18,7 +18,6 @@ export class ViewActionsComponent implements OnInit {
   public filteredActions: IAction[] = [];
   public searchTerm: string;
   public selectedActionType: string;
-  public isAdmin: boolean;
 
   constructor(
     private actionsService: ActionsService,
@@ -29,8 +28,11 @@ export class ViewActionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin;
     this.getActions();
+  }
+
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin;
   }
 
   getActions() {

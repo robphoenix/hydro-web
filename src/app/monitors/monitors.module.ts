@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { CreateMonitorFormComponent } from './create-monitor-form/create-monitor-form.component';
 import { CreateMonitorFormStatusComponent } from './create-monitor-form-status/create-monitor-form-status.component';
 import { CreateMonitorFormDescriptionComponent } from './create-monitor-form-description/create-monitor-form-description.component';
-import { CreateMonitorFormCategoriesComponent } from './create-monitor-form-categories/create-monitor-form-categories.component';
 import { CreateMonitorFormQueryComponent } from './create-monitor-form-query/create-monitor-form-query.component';
 import { CreateMonitorFormActionsComponent } from './create-monitor-form-actions/create-monitor-form-actions.component';
 import { AddMonitorComponent } from './add-monitor/add-monitor.component';
@@ -28,6 +27,8 @@ import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-men
 import { AllowsEditGuard } from '../user/allows-edit.guard';
 import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle/view-monitors-status-toggle.component';
 import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor-name.component';
+import { CreateMonitorCategoriesSelectComponent } from './create-monitor-categories-select/create-monitor-categories-select.component';
+import { CreateMonitorCategoryAddComponent } from './create-monitor-category-add/create-monitor-category-add.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,6 @@ import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor
     CreateMonitorFormComponent,
     CreateMonitorFormStatusComponent,
     CreateMonitorFormDescriptionComponent,
-    CreateMonitorFormCategoriesComponent,
     CreateMonitorFormQueryComponent,
     CreateMonitorFormActionsComponent,
     AddMonitorComponent,
@@ -81,6 +81,8 @@ import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor
     ViewMonitorsListItemMenuComponent,
     ViewMonitorsStatusToggleComponent,
     CreateMonitorNameComponent,
+    CreateMonitorCategoriesSelectComponent,
+    CreateMonitorCategoryAddComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

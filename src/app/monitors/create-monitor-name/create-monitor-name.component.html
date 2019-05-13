@@ -6,9 +6,13 @@
   </mat-hint>
   <mat-hint align="start" *ngIf="canEditName"> Name cannot be edited </mat-hint>
   <mat-hint align="end" *ngIf="!canEditName"> *Required </mat-hint>
-  <div *ngFor="let error of errors">
-    <mat-error *ngIf="hasError(error)">
-      {{ errorMessages[error] }}
-    </mat-error>
-  </div>
+  <mat-error *ngIf="hasError('required')">
+    {{ errorMessages['required'] }}
+  </mat-error>
+  <mat-error *ngIf="hasError('pattern')">
+    {{ errorMessages['required'] }}
+  </mat-error>
+  <mat-error *ngIf="hasError('maxlength')">
+    {{ errorMessages['required'] }}
+  </mat-error>
 </mat-form-field>

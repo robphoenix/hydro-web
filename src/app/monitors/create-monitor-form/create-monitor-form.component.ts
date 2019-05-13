@@ -27,9 +27,6 @@ import { IAction } from 'src/app/actions/action';
   styleUrls: ['./create-monitor-form.component.scss'],
 })
 export class CreateMonitorFormComponent implements OnInit {
-  public allowsEnable: boolean;
-  public isAdmin: boolean;
-
   @Input()
   heading: string;
 
@@ -40,7 +37,7 @@ export class CreateMonitorFormComponent implements OnInit {
   monitorName: string;
 
   @Input()
-  editForm: boolean;
+  editForm = true;
 
   @Output()
   submitForm = new EventEmitter<IMonitorSubmit>();
@@ -49,7 +46,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   readonly defaultPriority = MonitorPriority.Mid;
 
-  autocompleteOptions = {
+  public autocompleteOptions = {
     selectable: true,
     removable: true,
     addOnBlur: true,
@@ -144,8 +141,6 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin;
-    this.allowsEnable = this.authService.allowsEnable;
     if (this.monitor) {
       this.createMonitorForm.patchValue({
         cacheWindow: this.cacheWindowService.durationValues.indexOf(
@@ -212,6 +207,14 @@ export class CreateMonitorFormComponent implements OnInit {
       );
   }
 
+  public get allowsEnable(): boolean {
+    return this.authService.allowsEnable;
+  }
+
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin;
+  }
+
   get canViewMonitor(): boolean {
     return (
       this.createMonitorForm.valid &&
@@ -274,6 +277,9 @@ export class CreateMonitorFormComponent implements OnInit {
       .subscribe((categories: ICategory[]) => {
         this.availableCategories = categories;
         this.loadingCategories = false;
+        if (!this.availableCategories || !this.availableCategories.length) {
+          this.createMonitorForm.get(`categoriesInput`).disable();
+        }
       });
   }
 
