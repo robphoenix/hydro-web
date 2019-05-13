@@ -5,7 +5,7 @@ import { AllowsEditGuard } from './allows-edit.guard';
 describe('AllowsEditGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AllowsEditGuard]
+      providers: [AllowsEditGuard],
     });
   });
 

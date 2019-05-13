@@ -89,8 +89,8 @@ import { AllowsEditGuard } from '../user/allows-edit.guard';
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
     ViewToggleStatusComponent,
-    ViewMonitorDetailsComponent,
-    ViewMonitorDetailsMenuComponent,
+    ViewMonitorsListItemComponent,
+    ViewMonitorsListItemMenuComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

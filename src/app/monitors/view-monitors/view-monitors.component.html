@@ -39,10 +39,10 @@
     <cdk-virtual-scroll-viewport itemSize="72" class="scroll-viewport">
       <ng-container *cdkVirtualFor="let monitor of filteredMonitors">
         <hydro-list-item>
-          <hydro-view-monitor-details
+          <hydro-view-monitors-list-item
             class="monitor-details"
             [monitor]="monitor"
-          ></hydro-view-monitor-details>
+          ></hydro-view-monitors-list-item>
         </hydro-list-item>
       </ng-container>
     </cdk-virtual-scroll-viewport>

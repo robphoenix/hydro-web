@@ -1,42 +1,19 @@
-<<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
-<<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MonitorStatus, IMonitor } from '../monitor';
-=======
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
-} from '@angular/core';
-=======
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
->>>>>>> Set menu button permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
-import { IMonitor, MonitorStatus } from '../monitor';
->>>>>>> Add refresh service & update permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
-import { AuthService } from 'src/app/user/auth.service';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
-import { IErrorMessage } from 'src/app/shared/error-message';
-import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
-<<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
+import { IMonitor, MonitorStatus } from '../monitor';
+import { AuthService } from '../../user/auth.service';
 import { MonitorsService } from '../monitors.service';
-=======
 import { RefreshService } from '../refresh.service';
->>>>>>> Add refresh service & update permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
+import { MonitorStatusChangeDialogComponent } from '../monitor-status-change-dialog/monitor-status-change-dialog.component';
+import { IErrorMessage } from '../../shared/error-message';
+import { ErrorDialogComponent } from '../../shared/error-dialog/error-dialog.component';
 
 @Component({
-  selector: 'hydro-view-monitor-details-menu',
-  templateUrl: './view-monitor-details-menu.component.html',
-  styleUrls: ['./view-monitor-details-menu.component.scss'],
+  selector: 'hydro-view-monitors-list-item-menu',
+  templateUrl: './view-monitors-list-item-menu.component.html',
+  styleUrls: ['./view-monitors-list-item-menu.component.scss'],
 })
-<<<<<<< HEAD:src/app/monitors/view-monitor-details-menu/view-monitor-details-menu.component.ts
-export class ViewMonitorDetailsMenuComponent implements OnInit {
-=======
 export class ViewMonitorsListItemMenuComponent implements OnInit, OnDestroy {
->>>>>>> Add refresh service & update permissions:src/app/monitors/view-monitors-list-item-menu/view-monitors-list-item-menu.component.ts
   public allowsEdit: boolean;
   public allowsEnable: boolean;
   public showDelay = 500;
