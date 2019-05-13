@@ -24,7 +24,6 @@ import { CreateMonitorFormNameComponent } from './create-monitor-form-name/creat
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
-import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
 import { ViewMonitorsListItemComponent } from './view-monitors-list-item/view-monitors-list-item.component';
 import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-menu/view-monitors-list-item-menu.component';
 import { AllowsEditGuard } from '../user/allows-edit.guard';
@@ -79,7 +78,6 @@ import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
-    ViewToggleStatusComponent,
     ViewMonitorsListItemComponent,
     ViewMonitorsListItemMenuComponent,
     ViewMonitorsStatusToggleComponent,

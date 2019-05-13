@@ -1,3 +1,15 @@
-<p>
-  view-monitors-status-toggle works!
-</p>
+<mat-button-toggle-group
+  class="status-toggle"
+  [value]="status"
+  (change)="onToggleStatus($event)"
+>
+  <mat-button-toggle value="online">
+    <span class="status">Online</span>
+  </mat-button-toggle>
+  <mat-button-toggle value="offline">
+    <span class="status">Offline</span>
+  </mat-button-toggle>
+  <mat-button-toggle value="archived" *ngIf="isAdmin">
+    <span class="status">Archived</span>
+  </mat-button-toggle>
+</mat-button-toggle-group>
