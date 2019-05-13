@@ -18,14 +18,22 @@
 
     <mat-menu #menu="matMenu">
       <div>
-        <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
+        <a
+          mat-menu-item
+          *ngIf="allowsEdit"
+          routerLink="/actions/{{ action.id }}/edit"
+        >
           <mat-icon>edit</mat-icon>
           <span>
             Edit Action
           </span>
         </a>
 
-        <button mat-menu-item (click)="onArchiveAction(action.id)">
+        <button
+          mat-menu-item
+          *ngIf="allowsEdit"
+          (click)="onArchiveAction(action.id)"
+        >
           <mat-icon>archive</mat-icon>
           <span>
             Archive Action

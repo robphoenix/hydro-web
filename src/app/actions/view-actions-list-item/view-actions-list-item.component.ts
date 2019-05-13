@@ -12,6 +12,9 @@ export class ViewActionsListItemComponent {
   @Input()
   action: IAction;
 
+  @Input()
+  allowsEdit: boolean;
+
   @Output()
   archiveAction = new EventEmitter<number>();
 

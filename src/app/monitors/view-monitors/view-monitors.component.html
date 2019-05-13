@@ -26,6 +26,7 @@
     </mat-form-field>
 
     <hydro-button-raised
+      *ngIf="allowsEdit"
       color="accent"
       class="add-monitor"
       (click)="onAddNewMonitor()"

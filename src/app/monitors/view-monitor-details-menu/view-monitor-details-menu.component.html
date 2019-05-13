@@ -17,7 +17,11 @@
       </span>
     </a>
 
-    <a mat-menu-item routerLink="/monitors/{{ monitor.id }}/duplicate">
+    <a
+      mat-menu-item
+      *ngIf="allowsEdit"
+      routerLink="/monitors/{{ monitor.id }}/duplicate"
+    >
       <mat-icon class="icon">file_copy</mat-icon>
       <span>
         Duplicate Monitor

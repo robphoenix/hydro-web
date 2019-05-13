@@ -11,6 +11,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Router } from '@angular/router';
 import { FilterService } from '../filter.service';
 import { IFilterValues } from '../filter-values';
+import { AuthService } from 'src/app/user/auth.service';
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -21,6 +22,7 @@ export class ViewMonitorsComponent implements OnInit {
   public filteredMonitors: IMonitor[] = [];
   public searchTerm: string;
   public monitorsType: MonitorType = MonitorType.Standard;
+  public allowsEdit: boolean;
 
   private monitors: IMonitor[] = [];
   private standardMonitors: IMonitor[] = [];
@@ -31,11 +33,13 @@ export class ViewMonitorsComponent implements OnInit {
     private monitorsService: MonitorsService,
     private userService: UserService,
     private filterService: FilterService,
+    private authService: AuthService,
     public dialog: MatDialog,
     public router: Router,
   ) {}
 
   ngOnInit() {
+    this.allowsEdit = this.authService.allowsEdit;
     this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
     this.getMonitors();
   }
