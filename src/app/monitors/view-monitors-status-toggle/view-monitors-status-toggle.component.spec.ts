@@ -8,9 +8,8 @@ describe('ViewMonitorsStatusToggleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewMonitorsStatusToggleComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewMonitorsStatusToggleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
