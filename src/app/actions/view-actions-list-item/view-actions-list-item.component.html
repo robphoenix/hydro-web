@@ -9,7 +9,7 @@
   </div>
   <span class="action-type"> {{ names[action.actionType] }} Action </span>
 
-  <div class="menu">
+  <div *ngIf="allowsEdit" class="menu">
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       <span>
         Menu
