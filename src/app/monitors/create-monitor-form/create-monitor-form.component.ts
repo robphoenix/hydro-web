@@ -73,17 +73,10 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
 
-  private nameMaxCharLength = 50;
+  public nameMaxCharLength = 50;
   private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
-    name: {
-      required: `You must enter a monitor name`,
-      pattern: `Monitor name cannot contain punctuation marks, except dashes and underscores`,
-      maxlength: `Monitor name must be ${
-        this.nameMaxCharLength
-      } characters or less`,
-    },
     description: {
       required: `You must enter a monitor description`,
     },
@@ -99,7 +92,6 @@ export class CreateMonitorFormComponent implements OnInit {
   };
 
   placeholders = {
-    name: `Please enter a monitor name`,
     description: `Please enter a monitor description`,
     query: `Please enter a valid EPL Query`,
     categories: this.placeholderCategories,
@@ -168,9 +160,6 @@ export class CreateMonitorFormComponent implements OnInit {
         type: this.isAdmin ? this.monitor.type : MonitorType.Standard,
       });
 
-      if (this.editForm) {
-        this.createMonitorForm.get('name').disable();
-      }
       this.selectedCategories = this.monitor.categories;
       this.createMonitorForm
         .get('categories')

@@ -1,13 +1,12 @@
 <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
-  <hydro-create-monitor-form-name
+  <hydro-create-monitor-name
     class="form-field"
     [parent]="createMonitorForm"
-    [validationMessages]="validationMessages['name']"
-    [placeholder]="placeholders.name"
-    [editForm]="editForm"
+    [maxCharLength]="nameMaxCharLength"
+    [canEditName]="editForm"
     ngDefaultControl
   >
-  </hydro-create-monitor-form-name>
+  </hydro-create-monitor-name>
 
   <hydro-create-monitor-form-description
     class="form-field"

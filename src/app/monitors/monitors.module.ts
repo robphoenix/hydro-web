@@ -20,7 +20,6 @@ import { EplQueryDialogComponent } from './epl-query-dialog/epl-query-dialog.com
 import { MonitorStatusChangeDialogComponent } from './monitor-status-change-dialog/monitor-status-change-dialog.component';
 import { CreateMonitorFormPriorityComponent } from './create-monitor-form-priority/create-monitor-form-priority.component';
 import { CreateMonitorFormCacheWindowComponent } from './create-monitor-form-cache-window/create-monitor-form-cache-window.component';
-import { CreateMonitorFormNameComponent } from './create-monitor-form-name/create-monitor-form-name.component';
 import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/create-monitor-form-type.component';
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
@@ -28,6 +27,7 @@ import { ViewMonitorsListItemComponent } from './view-monitors-list-item/view-mo
 import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-menu/view-monitors-list-item-menu.component';
 import { AllowsEditGuard } from '../user/allows-edit.guard';
 import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle/view-monitors-status-toggle.component';
+import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor-name.component';
 
 @NgModule({
   imports: [
@@ -74,13 +74,13 @@ import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle
     MonitorStatusChangeDialogComponent,
     CreateMonitorFormPriorityComponent,
     CreateMonitorFormCacheWindowComponent,
-    CreateMonitorFormNameComponent,
     CreateMonitorFormTypeComponent,
     ChangeEventDialogComponent,
     ViewMonitorsComponent,
     ViewMonitorsListItemComponent,
     ViewMonitorsListItemMenuComponent,
     ViewMonitorsStatusToggleComponent,
+    CreateMonitorNameComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
