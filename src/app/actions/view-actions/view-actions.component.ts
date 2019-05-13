@@ -18,15 +18,18 @@ export class ViewActionsComponent implements OnInit {
   public filteredActions: IAction[] = [];
   public searchTerm: string;
   public selectedActionType: string;
+  public isAdmin: boolean;
 
   constructor(
     private actionsService: ActionsService,
+    private authService: AuthService,
     public router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin;
     this.getActions();
   }
 

@@ -9,7 +9,7 @@
   </div>
   <span class="action-type"> {{ names[action.actionType] }} Action </span>
 
-  <div *ngIf="allowsEdit" class="menu">
+  <div *ngIf="isAdmin" class="menu">
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
       <span>
         Menu
@@ -18,22 +18,14 @@
 
     <mat-menu #menu="matMenu">
       <div>
-        <a
-          mat-menu-item
-          *ngIf="allowsEdit"
-          routerLink="/actions/{{ action.id }}/edit"
-        >
+        <a mat-menu-item routerLink="/actions/{{ action.id }}/edit">
           <mat-icon>edit</mat-icon>
           <span>
             Edit Action
           </span>
         </a>
 
-        <button
-          mat-menu-item
-          *ngIf="allowsEdit"
-          (click)="onArchiveAction(action.id)"
-        >
+        <button mat-menu-item (click)="onArchiveAction(action.id)">
           <mat-icon>archive</mat-icon>
           <span>
             Archive Action

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/user/auth.service';
   styleUrls: ['./view-actions-list-item.component.scss'],
 })
 export class ViewActionsListItemComponent implements OnInit {
-  public allowsEdit: boolean;
+  public isAdmin: boolean;
   public names: { [key: string]: string } = actionTypeDisplayNames;
 
   @Input()
@@ -20,7 +20,7 @@ export class ViewActionsListItemComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.allowsEdit = this.authService.allowsEdit;
+    this.isAdmin = this.authService.isAdmin;
   }
 
   onArchiveAction(id: number): void {
