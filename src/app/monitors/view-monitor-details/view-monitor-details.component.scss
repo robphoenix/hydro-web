@@ -20,25 +20,11 @@
 .name {
   display: flex;
   align-items: center;
-  font-size: $fs-3;
-  font-weight: $fw-4;
-  color: $grey-8;
-  margin-bottom: $space-2;
-}
-
-.description {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
-  font-size: $fs-2;
-  font-weight: $fw-4;
-  color: $grey-7;
 }
 
 .status {
   font-size: $fs-5;
-  margin-left: $space-2;
+  margin: 0 0 $space-2 $space-2;
 }
 
 .online {

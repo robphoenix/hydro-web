@@ -1,14 +1,18 @@
 <div class="container">
   <div class="monitor">
     <div class="header">
-      <h3 class="name">
-        {{ monitor.name }}
+      <div class="name">
+        <hydro-list-item-title>
+          {{ monitor.name }}
+        </hydro-list-item-title>
         <span class="status" [ngClass]="monitor.status">•</span>
-      </h3>
-      <p class="description">
+      </div>
+
+      <hydro-list-item-subtitle>
         {{ monitor.description }}
-      </p>
+      </hydro-list-item-subtitle>
     </div>
+
     <button
       mat-stroked-button
       color="accent"
