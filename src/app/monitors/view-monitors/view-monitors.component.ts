@@ -24,6 +24,7 @@ export class ViewMonitorsComponent implements OnInit {
   public searchTerm: string;
   public monitorsType: MonitorType = MonitorType.Standard;
   public allowsEdit: boolean;
+  public isAdmin: boolean;
 
   private monitors: IMonitor[] = [];
   private standardMonitors: IMonitor[] = [];
@@ -41,6 +42,7 @@ export class ViewMonitorsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin;
     this.allowsEdit = this.authService.allowsEdit;
     this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
     this.refreshService.$refreshEvent.subscribe(() => this.onRefresh());
@@ -88,6 +90,9 @@ export class ViewMonitorsComponent implements OnInit {
   }
 
   private getSystemMonitors() {
+    if (!this.isAdmin) {
+      return;
+    }
     if (this.hasSystemMonitors) {
       this.monitors = this.systemMonitors;
     }

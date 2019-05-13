@@ -14,7 +14,7 @@
       (searchTermChange)="filterMonitors()"
     ></hydro-search-input>
 
-    <mat-form-field>
+    <mat-form-field *ngIf="isAdmin">
       <mat-label>Monitors Type</mat-label>
       <mat-select
         [(value)]="monitorsType"
