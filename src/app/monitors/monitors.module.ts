@@ -30,8 +30,9 @@ import { CreateMonitorFormTypeComponent } from './create-monitor-form-type/creat
 import { ChangeEventDialogComponent } from './change-event-dialog/change-event-dialog.component';
 import { ViewMonitorsComponent } from './view-monitors/view-monitors.component';
 import { ViewToggleStatusComponent } from './view-toggle-status/view-toggle-status.component';
-import { ViewMonitorDetailsComponent } from './view-monitor-details/view-monitor-details.component';
-import { ViewMonitorDetailsMenuComponent } from './view-monitor-details-menu/view-monitor-details-menu.component';
+import { ViewMonitorsListItemComponent } from './view-monitors-list-item/view-monitors-list-item.component';
+import { ViewMonitorsListItemMenuComponent } from './view-monitors-list-item-menu/view-monitors-list-item-menu.component';
+import { AllowsEditGuard } from '../user/allows-edit.guard';
 
 @NgModule({
   imports: [
@@ -40,10 +41,22 @@ import { ViewMonitorDetailsMenuComponent } from './view-monitor-details-menu/vie
     RouterModule.forChild([
       { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewMonitorsComponent },
-      { path: 'add', component: AddMonitorComponent },
+      {
+        path: 'add',
+        component: AddMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
       { path: ':id', component: MonitorComponent },
-      { path: ':id/edit', component: EditMonitorComponent },
-      { path: ':id/duplicate', component: DuplicateMonitorComponent },
+      {
+        path: ':id/edit',
+        component: EditMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
+      {
+        path: ':id/duplicate',
+        component: DuplicateMonitorComponent,
+        canActivate: [AllowsEditGuard],
+      },
     ]),
     FormsModule,
     ReactiveFormsModule,

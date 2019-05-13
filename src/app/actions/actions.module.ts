@@ -28,6 +28,7 @@ import { CreateActionEmailSendLimitComponent } from './create-action-email-send-
 import { CreateActionEmailTextComponent } from './create-action-email-text/create-action-email-text.component';
 import { CreateActionEmailCronComponent } from './create-action-email-cron/create-action-email-cron.component';
 import { ViewActionsListItemComponent } from './view-actions-list-item/view-actions-list-item.component';
+import { AllowsEditGuard } from '../user/allows-edit.guard';
 
 const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
   theme: 'snow',
@@ -59,8 +60,16 @@ const DEFAULT_QUILL_CONFIG: QuillConfigInterface = {
     RouterModule.forChild([
       { path: '', redirectTo: 'view', pathMatch: 'full' },
       { path: 'view', component: ViewActionsComponent },
-      { path: 'add', component: AddActionComponent },
-      { path: ':id/edit', component: EditActionComponent },
+      {
+        path: 'add',
+        component: AddActionComponent,
+        canActivate: [AllowsEditGuard],
+      },
+      {
+        path: ':id/edit',
+        component: EditActionComponent,
+        canActivate: [AllowsEditGuard],
+      },
     ]),
     FormsModule,
     ReactiveFormsModule,
