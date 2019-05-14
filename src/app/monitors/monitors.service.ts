@@ -86,8 +86,10 @@ export class MonitorsService {
     });
   }
 
-  public addCategories(categories: ICategories) {
-    return this.http.post(this.categoriesUrl, categories, { headers });
+  public addCategories(categories: ICategories): Observable<ICategory[]> {
+    return this.http.post<ICategory[]>(this.categoriesUrl, categories, {
+      headers,
+    });
   }
 
   public getGroups(): Observable<IGroup[]> {

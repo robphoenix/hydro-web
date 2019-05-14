@@ -69,20 +69,35 @@ export class CreateMonitorCategoriesSelectComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    this.filteredCategories.subscribe((filtered) => {
-      this.availableCategories = filtered;
-    });
+    if (this.filteredCategories) {
+      this.filteredCategories.subscribe((filtered) => {
+        // todo lowercase sort
+        this.availableCategories = filtered.sort(
+          (a: ICategory, b: ICategory) => {
+            if (a.name.toLowerCase() < b.name.toLowerCase()) {
+              return -1;
+            }
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          },
+        );
+      });
+    }
   }
 
   public get label(): string {
-    return !!this.availableCategories.length
-      ? `Categories`
-      : `Categories: none currently exist :(`;
+    if (this.availableCategories && this.availableCategories.length) {
+      return `Categories`;
+    }
+    return `Categories: none currently exist :(`;
   }
 
   public get hint(): string {
-    return !!this.availableCategories.length
-      ? `You can apply up to ${this.maxSelectedCategories} categories`
-      : ``;
+    if (this.availableCategories && this.availableCategories.length) {
+      return `You can apply up to ${this.maxSelectedCategories} categories`;
+    }
+    return ``;
   }
 }

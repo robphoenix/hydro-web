@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
+import {
+  MatAutocompleteSelectedEvent,
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import {
@@ -107,11 +111,11 @@ export class CreateMonitorFormComponent implements OnInit {
     private router: Router,
     private actionsService: ActionsService,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.loadingActions = true;
-    this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
 
@@ -170,18 +174,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
-    this.filteredCategories = this.createMonitorForm
-      .get('categoriesInput')
-      .valueChanges.pipe(
-        startWith(null),
-        map((term: string | ICategory) =>
-          this.filterService.filterCategories(
-            term,
-            this.availableCategories,
-            this.selectedCategories,
-          ),
-        ),
-      );
+    this.getAvailableCategories();
 
     this.filteredGroups = this.createMonitorForm
       .get('groupsInput')
@@ -282,6 +275,19 @@ export class CreateMonitorFormComponent implements OnInit {
         this.loadingCategories = false;
         if (!this.availableCategories || !this.availableCategories.length) {
           this.createMonitorForm.get(`categoriesInput`).disable();
+        } else {
+          this.filteredCategories = this.createMonitorForm
+            .get('categoriesInput')
+            .valueChanges.pipe(
+              startWith(null),
+              map((term: string | ICategory) =>
+                this.filterService.filterCategories(
+                  term,
+                  this.availableCategories,
+                  this.selectedCategories,
+                ),
+              ),
+            );
         }
       });
   }
@@ -368,7 +374,19 @@ export class CreateMonitorFormComponent implements OnInit {
 
   public onSubmitCategories(categories: string[]) {
     this.monitorsService.addCategories({ categories }).subscribe(
-      (res) => console.log({ res }),
+      (response: ICategory[]) => {
+        this.snackBar.open(
+          `Categories created: ${response
+            .map((category: ICategory) => category.name)
+            .join(', ')}`,
+          '',
+          {
+            duration: 2000,
+          },
+        );
+        // refresh categories
+        this.getAvailableCategories();
+      },
       (err: IErrorMessage) => {
         const title = `error adding categories`;
         const { message, cause, uuid } = err;
