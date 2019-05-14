@@ -21,6 +21,10 @@ export interface ICategory {
   name: string;
 }
 
+export interface ICategories {
+  categories: string[];
+}
+
 export interface IGroup {
   id: number;
   name: LDAPGroup;

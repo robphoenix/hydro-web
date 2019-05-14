@@ -1,13 +1,12 @@
 <form [formGroup]="createMonitorForm" (ngSubmit)="submit()" class="form">
-  <hydro-create-monitor-form-name
+  <hydro-create-monitor-name
     class="form-field"
     [parent]="createMonitorForm"
-    [validationMessages]="validationMessages['name']"
-    [placeholder]="placeholders.name"
-    [editForm]="editForm"
+    [maxCharLength]="nameMaxCharLength"
+    [canEditName]="editForm"
     ngDefaultControl
   >
-  </hydro-create-monitor-form-name>
+  </hydro-create-monitor-name>
 
   <hydro-create-monitor-form-description
     class="form-field"
@@ -49,21 +48,25 @@
     [parent]="createMonitorForm"
   ></hydro-create-monitor-form-cache-window>
 
-  <hydro-create-monitor-form-categories
-    *ngIf="availableCategories && availableCategories.length"
-    class="form-field"
-    [parent]="createMonitorForm"
-    [loading]="loadingCategories"
-    [selectedCategories]="selectedCategories"
-    [autocompleteOptions]="autocompleteOptions"
-    [filteredCategories]="filteredCategories"
-    [maxSelectedCategories]="maxSelectedCategories"
-    [validationMessages]="validationMessages['categories']"
-    [placeholder]="placeholders.categories"
-    (removeCategory)="removeCategory($event)"
-    (selectedCategory)="selectedCategory($event)"
-  >
-  </hydro-create-monitor-form-categories>
+  <div class="form-field">
+    <hydro-create-monitor-categories-select
+      [parent]="createMonitorForm"
+      [loading]="loadingCategories"
+      [selectedCategories]="selectedCategories"
+      [filteredCategories]="filteredCategories"
+      [maxSelectedCategories]="maxSelectedCategories"
+      [placeholder]="placeholders.categories"
+      [autocompleteOptions]="autocompleteOptions"
+      (removeCategory)="removeCategory($event)"
+      (selectedCategory)="selectedCategory($event)"
+    >
+    </hydro-create-monitor-categories-select>
+
+    <hydro-create-monitor-category-add
+      [currentCategories]="availableCategories"
+      (submitCategories)="onSubmitCategories($event)"
+    ></hydro-create-monitor-category-add>
+  </div>
 
   <hydro-create-monitor-form-groups
     class="form-field"

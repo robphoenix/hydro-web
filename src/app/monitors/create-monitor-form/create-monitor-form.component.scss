@@ -9,6 +9,10 @@
   margin-bottom: $space-4;
 }
 
+.categories {
+  display: flex;
+}
+
 .buttons {
   display: flex;
   justify-content: flex-end;

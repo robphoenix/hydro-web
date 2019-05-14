@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import {
+  MatAutocompleteSelectedEvent,
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import {
@@ -20,6 +24,8 @@ import { IMonitorSubmit } from '../monitor-submit';
 import { CacheWindowService } from '../cache-window.service';
 import { ActionsService } from 'src/app/actions/actions.service';
 import { IAction } from 'src/app/actions/action';
+import { IErrorMessage } from 'src/app/shared/error-message';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'hydro-create-monitor-form',
@@ -27,9 +33,6 @@ import { IAction } from 'src/app/actions/action';
   styleUrls: ['./create-monitor-form.component.scss'],
 })
 export class CreateMonitorFormComponent implements OnInit {
-  public allowsEnable: boolean;
-  public isAdmin: boolean;
-
   @Input()
   heading: string;
 
@@ -40,7 +43,7 @@ export class CreateMonitorFormComponent implements OnInit {
   monitorName: string;
 
   @Input()
-  editForm: boolean;
+  editForm = true;
 
   @Output()
   submitForm = new EventEmitter<IMonitorSubmit>();
@@ -49,7 +52,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
   readonly defaultPriority = MonitorPriority.Mid;
 
-  autocompleteOptions = {
+  public autocompleteOptions = {
     selectable: true,
     removable: true,
     addOnBlur: true,
@@ -73,17 +76,10 @@ export class CreateMonitorFormComponent implements OnInit {
   filteredGroups: Observable<IGroup[]>;
   loadingGroups = false;
 
-  private nameMaxCharLength = 50;
+  public nameMaxCharLength = 50;
   private controlsToBeMarked: string[] = ['name', 'description', 'query'];
 
   validationMessages: { [key: string]: { [key: string]: string } } = {
-    name: {
-      required: `You must enter a monitor name`,
-      pattern: `Monitor name cannot contain punctuation marks, except dashes and underscores`,
-      maxlength: `Monitor name must be ${
-        this.nameMaxCharLength
-      } characters or less`,
-    },
     description: {
       required: `You must enter a monitor description`,
     },
@@ -99,7 +95,6 @@ export class CreateMonitorFormComponent implements OnInit {
   };
 
   placeholders = {
-    name: `Please enter a monitor name`,
     description: `Please enter a monitor description`,
     query: `Please enter a valid EPL Query`,
     categories: this.placeholderCategories,
@@ -108,25 +103,26 @@ export class CreateMonitorFormComponent implements OnInit {
   };
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private monitorsService: MonitorsService,
     private filterService: FilterService,
     private cacheWindowService: CacheWindowService,
-    public authService: AuthService,
+    private authService: AuthService,
     private router: Router,
     private actionsService: ActionsService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
     this.loadingActions = true;
-    this.getAvailableCategories();
     this.getAvailableActions();
     this.getAvailableGroups();
 
     // set the default access groups
     this.selectedGroups = this.authService.userGroups || [];
 
-    this.createMonitorForm = this.fb.group({
+    this.createMonitorForm = this.formBuilder.group({
       actions: [this.selectedActions],
       actionsInput: [''],
       cacheWindow: [this.cacheWindowService.durationValues[0]],
@@ -152,8 +148,6 @@ export class CreateMonitorFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin;
-    this.allowsEnable = this.authService.allowsEnable;
     if (this.monitor) {
       this.createMonitorForm.patchValue({
         cacheWindow: this.cacheWindowService.durationValues.indexOf(
@@ -168,9 +162,6 @@ export class CreateMonitorFormComponent implements OnInit {
         type: this.isAdmin ? this.monitor.type : MonitorType.Standard,
       });
 
-      if (this.editForm) {
-        this.createMonitorForm.get('name').disable();
-      }
       this.selectedCategories = this.monitor.categories;
       this.createMonitorForm
         .get('categories')
@@ -183,18 +174,7 @@ export class CreateMonitorFormComponent implements OnInit {
 
     this.controlsToBeMarked.forEach((name: string) => this.markControl(name));
 
-    this.filteredCategories = this.createMonitorForm
-      .get('categoriesInput')
-      .valueChanges.pipe(
-        startWith(null),
-        map((term: string | ICategory) =>
-          this.filterService.filterCategories(
-            term,
-            this.availableCategories,
-            this.selectedCategories,
-          ),
-        ),
-      );
+    this.getAvailableCategories();
 
     this.filteredGroups = this.createMonitorForm
       .get('groupsInput')
@@ -221,6 +201,14 @@ export class CreateMonitorFormComponent implements OnInit {
           ),
         ),
       );
+  }
+
+  public get allowsEnable(): boolean {
+    return this.authService.allowsEnable;
+  }
+
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin;
   }
 
   get canViewMonitor(): boolean {
@@ -285,6 +273,22 @@ export class CreateMonitorFormComponent implements OnInit {
       .subscribe((categories: ICategory[]) => {
         this.availableCategories = categories;
         this.loadingCategories = false;
+        if (!this.availableCategories || !this.availableCategories.length) {
+          this.createMonitorForm.get(`categoriesInput`).disable();
+        } else {
+          this.filteredCategories = this.createMonitorForm
+            .get('categoriesInput')
+            .valueChanges.pipe(
+              startWith(null),
+              map((term: string | ICategory) =>
+                this.filterService.filterCategories(
+                  term,
+                  this.availableCategories,
+                  this.selectedCategories,
+                ),
+              ),
+            );
+        }
       });
   }
 
@@ -366,5 +370,31 @@ export class CreateMonitorFormComponent implements OnInit {
 
   cancel() {
     this.router.navigateByUrl('/monitors/view');
+  }
+
+  public onSubmitCategories(categories: string[]) {
+    this.monitorsService.addCategories({ categories }).subscribe(
+      (response: ICategory[]) => {
+        this.snackBar.open(
+          `Categories created: ${response
+            .map((category: ICategory) => category.name)
+            .join(', ')}`,
+          '',
+          {
+            duration: 2000,
+          },
+        );
+        // refresh categories
+        this.getAvailableCategories();
+      },
+      (err: IErrorMessage) => {
+        const title = `error adding categories`;
+        const { message, cause, uuid } = err;
+        this.dialog.open(ErrorDialogComponent, {
+          data: { title, message, cause, uuid },
+          maxWidth: `800px`,
+        });
+      },
+    );
   }
 }

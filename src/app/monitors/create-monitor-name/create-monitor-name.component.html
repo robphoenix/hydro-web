@@ -1,0 +1,18 @@
+<mat-form-field class="name" [formGroup]="parent" appearance="outline">
+  <mat-label> Name* </mat-label>
+  <input matInput placeholder="{{ placeholder }}" formControlName="name" />
+  <mat-hint align="start" *ngIf="!canEditName">
+    Name must be unique, and cannot contain punctuation marks
+  </mat-hint>
+  <mat-hint align="start" *ngIf="canEditName"> Name cannot be edited </mat-hint>
+  <mat-hint align="end" *ngIf="!canEditName"> *Required </mat-hint>
+  <mat-error *ngIf="hasError('required')">
+    {{ errorMessages['required'] }}
+  </mat-error>
+  <mat-error *ngIf="hasError('pattern')">
+    {{ errorMessages['required'] }}
+  </mat-error>
+  <mat-error *ngIf="hasError('maxlength')">
+    {{ errorMessages['required'] }}
+  </mat-error>
+</mat-form-field>

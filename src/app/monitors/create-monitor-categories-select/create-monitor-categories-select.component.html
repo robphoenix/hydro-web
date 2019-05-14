@@ -14,7 +14,7 @@
   [formGroup]="parent"
   appearance="outline"
 >
-  <mat-label>Categories</mat-label>
+  <mat-label>{{ label }}</mat-label>
   <mat-chip-list #chipList formControlName="categories">
     <mat-chip
       *ngFor="let category of selectedCategories"
