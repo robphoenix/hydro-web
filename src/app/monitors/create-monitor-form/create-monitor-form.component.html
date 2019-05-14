@@ -62,7 +62,10 @@
     >
     </hydro-create-monitor-categories-select>
 
-    <hydro-create-monitor-category-add></hydro-create-monitor-category-add>
+    <hydro-create-monitor-category-add
+      [currentCategories]="availableCategories"
+      (submitCategories)="onSubmitCategories($event)"
+    ></hydro-create-monitor-category-add>
   </div>
 
   <hydro-create-monitor-form-groups

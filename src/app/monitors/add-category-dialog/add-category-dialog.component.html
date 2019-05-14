@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="title">Add Categories</h1>
+<mat-form-field mat-dialog-content appearance="outline" class="content">
+  <mat-label>Names</mat-label>
+  <input matInput type="text" [formControl]="name" />
+  <mat-hint align="start">
+    Names must be unique. Enter multiple categories using a comma separated
+    list.
+  </mat-hint>
+  <mat-error *ngIf="hasError('required')">
+    You must enter at least 1 category name
+  </mat-error>
+  <mat-error *ngIf="hasError('uniquecategory')">
+    Categories already exist: {{ duplicateCategories }}. Category names must be
+    unique
+  </mat-error>
+</mat-form-field>
+<div mat-dialog-actions class="dialog-actions">
+  <hydro-button-raised color="primary" (click)="cancel()">
+    Cancel
+  </hydro-button-raised>
+
+  <hydro-button-raised color="accent" (click)="save()"
+    >Save</hydro-button-raised
+  >
+</div>

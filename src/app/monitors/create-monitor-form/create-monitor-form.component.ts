@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import {
@@ -20,6 +20,8 @@ import { IMonitorSubmit } from '../monitor-submit';
 import { CacheWindowService } from '../cache-window.service';
 import { ActionsService } from 'src/app/actions/actions.service';
 import { IAction } from 'src/app/actions/action';
+import { IErrorMessage } from 'src/app/shared/error-message';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'hydro-create-monitor-form',
@@ -97,13 +99,14 @@ export class CreateMonitorFormComponent implements OnInit {
   };
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private monitorsService: MonitorsService,
     private filterService: FilterService,
     private cacheWindowService: CacheWindowService,
-    public authService: AuthService,
+    private authService: AuthService,
     private router: Router,
     private actionsService: ActionsService,
+    private dialog: MatDialog,
   ) {
     this.loadingCategories = true;
     this.loadingGroups = true;
@@ -115,7 +118,7 @@ export class CreateMonitorFormComponent implements OnInit {
     // set the default access groups
     this.selectedGroups = this.authService.userGroups || [];
 
-    this.createMonitorForm = this.fb.group({
+    this.createMonitorForm = this.formBuilder.group({
       actions: [this.selectedActions],
       actionsInput: [''],
       cacheWindow: [this.cacheWindowService.durationValues[0]],
@@ -361,5 +364,19 @@ export class CreateMonitorFormComponent implements OnInit {
 
   cancel() {
     this.router.navigateByUrl('/monitors/view');
+  }
+
+  public onSubmitCategories(categories: string[]) {
+    this.monitorsService.addCategories({ categories }).subscribe(
+      (res) => console.log({ res }),
+      (err: IErrorMessage) => {
+        const title = `error adding categories`;
+        const { message, cause, uuid } = err;
+        this.dialog.open(ErrorDialogComponent, {
+          data: { title, message, cause, uuid },
+          maxWidth: `800px`,
+        });
+      },
+    );
   }
 }

@@ -4,6 +4,7 @@ import {
   MonitorType,
   MonitorStatus,
   IGroup,
+  ICategories,
 } from './monitor';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -83,6 +84,10 @@ export class MonitorsService {
     return this.http.get<ICategory[]>(this.categoriesUrl, {
       headers,
     });
+  }
+
+  public addCategories(categories: ICategories) {
+    return this.http.post(this.categoriesUrl, categories, { headers });
   }
 
   public getGroups(): Observable<IGroup[]> {

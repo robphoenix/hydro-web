@@ -1,0 +1,12 @@
+@import 'main';
+
+.content {
+  margin-bottom: $space-3;
+  height: 100px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $space-2;
+}

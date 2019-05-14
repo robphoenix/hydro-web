@@ -29,6 +29,7 @@ import { ViewMonitorsStatusToggleComponent } from './view-monitors-status-toggle
 import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor-name.component';
 import { CreateMonitorCategoriesSelectComponent } from './create-monitor-categories-select/create-monitor-categories-select.component';
 import { CreateMonitorCategoryAddComponent } from './create-monitor-category-add/create-monitor-category-add.component';
+import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 
 @NgModule({
   imports: [
@@ -83,11 +84,13 @@ import { CreateMonitorCategoryAddComponent } from './create-monitor-category-add
     CreateMonitorNameComponent,
     CreateMonitorCategoriesSelectComponent,
     CreateMonitorCategoryAddComponent,
+    AddCategoryDialogComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,
     MonitorStatusChangeDialogComponent,
     ChangeEventDialogComponent,
+    AddCategoryDialogComponent,
   ],
 })
 export class MonitorsModule {}
