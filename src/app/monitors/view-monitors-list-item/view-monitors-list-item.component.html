@@ -11,14 +11,6 @@
       <hydro-list-item-subtitle>
         {{ monitor.description }}
       </hydro-list-item-subtitle>
-
-      <div class="categories">
-        <div *ngFor="let category of monitor.categories">
-          <div class="category">
-            {{ category.name }}
-          </div>
-        </div>
-      </div>
     </div>
 
     <button
@@ -29,12 +21,10 @@
     >
       View Monitor
     </button>
-  </div>
-
-  <div class="buttons">
     <button
       mat-stroked-button
       matTooltip="{{ monitor.query }}"
+      color="primary"
       [matTooltipPosition]="'below'"
       [matTooltipClass]="'epl-query-tooltip'"
       (mouseenter)="onMouseEnter()"
@@ -43,7 +33,17 @@
     >
       {{ eplQueryButtonText }} EPL Query
     </button>
+  </div>
 
+  <div class="categories">
+    <div *ngFor="let category of monitor.categories">
+      <div class="category">
+        {{ category.name }}
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
     <hydro-view-monitors-list-item-menu
       *ngIf="allowsEnable"
       class="menu"

@@ -12,6 +12,7 @@
 }
 
 .scroll-viewport {
+  margin-bottom: $space-4;
   height: 700px;
 
   @include breakpoint(xl) {
