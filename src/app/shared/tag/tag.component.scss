@@ -1,6 +1,7 @@
 @import 'main';
 
 .tag {
+  display: inline-block;
   padding: $space-2;
   margin-right: $space-2;
   border: 1px solid;

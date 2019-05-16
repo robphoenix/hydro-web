@@ -1,5 +1,5 @@
 <div class="action">
-  <div>
+  <div class="header">
     <hydro-list-item-title>
       {{ action.name }}
     </hydro-list-item-title>
@@ -7,7 +7,12 @@
       {{ action.description }}
     </hydro-list-item-subtitle>
   </div>
-  <span class="action-type"> {{ names[action.actionType] }} Action </span>
+
+  <hydro-tag color="primary"> {{ names[action.actionType] }} Action </hydro-tag>
+
+  <button mat-stroked-button (click)="showProperties = !showProperties">
+    {{ showProperties ? 'Hide' : 'Show' }} Properties
+  </button>
 
   <div *ngIf="isAdmin" class="menu">
     <button mat-stroked-button [matMenuTriggerFor]="menu" color="primary">
@@ -34,4 +39,10 @@
       </div>
     </mat-menu>
   </div>
+</div>
+
+<div class="properties" [ngClass]="{ 'show-properties': showProperties }">
+  <h3>Properties</h3>
+
+  <div [innerHTML]="action.metadata.emailText"></div>
 </div>
