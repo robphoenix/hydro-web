@@ -36,11 +36,9 @@
   </div>
 
   <div class="categories">
-    <div *ngFor="let category of monitor.categories">
-      <div class="category">
-        {{ category.name }}
-      </div>
-    </div>
+    <hydro-tag *ngFor="let category of monitor.categories" color="primary">
+      {{ category.name }}
+    </hydro-tag>
   </div>
 
   <div class="buttons">
