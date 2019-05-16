@@ -39,6 +39,20 @@
   color: $grey-4;
 }
 
+.categories {
+  display: flex;
+}
+
+.category {
+  padding: $space-2;
+  background-color: $primary-lighter;
+  margin-right: $space-2;
+  border: 1px solid $primary-lighter;
+  border-radius: 5px;
+  font-size: $fs-1;
+  color: $primary-darker;
+}
+
 .view-monitor {
   margin-left: auto;
 }

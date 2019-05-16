@@ -71,7 +71,6 @@ export class CreateMonitorCategoriesSelectComponent implements OnChanges {
   ngOnChanges() {
     if (this.filteredCategories) {
       this.filteredCategories.subscribe((filtered) => {
-        // todo lowercase sort
         this.availableCategories = filtered.sort(
           (a: ICategory, b: ICategory) => {
             if (a.name.toLowerCase() < b.name.toLowerCase()) {
