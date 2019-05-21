@@ -5,13 +5,26 @@
   align-items: center;
 }
 
-.action-type {
-  margin: 0 $space-4 0 auto;
-  padding: $space-1 $space-2;
-  color: $primary-darker;
-  background-color: $primary-lighter;
+.header {
+  flex: 1;
 }
 
 .menu {
-  margin-right: $space-4;
+  margin: 0 $space-4;
+}
+
+.properties {
+  visibility: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: 300ms all ease-in-out;
+  padding: 0 $space-4;
+}
+
+.show-properties {
+  visibility: visible;
+  max-height: 500px;
+  opacity: 1;
+  transition: 300ms all ease-in-out;
+  padding: $space-4;
 }

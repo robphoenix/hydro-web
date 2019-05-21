@@ -1,4 +1,4 @@
-![hydro logo](/src/assets/img/hydroelectric.png)
+![hydro logo](/src/assets/img/hydro-power.png)
 
 [![Build Status](https://mn2forbld0001d0/view/All%20jobs/job/hydro-web-pipeline/job/master/badge/icon?style=flat-square)](https://mn2forbld0001d0/view/All%20jobs/job/hydro-web-pipeline/job/master/)
 

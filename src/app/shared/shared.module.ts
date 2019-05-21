@@ -21,6 +21,7 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { MarginDirective } from './margin.directive';
 import { ListItemTitleComponent } from './list-item-title/list-item-title.component';
 import { ListItemSubtitleComponent } from './list-item-subtitle/list-item-subtitle.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { ListItemSubtitleComponent } from './list-item-subtitle/list-item-subtit
     MarginDirective,
     ListItemTitleComponent,
     ListItemSubtitleComponent,
+    TagComponent,
   ],
   exports: [
     SearchInputComponent,
@@ -69,6 +71,7 @@ import { ListItemSubtitleComponent } from './list-item-subtitle/list-item-subtit
     ListItemTitleComponent,
     ListItemSubtitleComponent,
     MarginDirective,
+    TagComponent,
   ],
   entryComponents: [ErrorDialogComponent],
 })

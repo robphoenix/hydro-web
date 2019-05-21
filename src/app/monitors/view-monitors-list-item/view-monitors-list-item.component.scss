@@ -3,6 +3,7 @@
 .container {
   display: flex;
   align-items: center;
+  height: 80px;
 }
 
 .monitor {
@@ -39,12 +40,20 @@
   color: $grey-4;
 }
 
+.categories {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-wrap: wrap;
+  margin-left: $space-3;
+}
+
 .view-monitor {
-  margin-left: auto;
+  margin: 0 $space-3;
 }
 
 .buttons {
-  flex: 1;
+  flex: 2;
   display: flex;
   justify-content: flex-end;
 }

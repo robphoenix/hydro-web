@@ -7,51 +7,32 @@ import { IFilterValues } from './filter-values';
   providedIn: 'root',
 })
 export class FilterService {
-  filterPredicate(): (monitor: IMonitor, filter: string) => boolean {
-    return (monitor: IMonitor, filter: string): boolean => {
-      const {
-        searchTerm,
-        selectedActions,
-        selectedCategories,
-        status,
-      } = JSON.parse(filter);
-
-      const matchesSearchTerm: boolean = this.matchesSearchTerm(
-        monitor,
-        searchTerm,
-      );
-      const hasSelectedCategories: boolean = this.hasCategories(
-        monitor,
-        selectedCategories,
-      );
-      const hasSelectedActions: boolean = this.hasActions(
-        monitor,
-        Object.keys(selectedActions).reduce(
-          (prev: string[], curr: string) => [...prev, ...selectedActions[curr]],
-          [],
-        ),
-      );
-      const hasStatus: boolean = this.hasStatus(monitor, status);
-
-      return (
-        matchesSearchTerm &&
-        hasSelectedCategories &&
-        hasSelectedActions &&
-        hasStatus
-      );
-    };
-  }
-
   public filterMonitors(
     monitors: IMonitor[],
     filterValues: IFilterValues,
   ): IMonitor[] {
-    const { status, searchTerm } = filterValues;
-    return monitors.filter(
-      (monitor: IMonitor) =>
+    const { status, searchTerm, selectedCategories } = filterValues;
+
+    return monitors.filter((monitor: IMonitor) => {
+      return (
         monitor.status === status &&
-        this.matchesSearchTerm(monitor, searchTerm),
-    );
+        this.matchesSearchTerm(monitor, searchTerm) &&
+        this.hasSelectedCategories(monitor.categories, selectedCategories)
+      );
+    });
+  }
+
+  private hasSelectedCategories(
+    categories: ICategory[],
+    selected: string[],
+  ): boolean {
+    if (!selected || !selected.length) {
+      return true;
+    }
+
+    return categories
+      .map((category: ICategory) => category.name)
+      .some((name: string) => selected.includes(name));
   }
 
   private matchesSearchTerm(monitor: IMonitor, searchTerm: string): boolean {

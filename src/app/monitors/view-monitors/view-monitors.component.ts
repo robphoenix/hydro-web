@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IMonitor, MonitorStatus, MonitorType } from '../monitor';
+import { IMonitor, MonitorStatus, MonitorType, ICategory } from '../monitor';
 import { MonitorsService } from '../monitors.service';
 import { MatDialog } from '@angular/material';
 import {
@@ -23,6 +23,8 @@ export class ViewMonitorsComponent implements OnInit {
   public filteredMonitors: IMonitor[] = [];
   public searchTerm: string;
   public monitorsType: MonitorType = MonitorType.Standard;
+  public categories: string[];
+  public selectedCategories: string[];
 
   private monitors: IMonitor[] = [];
   private standardMonitors: IMonitor[] = [];
@@ -43,6 +45,7 @@ export class ViewMonitorsComponent implements OnInit {
     this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
     this.refreshService.$refreshEvent.subscribe(() => this.onRefresh());
     this.getMonitors();
+    this.getCategories();
   }
 
   public get allowsEdit(): boolean {
@@ -60,6 +63,24 @@ export class ViewMonitorsComponent implements OnInit {
   public set status(status: MonitorStatus) {
     this.monitorsStatus = status;
     this.userService.lastMonitorsStatus = status;
+  }
+
+  private getCategories() {
+    this.monitorsService
+      .getCategories()
+      .subscribe((categories: ICategory[]) => {
+        this.categories = categories
+          .map((category: ICategory) => category.name)
+          .sort((a: string, b: string) => {
+            if (a.toLowerCase() < b.toLowerCase()) {
+              return -1;
+            }
+            if (a.toLowerCase() > b.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          });
+      });
   }
 
   getMonitors(): void {
@@ -157,6 +178,7 @@ export class ViewMonitorsComponent implements OnInit {
       this.filteredMonitors = this.filterService.filterMonitors(this.monitors, {
         status: this.status,
         searchTerm: this.searchTerm,
+        selectedCategories: this.selectedCategories,
       } as IFilterValues);
     }
   }

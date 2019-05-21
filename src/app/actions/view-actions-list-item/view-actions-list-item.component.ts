@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/user/auth.service';
 })
 export class ViewActionsListItemComponent {
   public names: { [key: string]: string } = actionTypeDisplayNames;
+  public showProperties = false;
 
   @Input()
   action: IAction;
