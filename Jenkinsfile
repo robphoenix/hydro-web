@@ -49,13 +49,31 @@ pipeline {
       }
     }
     stage('Build') {
-      steps {
-        sh 'npm run build:prod'
+      parallel {
+        stage('Dev') {
+          steps {
+            sh 'npm run build:prod'
+          }
+        }
+        stage('PoC') {
+          steps {
+            sh 'npm run build:poc'
+          }
+        }
       }
     }
     stage('Deploy') {
-      steps {
-        sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
+      parallel {
+        stage('Dev') {
+          steps {
+            sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
+          }
+        }
+        stage('PoC') {
+          steps {
+            sh 'scp -i ~/.ssh/id_rsa -r poc/dist middleware@ir3hydpoc0010p0:/usr/local/bet365/hydro-web'
+          }
+        }
       }
     }
   }
