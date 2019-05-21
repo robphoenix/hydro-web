@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IAction } from './action';
-import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -10,7 +10,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   providedIn: 'root',
 })
 export class ActionsService {
-  readonly baseUrl = `http://mn2formlt0001d0:6080`;
+  readonly baseUrl = environment.apiUrl;
   monitorsUrl = `${this.baseUrl}/p/monitors`;
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;

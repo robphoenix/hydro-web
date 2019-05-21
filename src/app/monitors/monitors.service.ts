@@ -11,6 +11,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAction } from '../actions/action';
+import { environment } from '../../environments/environment';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -24,7 +25,7 @@ const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   providedIn: 'root',
 })
 export class MonitorsService {
-  readonly baseUrl = `http://mn2formlt0001d0:6080`;
+  readonly baseUrl = environment.apiUrl;
   monitorsUrl = `${this.baseUrl}/p/monitors`;
   optionsUrl = `${this.monitorsUrl}/options`;
   actionsUrl = `${this.optionsUrl}/actions`;

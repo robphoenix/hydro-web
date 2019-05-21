@@ -10,12 +10,13 @@ import {
   MonitorDataAttribute,
   IMonitorDataBody,
 } from './monitor-data';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventbusService {
-  private eventBusUrl = 'http://mn2formlt0002d0:6081/eventbus';
+  private eventBusUrl = `${environment.eventBusUrl}/eventbus`;
   private outputAddress = 'result.pub.output';
   private cachedAddress = 'result.pub.cached';
   private statusAddress = 'monitor.status';

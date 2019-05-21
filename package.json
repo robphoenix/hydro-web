@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:poc": "ng build --prod --env=poc",
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint && npm run lint:styles",
