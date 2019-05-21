@@ -48,14 +48,18 @@ pipeline {
         }
       }
     }
-    stage('Dev Build') {
-      steps {
-        sh 'npm run build:prod'
-      }
-    }
-    stage('PoC Build') {
-      steps {
-        sh 'npm run build:poc'
+    stage('Build') {
+      parallel {
+        stage('Dev') {
+          steps {
+            sh 'npm run build:prod'
+          }
+        }
+        stage('PoC') {
+          steps {
+            sh 'npm run build:poc'
+          }
+        }
       }
     }
     stage('Deploy') {
