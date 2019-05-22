@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://mn2formlt0001d0:6080',
-  eventBusUrl: 'http://mn2formlt0002d0:6081',
+  apiUrl: 'http://ir3hydpoc0009p0:6080',
+  eventBusUrl: 'http://ir3hydpoc0007p0:6081',
 };
