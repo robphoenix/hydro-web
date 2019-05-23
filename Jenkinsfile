@@ -59,8 +59,8 @@ pipeline {
       }
     }
     stage('PoC Build'){
-      when{
-        branch 'master'
+      when {
+        buildingTag()
       }
       steps {
         sh 'npm run build:poc'
