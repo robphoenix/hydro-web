@@ -27,6 +27,7 @@ pipeline {
   stages {
     stage('NPM Install') {
       steps {
+        updateGitlabCommitStatus name: 'hydro-web-pipeline', state: 'pending'
         sh '''
         npm config set strict-ssl false
         npm set registry https://proget/npm/Production-npm/
