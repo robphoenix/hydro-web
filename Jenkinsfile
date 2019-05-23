@@ -58,14 +58,12 @@ pipeline {
         sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
       }
     }
-    stage('PoC'){
+    stage('PoC Build'){
       when{
         branch 'master'
       }
-      stage('Build') {
-          steps {
-            sh 'npm run build:poc'
-          }
+      steps {
+        sh 'npm run build:poc'
       }
     }
   }
