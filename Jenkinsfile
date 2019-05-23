@@ -62,18 +62,17 @@ pipeline {
         }
       }
     }
-    stage('Deploy') {
-      parallel {
-        stage('Dev') {
-          steps {
-            sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
-          }
-        }
-        stage('PoC') {
-          steps {
-            sh 'scp -i ~/.ssh/id_rsa -r poc/dist middleware@ir3hydpoc0010p0:/usr/local/bet365/hydro-web'
-          }
-        }
+    stage('Dev Deploy') {
+      steps {
+        sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
+      }
+    }
+    stage('master-branch-stuff'){
+      when{
+        branch 'master'
+      }
+      steps {
+        echo 'run this stage - ony if the branch = master branch'
       }
     }
   }
