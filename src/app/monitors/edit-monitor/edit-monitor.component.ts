@@ -17,7 +17,6 @@ import { CreateMonitorFormComponent } from '../create-monitor-form/create-monito
 export class EditMonitorComponent implements OnInit, OnDestroy {
   monitor: IMonitor;
   sub: Subscription;
-  editForm = true;
 
   @ViewChild(CreateMonitorFormComponent)
   form: CreateMonitorFormComponent;

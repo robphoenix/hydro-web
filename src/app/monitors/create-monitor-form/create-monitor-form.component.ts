@@ -43,7 +43,7 @@ export class CreateMonitorFormComponent implements OnInit {
   monitorName: string;
 
   @Input()
-  editForm = true;
+  isEditForm = false;
 
   @Output()
   submitForm = new EventEmitter<IMonitorSubmit>();

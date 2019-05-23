@@ -4,7 +4,7 @@
     <hydro-create-monitor-form
       *ngIf="monitor"
       [monitor]="monitor"
-      [editForm]="editForm"
+      [isEditForm]="true"
       (submitForm)="saveMonitor($event)"
     ></hydro-create-monitor-form>
   </hydro-card-form>
