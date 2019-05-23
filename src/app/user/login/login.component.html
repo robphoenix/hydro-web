@@ -62,13 +62,16 @@
   ></mat-progress-bar>
 
   <div class="button">
-    <hydro-button-raised
+    <button
+      mat-raised-button
       color="accent"
       *ngIf="!attemptingLogIn"
       (click)="login()"
       [disabled]="!loginForm.valid"
     >
-      Log In
-    </hydro-button-raised>
+      <span class="button-text">
+        Log In
+      </span>
+    </button>
   </div>
 </div>

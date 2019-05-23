@@ -32,6 +32,11 @@
       "type": "npm",
       "script": "lint:styles",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build:poc",
+      "problemMatcher": []
     }
   ]
 }

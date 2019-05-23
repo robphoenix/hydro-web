@@ -4,10 +4,11 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Observable, interval, Subject, Subscription } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IUser, Permissions } from './user';
+import { Permissions } from './user';
 import { Router } from '@angular/router';
 import { ILoginResponse } from './login-response';
 import { IGroup } from '../monitors/monitor';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -50,7 +51,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  readonly baseUrl = `http://mn2formlt0001d0:6080`;
+  readonly baseUrl = environment.apiUrl;
   readonly loginUrl = `${this.baseUrl}/login`;
   readonly refreshUrl = `${this.baseUrl}/p/refresh`;
 

@@ -22,7 +22,7 @@ export class CreateMonitorNameComponent implements OnInit {
   parent: FormGroup;
 
   @Input()
-  canEditName: boolean;
+  canEditName = true;
 
   ngOnInit(): void {
     this.errors = Object.keys(this.errorMessages);

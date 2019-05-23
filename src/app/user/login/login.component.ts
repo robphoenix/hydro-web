@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
 import { IErrorMessage } from 'src/app/shared/error-message';
 
 @Component({
