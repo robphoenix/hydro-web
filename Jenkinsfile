@@ -59,11 +59,13 @@ pipeline {
         sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
       }
     }
-    stage('PoC Build'){
-      when { tag "v*" }
-      steps {
-        sh 'npm run build:poc'
-      }
-    }
+    // stage('PoC Build'){
+    //   when {
+    //     buildingTag()
+    //   }
+    //   steps {
+    //     sh 'npm run build:poc'
+    //   }
+    // }
   }
 }
