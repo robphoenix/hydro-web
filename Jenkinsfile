@@ -59,9 +59,7 @@ pipeline {
       }
     }
     stage('PoC Build'){
-      when {
-        buildingTag()
-      }
+      when { tag "v*" }
       steps {
         sh 'npm run build:poc'
       }
