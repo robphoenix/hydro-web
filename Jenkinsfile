@@ -48,18 +48,9 @@ pipeline {
         }
       }
     }
-    stage('Build') {
-      parallel {
-        stage('Dev') {
-          steps {
-            sh 'npm run build:prod'
-          }
-        }
-        stage('PoC') {
-          steps {
-            sh 'npm run build:poc'
-          }
-        }
+    stage('Dev Build') {
+      steps {
+        sh 'npm run build:prod'
       }
     }
     stage('Dev Deploy') {
@@ -67,12 +58,14 @@ pipeline {
         sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
       }
     }
-    stage('master-branch-stuff'){
+    stage('PoC'){
       when{
         branch 'master'
       }
-      steps {
-        echo 'run this stage - ony if the branch = master branch'
+      stage('Build') {
+          steps {
+            sh 'npm run build:poc'
+          }
       }
     }
   }
