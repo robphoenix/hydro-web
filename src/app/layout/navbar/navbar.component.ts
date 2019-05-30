@@ -8,9 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  name = '../assets/img/hydro-uppercase.png';
-  logo = '../assets/img/hydroelectric.png';
-  background = 'primary';
+  // name = '../assets/img/hydro-uppercase.png';
+  logo = '../assets/img/hydro-power.png';
 
   constructor(public authService: AuthService, public router: Router) {}
 }

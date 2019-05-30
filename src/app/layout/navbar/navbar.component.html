@@ -1,28 +1,20 @@
-<mat-toolbar color="primary" class="navbar">
+<mat-toolbar class="navbar">
   <div class="logo">
-    <!-- <hydro-logo></hydro-logo> -->
-    <hydro-logotype-link color="primary"></hydro-logotype-link>
+    <a routerLink="/" class="logo">
+      <img [src]="logo" height="40" alt="hydro-logo" />
+      <span class="logotype">
+        Hydro
+      </span>
+    </a>
   </div>
 
-  <nav *ngIf="authService.isLoggedIn">
-    <hydro-button-flat
-      color="primary"
-      (click)="router.navigateByUrl('/monitors')"
-    >
-      <span class="link-name">
-        Monitors
-      </span>
-    </hydro-button-flat>
-    <hydro-button-flat
-      (click)="router.navigateByUrl('/actions')"
-      color="primary"
-    >
-      <span class="link-name">
-        Actions
-      </span>
-    </hydro-button-flat>
-    <hydro-button-flat (click)="authService.logout()" color="primary">
-      <span class="link-name"> Log Out {{ authService.userDisplayName }} </span>
-    </hydro-button-flat>
+  <nav *ngIf="authService.isLoggedIn" class="nav">
+    <div class="links">
+      <a mat-button routerLink="/monitors" class="nav-link">Monitors</a>
+      <a mat-button routerLink="/actions" class="nav-link">Actions</a>
+    </div>
+    <button mat-button (click)="authService.logout()" class="nav-link">
+      Log Out {{ authService.userDisplayName }}
+    </button>
   </nav>
 </mat-toolbar>
