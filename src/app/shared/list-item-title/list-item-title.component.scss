@@ -1,7 +1,7 @@
 @import 'main';
 
 .title {
-  font-size: $fs-3;
+  font-size: font-size(3);
   font-weight: $fw-4;
   color: $grey-9;
   line-height: $lh-title;

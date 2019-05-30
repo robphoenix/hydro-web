@@ -22,7 +22,7 @@ body {
   color: $grey-8;
   background-color: $grey-1;
   border: 1px solid $grey-3;
-  font-size: $fs-3;
+  font-size: font-size(3);
   box-shadow: $box-shadow;
   line-height: $lh-copy;
   white-space: pre-wrap;

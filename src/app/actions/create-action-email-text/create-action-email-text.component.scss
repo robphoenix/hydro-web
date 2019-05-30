@@ -7,7 +7,7 @@
 .email-text-title {
   color: $grey-9;
   margin-bottom: major-scale(1);
-  font-size: $fs-4;
+  font-size: font-size(4);
   font-weight: $fw-4;
 }
 
@@ -18,7 +18,7 @@
 .email-text-error {
   margin-bottom: major-scale(1);
   margin-left: major-scale(1);
-  font-size: $fs-2;
+  font-size: font-size(2);
 }
 
 .code {
