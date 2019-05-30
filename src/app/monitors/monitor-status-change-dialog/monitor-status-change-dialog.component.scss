@@ -10,11 +10,11 @@
   margin-left: $space-3;
   display: flex;
   align-items: center;
-  padding: $space-1 $space-5;
+  padding: minorscale(1) $space-5;
 }
 
 .content {
   font-size: $fs-3;
-  margin-left: $space-1;
+  margin-left: minorscale(1);
   margin-bottom: $space-5;
 }
