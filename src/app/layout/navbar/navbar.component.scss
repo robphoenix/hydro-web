@@ -20,7 +20,7 @@
 .logotype {
   font-family: 'Comfortaa', cursive;
   font-size: font-size(6);
-  color: $grey-7;
+  color: gray(7);
   margin-left: major-scale(2);
 }
 
@@ -36,6 +36,6 @@
 .nav-link {
   font-size: font-size(3);
   font-weight: $fw-normal;
-  color: $grey-7;
+  color: gray(7);
   margin-left: major-scale(2);
 }

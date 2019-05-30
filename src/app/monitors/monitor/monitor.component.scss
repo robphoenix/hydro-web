@@ -13,7 +13,7 @@
   font-size: font-size(2);
   font-weight: $fw-4;
   margin-left: major-scale(1);
-  color: $grey-5;
+  color: gray(5);
 }
 
 .inner-wrapper {
@@ -66,7 +66,7 @@
 }
 
 .mat-row:nth-child(odd) {
-  background-color: $grey-1;
+  background-color: gray(1);
 }
 
 .hidden {
@@ -83,7 +83,7 @@
 .details {
   display: flex;
   flex-direction: column;
-  color: $grey-7;
+  color: gray(7);
 
   .description {
     margin-bottom: major-scale(1);
