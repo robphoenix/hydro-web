@@ -1,25 +1,25 @@
 @import 'main';
 
 .container {
-  margin: $space-9;
-  padding: $space-5;
+  margin: major-scale(8);
+  padding: major-scale(4);
 }
 
 .heading {
-  margin-bottom: $space-5;
+  margin-bottom: major-scale(4);
 }
 
 .header-name {
   font-size: $fs-2;
   font-weight: $fw-4;
-  margin-left: $space-2;
+  margin-left: major-scale(1);
   color: $grey-5;
 }
 
 .inner-wrapper {
   display: flex;
   align-items: center;
-  margin-bottom: $space-5;
+  margin-bottom: major-scale(4);
 }
 
 .buttons {
@@ -28,11 +28,11 @@
 }
 
 .button {
-  margin-left: $space-3;
+  margin-left: major-scale(2);
 }
 
 .icon {
-  margin-right: $space-2;
+  margin-right: major-scale(1);
 }
 
 .table-outer-wrapper {
@@ -50,7 +50,7 @@
 
 .mat-header-cell,
 .mat-cell {
-  padding: $space-3;
+  padding: major-scale(2);
   display: table-cell;
   white-space: nowrap;
   overflow: hidden;
@@ -76,7 +76,7 @@
 .messages {
   display: flex;
   flex-direction: column;
-  margin: $space-9 auto;
+  margin: major-scale(8) auto;
   width: 300px;
 }
 
@@ -86,7 +86,7 @@
   color: $grey-7;
 
   .description {
-    margin-bottom: $space-2;
+    margin-bottom: major-scale(1);
   }
 }
 

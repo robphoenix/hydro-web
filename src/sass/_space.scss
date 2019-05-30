@@ -1,35 +1,16 @@
-$space-tokens: 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 96, 112;
-
-$space-1: nth($space-tokens, 1) + px;
-$space-2: nth($space-tokens, 2) + px;
-$space-3: nth($space-tokens, 3) + px;
-$space-4: nth($space-tokens, 4) + px;
-$space-5: nth($space-tokens, 5) + px;
-$space-6: nth($space-tokens, 6) + px;
-$space-7: nth($space-tokens, 7) + px;
-$space-8: nth($space-tokens, 8) + px;
-$space-9: nth($space-tokens, 9) + px;
-$space-10: nth($space-tokens, 10) + px;
-$space-11: nth($space-tokens, 11) + px;
-$space-12: nth($space-tokens, 12) + px;
-
-@function space($step) {
-  @return nth($space-tokens, $step) + px;
-}
-
 /*
 For spacing, use the 8px major scale grid.
 
 For heights, widths, margins, paddings use values that are always divisible by 8.
 We call this the major scale.
 
-majorscale(1) => 8px
-majorscale(2) => 16px
-majorscale(3) => 24px
-majorscale(4) => 32px
-majorscale(5) => 40px
+major-scale(1) => 8px
+major-scale(2) => 16px
+major-scale(3) => 24px
+major-scale(4) => 32px
+major-scale(5) => 40px
 */
-@function majorscale($step) {
+@function major-scale($step) {
   @return ($step * 8) + px;
 }
 
@@ -42,12 +23,12 @@ Use the minor scale primarily for spacing only when the major scale is too much.
 
 For example: 4, 12, 20 are fine to use. But avoid using 52.
 
-minorscale(1) => 4px
-minorscale(3) => 12px
-minorscale(5) => 20px
-minorscale(7) => 28px
-minorscale(9) => 36px
+minor-scale(1) => 4px
+minor-scale(3) => 12px
+minor-scale(5) => 20px
+minor-scale(7) => 28px
+minor-scale(9) => 36px
 */
-@function minorscale($step) {
+@function minor-scale($step) {
   @return ($step * 4) + px;
 }

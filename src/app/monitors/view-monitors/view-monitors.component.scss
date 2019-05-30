@@ -4,15 +4,15 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
 }
 
 .search {
-  padding: 0 $space-2;
+  padding: 0 major-scale(1);
 }
 
 .scroll-viewport {
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
   height: 700px;
 
   @include breakpoint(xl) {
@@ -21,7 +21,7 @@
 }
 
 .add-monitor {
-  margin-left: $space-3;
+  margin-left: major-scale(2);
 }
 
 .monitor-details {

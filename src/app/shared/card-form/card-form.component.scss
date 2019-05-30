@@ -2,8 +2,8 @@
 
 .card {
   background-color: $white;
-  padding: $space-6 $space-9;
+  padding: major-scale(5) major-scale(8);
   border-top: 3px solid $primary;
   box-shadow: $box-shadow;
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
 }

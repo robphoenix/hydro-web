@@ -25,7 +25,7 @@
 
 .status {
   font-size: $fs-5;
-  margin: 0 0 $space-2 $space-2;
+  margin: 0 0 major-scale(1) major-scale(1);
 }
 
 .online {
@@ -45,11 +45,11 @@
   align-items: center;
   height: 100%;
   flex-wrap: wrap;
-  margin-left: $space-3;
+  margin-left: major-scale(2);
 }
 
 .view-monitor {
-  margin: 0 $space-3;
+  margin: 0 major-scale(2);
 }
 
 .buttons {
@@ -64,5 +64,5 @@
 }
 
 .menu {
-  margin-left: $space-5;
+  margin-left: major-scale(4);
 }

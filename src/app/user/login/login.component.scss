@@ -24,12 +24,12 @@
 }
 
 .headline {
-  margin-bottom: majorscale(4);
+  margin-bottom: major-scale(4);
 }
 
 .subheadline {
   color: $grey-5;
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .form {
@@ -38,7 +38,7 @@
 }
 
 .form-field {
-  margin-bottom: $space-2;
+  margin-bottom: major-scale(1);
 }
 
 .visibility {

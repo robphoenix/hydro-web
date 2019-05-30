@@ -3,15 +3,15 @@
 .page {
   width: 50%;
   margin: 0 auto;
-  padding: $space-4 $space-7;
+  padding: major-scale(3) major-scale(6);
 
   @include breakpoint(xl) {
     width: 60%;
-    padding: $space-5;
+    padding: major-scale(4);
   }
 
   @include breakpoint(md) {
     width: 80%;
-    padding: $space-6;
+    padding: major-scale(5);
   }
 }

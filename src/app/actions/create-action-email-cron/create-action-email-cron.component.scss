@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
 }
 
 .email-cron-explanation {
-  margin-left: $space-4;
-  padding-bottom: $space-3;
+  margin-left: major-scale(3);
+  padding-bottom: major-scale(2);
   color: $grey-8;
 }

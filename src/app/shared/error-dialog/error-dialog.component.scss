@@ -5,32 +5,32 @@
 }
 
 .content {
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .cause {
   color: $grey-7;
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .message {
   color: $accent-warn;
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .uuid {
   display: flex;
   align-items: center;
   color: $grey-7;
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .copy-button {
-  margin-left: $space-3;
+  margin-left: major-scale(2);
 }
 
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
