@@ -10,8 +10,8 @@ major-scale(3) => 24px
 major-scale(4) => 32px
 major-scale(5) => 40px
 */
-@function major-scale($step) {
-  @return ($step * 8) + px;
+@function major-scale($scale) {
+  @return ($scale * 8) + px;
 }
 
 /*
@@ -29,6 +29,6 @@ minor-scale(5) => 20px
 minor-scale(7) => 28px
 minor-scale(9) => 36px
 */
-@function minor-scale($step) {
-  @return ($step * 4) + px;
+@function minor-scale($scale) {
+  @return ($scale * 4) + px;
 }

@@ -1,6 +1,6 @@
 @import 'main';
 
-.login {
+.login__container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.headline,
+.login-header,
 .form,
 .progress-bar,
 .button {
@@ -23,12 +23,19 @@
   }
 }
 
-.headline {
+.login-header {
   margin-bottom: major-scale(4);
 }
 
-.subheadline {
-  color: $grey-5;
+.login-header__headline {
+  @include h1;
+
+  margin-bottom: major-scale(2);
+}
+
+.login-header__subheadline {
+  @include subtitle;
+
   margin-bottom: major-scale(2);
 }
 
@@ -44,12 +51,6 @@
 .visibility {
   cursor: pointer;
   color: $grey-5;
-}
-
-.button {
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-end;
 }
 
 .button-text {
