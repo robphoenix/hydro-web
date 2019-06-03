@@ -59,13 +59,26 @@ pipeline {
         sh 'scp -i ~/.ssh/id_rsa -r dist middleware@mn2formlt0001d0:/usr/local/bet365/hydro-web-server'
       }
     }
-    // stage('PoC Build'){
-    //   when {
-    //     buildingTag()
-    //   }
-    //   steps {
-    //     sh 'npm run build:poc'
-    //   }
-    // }
+    stage('PoC Build'){
+      when {
+        buildingTag()
+      }
+      steps {
+        sh 'npm run build:poc'
+      }
+    }
+    stage('PoC Create Artefact'){
+      when {
+        buildingTag()
+      }
+      steps {
+        sh '''
+        LAST_TAG=$(git describe --abbrev=0 --tags origin/master)
+        tar -zcvf hydro-web-${LAST_TAG}.tar.gz poc/dist
+        ls -al
+        mv hydro-web-${LAST_TAG}.tar.gz /dev_releases/hydro/Artefacts
+        '''
+      }
+    }
   }
 }
