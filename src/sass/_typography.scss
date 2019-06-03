@@ -1,15 +1,9 @@
 // Font Sizes
-$fontSizes: 12, 14, 16, 20, 24, 32, 40, 48, 64, 72;
+$font-sizes: 12, 14, 16, 20, 24, 32, 40, 48;
 
-$fs-1: nth($fontSizes, 1) + px;
-$fs-2: nth($fontSizes, 2) + px;
-$fs-3: nth($fontSizes, 3) + px;
-$fs-4: nth($fontSizes, 4) + px;
-$fs-5: nth($fontSizes, 5) + px;
-$fs-6: nth($fontSizes, 6) + px;
-$fs-7: nth($fontSizes, 7) + px;
-$fs-8: nth($fontSizes, 8) + px;
-$fs-9: nth($fontSizes, 9) + px;
+@function font-size($scale) {
+  @return nth($font-sizes, $scale) + px;
+}
 
 // Font Weight
 $fw-normal: normal;
@@ -28,3 +22,19 @@ $ls-normal: normal;
 $ls-tracked: 0.1em;
 $ls-tight: -0.05em;
 $ls-mega: 0.25em;
+
+/*
+Mixins
+*/
+@mixin h1 {
+  font-size: font-size(6);
+  font-weight: $fw-normal;
+  line-height: $lh-title;
+}
+
+@mixin subtitle {
+  font-size: font-size(3);
+  font-weight: $fw-normal;
+  color: gray(5);
+  line-height: $lh-copy;
+}

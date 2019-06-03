@@ -1,24 +1,24 @@
 @import 'main';
 
 .email-text {
-  margin-bottom: $space-3;
+  margin-bottom: major-scale(2);
 }
 
 .email-text-title {
-  color: $grey-9;
-  margin-bottom: $space-2;
-  font-size: $fs-4;
+  color: gray(9);
+  margin-bottom: major-scale(1);
+  font-size: font-size(4);
   font-weight: $fw-4;
 }
 
 .email-text-explanation {
-  margin-bottom: $space-2;
+  margin-bottom: major-scale(1);
 }
 
 .email-text-error {
-  margin-bottom: $space-2;
-  margin-left: $space-2;
-  font-size: $fs-2;
+  margin-bottom: major-scale(1);
+  margin-left: major-scale(1);
+  font-size: font-size(2);
 }
 
 .code {
@@ -27,5 +27,5 @@
 
 .email-editor {
   height: 400px;
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
 }

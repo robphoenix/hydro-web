@@ -1,14 +1,13 @@
 @import 'main';
 
-.login {
+.login__container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-.headline,
+.login-header,
 .form,
 .progress-bar,
 .button {
@@ -23,13 +22,20 @@
   }
 }
 
-.headline {
-  margin-bottom: $space-4;
+.login-header {
+  margin-bottom: major-scale(4);
 }
 
-.subheadline {
-  color: $grey-5;
-  margin-bottom: $space-3;
+.login-header__headline {
+  @include h1;
+
+  margin-bottom: major-scale(2);
+}
+
+.login-header__subheadline {
+  @include subtitle;
+
+  margin-bottom: major-scale(2);
 }
 
 .form {
@@ -38,21 +44,15 @@
 }
 
 .form-field {
-  margin-bottom: $space-2;
+  margin-bottom: major-scale(1);
 }
 
 .visibility {
   cursor: pointer;
-  color: $grey-5;
-}
-
-.button {
-  // display: flex;
-  // align-items: center;
-  // justify-content: flex-end;
+  color: gray(5);
 }
 
 .button-text {
   text-transform: uppercase;
-  font-size: $fs-2;
+  font-size: font-size(2);
 }

@@ -3,7 +3,7 @@
     class="form-field"
     [parent]="createMonitorForm"
     [maxCharLength]="nameMaxCharLength"
-    [canEditName]="editForm"
+    [canEditName]="!isEditForm"
     ngDefaultControl
   >
   </hydro-create-monitor-name>

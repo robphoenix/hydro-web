@@ -2,15 +2,15 @@
 
 .form-field {
   width: 100%;
-  margin-bottom: $space-4;
+  margin-bottom: major-scale(3);
 }
 
 .buttons {
-  margin-top: $space-3;
+  margin-top: major-scale(2);
   display: flex;
   justify-content: flex-end;
 }
 
 .button {
-  margin-left: $space-3;
+  margin-left: major-scale(2);
 }

@@ -1,19 +1,16 @@
 @import 'theming';
 
-// Greys
-$grey-0: mat-color(mat-palette($mat-gray, 50));
-$grey-1: mat-color(mat-palette($mat-gray, 100));
-$grey-2: mat-color(mat-palette($mat-gray, 200));
-$grey-3: mat-color(mat-palette($mat-gray, 300));
-$grey-4: mat-color(mat-palette($mat-gray, 400));
-$grey-5: mat-color(mat-palette($mat-gray, 500));
-$grey-6: mat-color(mat-palette($mat-gray, 600));
-$grey-7: mat-color(mat-palette($mat-gray, 700));
-$grey-8: mat-color(mat-palette($mat-gray, 800));
-$grey-9: mat-color(mat-palette($mat-gray, 900));
+// Grays
+$grayscale: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+@function gray($scale) {
+  $value: nth($grayscale, $scale);
+
+  @return mat-color(mat-palette($mat-gray, $value));
+}
 
 $white: #fff;
-$black: $grey-9;
+$black: gray(9);
 
 // Primary
 $primary: mat-color($hydro-app-primary, default);

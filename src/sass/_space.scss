@@ -1,14 +1,34 @@
-$space: 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 96, 112;
+/*
+For spacing, use the 8px major scale grid.
 
-$space-1: nth($space, 1) + px;
-$space-2: nth($space, 2) + px;
-$space-3: nth($space, 3) + px;
-$space-4: nth($space, 4) + px;
-$space-5: nth($space, 5) + px;
-$space-6: nth($space, 6) + px;
-$space-7: nth($space, 7) + px;
-$space-8: nth($space, 8) + px;
-$space-9: nth($space, 9) + px;
-$space-10: nth($space, 10) + px;
-$space-11: nth($space, 11) + px;
-$space-12: nth($space, 12) + px;
+For heights, widths, margins, paddings use values that are always divisible by 8.
+We call this the major scale.
+
+major-scale(1) => 8px
+major-scale(2) => 16px
+major-scale(3) => 24px
+major-scale(4) => 32px
+major-scale(5) => 40px
+*/
+@function major-scale($scale) {
+  @return ($scale * 8) + px;
+}
+
+/*
+Use the 4px minor scale grid for values under 40px
+
+Only use the 4px grid for values under 40.
+Try making your designs work with the major scale first before using the minor scale.
+Use the minor scale primarily for spacing only when the major scale is too much.
+
+For example: 4, 12, 20 are fine to use. But avoid using 52.
+
+minor-scale(1) => 4px
+minor-scale(3) => 12px
+minor-scale(5) => 20px
+minor-scale(7) => 28px
+minor-scale(9) => 36px
+*/
+@function minor-scale($scale) {
+  @return ($scale * 4) + px;
+}

@@ -3,7 +3,7 @@
 .list-item {
   display: flex;
   align-items: center;
-  border-bottom: 2px solid $grey-3;
+  border-bottom: 1px solid gray(3);
   background-color: $white;
-  padding: $space-4 $space-5;
+  padding: major-scale(3) major-scale(4);
 }

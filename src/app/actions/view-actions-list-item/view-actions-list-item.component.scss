@@ -10,7 +10,7 @@
 }
 
 .menu {
-  margin: 0 $space-4;
+  margin: 0 major-scale(3);
 }
 
 .properties {
@@ -18,7 +18,7 @@
   max-height: 0;
   opacity: 0;
   transition: 300ms all ease-in-out;
-  padding: 0 $space-4;
+  padding: 0 major-scale(3);
 }
 
 .show-properties {
@@ -26,5 +26,5 @@
   max-height: 500px;
   opacity: 1;
   transition: 300ms all ease-in-out;
-  padding: $space-4;
+  padding: major-scale(3);
 }

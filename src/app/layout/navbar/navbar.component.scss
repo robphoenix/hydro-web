@@ -1,9 +1,10 @@
 @import 'main';
 
 .navbar {
-  position: fixed;
+  position: sticky;
   z-index: 900;
   top: 0;
+  height: major-scale(9);
   box-shadow: $box-shadow;
   display: flex;
   justify-content: space-between;
@@ -12,15 +13,29 @@
 .logo {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  margin-left: major-scale(2);
 }
 
-.link-name {
-  font-size: $fs-4;
-  font-weight: $fw-3;
-  color: $grey-2;
+.logotype {
+  font-family: 'Comfortaa', cursive;
+  font-size: font-size(6);
+  color: gray(7);
+  margin-left: major-scale(2);
+}
 
-  &:hover {
-    color: $white;
-    transition: color 0.3s ease-out;
-  }
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: major-scale(2);
+  margin-left: major-scale(4);
+}
+
+.nav-link {
+  font-size: font-size(3);
+  font-weight: $fw-normal;
+  color: gray(7);
+  margin-left: major-scale(2);
 }

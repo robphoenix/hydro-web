@@ -43,7 +43,7 @@ export class CreateMonitorFormComponent implements OnInit {
   monitorName: string;
 
   @Input()
-  editForm = true;
+  isEditForm = false;
 
   @Output()
   submitForm = new EventEmitter<IMonitorSubmit>();
@@ -296,6 +296,8 @@ export class CreateMonitorFormComponent implements OnInit {
     this.selectedCategories = this.selectedCategories.filter(
       (selected: ICategory) => selected.id !== category.id,
     );
+    this.createMonitorForm.get('categories').setValue(this.selectedCategories);
+
     const ctrl = this.createMonitorForm.get('categoriesInput');
     if (ctrl.disabled) {
       ctrl.enable();

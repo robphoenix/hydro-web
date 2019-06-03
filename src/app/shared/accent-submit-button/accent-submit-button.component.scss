@@ -3,10 +3,10 @@
 .button {
   display: flex;
   align-items: center;
-  padding: $space-1 $space-5;
+  padding: minor-scale(1) major-scale(4);
 }
 
 .content {
-  font-size: $fs-3;
-  margin-left: $space-1;
+  font-size: font-size(3);
+  margin-left: minor-scale(1);
 }

@@ -7,14 +7,14 @@
 }
 
 .action-button {
-  margin-left: $space-3;
+  margin-left: major-scale(2);
   display: flex;
   align-items: center;
-  padding: $space-1 $space-5;
+  padding: minor-scale(1) major-scale(4);
 }
 
 .content {
-  font-size: $fs-3;
-  margin-left: $space-1;
-  margin-bottom: $space-5;
+  font-size: font-size(3);
+  margin-left: minor-scale(1);
+  margin-bottom: major-scale(4);
 }

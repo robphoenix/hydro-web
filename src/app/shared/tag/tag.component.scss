@@ -2,11 +2,11 @@
 
 .tag {
   display: inline-block;
-  padding: $space-2;
-  margin-right: $space-2;
+  padding: major-scale(1);
+  margin-right: major-scale(1);
   border: 1px solid;
   border-radius: 3px;
-  font-size: $fs-1;
+  font-size: font-size(1);
 }
 
 .primary {
