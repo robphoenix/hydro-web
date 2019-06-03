@@ -63,13 +63,13 @@ pipeline {
       when {
         buildingTag()
       }
-  options {
-    // Connection is configured by the Jenkins Gitlab plugin
-    // Manage Jenkins -> Configure System -> Gitlab
-    gitLabConnection('gitlab-fm')
-  }
       steps {
         sh 'npm run build:poc'
+        // tar it up with git tag
+        LAST_TAG=$(git describe --abbrev=0 --tags origin/master)
+        tar -zcvf hydro-web-${LAST_TAG}.tar.gz poc/dist
+        ls -al
+        // move to folder
       }
     }
   }
