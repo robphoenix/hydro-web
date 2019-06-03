@@ -63,6 +63,11 @@ pipeline {
       when {
         buildingTag()
       }
+  options {
+    // Connection is configured by the Jenkins Gitlab plugin
+    // Manage Jenkins -> Configure System -> Gitlab
+    gitLabConnection('gitlab-fm')
+  }
       steps {
         sh 'npm run build:poc'
       }
