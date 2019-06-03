@@ -3,8 +3,8 @@
   <mat-form-field class="input">
     <input
       matInput
-      type="text"
-      placeholder="{{placeHolder || 'Search'}}"
+      type="search"
+      placeholder="{{ placeHolder || 'Search' }}"
       [(ngModel)]="searchTerm"
       (keyup)="updateSearchTerm()"
     />
