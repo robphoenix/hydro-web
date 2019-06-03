@@ -24,11 +24,11 @@ Run `npm start` to start up the app, and then navigate to
 [http://localhost:4200/](http://localhost:4200/). The app will automatically
 reload if you change any of the source files.
 
-## Design & CSS
+## Design System
 
 In the Sass files you will find predefined colours, typography settings, and padding & margin spacings. These should help with the overall rhythm and design of the site.
 
-## Dev server
+## DEV server
 
 A dev instance of Hydro is available on
 [mn2splmfe001sd0](http://mn2splmfe001sd0:4200). The Angular app here is
@@ -40,10 +40,12 @@ this deep links will not work on the DEV server.
 - **server/deploy.sh** will build and deploy the Go web server to the DEV instance.
 - **server/run.sh** will run the Go web server in the background, this is to be used on any remote servers that are expected to serve the application.
 
+## POC Server
+
 ## CI
 
 The [hydro-web-pipeline](https://mn2forbld0001d0/job/hydro-web-pipeline/)
 Jenkins job will run formatting & linting checks. It will also build and
-deploy the Angular app, as well as the small Go server that will serve the
+deploy to DEV, as well as the small Go server that will serve the
 app. It can be triggered by Merge Requests, pushes to open Merge Requests,
 and manually for any available branch.
