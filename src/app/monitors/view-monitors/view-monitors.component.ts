@@ -48,10 +48,6 @@ export class ViewMonitorsComponent implements OnInit {
     this.getCategories();
   }
 
-  public get allowsEdit(): boolean {
-    return this.authService.allowsEdit;
-  }
-
   public get isAdmin(): boolean {
     return this.authService.isAdmin;
   }
@@ -147,7 +143,7 @@ export class ViewMonitorsComponent implements OnInit {
               this.monitorsType = MonitorType.System;
               this.getMonitors();
             } else {
-              this.onAddNewMonitor();
+              this.navigateToAddNewMonitor();
             }
             break;
           case MonitorType.System:
@@ -155,11 +151,11 @@ export class ViewMonitorsComponent implements OnInit {
               this.monitorsType = MonitorType.Standard;
               this.getMonitors();
             } else {
-              this.onAddNewMonitor();
+              this.navigateToAddNewMonitor();
             }
             break;
           default:
-            this.onAddNewMonitor();
+            this.navigateToAddNewMonitor();
             break;
         }
       });
@@ -183,7 +179,7 @@ export class ViewMonitorsComponent implements OnInit {
     }
   }
 
-  public onAddNewMonitor() {
+  public navigateToAddNewMonitor() {
     this.router.navigateByUrl('/monitors/add');
   }
 

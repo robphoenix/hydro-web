@@ -8,8 +8,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  // name = '../assets/img/hydro-uppercase.png';
   logo = '../assets/img/hydro-power.png';
 
   constructor(public authService: AuthService, public router: Router) {}
+
+  public get allowsEdit(): boolean {
+    return this.authService.allowsEdit;
+  }
+
+  public get isAdmin(): boolean {
+    return this.authService.isAdmin;
+  }
+
+  public logout() {
+    this.authService.logout();
+  }
 }
