@@ -65,13 +65,19 @@ pipeline {
       }
       steps {
         sh 'npm run build:poc'
-        // tar it up with git tag
+      }
+    }
+    stage('PoC Create Artefact'){
+      when {
+        buildingTag()
+      }
+      steps {
         sh '''
         LAST_TAG=$(git describe --abbrev=0 --tags origin/master)
         tar -zcvf hydro-web-${LAST_TAG}.tar.gz poc/dist
         ls -al
+        mv hydro-web-${LAST_TAG}.tar.gz /dev_releases/hydro/Artefacts
         '''
-        // move to folder
       }
     }
   }
