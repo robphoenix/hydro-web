@@ -10,7 +10,14 @@
 
   <nav *ngIf="authService.isLoggedIn" class="nav">
     <div class="links">
-      <a mat-button routerLink="/monitors" class="nav-link">Monitors</a>
+      <button mat-button [matMenuTriggerFor]="monitorsMenu" class="nav-link">
+        Monitors
+      </button>
+      <mat-menu #monitorsMenu="matMenu">
+        <button mat-menu-item routerLink="/monitors/view">
+          View Monitors
+        </button>
+      </mat-menu>
       <a mat-button routerLink="/actions" class="nav-link">Actions</a>
     </div>
     <button mat-button (click)="authService.logout()" class="nav-link">
