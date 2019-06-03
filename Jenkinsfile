@@ -66,9 +66,11 @@ pipeline {
       steps {
         sh 'npm run build:poc'
         // tar it up with git tag
+        sh '''
         LAST_TAG=$(git describe --abbrev=0 --tags origin/master)
         tar -zcvf hydro-web-${LAST_TAG}.tar.gz poc/dist
         ls -al
+        '''
         // move to folder
       }
     }
