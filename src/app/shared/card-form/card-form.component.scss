@@ -1,9 +1,7 @@
 @import 'main';
 
 .card {
-  background-color: $white;
   padding: major-scale(5) major-scale(8);
-  border-top: 3px solid $primary;
-  box-shadow: $box-shadow;
+  // border-top: 3px solid $primary;
   margin-bottom: major-scale(3);
 }

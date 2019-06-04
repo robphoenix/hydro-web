@@ -1,11 +1,10 @@
 <hydro-page-form>
   <hydro-headline>Edit Monitor</hydro-headline>
-  <hydro-card-form>
-    <hydro-create-monitor-form
-      *ngIf="monitor"
-      [monitor]="monitor"
-      [isEditForm]="true"
-      (submitForm)="saveMonitor($event)"
-    ></hydro-create-monitor-form>
-  </hydro-card-form>
+
+  <hydro-create-monitor-form
+    *ngIf="monitor"
+    [monitor]="monitor"
+    [isEditForm]="true"
+    (submitForm)="saveMonitor($event)"
+  ></hydro-create-monitor-form>
 </hydro-page-form>

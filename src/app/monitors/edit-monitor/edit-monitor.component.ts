@@ -48,7 +48,11 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   saveMonitor(event: IMonitorSubmit) {
     const { monitor, view } = event;
     this.monitorsService.putMonitor(monitor).subscribe(
-      () => {
+      (res) => {
+        console.log({ res });
+
+        console.log({ view });
+
         view
           ? this.router.navigateByUrl(`/monitors/${monitor.id}`)
           : this.router.navigateByUrl(`/monitors/view`);
