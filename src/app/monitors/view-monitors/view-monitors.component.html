@@ -8,13 +8,12 @@
     ></hydro-view-monitors-status-toggle>
 
     <hydro-search-input
-      class="search"
       [(searchTerm)]="searchTerm"
       [placeHolder]="'Search Monitors'"
       (searchTermChange)="filterMonitors()"
     ></hydro-search-input>
 
-    <mat-form-field>
+    <mat-form-field class="filter-categories">
       <mat-label>Filter Categories</mat-label>
       <mat-select
         [(value)]="selectedCategories"
@@ -37,15 +36,6 @@
         <mat-option value="system">System</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <hydro-button-raised
-      *ngIf="allowsEdit"
-      color="accent"
-      class="add-monitor"
-      (click)="onAddNewMonitor()"
-    >
-      Add New Monitor
-    </hydro-button-raised>
   </div>
 
   <hydro-list>
