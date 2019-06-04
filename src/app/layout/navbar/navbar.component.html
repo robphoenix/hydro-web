@@ -12,6 +12,7 @@
     <div class="links">
       <button mat-button [matMenuTriggerFor]="monitorsMenu" class="nav-button">
         Monitors
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #monitorsMenu="matMenu" class="nav-menu">
         <button mat-menu-item (click)="router.navigateByUrl('/monitors/view')">
@@ -25,8 +26,10 @@
           Add New Monitor
         </button>
       </mat-menu>
+
       <button mat-button [matMenuTriggerFor]="actionsMenu" class="nav-button">
         Actions
+        <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #actionsMenu="matMenu" class="nav-menu">
         <button mat-menu-item (click)="router.navigateByUrl('/actions/view')">
