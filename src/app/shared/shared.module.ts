@@ -8,7 +8,6 @@ import { IconComponent } from './icon/icon.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AccentSubmitButtonComponent } from './accent-submit-button/accent-submit-button.component';
 import { TableHeadingComponent } from './table-heading/table-heading.component';
-import { DialogCloseButtonComponent } from './dialog-close-button/dialog-close-button.component';
 import { ButtonRaisedComponent } from './button-raised/button-raised.component';
 import { HeadlineComponent } from './headline/headline.component';
 import { ButtonFlatComponent } from './button-flat/button-flat.component';
@@ -36,7 +35,6 @@ import { TagComponent } from './tag/tag.component';
     ErrorDialogComponent,
     AccentSubmitButtonComponent,
     TableHeadingComponent,
-    DialogCloseButtonComponent,
     ButtonRaisedComponent,
     HeadlineComponent,
     ButtonFlatComponent,
@@ -56,7 +54,6 @@ import { TagComponent } from './tag/tag.component';
     IconComponent,
     AccentSubmitButtonComponent,
     TableHeadingComponent,
-    DialogCloseButtonComponent,
     ButtonRaisedComponent,
     HeadlineComponent,
     ButtonFlatComponent,
