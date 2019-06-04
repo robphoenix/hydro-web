@@ -15,10 +15,9 @@
 
 .buttons {
   display: flex;
-  justify-content: flex-end;
   margin-bottom: major-scale(2);
 }
 
-.button {
-  margin-left: major-scale(2);
+.middle-button {
+  margin: 0 major-scale(2);
 }

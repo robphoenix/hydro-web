@@ -8,6 +8,8 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
 import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
+import { TitleService } from 'src/app/shared/title.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'hydro-edit-monitor',
@@ -27,7 +29,11 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
     private router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-  ) {}
+    titleService: TitleService,
+    title: Title,
+  ) {
+    title.setTitle(titleService.title(`Edit Monitor`));
+  }
 
   ngOnInit() {
     this.sub = this.route.paramMap.subscribe((params) => {
@@ -48,7 +54,11 @@ export class EditMonitorComponent implements OnInit, OnDestroy {
   saveMonitor(event: IMonitorSubmit) {
     const { monitor, view } = event;
     this.monitorsService.putMonitor(monitor).subscribe(
-      () => {
+      (res) => {
+        console.log({ res });
+
+        console.log({ view });
+
         view
           ? this.router.navigateByUrl(`/monitors/${monitor.id}`)
           : this.router.navigateByUrl(`/monitors/view`);

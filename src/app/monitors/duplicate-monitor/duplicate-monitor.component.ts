@@ -8,6 +8,8 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { CreateMonitorFormComponent } from '../create-monitor-form/create-monitor-form.component';
 import { IMonitorSubmit } from '../monitor-submit';
 import { IErrorMessage } from 'src/app/shared/error-message';
+import { TitleService } from 'src/app/shared/title.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'hydro-duplicate-monitor',
@@ -29,7 +31,11 @@ export class DuplicateMonitorComponent implements OnInit, OnDestroy {
     private router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-  ) {}
+    titleService: TitleService,
+    title: Title,
+  ) {
+    title.setTitle(titleService.title(`Duplicate Monitor`));
+  }
 
   ngOnInit() {
     this.sub = this.route.paramMap.subscribe((params) => {

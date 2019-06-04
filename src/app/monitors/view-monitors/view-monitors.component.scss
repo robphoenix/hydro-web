@@ -2,13 +2,17 @@
 
 .toolbar {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: major-scale(3);
+  margin-bottom: major-scale(4);
 }
 
-.search {
-  padding: 0 major-scale(1);
+.toolbar > * {
+  flex: 1;
+}
+
+.filter-categories {
+  margin: 0 major-scale(4);
 }
 
 .scroll-viewport {
@@ -20,14 +24,6 @@
   }
 }
 
-.add-monitor {
-  margin-left: major-scale(2);
-}
-
 .monitor-details {
   width: 100%;
-}
-
-.odd {
-  background: gray(2);
 }

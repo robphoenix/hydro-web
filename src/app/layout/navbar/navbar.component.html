@@ -10,10 +10,47 @@
 
   <nav *ngIf="authService.isLoggedIn" class="nav">
     <div class="links">
-      <a mat-button routerLink="/monitors" class="nav-link">Monitors</a>
-      <a mat-button routerLink="/actions" class="nav-link">Actions</a>
+      <button mat-button [matMenuTriggerFor]="monitorsMenu" class="nav-button">
+        Monitors
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #monitorsMenu="matMenu" class="nav-menu">
+        <button mat-menu-item (click)="router.navigateByUrl('/monitors/view')">
+          View Monitors
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="allowsEdit"
+          (click)="router.navigateByUrl('/monitors/add')"
+        >
+          Add New Monitor
+        </button>
+        <button
+          mat-menu-item
+          (click)="router.navigateByUrl('/monitors/feedtypes')"
+        >
+          View Monitor Feed Types
+        </button>
+      </mat-menu>
+
+      <button mat-button [matMenuTriggerFor]="actionsMenu" class="nav-button">
+        Actions
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #actionsMenu="matMenu" class="nav-menu">
+        <button mat-menu-item (click)="router.navigateByUrl('/actions/view')">
+          View Actions
+        </button>
+        <button
+          mat-menu-item
+          *ngIf="isAdmin"
+          (click)="router.navigateByUrl('/actions/add')"
+        >
+          Add New Action
+        </button>
+      </mat-menu>
     </div>
-    <button mat-button (click)="authService.logout()" class="nav-link">
+    <button mat-button (click)="logout()" class="nav-button">
       Log Out {{ authService.userDisplayName }}
     </button>
   </nav>

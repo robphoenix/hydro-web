@@ -97,23 +97,26 @@
   </hydro-create-monitor-form-actions>
 
   <div class="buttons">
-    <hydro-button-raised
+    <button
+      mat-raised-button
       [disabled]="!createMonitorForm.valid"
-      color="accent"
-      class="button"
+      color="primary"
+      type="submit"
     >
       Save Monitor
-    </hydro-button-raised>
-    <hydro-button-raised
-      color="accent"
-      class="button"
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="middle-button"
       (click)="submit(true)"
       [disabled]="!canViewMonitor"
+      type="button"
     >
       Save Monitor and View
-    </hydro-button-raised>
-    <hydro-button-raised color="warn" (click)="cancel()" class="button">
+    </button>
+    <button mat-raised-button color="warn" (click)="cancel()" type="button">
       Cancel
-    </hydro-button-raised>
+    </button>
   </div>
 </form>

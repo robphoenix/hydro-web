@@ -260,6 +260,8 @@ export class CreateMonitorFormComponent implements OnInit {
       monitor.id = id;
     }
 
+    console.log(`in create`);
+
     this.submitForm.emit({ monitor, view } as IMonitorSubmit);
   }
 

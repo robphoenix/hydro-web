@@ -1,11 +1,10 @@
 <hydro-page-form>
   <hydro-headline>Duplicate Monitor</hydro-headline>
-  <hydro-card-form>
-    <hydro-create-monitor-form
-      *ngIf="monitor && monitorName"
-      [monitor]="monitor"
-      [monitorName]="monitorName"
-      (submitForm)="addMonitor($event)"
-    ></hydro-create-monitor-form>
-  </hydro-card-form>
+
+  <hydro-create-monitor-form
+    *ngIf="monitor && monitorName"
+    [monitor]="monitor"
+    [monitorName]="monitorName"
+    (submitForm)="addMonitor($event)"
+  ></hydro-create-monitor-form>
 </hydro-page-form>

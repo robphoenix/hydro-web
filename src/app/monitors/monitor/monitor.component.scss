@@ -5,10 +5,6 @@
   padding: major-scale(4);
 }
 
-.heading {
-  margin-bottom: major-scale(4);
-}
-
 .header-name {
   font-size: font-size(2);
   font-weight: $fw-4;
@@ -18,17 +14,16 @@
 
 .inner-wrapper {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   margin-bottom: major-scale(4);
 }
 
 .buttons {
-  margin-left: auto;
   display: flex;
 }
 
-.button {
-  margin-left: major-scale(2);
+.show-epl {
+  margin: 0 major-scale(2);
 }
 
 .icon {
@@ -84,10 +79,7 @@
   display: flex;
   flex-direction: column;
   color: gray(7);
-
-  .description {
-    margin-bottom: major-scale(1);
-  }
+  margin-bottom: major-scale(3);
 }
 
 .new-data {

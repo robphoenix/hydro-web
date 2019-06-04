@@ -3,17 +3,17 @@
 .toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: major-scale(3);
+  justify-content: flex-end;
+  width: 60%;
+  margin: 0 auto major-scale(4) 0;
+}
+
+.toolbar > * {
+  flex: 1;
 }
 
 .filter {
-  width: 20%;
-}
-
-.search {
-  width: 40%;
+  margin-left: major-scale(3);
 }
 
 .scroll-viewport {

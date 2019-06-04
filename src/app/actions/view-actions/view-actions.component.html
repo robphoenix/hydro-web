@@ -2,6 +2,12 @@
   <hydro-headline>Actions</hydro-headline>
 
   <div class="toolbar">
+    <hydro-search-input
+      [(searchTerm)]="searchTerm"
+      [placeHolder]="'Search Actions'"
+      (searchTermChange)="filterActions()"
+    ></hydro-search-input>
+
     <mat-form-field class="filter">
       <mat-label>Filter Action Types</mat-label>
       <mat-select
@@ -15,21 +21,6 @@
         <mat-option value="emailBatch">Email Batch</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <hydro-search-input
-      [(searchTerm)]="searchTerm"
-      [placeHolder]="'Search Actions'"
-      (searchTermChange)="filterActions()"
-      class="search"
-    ></hydro-search-input>
-
-    <hydro-button-raised
-      *ngIf="isAdmin"
-      (click)="router.navigateByUrl('/actions/add')"
-      color="accent"
-    >
-      Add New Action
-    </hydro-button-raised>
   </div>
 
   <hydro-list>
