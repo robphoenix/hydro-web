@@ -23,23 +23,6 @@
   align-items: center;
 }
 
-.status {
-  font-size: font-size(5);
-  margin: 0 0 major-scale(1) major-scale(1);
-}
-
-.online {
-  color: $accent-green;
-}
-
-.offline {
-  color: $accent-red;
-}
-
-.archived {
-  color: gray(4);
-}
-
 .categories {
   display: flex;
   align-items: center;

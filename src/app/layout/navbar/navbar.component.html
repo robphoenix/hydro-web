@@ -25,6 +25,12 @@
         >
           Add New Monitor
         </button>
+        <button
+          mat-menu-item
+          (click)="router.navigateByUrl('/monitors/feedtypes')"
+        >
+          View Monitor Feed Types
+        </button>
       </mat-menu>
 
       <button mat-button [matMenuTriggerFor]="actionsMenu" class="nav-button">
