@@ -6,6 +6,8 @@ import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.c
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { CreateActionComponent } from '../create-action/create-action.component';
+import { TitleService } from 'src/app/shared/title.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'hydro-add-action',
@@ -21,7 +23,11 @@ export class AddActionComponent {
     public dialog: MatDialog,
     private router: Router,
     public snackBar: MatSnackBar,
-  ) {}
+    titleService: TitleService,
+    title: Title,
+  ) {
+    title.setTitle(titleService.title(`Add Action`));
+  }
 
   onSubmit(action: IAction) {
     this.actionsService.addAction(action).subscribe(

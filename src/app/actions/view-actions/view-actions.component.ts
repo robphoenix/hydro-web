@@ -7,6 +7,8 @@ import { IErrorMessage } from 'src/app/shared/error-message';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { ActionUpdateDialogComponent } from '../action-update-dialog/action-update-dialog.component';
 import { AuthService } from 'src/app/user/auth.service';
+import { TitleService } from 'src/app/shared/title.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'hydro-view-actions',
@@ -25,7 +27,11 @@ export class ViewActionsComponent implements OnInit {
     public router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-  ) {}
+    titleService: TitleService,
+    title: Title,
+  ) {
+    title.setTitle(titleService.title(`View Actions`));
+  }
 
   ngOnInit() {
     this.getActions();

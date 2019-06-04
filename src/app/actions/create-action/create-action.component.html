@@ -81,15 +81,22 @@
   </div>
 
   <div class="buttons">
-    <hydro-button-raised
-      color="accent"
+    <button
+      mat-raised-button
+      color="primary"
       [type]="onSubmit"
       [disabled]="disableSubmit"
     >
       Save Action
-    </hydro-button-raised>
-    <hydro-button-raised color="warn" (click)="cancel()" class="button">
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="cancel()"
+      class="cancel"
+      type="button"
+    >
       Cancel
-    </hydro-button-raised>
+    </button>
   </div>
 </form>

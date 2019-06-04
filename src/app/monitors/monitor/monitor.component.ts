@@ -25,6 +25,8 @@ import { ChangeEventDialogComponent } from '../change-event-dialog/change-event-
 import { SortService } from '../sort.service';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { AuthService } from 'src/app/user/auth.service';
+import { TitleService } from 'src/app/shared/title.service';
+import { Title } from '@angular/platform-browser';
 
 /**
  * Describes a single monitor.
@@ -69,9 +71,12 @@ export class MonitorComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private sortService: SortService,
     private authService: AuthService,
+    private titleService: TitleService,
+    private title: Title,
   ) {}
 
   ngOnInit() {
+    this.title.setTitle(this.titleService.title(`Monitor`));
     this.allowsEdit = this.authService.allowsEdit;
     this.dataSource = new MatTableDataSource([]);
     this.dataSource.sort = this.sort;
@@ -196,6 +201,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
       this.editLink = `/monitors/${id}/edit`;
       this.monitorService.getMonitorById(id).subscribe(
         (monitor) => {
+          this.title.setTitle(this.titleService.title(monitor.name));
           this.monitor = monitor;
           this.getCachedData();
           this.getLiveData();

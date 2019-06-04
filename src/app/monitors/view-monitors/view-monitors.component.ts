@@ -1,3 +1,4 @@
+import { TitleService } from './../../shared/title.service';
 import { Component, OnInit } from '@angular/core';
 import { IMonitor, MonitorStatus, MonitorType, ICategory } from '../monitor';
 import { MonitorsService } from '../monitors.service';
@@ -13,6 +14,7 @@ import { FilterService } from '../filter.service';
 import { IFilterValues } from '../filter-values';
 import { AuthService } from 'src/app/user/auth.service';
 import { RefreshService } from '../refresh.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'hydro-view-monitors',
@@ -39,7 +41,11 @@ export class ViewMonitorsComponent implements OnInit {
     private refreshService: RefreshService,
     public dialog: MatDialog,
     public router: Router,
-  ) {}
+    titleService: TitleService,
+    title: Title,
+  ) {
+    title.setTitle(titleService.title(`View Monitors`));
+  }
 
   ngOnInit() {
     this.status = this.userService.lastMonitorsStatus || MonitorStatus.Online;
