@@ -3,9 +3,9 @@
 @include mat-core(); // Be sure that you only ever include this mixin once!
 
 // Available color palettes: https://material.io/design/color/#tools-for-picking-colors
-$hydro-app-primary: mat-palette($mat-blue, 700, 50, 900);
-$hydro-app-accent: mat-palette($mat-pink, 500, 50, 900);
-$hydro-app-warn: mat-palette($mat-red, A700, 50, 900);
+$hydro-app-primary: mat-palette($mat-teal, 700, 50, 900);
+$hydro-app-accent: mat-palette($mat-cyan, 600, 50, 900);
+$hydro-app-warn: mat-palette($mat-red, 700, 50, 900);
 
 $hydro-app-theme: mat-light-theme(
   $hydro-app-primary,
