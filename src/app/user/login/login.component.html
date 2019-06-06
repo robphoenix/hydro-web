@@ -64,12 +64,12 @@
   <div class="button">
     <button
       mat-raised-button
-      color="accent"
+      color="primary"
       *ngIf="!attemptingLogIn"
       (click)="login()"
       [disabled]="!loginForm.valid"
     >
-      <span class="button-text">
+      <span>
         Log In
       </span>
     </button>

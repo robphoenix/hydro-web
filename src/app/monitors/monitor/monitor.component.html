@@ -17,7 +17,7 @@
         mat-raised-button
         (click)="togglePause()"
         [disabled]="!(liveData && liveData.length)"
-        color="primary"
+        color="accent"
       >
         <mat-icon class="icon">{{ paused ? 'play_arrow' : 'pause' }}</mat-icon>
         {{ paused ? 'Run  ' : 'Pause' }}
@@ -25,7 +25,7 @@
 
       <button
         mat-raised-button
-        color="accent"
+        color="primary"
         (click)="showEpl()"
         class="show-epl"
       >
@@ -35,7 +35,7 @@
       <button
         mat-raised-button
         *ngIf="allowsEdit"
-        color="accent"
+        color="primary"
         (click)="router.navigateByUrl(editLink)"
       >
         Edit
