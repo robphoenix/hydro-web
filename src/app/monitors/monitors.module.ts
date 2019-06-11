@@ -30,6 +30,7 @@ import { CreateMonitorNameComponent } from './create-monitor-name/create-monitor
 import { CreateMonitorCategoriesSelectComponent } from './create-monitor-categories-select/create-monitor-categories-select.component';
 import { CreateMonitorCategoryAddComponent } from './create-monitor-category-add/create-monitor-category-add.component';
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
+import { ViewFeedtypesComponent } from './view-feedtypes/view-feedtypes.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,10 @@ import { AddCategoryDialogComponent } from './add-category-dialog/add-category-d
         path: 'add',
         component: AddMonitorComponent,
         canActivate: [AllowsEditGuard],
+      },
+      {
+        path: 'feedtypes',
+        component: ViewFeedtypesComponent,
       },
       { path: ':id', component: MonitorComponent },
       {
@@ -85,6 +90,7 @@ import { AddCategoryDialogComponent } from './add-category-dialog/add-category-d
     CreateMonitorCategoriesSelectComponent,
     CreateMonitorCategoryAddComponent,
     AddCategoryDialogComponent,
+    ViewFeedtypesComponent,
   ],
   entryComponents: [
     EplQueryDialogComponent,

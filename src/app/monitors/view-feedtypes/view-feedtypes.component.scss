@@ -1,0 +1,25 @@
+@import 'main';
+
+.inner-wrapper {
+  display: flex;
+}
+
+.feed-types {
+  flex: 1;
+}
+
+.subheader {
+  text-transform: uppercase;
+  letter-spacing: $ls-tracked;
+}
+
+.fields-list {
+  flex: 3;
+  padding-left: major-scale(4);
+}
+
+.fields {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

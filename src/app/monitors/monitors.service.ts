@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAction } from '../actions/action';
 import { environment } from '../../environments/environment';
+import { IFeedTypes } from './feedtypes';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -31,6 +32,7 @@ export class MonitorsService {
   actionsUrl = `${this.optionsUrl}/actions`;
   categoriesUrl = `${this.optionsUrl}/categories`;
   groupsUrl = `${this.optionsUrl}/groups`;
+  feedTypesUrl = `${this.optionsUrl}/feedtypes`;
 
   readonly actionsGroups: string[] = ['block', 'email', 'store', 'other'];
   readonly actionsIcons: { [group: string]: string } = {
@@ -118,6 +120,10 @@ export class MonitorsService {
       monitor,
       { headers },
     );
+  }
+
+  public getFeedTypes(): Observable<IFeedTypes> {
+    return this.http.get<IFeedTypes>(this.feedTypesUrl, { headers });
   }
 
   public allCurrentCategories(monitors: IMonitor[]): string[] {

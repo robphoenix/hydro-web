@@ -1,0 +1,39 @@
+<hydro-page-wide>
+  <hydro-headline>Monitor Feed Types</hydro-headline>
+  <div class="inner-wrapper">
+    <div class="feed-types">
+      <mat-action-list>
+        <button
+          mat-list-item
+          *ngFor="let esperDataType of esperDataTypes"
+          (click)="showFields(esperDataType)"
+        >
+          {{ esperDataType }}
+        </button>
+      </mat-action-list>
+    </div>
+    <div class="fields-list">
+      <mat-list role="list">
+        <h3 mat-subheader class="subheader">{{ currentDataType }}</h3>
+        <div *ngIf="fieldKeys && fieldKeys.length; else noFields">
+          <mat-list-item role="listitem" *ngFor="let field of fieldKeys">
+            <div class="fields">
+              <span>
+                {{ field }}
+              </span>
+              <span>
+                <hydro-tag color="primary">
+                  {{ fields[field] }}
+                </hydro-tag>
+              </span>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </div>
+        <ng-template #noFields>
+          There are currently no fields available for this feed type, sozza :(
+        </ng-template>
+      </mat-list>
+    </div>
+  </div>
+</hydro-page-wide>
