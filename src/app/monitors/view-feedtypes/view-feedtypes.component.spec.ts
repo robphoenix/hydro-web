@@ -8,9 +8,8 @@ describe('ViewFeedtypesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewFeedtypesComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewFeedtypesComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
