@@ -15,17 +15,31 @@
     <div class="fields-list">
       <mat-list role="list">
         <h3 mat-subheader class="subheader">{{ currentDataType }}</h3>
-        <div *ngIf="fieldKeys && fieldKeys.length; else noFields">
-          <mat-list-item role="listitem" *ngFor="let field of fieldKeys">
+        <div *ngIf="fields && fields.length; else noFields">
+          <mat-list-item
+            role="listitem"
+            *ngFor="let field of fields"
+            class="field-list-item"
+          >
             <div class="fields">
-              <span>
-                {{ field }}
-              </span>
-              <span>
+              <div class="field-header">
+                <h4 mat-line class="field-name">
+                  {{ field.name }}
+                </h4>
+                <p>{{ field.help }}</p>
+              </div>
+
+              <div class="fields-optional">
+                <p *ngIf="field.type">Type: {{ field.type }}</p>
+                <p *ngIf="field.format">Format: {{ field.format }}</p>
+              </div>
+
+              <div class="field-details">
                 <hydro-tag color="accent">
-                  {{ fields[field] }}
+                  {{ field.javaType }}
                 </hydro-tag>
-              </span>
+                <hydro-tag color="primary">{{ field.order }}</hydro-tag>
+              </div>
             </div>
             <mat-divider></mat-divider>
           </mat-list-item>

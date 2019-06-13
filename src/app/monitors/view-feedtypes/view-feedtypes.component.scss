@@ -14,12 +14,40 @@
 }
 
 .fields-list {
-  flex: 3;
+  flex: 5;
   padding-left: major-scale(4);
+}
+
+.mat-list-base .mat-list-item {
+  height: major-scale(13);
 }
 
 .fields {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   width: 100%;
+}
+
+.field-header {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-name {
+  margin-bottom: major-scale(1);
+}
+
+.fields-optional {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-left: major-scale(3);
+}
+
+.field-details {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

@@ -1,4 +1,4 @@
-import { JavaType } from './../feedtypes';
+import { IFeedType } from './../feedtypes';
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from '../monitors.service';
 import { TitleService } from 'src/app/shared/title.service';
@@ -15,8 +15,7 @@ export class ViewFeedtypesComponent implements OnInit {
   public feedTypes: IFeedTypes;
   public esperDataTypes: string[];
   public currentDataType: string;
-  public fields: { [key: string]: JavaType };
-  public fieldKeys: string[];
+  public fields: IFeedType[];
 
   constructor(
     private monitorsService: MonitorsService,
@@ -37,7 +36,6 @@ export class ViewFeedtypesComponent implements OnInit {
         this.esperDataTypes = Object.keys(feedTypes).sort();
         this.currentDataType = this.esperDataTypes[0];
         this.fields = feedTypes[this.currentDataType];
-        this.fieldKeys = Object.keys(this.fields);
       },
       (error: IErrorMessage) => console.log({ error }),
     );

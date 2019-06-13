@@ -1,7 +1,14 @@
 export interface IFeedTypes {
-  [key: string]: {
-    [key: string]: JavaType;
-  };
+  [key: string]: IFeedType[];
+}
+
+export interface IFeedType {
+  name: string;
+  help: string;
+  javaType: JavaType;
+  order: number;
+  type?: string;
+  format?: string;
 }
 
 export enum JavaType {
