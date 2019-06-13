@@ -13,13 +13,22 @@
   letter-spacing: $ls-tracked;
 }
 
+.search {
+  width: 30%;
+  margin-left: auto;
+}
+
 .fields-list {
   flex: 5;
   padding-left: major-scale(4);
+
+  .mat-list-base .mat-list-item {
+    height: major-scale(13);
+  }
 }
 
-.mat-list-base .mat-list-item {
-  height: major-scale(13);
+.field-list-item {
+  border-bottom: 1px solid gray(5);
 }
 
 .fields {

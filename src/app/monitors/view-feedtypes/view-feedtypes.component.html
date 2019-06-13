@@ -1,5 +1,12 @@
 <hydro-page-wide>
   <hydro-headline>Monitor Feed Types</hydro-headline>
+  <div class="search">
+    <hydro-search-input
+      [(searchTerm)]="searchTerm"
+      [placeHolder]="'Search Feed Types...'"
+      (searchTermChange)="filterFeedTypes()"
+    ></hydro-search-input>
+  </div>
   <div class="inner-wrapper">
     <div class="feed-types">
       <mat-action-list>
@@ -15,10 +22,10 @@
     <div class="fields-list">
       <mat-list role="list">
         <h3 mat-subheader class="subheader">{{ currentDataType }}</h3>
-        <div *ngIf="fields && fields.length; else noFields">
+        <div *ngIf="filteredFields && filteredFields.length; else noFields">
           <mat-list-item
             role="listitem"
-            *ngFor="let field of fields"
+            *ngFor="let field of filteredFields"
             class="field-list-item"
           >
             <div class="fields">
@@ -41,7 +48,6 @@
                 <hydro-tag color="primary">{{ field.order }}</hydro-tag>
               </div>
             </div>
-            <mat-divider></mat-divider>
           </mat-list-item>
         </div>
         <ng-template #noFields>
